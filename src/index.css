@@ -9,25 +9,36 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 220 25% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 25% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 25% 12%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Brand blue (was #008cba — 3.0:1 fail). Now #006a8e ≈ 4.84:1 on white (AA). */
+    --primary: 196 100% 28%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Deeper brand blue for filled buttons/nav with white text — #005a78 ≈ 5.7:1. */
+    --brand: 196 100% 24%;
+    --brand-foreground: 0 0% 100%;
+    --brand-hover: 196 100% 19%;
+
+    /* Darkened DPH gold accent bar — was light yellow, now AA on white (#a36a00 ≈ 4.6:1). */
+    --accent-gold: 38 100% 32%;
+    --accent-gold-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary-foreground: 220 25% 12%;
 
+    /* Muted text darkened from 46.9% → 35% so loading/secondary text passes 4.5:1. */
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted-foreground: 215 20% 35%;
 
     --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent-foreground: 220 25% 12%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;

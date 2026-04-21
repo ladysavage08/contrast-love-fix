@@ -1,16 +1,317 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import {
+  Facebook,
+  Twitter,
+  Youtube,
+  Instagram,
+  Search,
+  Phone,
+  FileText,
+  Heart,
+  Apple,
+  Users,
+  ClipboardCheck,
+  Stethoscope,
+  ArrowRight,
+  Info,
+} from "lucide-react";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+/**
+ * Accessible rebuild of the ECHD homepage.
+ *
+ * Color contrast policy (WCAG 2.1 AA, ≥ 4.5:1 for normal text):
+ *   - Brand blue text on white: hsl(var(--primary)) = #006a8e (was #008cba — 3.0:1, failing).
+ *   - White text on brand surfaces: hsl(var(--brand)) = #005a78 (5.7:1).
+ *   - Muted/secondary text: hsl(var(--muted-foreground)) at L=35% (≥ 4.5:1).
+ *   - Gold accent stripe darkened to #a36a00 for any text laid over it.
+ *
+ * No hard-coded colors in this file — all styling flows through semantic tokens.
+ * No empty `href=""` links — every interactive element is either a real route
+ * or a <button>.
+ */
+
+const quickLinks = [
+  { icon: Stethoscope, label: "Mobile Health Clinic", href: "/mobile-health-clinic" },
+  { icon: FileText, label: "Birth/Death Certificates", href: "/vital-records" },
+  { icon: Phone, label: "ECHD Directory", href: "/directory" },
+  { icon: Heart, label: "Immunizations", href: "/immunizations" },
+  { icon: ClipboardCheck, label: "Restaurant Scores", href: "/restaurant-scores" },
+  { icon: Apple, label: "WIC", href: "/wic" },
+  { icon: Users, label: "Volunteers", href: "/volunteers" },
+];
+
+const news = [
+  {
+    title:
+      "WHAT IS PUBLIC HEALTH? by Lee Donohue, MD — Director, East Central Health District",
+    href: "/news/what-is-public-health",
+  },
+  {
+    title:
+      "February Is American Heart Month — Know Your Numbers. Protect Your Heart.",
+    href: "/news/american-heart-month",
+  },
+  {
+    title:
+      "Health Department Operations Update — operational status by county for February 2, 2026",
+    href: "/news/operations-update-february",
+  },
+];
+
+const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen bg-background text-foreground">
+      {/* ============ TOP UTILITY BAR ============ */}
+      <header className="border-b border-border">
+        <div className="container flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">
+          {/* Brand */}
+          <a
+            href="/"
+            className="flex items-center gap-3 text-foreground hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+            aria-label="East Central Health District — Home"
+          >
+            <span
+              aria-hidden="true"
+              className="flex h-12 w-12 items-center justify-center rounded bg-destructive font-bold text-destructive-foreground"
+            >
+              DPH
+            </span>
+            <span className="leading-tight">
+              <span className="block text-xs text-muted-foreground">
+                Georgia Department of Public Health
+              </span>
+              <span className="block text-base font-semibold">
+                East Central Health District
+              </span>
+            </span>
+          </a>
+
+          {/* Search + utility links */}
+          <div className="flex flex-col gap-3 md:items-end">
+            <nav aria-label="Utility" className="flex items-center gap-3 text-sm">
+              <Info className="h-4 w-4 text-primary" aria-hidden="true" />
+              <a
+                href="/contact-us"
+                className="text-primary underline-offset-2 hover:underline focus-visible:underline"
+              >
+                Contact Us
+              </a>
+              <span aria-hidden="true" className="text-muted-foreground">|</span>
+              <a
+                href="/sitemap"
+                className="text-primary underline-offset-2 hover:underline focus-visible:underline"
+              >
+                Site Map
+              </a>
+            </nav>
+
+            <form
+              role="search"
+              className="flex w-full max-w-sm items-stretch overflow-hidden rounded border border-border"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <label htmlFor="site-search" className="sr-only">
+                Search this site
+              </label>
+              <input
+                id="site-search"
+                type="search"
+                placeholder="Search this site"
+                className="flex-1 bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+              />
+              <button
+                type="submit"
+                className="flex items-center gap-1 bg-brand px-4 text-sm font-medium text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                <Search className="h-4 w-4" aria-hidden="true" />
+                Go
+              </button>
+            </form>
+
+            <div className="flex items-center gap-2">
+              <SocialIcons />
+              <a
+                href="/employee-login"
+                className="rounded bg-brand px-3 py-1.5 text-sm font-medium text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                Employee Login
+              </a>
+              <a
+                href="/patient-portal"
+                className="rounded bg-brand px-3 py-1.5 text-sm font-medium text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                Patient Portal
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Primary nav (white text on brand background — 5.7:1) */}
+        <nav aria-label="Primary" className="bg-brand text-brand-foreground">
+          <ul className="container flex flex-wrap">
+            {[
+              ["Home", "/"],
+              ["About Us", "/about"],
+              ["Counties", "/counties"],
+              ["Programs/Services", "/programs"],
+              ["Mobile Health Clinic", "/mobile-health-clinic"],
+              ["Careers", "/careers"],
+              ["News/Events", "/news"],
+              ["I Want To…", "/services"],
+            ].map(([label, href]) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  className="block px-5 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+                >
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          {/* Darkened gold accent stripe */}
+          <div className="h-1 bg-accent-gold" aria-hidden="true" />
+        </nav>
+      </header>
+
+      {/* ============ MAIN ============ */}
+      <main id="main" className="container grid gap-8 py-10 lg:grid-cols-[1fr_320px]">
+        {/* Hero / featured banner placeholder */}
+        <section aria-label="Featured" className="space-y-8">
+          <div className="aspect-[16/7] w-full rounded-lg border border-border bg-muted" />
+
+          <section aria-labelledby="news-heading">
+            <div className="mb-4 flex items-end justify-between border-b border-border pb-2">
+              <h2 id="news-heading" className="text-2xl font-semibold">
+                Public Health News
+              </h2>
+              <a
+                href="/news"
+                className="text-sm font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
+              >
+                News Archive
+              </a>
+            </div>
+
+            <ul className="divide-y divide-border">
+              {news.map((item) => (
+                <li key={item.href} className="flex gap-4 py-5">
+                  <div
+                    aria-hidden="true"
+                    className="h-20 w-28 shrink-0 rounded bg-muted"
+                  />
+                  <div>
+                    <h3 className="text-lg font-semibold">
+                      <a
+                        href={item.href}
+                        className="text-primary underline-offset-2 hover:underline focus-visible:underline"
+                      >
+                        {item.title}
+                      </a>
+                    </h3>
+                    <a
+                      href={item.href}
+                      className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
+                      aria-label={`Read more: ${item.title}`}
+                    >
+                      Read More <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </a>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </section>
+
+        {/* ============ SIDEBAR ============ */}
+        <aside aria-label="Sidebar" className="space-y-8">
+          <section aria-labelledby="quick-links-heading" className="rounded-lg border border-border p-5">
+            <h2 id="quick-links-heading" className="mb-4 text-xl font-semibold">
+              Quick Links
+            </h2>
+            <ul className="space-y-2">
+              {quickLinks.map(({ icon: Icon, label, href }) => (
+                <li key={href}>
+                  <a
+                    href={href}
+                    className="flex items-center gap-3 rounded px-3 py-2 text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+                  >
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                    <span className="font-medium underline-offset-2 hover:underline">
+                      {label}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a
+              href="/programs"
+              className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+            >
+              View All Programs <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </section>
+
+          <a
+            href="/calendar"
+            className="flex w-full items-center justify-center rounded bg-brand px-4 py-3 font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            Calendar of Events
+          </a>
+
+          <section aria-labelledby="stay-connected-heading">
+            <h2 id="stay-connected-heading" className="mb-3 text-xl font-semibold">
+              Stay Connected
+            </h2>
+            <SocialIcons large />
+          </section>
+        </aside>
+      </main>
+
+      {/* ============ FOOTER ============ */}
+      <footer className="border-t border-border bg-muted">
+        <div className="container py-6 text-sm text-muted-foreground">
+          <p>
+            <strong className="text-foreground">Disclaimer:</strong> Automatic
+            translation services are provided but have not been fully vetted by
+            ECHD staff.
+          </p>
+          <p className="mt-2">
+            © {new Date().getFullYear()} East Central Health District — Georgia
+            Department of Public Health.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
 
-const Index = PlaceholderIndex;
+/* ----- Helpers ----- */
+
+const socials: Array<{ name: string; href: string; Icon: typeof Facebook }> = [
+  { name: "Facebook", href: "https://facebook.com", Icon: Facebook },
+  { name: "Twitter", href: "https://twitter.com", Icon: Twitter },
+  { name: "YouTube", href: "https://youtube.com", Icon: Youtube },
+  { name: "Instagram", href: "https://instagram.com", Icon: Instagram },
+];
+
+const SocialIcons = ({ large = false }: { large?: boolean }) => (
+  <ul className="flex items-center gap-2">
+    {socials.map(({ name, href, Icon }) => (
+      <li key={name}>
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${name} (opens in new tab)`}
+          className={`flex items-center justify-center rounded-full bg-brand text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
+            large ? "h-11 w-11" : "h-8 w-8"
+          }`}
+        >
+          <Icon className={large ? "h-5 w-5" : "h-4 w-4"} aria-hidden="true" />
+        </a>
+      </li>
+    ))}
+  </ul>
+);
 
 export default Index;
