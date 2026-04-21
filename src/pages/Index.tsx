@@ -14,6 +14,7 @@ import {
   ArrowRight,
   Info,
 } from "lucide-react";
+import HeroSlider from "@/components/HeroSlider";
 
 /**
  * Accessible rebuild of the ECHD homepage.
@@ -175,9 +176,8 @@ const Index = () => {
 
       {/* ============ MAIN ============ */}
       <main id="main" className="container grid gap-8 py-10 lg:grid-cols-[1fr_320px]">
-        {/* Hero / featured banner placeholder */}
         <section aria-label="Featured" className="space-y-8">
-          <div className="aspect-[16/7] w-full rounded-lg border border-border bg-muted" />
+          <HeroSlider />
 
           <section aria-labelledby="news-heading">
             <div className="mb-4 flex items-end justify-between border-b border-border pb-2">
