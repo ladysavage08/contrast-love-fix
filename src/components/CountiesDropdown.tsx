@@ -125,22 +125,30 @@ const CountiesDropdown = ({ currentSlug }: CountiesDropdownProps) => {
   return (
     <li
       ref={containerRef}
-      className="relative"
+      className="relative flex items-stretch"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
+      {/* Label → navigates to the Counties landing page. */}
+      <a
+        href="/counties"
+        className="flex items-center px-5 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+      >
+        Counties
+      </a>
+      {/* Caret → toggles the dropdown without navigating. */}
       <button
         ref={triggerRef}
         type="button"
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={menuId}
+        aria-label={open ? "Close counties menu" : "Open counties menu"}
         onClick={() => (open ? close() : openAndFocus(0))}
         onKeyDown={onTriggerKeyDown}
-        className="flex items-center gap-1 px-5 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+        className="flex items-center pr-3 text-xs hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
       >
-        Counties
-        <span aria-hidden="true" className="text-xs">▾</span>
+        <span aria-hidden="true">▾</span>
       </button>
       <ul
         id={menuId}
