@@ -4,13 +4,11 @@ import {
   Twitter,
   Youtube,
   Instagram,
-  Search,
   Phone,
   MapPin,
   Clock,
   User,
   ArrowRight,
-  Info,
   ChevronRight,
   Calendar,
   BarChart3,
@@ -18,7 +16,7 @@ import {
   Utensils,
   ImageIcon,
 } from "lucide-react";
-import CountiesDropdown from "@/components/CountiesDropdown";
+import SiteHeader from "@/components/SiteHeader";
 import { counties, type CountyRelatedLink } from "@/data/counties";
 import burkeImage from "@/assets/county-burke.jpg";
 
