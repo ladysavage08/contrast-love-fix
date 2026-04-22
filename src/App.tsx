@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import BurkeCounty from "./pages/BurkeCounty.tsx";
 import Counties from "./pages/Counties.tsx";
+import CountyPage from "./pages/CountyPage.tsx";
 import WegoHome from "./pages/wego/WegoHome.tsx";
 import WegoAbout from "./pages/wego/WegoAbout.tsx";
 import WegoServices from "./pages/wego/WegoServices.tsx";
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/counties" element={<Counties />} />
           <Route path="/counties/burke" element={<BurkeCounty />} />
+          <Route path="/counties/:slug" element={<CountyPage />} />
           <Route path="/wego" element={<WegoHome />} />
           <Route path="/wego/about" element={<WegoAbout />} />
           <Route path="/wego/services" element={<WegoServices />} />
