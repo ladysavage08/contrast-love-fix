@@ -1,0 +1,497 @@
+import {
+  Facebook,
+  Twitter,
+  Youtube,
+  Instagram,
+  Search,
+  Phone,
+  MapPin,
+  Clock,
+  User,
+  ArrowRight,
+  Info,
+  ChevronRight,
+  Calendar,
+  BarChart3,
+  Newspaper,
+  Utensils,
+} from "lucide-react";
+import countyImage from "@/assets/county-burke.jpg";
+
+/**
+ * Burke County Health Department page.
+ * Reuses the homepage design system (semantic tokens, brand colors,
+ * typography, spacing). Built as a template — duplicate this file and
+ * swap the COUNTY config block to add other counties.
+ */
+
+// ============ COUNTY CONFIG (edit here for other counties) ============
+const COUNTY = {
+  name: "Burke County",
+  fullName: "Burke County Health Department",
+  intro:
+    "Welcome to the Burke County Health Department, where our goal is to serve citizens of Burke County by providing preventive healthcare services.",
+  nurseManager: "Gina Richardson, RN, BSN",
+  address: {
+    line1: "Burke County Health Department",
+    line2: "114 Dogwood Drive",
+    line3: "P.O. Box 238",
+    cityStateZip: "Waynesboro, Georgia 30830",
+  },
+  phone: "(706) 554-3456",
+  phoneHref: "tel:7065543456",
+  servicesUrl:
+    "https://www.echd.org/burke-county-programs-and-services",
+  servicesLabel:
+    "Click here to view all services provided by the Burke County Health Department.",
+  hours: [
+    { days: "Monday – Thursday", time: "8:00 AM – 5:30 PM" },
+    { days: "Friday", time: "Closed every other Friday — call for dates" },
+    { days: "Daily", time: "Closed Noon – 1:00 PM" },
+  ],
+  relatedLinks: [
+    { icon: Calendar, label: "Burke BOH Meetings 2026", href: "#" },
+    { icon: BarChart3, label: "County Health Rankings", href: "#" },
+    { icon: Newspaper, label: "The True Citizen — Burke County News", href: "#" },
+    { icon: Utensils, label: "Restaurant Inspection Scores", href: "#" },
+  ],
+  heroImage: countyImage,
+  heroAlt: "Burke County courthouse and surrounding landscape",
+};
+// ======================================================================
+
+const counties = [
+  "Burke County",
+  "Columbia County",
+  "Emanuel County",
+  "Glascock County",
+  "Jefferson County",
+  "Jenkins County",
+  "Lincoln County",
+  "McDuffie County",
+  "Richmond County",
+  "Screven County",
+  "Taliaferro County",
+  "Warren County",
+  "Wilkes County",
+];
+
+const BurkeCounty = () => {
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      {/* ============ HEADER ============ */}
+      <header className="border-b border-border">
+        <div className="container flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">
+          <a
+            href="/"
+            className="flex items-center gap-3 text-foreground hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+            aria-label="East Central Health District — Home"
+          >
+            <span
+              aria-hidden="true"
+              className="flex h-12 w-12 items-center justify-center rounded bg-destructive font-bold text-destructive-foreground"
+            >
+              DPH
+            </span>
+            <span className="leading-tight">
+              <span className="block text-xs text-muted-foreground">
+                Georgia Department of Public Health
+              </span>
+              <span className="block text-base font-semibold">
+                East Central Health District
+              </span>
+            </span>
+          </a>
+
+          <div className="flex flex-col gap-3 md:items-end">
+            <nav aria-label="Utility" className="flex items-center gap-3 text-sm">
+              <Info className="h-4 w-4 text-primary" aria-hidden="true" />
+              <a
+                href="/contact-us"
+                className="text-primary underline-offset-2 hover:underline focus-visible:underline"
+              >
+                Contact Us
+              </a>
+              <span aria-hidden="true" className="text-muted-foreground">|</span>
+              <a
+                href="/sitemap"
+                className="text-primary underline-offset-2 hover:underline focus-visible:underline"
+              >
+                Site Map
+              </a>
+            </nav>
+
+            <form
+              role="search"
+              className="flex w-full max-w-sm items-stretch overflow-hidden rounded border border-border"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <label htmlFor="site-search" className="sr-only">
+                Search this site
+              </label>
+              <input
+                id="site-search"
+                type="search"
+                placeholder="Search this site"
+                className="flex-1 bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+              />
+              <button
+                type="submit"
+                className="flex items-center gap-1 bg-brand px-4 text-sm font-medium text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                <Search className="h-4 w-4" aria-hidden="true" />
+                Go
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* Primary nav with Counties dropdown */}
+        <nav aria-label="Primary" className="bg-brand text-brand-foreground">
+          <ul className="container flex flex-wrap">
+            {[
+              ["Home", "/"],
+              ["About Us", "/about"],
+              ["__counties__", ""],
+              ["Programs/Services", "/programs"],
+              ["Mobile Health Clinic", "/mobile-health-clinic"],
+              ["Careers", "/careers"],
+              ["News/Events", "/news"],
+              ["I Want To…", "/services"],
+            ].map(([label, href]) =>
+              label === "__counties__" ? (
+                <li key="counties" className="group relative">
+                  <button
+                    type="button"
+                    aria-haspopup="true"
+                    className="flex items-center gap-1 px-5 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground group-hover:bg-brand-hover"
+                  >
+                    Counties
+                    <span aria-hidden="true" className="text-xs">▾</span>
+                  </button>
+                  <ul
+                    role="menu"
+                    className="invisible absolute left-0 top-full z-50 min-w-[220px] rounded-b border border-t-[3px] border-border border-t-accent-gold bg-popover p-1.5 text-popover-foreground opacity-0 shadow-lg transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+                  >
+                    {counties.map((county) => {
+                      const slug = county.replace(" County", "").toLowerCase();
+                      const isCurrent = county === COUNTY.name;
+                      return (
+                        <li key={county} role="none">
+                          <a
+                            role="menuitem"
+                            href={`/counties/${slug}`}
+                            aria-current={isCurrent ? "page" : undefined}
+                            className={`block rounded px-3 py-2 text-sm font-medium text-primary hover:bg-muted hover:underline focus-visible:bg-muted focus-visible:underline ${
+                              isCurrent ? "bg-muted" : ""
+                            }`}
+                          >
+                            {county}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
+              ) : (
+                <li key={label}>
+                  <a
+                    href={href}
+                    className="block px-5 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ),
+            )}
+          </ul>
+          <div className="h-1 bg-accent-gold" aria-hidden="true" />
+        </nav>
+      </header>
+
+      {/* ============ BREADCRUMB ============ */}
+      <nav aria-label="Breadcrumb" className="border-b border-border bg-muted/40">
+        <ol className="container flex flex-wrap items-center gap-1 py-3 text-sm">
+          <li>
+            <a
+              href="/"
+              className="text-primary underline-offset-2 hover:underline focus-visible:underline"
+            >
+              Home
+            </a>
+          </li>
+          <li aria-hidden="true" className="text-muted-foreground">
+            <ChevronRight className="h-4 w-4" />
+          </li>
+          <li className="text-muted-foreground">Counties</li>
+          <li aria-hidden="true" className="text-muted-foreground">
+            <ChevronRight className="h-4 w-4" />
+          </li>
+          <li aria-current="page" className="font-medium text-foreground">
+            {COUNTY.name}
+          </li>
+        </ol>
+      </nav>
+
+      {/* ============ MAIN ============ */}
+      <main id="main" className="container py-10">
+        {/* Page Hero */}
+        <section
+          aria-labelledby="page-title"
+          className="mb-10 grid gap-8 lg:grid-cols-[1fr_420px] lg:items-center"
+        >
+          <div>
+            <h1 id="page-title" className="text-3xl font-bold md:text-4xl">
+              {COUNTY.fullName}
+            </h1>
+            <div
+              aria-hidden="true"
+              className="mt-3 h-1 w-20 bg-accent-gold"
+            />
+            <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+              {COUNTY.intro}
+            </p>
+            <a
+              href={COUNTY.servicesUrl}
+              className="mt-6 inline-flex items-center gap-2 rounded bg-brand px-5 py-3 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+            >
+              View All Services <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
+          <div className="overflow-hidden rounded-lg border border-border shadow-sm">
+            <img
+              src={COUNTY.heroImage}
+              alt={COUNTY.heroAlt}
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        </section>
+
+        {/* Two-column body */}
+        <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
+          {/* Main column */}
+          <div className="space-y-6">
+            {/* Nurse Manager */}
+            <InfoCard icon={User} title="County Nurse Manager">
+              <p className="text-lg font-semibold text-foreground">
+                {COUNTY.nurseManager}
+              </p>
+            </InfoCard>
+
+            {/* Location */}
+            <InfoCard icon={MapPin} title="Location">
+              <address className="not-italic leading-relaxed text-foreground">
+                {COUNTY.address.line1}
+                <br />
+                {COUNTY.address.line2}
+                <br />
+                {COUNTY.address.line3}
+                <br />
+                {COUNTY.address.cityStateZip}
+              </address>
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                  `${COUNTY.address.line2}, ${COUNTY.address.cityStateZip}`,
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
+              >
+                Get Directions <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                <span className="sr-only">(opens in new tab)</span>
+              </a>
+            </InfoCard>
+
+            {/* Hours */}
+            <InfoCard icon={Clock} title="Hours of Operation">
+              <table className="w-full text-left text-sm">
+                <caption className="sr-only">Burke County office hours</caption>
+                <thead>
+                  <tr className="border-b border-border">
+                    <th scope="col" className="py-2 pr-4 font-semibold">
+                      Days
+                    </th>
+                    <th scope="col" className="py-2 font-semibold">
+                      Hours
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {COUNTY.hours.map((row) => (
+                    <tr key={row.days} className="border-b border-border last:border-0">
+                      <td className="py-2 pr-4 font-medium text-foreground">
+                        {row.days}
+                      </td>
+                      <td className="py-2 text-muted-foreground">{row.time}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </InfoCard>
+
+            {/* Services CTA band */}
+            <section
+              aria-labelledby="services-cta"
+              className="rounded-lg border-l-4 border-accent-gold bg-brand p-6 text-brand-foreground shadow-sm"
+            >
+              <h2 id="services-cta" className="text-xl font-bold">
+                Services at {COUNTY.fullName}
+              </h2>
+              <p className="mt-2 text-sm opacity-95">{COUNTY.servicesLabel}</p>
+              <a
+                href={COUNTY.servicesUrl}
+                className="mt-4 inline-flex items-center gap-2 rounded bg-accent-gold px-5 py-2.5 text-sm font-semibold text-foreground hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-foreground"
+              >
+                View All Services <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </section>
+
+            {/* Related links */}
+            <section
+              aria-labelledby="related-heading"
+              className="rounded-lg border border-border p-6"
+            >
+              <h2 id="related-heading" className="mb-4 text-xl font-semibold">
+                Related Pages
+              </h2>
+              <ul className="grid gap-2 sm:grid-cols-2">
+                {COUNTY.relatedLinks.map(({ icon: Icon, label, href }) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      className="flex items-center gap-3 rounded px-3 py-2.5 text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+                    >
+                      <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                      <span className="font-medium underline-offset-2 hover:underline">
+                        {label}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
+
+          {/* Sidebar */}
+          <aside aria-label="Sidebar" className="space-y-6">
+            <section
+              aria-labelledby="quick-contact-heading"
+              className="rounded-lg border border-t-[3px] border-border border-t-accent-gold p-5"
+            >
+              <h2
+                id="quick-contact-heading"
+                className="mb-3 text-lg font-semibold"
+              >
+                Quick Contact
+              </h2>
+              <p className="flex items-start gap-2 text-sm text-foreground">
+                <Phone className="mt-0.5 h-4 w-4 text-primary" aria-hidden="true" />
+                <a
+                  href={COUNTY.phoneHref}
+                  className="font-semibold text-primary underline-offset-2 hover:underline focus-visible:underline"
+                >
+                  {COUNTY.phone}
+                </a>
+              </p>
+              <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
+                <MapPin className="mt-0.5 h-4 w-4 text-primary" aria-hidden="true" />
+                <span>
+                  {COUNTY.address.line2}
+                  <br />
+                  {COUNTY.address.cityStateZip}
+                </span>
+              </p>
+              <a
+                href={COUNTY.phoneHref}
+                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                <Phone className="h-4 w-4" aria-hidden="true" /> Call Now
+              </a>
+            </section>
+
+            <section
+              aria-labelledby="connect-heading"
+              className="rounded-lg border border-border p-5"
+            >
+              <h2 id="connect-heading" className="mb-3 text-lg font-semibold">
+                Stay Connected
+              </h2>
+              <SocialIcons large />
+            </section>
+          </aside>
+        </div>
+      </main>
+
+      {/* ============ FOOTER ============ */}
+      <footer className="border-t border-border bg-muted">
+        <div className="container py-6 text-sm text-muted-foreground">
+          <p>
+            <strong className="text-foreground">Disclaimer:</strong> Automatic
+            translation services are provided but have not been fully vetted by
+            ECHD staff.
+          </p>
+          <p className="mt-2">
+            © {new Date().getFullYear()} East Central Health District — Georgia
+            Department of Public Health.
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+/* ----- Helpers ----- */
+
+const InfoCard = ({
+  icon: Icon,
+  title,
+  children,
+}: {
+  icon: typeof User;
+  title: string;
+  children: React.ReactNode;
+}) => (
+  <section
+    aria-labelledby={`card-${title.replace(/\s+/g, "-").toLowerCase()}`}
+    className="rounded-lg border border-t-[3px] border-border border-t-accent-gold bg-card p-6 shadow-sm"
+  >
+    <h2
+      id={`card-${title.replace(/\s+/g, "-").toLowerCase()}`}
+      className="mb-3 flex items-center gap-2 text-xl font-semibold text-foreground"
+    >
+      <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
+      {title}
+    </h2>
+    <div className="text-foreground">{children}</div>
+  </section>
+);
+
+const socials: Array<{ name: string; href: string; Icon: typeof Facebook }> = [
+  { name: "Facebook", href: "https://facebook.com", Icon: Facebook },
+  { name: "Twitter", href: "https://twitter.com", Icon: Twitter },
+  { name: "YouTube", href: "https://youtube.com", Icon: Youtube },
+  { name: "Instagram", href: "https://instagram.com", Icon: Instagram },
+];
+
+const SocialIcons = ({ large = false }: { large?: boolean }) => (
+  <ul className="flex items-center gap-2">
+    {socials.map(({ name, href, Icon }) => (
+      <li key={name}>
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${name} (opens in new tab)`}
+          className={`flex items-center justify-center rounded-full bg-brand text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
+            large ? "h-11 w-11" : "h-8 w-8"
+          }`}
+        >
+          <Icon className={large ? "h-5 w-5" : "h-4 w-4"} aria-hidden="true" />
+        </a>
+      </li>
+    ))}
+  </ul>
+);
+
+export default BurkeCounty;
