@@ -42,7 +42,7 @@ const slides: Slide[] = [
     alt: "A nurse administering an immunization to a patient's arm.",
     eyebrow: "Immunizations",
     title: "Stay protected — vaccines for every age.",
-    cta: { label: "Find a clinic", href: "/immunizations" },
+    cta: { label: "Find a clinic near you", href: "/counties" },
   },
 ];
 
