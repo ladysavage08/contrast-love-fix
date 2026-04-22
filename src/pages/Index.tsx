@@ -152,22 +152,68 @@ const Index = () => {
             {[
               ["Home", "/"],
               ["About Us", "/about"],
-              ["Counties", "/counties"],
+              ["__counties__", ""],
               ["Programs/Services", "/programs"],
               ["Mobile Health Clinic", "/mobile-health-clinic"],
               ["Careers", "/careers"],
               ["News/Events", "/news"],
               ["I Want To…", "/services"],
-            ].map(([label, href]) => (
-              <li key={label}>
-                <a
-                  href={href}
-                  className="block px-5 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
-                >
-                  {label}
-                </a>
-              </li>
-            ))}
+            ].map(([label, href]) =>
+              label === "__counties__" ? (
+                <li key="counties" className="group relative">
+                  <button
+                    type="button"
+                    aria-haspopup="true"
+                    className="flex items-center gap-1 px-5 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground group-hover:bg-brand-hover"
+                  >
+                    Counties
+                    <span aria-hidden="true" className="text-xs">▾</span>
+                  </button>
+                  <ul
+                    role="menu"
+                    className="invisible absolute left-0 top-full z-50 min-w-[220px] rounded-b border border-t-[3px] border-border border-t-accent-gold bg-popover p-1.5 text-popover-foreground opacity-0 shadow-lg transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+                  >
+                    {[
+                      "Burke County",
+                      "Columbia County",
+                      "Emanuel County",
+                      "Glascock County",
+                      "Jefferson County",
+                      "Jenkins County",
+                      "Lincoln County",
+                      "McDuffie County",
+                      "Richmond County",
+                      "Screven County",
+                      "Taliaferro County",
+                      "Warren County",
+                      "Wilkes County",
+                    ].map((county) => {
+                      const slug = county.replace(" County", "").toLowerCase();
+                      return (
+                        <li key={county} role="none">
+                          <a
+                            role="menuitem"
+                            href={`/counties/${slug}`}
+                            className="block rounded px-3 py-2 text-sm font-medium text-primary hover:bg-muted hover:underline focus-visible:bg-muted focus-visible:underline"
+                          >
+                            {county}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
+              ) : (
+                <li key={label}>
+                  <a
+                    href={href}
+                    className="block px-5 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ),
+            )}
           </ul>
           {/* Darkened gold accent stripe */}
           <div className="h-1 bg-accent-gold" aria-hidden="true" />
