@@ -40,7 +40,9 @@ All colors MUST be HSL.
     --accent: 210 40% 96.1%;
     --accent-foreground: 220 25% 12%;
 
-    --destructive: 0 84.2% 60.2%;
+    /* Darkened from L=60.2 → L=45 so white text on this surface passes WCAG AA
+       (5.43:1). Used for the DPH badge and required-field asterisks. */
+    --destructive: 0 84.2% 45%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
