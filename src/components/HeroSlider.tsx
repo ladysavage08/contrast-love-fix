@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/carousel";
 
 import community from "@/assets/slide-community.jpg";
-import mobileClinic from "@/assets/slide-mobile-clinic.jpg";
+import mobileClinic from "@/assets/hero-mobile-clinic.jpg";
 import immunization from "@/assets/slide-immunization.jpg";
 
 type Slide = {
@@ -20,6 +20,8 @@ type Slide = {
   eyebrow: string;
   title: string;
   cta: { label: string; href: string };
+  /** Tailwind object-position classes, e.g. "object-center sm:object-right". Keeps focal subject visible across breakpoints. */
+  focal?: string;
 };
 
 const slides: Slide[] = [
@@ -32,10 +34,12 @@ const slides: Slide[] = [
   },
   {
     image: mobileClinic,
-    alt: "ECHD Mobile Health Clinic van parked at a community location.",
+    alt: "East Central Public Health District Mobile Health Clinic vehicle with DPH branding and the slogan 'We Go Where You Are!'",
     eyebrow: "Care that comes to you",
     title: "The Mobile Health Clinic brings services to your neighborhood.",
     cta: { label: "See the schedule", href: "/wego/schedule" },
+    // Mobile (portrait): center on the truck/DPH seal. Desktop (wide): shift right so the seal & slogan stay in view next to the caption on the left.
+    focal: "object-[60%_center] sm:object-[70%_center]",
   },
   {
     image: immunization,
@@ -98,7 +102,7 @@ const HeroSlider = () => {
                   width={1280}
                   height={576}
                   loading={i === 0 ? "eager" : "lazy"}
-                  className="absolute inset-0 h-full w-full object-cover"
+                  className={`absolute inset-0 h-full w-full object-cover ${slide.focal ?? "object-center"}`}
                 />
                 {/* Dark gradient ensures ≥4.5:1 contrast for white caption text */}
                 <div
