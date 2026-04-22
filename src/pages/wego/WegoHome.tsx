@@ -34,12 +34,12 @@ const WegoHome = () => {
         aria-label="Mobile Health Clinic introduction"
         className="border-b border-border bg-brand text-brand-foreground"
       >
-        <div className="container grid gap-6 py-12 md:grid-cols-[1fr_auto] md:items-center md:py-16">
+        <div className="container grid gap-6 py-10 md:grid-cols-[1fr_auto] md:items-center md:py-16">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-wide text-brand-foreground/90">
+            <p className="text-xs font-semibold uppercase tracking-wide text-brand-foreground/90 sm:text-sm">
               Mobile Health Clinic
             </p>
-            <h1 className="mt-2 text-3xl font-bold leading-tight md:text-5xl">
+            <h1 className="mt-2 text-2xl font-bold leading-tight sm:text-3xl md:text-5xl">
               We Go Where You Are
             </h1>
             <div aria-hidden="true" className="mt-4 h-1 w-20 bg-accent-gold" />
