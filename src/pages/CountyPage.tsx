@@ -111,95 +111,8 @@ const CountyPage = () => {
   const related = county.relatedLinks ?? [];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* ============ HEADER ============ */}
-      <header className="border-b border-border">
-        <div className="container flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">
-          <a
-            href="/"
-            className="flex items-center gap-3 text-foreground hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
-            aria-label="East Central Health District — Home"
-          >
-            <span
-              aria-hidden="true"
-              className="flex h-12 w-12 items-center justify-center rounded bg-destructive font-bold text-destructive-foreground"
-            >
-              DPH
-            </span>
-            <span className="leading-tight">
-              <span className="block text-xs text-muted-foreground">
-                Georgia Department of Public Health
-              </span>
-              <span className="block text-base font-semibold">
-                East Central Health District
-              </span>
-            </span>
-          </a>
-
-          <div className="flex flex-col gap-3 md:items-end">
-            <nav aria-label="Utility" className="flex items-center gap-3 text-sm">
-              <Info className="h-4 w-4 text-primary" aria-hidden="true" />
-              <a href="/contact-us" className="text-primary underline-offset-2 hover:underline focus-visible:underline">
-                Contact Us
-              </a>
-              <span aria-hidden="true" className="text-muted-foreground">|</span>
-              <a href="/sitemap" className="text-primary underline-offset-2 hover:underline focus-visible:underline">
-                Site Map
-              </a>
-            </nav>
-
-            <form
-              role="search"
-              className="flex w-full max-w-sm items-stretch overflow-hidden rounded border border-border"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <label htmlFor="site-search" className="sr-only">Search this site</label>
-              <input
-                id="site-search"
-                type="search"
-                placeholder="Search this site"
-                className="flex-1 bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="flex items-center gap-1 bg-brand px-4 text-sm font-medium text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-              >
-                <Search className="h-4 w-4" aria-hidden="true" />
-                Go
-              </button>
-            </form>
-          </div>
-        </div>
-
-        <nav aria-label="Primary" className="bg-brand text-brand-foreground">
-          <ul className="container flex flex-wrap">
-            {[
-              ["Home", "/"],
-              ["About Us", "/about"],
-              ["__counties__", ""],
-              ["Programs/Services", "/programs"],
-              ["Mobile Health Clinic", "/wego"],
-              ["Careers", "/careers"],
-              ["News/Events", "/news"],
-              ["I Want To…", "/services"],
-            ].map(([label, href]) =>
-              label === "__counties__" ? (
-                <CountiesDropdown key="counties" currentSlug={county.slug} />
-              ) : (
-                <li key={label}>
-                  <a
-                    href={href}
-                    className="block px-5 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
-                  >
-                    {label}
-                  </a>
-                </li>
-              ),
-            )}
-          </ul>
-          <div className="h-1 bg-accent-gold" aria-hidden="true" />
-        </nav>
-      </header>
+    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
+      <SiteHeader currentCountySlug={county.slug} />
 
       {/* ============ BREADCRUMB ============ */}
       <nav aria-label="Breadcrumb" className="border-b border-border bg-muted/40">
@@ -227,11 +140,11 @@ const CountyPage = () => {
       </nav>
 
       {/* ============ MAIN ============ */}
-      <main id="main" className="container py-10">
+      <main id="main" className="container py-8 md:py-10">
         {/* Page Hero */}
         <section
           aria-labelledby="page-title"
-          className="mb-10 grid gap-8 lg:grid-cols-[1fr_420px] lg:items-center"
+          className="mb-8 grid gap-6 md:mb-10 md:gap-8 lg:grid-cols-[1fr_420px] lg:items-center"
         >
           <div>
             <h1 id="page-title" className="text-3xl font-bold md:text-4xl">
