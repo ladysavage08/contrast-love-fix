@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import HeroSlider from "@/components/HeroSlider";
 import SiteHeader from "@/components/SiteHeader";
+import newsPublicHealth from "@/assets/news-public-health.jpg";
 
 /**
  * Accessible rebuild of the ECHD homepage.
@@ -44,6 +45,9 @@ const news = [
     title:
       "WHAT IS PUBLIC HEALTH? by Lee Donohue, MD — Director, East Central Health District",
     href: "/news/what-is-public-health",
+    image: newsPublicHealth,
+    imageAlt:
+      "Diverse group of healthcare workers and community members in a bright community health setting",
   },
   {
     title:
@@ -102,10 +106,21 @@ const Index = () => {
             <ul className="divide-y divide-border">
               {news.map((item) => (
                 <li key={item.href} className="flex gap-4 py-5">
-                  <div
-                    aria-hidden="true"
-                    className="h-20 w-28 shrink-0 rounded bg-muted"
-                  />
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.imageAlt ?? ""}
+                      loading="lazy"
+                      width={704}
+                      height={512}
+                      className="h-20 w-28 shrink-0 rounded object-cover"
+                    />
+                  ) : (
+                    <div
+                      aria-hidden="true"
+                      className="h-20 w-28 shrink-0 rounded bg-muted"
+                    />
+                  )}
                   <div>
                     <h3 className="text-lg font-semibold">
                       <a
