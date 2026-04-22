@@ -3,7 +3,6 @@ import {
   Twitter,
   Youtube,
   Instagram,
-  Search,
   Phone,
   FileText,
   Heart,
@@ -12,10 +11,9 @@ import {
   ClipboardCheck,
   Stethoscope,
   ArrowRight,
-  Info,
 } from "lucide-react";
 import HeroSlider from "@/components/HeroSlider";
-import CountiesDropdown from "@/components/CountiesDropdown";
+import SiteHeader from "@/components/SiteHeader";
 
 /**
  * Accessible rebuild of the ECHD homepage.
