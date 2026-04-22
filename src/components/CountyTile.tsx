@@ -29,7 +29,7 @@ const CountyTile = ({ county }: CountyTileProps) => {
   const isLive = county.status === "live";
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-lg border border-t-[3px] border-border border-t-accent-gold bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-md focus-within:shadow-md">
+    <article className="flex h-full w-full min-h-[420px] flex-col overflow-hidden rounded-lg border border-t-[3px] border-border border-t-accent-gold bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-md focus-within:shadow-md">
       {/* Header */}
       <header className="border-b border-border p-5">
         <h3 className="text-xl font-bold text-foreground">{county.name}</h3>
@@ -150,8 +150,8 @@ const CountyTile = ({ county }: CountyTileProps) => {
         )}
       </div>
 
-      {/* CTA — unified label across all tiles */}
-      <div className="border-t border-border p-4">
+      {/* CTA — unified label across all tiles, pinned to card bottom */}
+      <div className="mt-auto border-t border-border p-4">
         <a
           href={`/counties/${county.slug}`}
           className="flex w-full items-center justify-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
