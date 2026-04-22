@@ -265,7 +265,7 @@ const CountyPage = () => {
               <p className="mt-2 text-sm opacity-95">{servicesLabel}</p>
               <a
                 href={servicesUrl}
-                className="mt-4 inline-flex items-center gap-2 rounded bg-accent-gold px-5 py-2.5 text-sm font-semibold text-foreground hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-foreground"
+                className="mt-4 inline-flex items-center gap-2 rounded bg-accent-gold px-5 py-2.5 text-sm font-semibold text-accent-gold-foreground hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-foreground"
               >
                 View All Services <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>

@@ -31,7 +31,7 @@ const TYPE_BADGE: Record<ScheduleEntryType, string> = {
   maintenance:
     "bg-muted text-foreground border border-border",
   training:
-    "bg-accent-gold text-foreground",
+    "bg-accent-gold text-accent-gold-foreground",
   tbd:
     "border border-dashed border-border bg-background text-muted-foreground",
 };
