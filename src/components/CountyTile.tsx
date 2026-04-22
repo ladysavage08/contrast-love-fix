@@ -1,4 +1,4 @@
-import { ArrowRight, Clock, MapPin, Phone, User } from "lucide-react";
+import { ArrowRight, Clock, Info, MapPin, Phone, User } from "lucide-react";
 import type { County } from "@/data/counties";
 
 interface CountyTileProps {
@@ -8,11 +8,22 @@ interface CountyTileProps {
 /**
  * Information-rich county tile for the /counties landing page.
  *
- * Accessibility notes:
- *  - Each tile is an <article> with the county name as <h3> (page provides h1/h2).
+ * Field order (matches Burke reference layout):
+ *   1. Street address (with optional PO box line above)
+ *   2. City, State ZIP
+ *   3. Phone number (clickable tel: link)
+ *   4. Hours of operation
+ *   5. Lunch closure / special hours (when present)
+ *   6. Nurse Manager label
+ *   7. Nurse Manager name and credentials
+ *   8. Bottom CTA → full county page ("Visit [County Name] Page")
+ *
+ * Accessibility:
+ *  - <article> wraps each tile; the county name is an <h3> (page provides h1/h2).
  *  - The whole tile is NOT a single link — only the CTA button is interactive.
  *    Phone numbers are real tel: links so users can dial without leaving the tile.
  *  - Icons are aria-hidden; the visible text carries the meaning.
+ *  - Optional fields gracefully omit if not present on the source page.
  */
 const CountyTile = ({ county }: CountyTileProps) => {
   const isLive = county.status === "live";
@@ -39,6 +50,12 @@ const CountyTile = ({ county }: CountyTileProps) => {
                   <dt className="sr-only">Address</dt>
                   <dd className="not-italic leading-relaxed text-foreground">
                     <address className="not-italic">
+                      {county.address.poBox && (
+                        <>
+                          {county.address.poBox}
+                          <br />
+                        </>
+                      )}
                       {county.address.street}
                       <br />
                       {county.address.cityStateZip}
@@ -78,10 +95,32 @@ const CountyTile = ({ county }: CountyTileProps) => {
                   <dt className="sr-only">Hours of operation</dt>
                   <dd className="leading-relaxed text-foreground">
                     {county.hoursSummary.map((line, i) => (
-                      <span key={i} className={i === 0 ? "block font-medium" : "block text-muted-foreground"}>
+                      <span
+                        key={i}
+                        className={
+                          i === 0
+                            ? "block font-medium"
+                            : "block text-muted-foreground"
+                        }
+                      >
                         {line}
                       </span>
                     ))}
+                  </dd>
+                </div>
+              </div>
+            )}
+
+            {county.lunchClosure && (
+              <div className="flex items-start gap-3">
+                <Info
+                  className="mt-0.5 h-4 w-4 shrink-0 text-primary"
+                  aria-hidden="true"
+                />
+                <div>
+                  <dt className="sr-only">Lunch / special hours</dt>
+                  <dd className="text-muted-foreground">
+                    {county.lunchClosure}
                   </dd>
                 </div>
               </div>
@@ -111,14 +150,14 @@ const CountyTile = ({ county }: CountyTileProps) => {
         )}
       </div>
 
-      {/* CTA */}
+      {/* CTA — unified label across all tiles */}
       <div className="border-t border-border p-4">
         <a
           href={`/counties/${county.slug}`}
           className="flex w-full items-center justify-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           aria-label={`Visit ${county.name} page`}
         >
-          {isLive ? `Visit ${county.name} Page` : "View County Page"}
+          Visit {county.name} Page
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </a>
       </div>
