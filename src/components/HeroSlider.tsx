@@ -35,7 +35,7 @@ const slides: Slide[] = [
     alt: "ECHD Mobile Health Clinic van parked at a community location.",
     eyebrow: "Care that comes to you",
     title: "The Mobile Health Clinic brings services to your neighborhood.",
-    cta: { label: "See the schedule", href: "/mobile-health-clinic" },
+    cta: { label: "See the schedule", href: "/wego/schedule" },
   },
   {
     image: immunization,
