@@ -17,6 +17,7 @@ import {
   Utensils,
 } from "lucide-react";
 import countyImage from "@/assets/county-burke.jpg";
+import CountiesDropdown from "@/components/CountiesDropdown";
 
 /**
  * Burke County Health Department page.
@@ -160,39 +161,7 @@ const BurkeCounty = () => {
               ["I Want To…", "/services"],
             ].map(([label, href]) =>
               label === "__counties__" ? (
-                <li key="counties" className="group relative">
-                  <button
-                    type="button"
-                    aria-haspopup="true"
-                    className="flex items-center gap-1 px-5 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground group-hover:bg-brand-hover"
-                  >
-                    Counties
-                    <span aria-hidden="true" className="text-xs">▾</span>
-                  </button>
-                  <ul
-                    role="menu"
-                    className="invisible absolute left-0 top-full z-50 min-w-[220px] rounded-b border border-t-[3px] border-border border-t-accent-gold bg-popover p-1.5 text-popover-foreground opacity-0 shadow-lg transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
-                  >
-                    {counties.map((county) => {
-                      const slug = county.replace(" County", "").toLowerCase();
-                      const isCurrent = county === COUNTY.name;
-                      return (
-                        <li key={county} role="none">
-                          <a
-                            role="menuitem"
-                            href={`/counties/${slug}`}
-                            aria-current={isCurrent ? "page" : undefined}
-                            className={`block rounded px-3 py-2 text-sm font-medium text-primary hover:bg-muted hover:underline focus-visible:bg-muted focus-visible:underline ${
-                              isCurrent ? "bg-muted" : ""
-                            }`}
-                          >
-                            {county}
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </li>
+                <CountiesDropdown key="counties" currentSlug="burke" />
               ) : (
                 <li key={label}>
                   <a
