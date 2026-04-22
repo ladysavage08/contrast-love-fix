@@ -29,15 +29,15 @@ const CountyTile = ({ county }: CountyTileProps) => {
   const isLive = county.status === "live";
 
   return (
-    <article className="flex h-full w-full min-h-[420px] flex-col overflow-hidden rounded-lg border border-t-[3px] border-border border-t-accent-gold bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-md focus-within:shadow-md">
+    <article className="flex h-full w-full min-h-[380px] flex-col overflow-hidden rounded-lg border border-t-[3px] border-border border-t-accent-gold bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-md focus-within:shadow-md sm:min-h-[420px]">
       {/* Header */}
-      <header className="border-b border-border p-5">
-        <h3 className="text-xl font-bold text-foreground">{county.name}</h3>
+      <header className="border-b border-border p-4 sm:p-5">
+        <h3 className="text-lg font-bold text-foreground sm:text-xl">{county.name}</h3>
         <p className="mt-1 text-sm text-muted-foreground">{county.healthDept}</p>
       </header>
 
       {/* Body */}
-      <div className="flex-1 p-5">
+      <div className="flex-1 p-4 sm:p-5">
         {isLive ? (
           <dl className="space-y-4 text-sm">
             {county.address && (
@@ -151,10 +151,10 @@ const CountyTile = ({ county }: CountyTileProps) => {
       </div>
 
       {/* CTA — unified label across all tiles, pinned to card bottom */}
-      <div className="mt-auto border-t border-border p-4">
+      <div className="mt-auto border-t border-border p-3 sm:p-4">
         <a
           href={`/counties/${county.slug}`}
-          className="flex w-full items-center justify-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          className="flex w-full items-center justify-center gap-2 rounded bg-brand px-4 py-3 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           aria-label={`Visit ${county.name} page`}
         >
           Visit {county.name} Page

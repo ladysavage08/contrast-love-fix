@@ -149,7 +149,7 @@ const WegoSchedule = () => {
             </div>
 
             <ol
-              className="mt-6 grid gap-4 md:grid-cols-2"
+              className="mt-6 grid gap-4 sm:grid-cols-2"
               aria-label={`${month.label} clinic stops by date`}
             >
               {grouped.map(({ date, entries }) => (
