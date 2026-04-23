@@ -154,15 +154,15 @@ const PrimaryNav = ({ currentCountySlug }: PrimaryNavProps) => {
       </div>
 
       {/* Desktop: horizontal nav (md+) */}
-      <ul className="container hidden md:flex md:flex-wrap">
+      <ul className="container hidden w-full md:flex md:flex-nowrap md:items-stretch">
         {ITEMS.map(([label, href]) =>
           label === "__counties__" ? (
             <CountiesDropdown key="counties" currentSlug={currentCountySlug} />
           ) : (
-            <li key={label}>
+            <li key={label} className="flex flex-1 items-stretch">
               <a
                 href={href}
-                className="block px-5 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+                className="flex w-full items-center justify-center px-3 py-3 text-center text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
               >
                 {label}
               </a>
