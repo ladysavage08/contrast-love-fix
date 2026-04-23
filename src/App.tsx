@@ -28,6 +28,8 @@ import WegoSchedule from "./pages/wego/WegoSchedule.tsx";
 import WegoFaq from "./pages/wego/WegoFaq.tsx";
 import WegoContact from "./pages/wego/WegoContact.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import SiteAlertBanner from "./components/SiteAlertBanner.tsx";
+import SiteAlertModal from "./components/SiteAlertModal.tsx";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +38,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <SiteAlertBanner />
+      <SiteAlertModal />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
