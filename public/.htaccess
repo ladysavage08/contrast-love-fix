@@ -1,0 +1,53 @@
+# East Central Health District — Apache config for Pair (and any Apache host)
+#
+# This file MUST be uploaded to the web root alongside index.html.
+# It does two things:
+#   1) Sends every page request to index.html so React Router can handle URLs
+#      like /calendar, /news/some-post, /counties/richmond, etc.
+#   2) Adds caching + compression so the site loads fast.
+#
+# DO NOT edit unless you know Apache rewrite rules.
+
+# ---------- 1. Single-page-app routing fallback ----------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # If the request is for a real file or folder, serve it directly.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Otherwise, send to index.html so the React app can render the route.
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# ---------- 2. Compression ----------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
+
+# ---------- 3. Cache headers ----------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  # Hashed JS/CSS bundles produced by the build never change — cache for 1 year.
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/svg+xml "access plus 6 months"
+  ExpiresByType font/woff2 "access plus 1 year"
+  # HTML must NOT be aggressively cached or users will see stale pages after deploys.
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# ---------- 4. Security headers ----------
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# ---------- 5. Pretty 404 (still served by React Router) ----------
+ErrorDocument 404 /index.html
