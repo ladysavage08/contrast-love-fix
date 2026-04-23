@@ -67,8 +67,8 @@ export function useSiteAlerts() {
     }
     load();
 
-    const channel = supabase
-      .channel("site_settings_alerts")
+    const channel = supabase.channel(`site_settings_alerts_${Math.random().toString(36).slice(2)}`);
+    channel
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "site_settings", filter: `key=eq.${SITE_ALERTS_KEY}` },
