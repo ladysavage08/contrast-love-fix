@@ -12,7 +12,7 @@ import HeroSlider from "@/components/HeroSlider";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SocialIcons from "@/components/SocialIcons";
-import newsPublicHealth from "@/assets/news-public-health.jpg";
+import { usePosts, formatPostDate } from "@/hooks/usePosts";
 
 /**
  * Accessible rebuild of the ECHD homepage.
@@ -38,28 +38,9 @@ const quickLinks = [
   { icon: Users, label: "Volunteers", href: "/volunteers" },
 ];
 
-const news = [
-  {
-    title:
-      "WHAT IS PUBLIC HEALTH? by Lee Donohue, MD — Director, East Central Health District",
-    href: "/news/what-is-public-health",
-    image: newsPublicHealth,
-    imageAlt:
-      "Diverse group of healthcare workers and community members in a bright community health setting",
-  },
-  {
-    title:
-      "February Is American Heart Month — Know Your Numbers. Protect Your Heart.",
-    href: "/news/american-heart-month",
-  },
-  {
-    title:
-      "Health Department Operations Update — operational status by county for February 2, 2026",
-    href: "/news/operations-update-february",
-  },
-];
-
 const Index = () => {
+  const { data: news = [], isLoading: newsLoading } = usePosts(4);
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
       <SiteHeader
@@ -97,20 +78,28 @@ const Index = () => {
                 href="/news"
                 className="text-sm font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
               >
-                News Archive
+                View All News &amp; Events
               </a>
             </div>
 
+            {newsLoading && (
+              <p className="py-4 text-sm text-muted-foreground">Loading…</p>
+            )}
+
+            {!newsLoading && news.length === 0 && (
+              <p className="py-4 text-sm text-muted-foreground">
+                No news posts have been published yet.
+              </p>
+            )}
+
             <ul className="divide-y divide-border">
               {news.map((item) => (
-                <li key={item.href} className="flex gap-4 py-5">
-                  {item.image ? (
+                <li key={item.id} className="flex gap-4 py-5">
+                  {item.featured_image_url ? (
                     <img
-                      src={item.image}
-                      alt={item.imageAlt ?? `Photo for article: ${item.title}`}
+                      src={item.featured_image_url}
+                      alt={item.title}
                       loading="lazy"
-                      width={704}
-                      height={512}
                       className="h-20 w-28 shrink-0 rounded object-cover"
                     />
                   ) : (
@@ -119,17 +108,26 @@ const Index = () => {
                       className="h-20 w-28 shrink-0 rounded bg-muted"
                     />
                   )}
-                  <div>
+                  <div className="min-w-0">
+                    <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                      {formatPostDate(item.published_at)}
+                      {item.post_type === "event" && " • Event"}
+                    </p>
                     <h3 className="text-lg font-semibold">
                       <a
-                        href={item.href}
+                        href={`/news/${item.slug}`}
                         className="text-primary underline-offset-2 hover:underline focus-visible:underline"
                       >
                         {item.title}
                       </a>
                     </h3>
+                    {item.excerpt && (
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {item.excerpt}
+                      </p>
+                    )}
                     <a
-                      href={item.href}
+                      href={`/news/${item.slug}`}
                       className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
                       aria-label={`Read more: ${item.title}`}
                     >
@@ -139,6 +137,15 @@ const Index = () => {
                 </li>
               ))}
             </ul>
+
+            <div className="mt-4">
+              <a
+                href="/news"
+                className="inline-flex items-center gap-2 rounded bg-brand px-4 py-2 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                View All News &amp; Events <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
           </section>
         </section>
 
