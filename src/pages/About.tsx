@@ -79,6 +79,7 @@ const About = () => {
           <img
             src={aboutHero}
             alt=""
+            aria-hidden="true"
             width={1920}
             height={800}
             className="absolute inset-0 -z-10 h-full w-full object-cover object-center"

@@ -107,7 +107,7 @@ const Index = () => {
                   {item.image ? (
                     <img
                       src={item.image}
-                      alt={item.imageAlt ?? ""}
+                      alt={item.imageAlt ?? `Photo for article: ${item.title}`}
                       loading="lazy"
                       width={704}
                       height={512}
