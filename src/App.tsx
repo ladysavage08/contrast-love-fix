@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
+import About from "./pages/About.tsx";
 import Counties from "./pages/Counties.tsx";
 import CountyPage from "./pages/CountyPage.tsx";
 import WegoHome from "./pages/wego/WegoHome.tsx";
@@ -24,6 +25,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/about" element={<About />} />
           <Route path="/counties" element={<Counties />} />
           <Route path="/counties/:slug" element={<CountyPage />} />
           <Route path="/wego" element={<WegoHome />} />
