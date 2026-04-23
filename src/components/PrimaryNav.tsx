@@ -22,7 +22,7 @@ const ITEMS: NavItem[] = [
   ["__counties__", ""],
   ["Programs/Services", "/programs"],
   ["Mobile Health Clinic", "/wego"],
-  ["Careers", "/careers"],
+  ["Careers", "https://dph.georgia.gov/about-dph/careers"],
   ["News/Events", "/news"],
   ["I Want To…", "/services"],
 ];
@@ -143,9 +143,15 @@ const PrimaryNav = ({ currentCountySlug }: PrimaryNavProps) => {
               <li key={label}>
                 <a
                   href={href}
+                  {...(href.startsWith("http")
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                   className="block px-1 py-3 text-base font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
                 >
                   {label}
+                  {href.startsWith("http") && (
+                    <span className="sr-only"> (opens in new tab)</span>
+                  )}
                 </a>
               </li>
             ),
@@ -162,9 +168,15 @@ const PrimaryNav = ({ currentCountySlug }: PrimaryNavProps) => {
             <li key={label} className="flex flex-1 items-stretch">
               <a
                 href={href}
+                {...(href.startsWith("http")
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
                 className="flex w-full items-center justify-center px-3 py-3 text-center text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
               >
                 {label}
+                {href.startsWith("http") && (
+                  <span className="sr-only"> (opens in new tab)</span>
+                )}
               </a>
             </li>
           ),
