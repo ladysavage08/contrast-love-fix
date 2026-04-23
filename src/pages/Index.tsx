@@ -182,7 +182,7 @@ const Index = () => {
             <h2 id="stay-connected-heading" className="mb-3 text-xl font-semibold">
               Stay Connected
             </h2>
-            <SocialIcons large />
+            <SocialIcons size="lg" />
           </section>
         </aside>
       </main>
