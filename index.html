@@ -20,6 +20,16 @@
   <meta name="twitter:title" content="Lovable App">
   <meta property="og:description" content="This application enhances website accessibility by fixing contrast issues and improving navigation.">
   <meta name="twitter:description" content="This application enhances website accessibility by fixing contrast issues and improving navigation.">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MFXSXKR8EV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // SPA: disable automatic page_view; we send manually on route change
+    gtag('config', 'G-MFXSXKR8EV', { send_page_view: false });
+  </script>
 </head>
 
   <body>
