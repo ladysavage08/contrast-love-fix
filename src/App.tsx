@@ -30,6 +30,7 @@ import WegoContact from "./pages/wego/WegoContact.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import SiteAlertBanner from "./components/SiteAlertBanner.tsx";
 import SiteAlertModal from "./components/SiteAlertModal.tsx";
+import AnalyticsTracker from "./components/AnalyticsTracker.tsx";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
       <SiteAlertBanner />
       <SiteAlertModal />
       <BrowserRouter>
+        <AnalyticsTracker />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
