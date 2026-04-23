@@ -112,9 +112,11 @@ const ContactForm = () => {
         throw new Error(error.message || "Submission failed.");
       }
 
-      const result = data as
-        | { ok: true }
-        | { ok: false; error?: string; fieldErrors?: FieldErrors };
+      const result = data as {
+        ok: boolean;
+        error?: string;
+        fieldErrors?: FieldErrors;
+      };
 
       if (!result.ok) {
         if (result.fieldErrors) setErrors(result.fieldErrors);
