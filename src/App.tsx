@@ -10,6 +10,8 @@ import Counties from "./pages/Counties.tsx";
 import CountyPage from "./pages/CountyPage.tsx";
 import Programs from "./pages/Programs.tsx";
 import ProgramPage from "./pages/ProgramPage.tsx";
+import EnvironmentalHealth from "./pages/EnvironmentalHealth.tsx";
+import EnvironmentalHealthPage from "./pages/EnvironmentalHealthPage.tsx";
 import WegoHome from "./pages/wego/WegoHome.tsx";
 import WegoAbout from "./pages/wego/WegoAbout.tsx";
 import WegoServices from "./pages/wego/WegoServices.tsx";
@@ -34,6 +36,8 @@ const App = () => (
           <Route path="/counties/:slug" element={<CountyPage />} />
           <Route path="/programs" element={<Programs />} />
           <Route path="/programs/:slug" element={<ProgramPage />} />
+          <Route path="/environmental-health" element={<EnvironmentalHealth />} />
+          <Route path="/environmental-health/:slug" element={<EnvironmentalHealthPage />} />
           <Route path="/wego" element={<WegoHome />} />
           <Route path="/wego/about" element={<WegoAbout />} />
           <Route path="/wego/services" element={<WegoServices />} />
