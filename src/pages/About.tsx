@@ -139,13 +139,13 @@ const About = () => {
               </p>
               <p className="mt-3 text-base leading-relaxed text-foreground/90">
                 Our county health departments, district programs, and the
-                WeGo Mobile Health Clinic work together to prevent disease,
-                promote wellness, and protect the public from environmental
-                health hazards.
+                <strong className="font-semibold"> WeGo Mobile Health Clinic </strong>
+                work together to prevent disease, promote wellness, and protect
+                the public from environmental health hazards.
               </p>
               <p className="mt-3 text-base leading-relaxed text-foreground/90">
-                Whatever ZIP code you call home, public health is closer than
-                you think.
+                When transportation, time, or distance get in the way, we come
+                to you — because <em>we go where you are</em>.
               </p>
             </div>
             <div>
