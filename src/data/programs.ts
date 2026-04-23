@@ -209,15 +209,13 @@ export const programs: Program[] = [
       "Supplemental nutrition and education for women, infants, and children.",
     intro:
       "The Women, Infants, and Children (WIC) Supplemental Nutrition Program provides nutritious foods, education, and breastfeeding support to eligible families, alongside community-based nutrition services.",
+    href: "/wic",
     subtopics: [
-      {
-        label:
-          "The Women, Infants, and Children (WIC) Supplemental Nutrition Program",
-      },
-      { label: "Qualifying for WIC" },
+      { label: "WIC Program Overview", href: "/wic" },
+      { label: "Qualifying for WIC", href: "/wic" },
+      { label: "WIC Approved Foods", href: "/wic" },
       { label: "Population-Based Nutrition Services" },
       { label: "Community Activities" },
-      { label: "WIC-Approved Food List" },
     ],
   },
   {
