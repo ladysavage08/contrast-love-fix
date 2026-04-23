@@ -188,7 +188,7 @@ const Index = () => {
                       <div className="min-w-0">
                         <h3 className="font-semibold text-foreground">
                           <a
-                            href="/calendar"
+                            href={`/news/${e.slug}`}
                             className="text-primary underline-offset-2 hover:underline focus-visible:underline"
                           >
                             {e.title}
