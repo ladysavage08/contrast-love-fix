@@ -253,6 +253,88 @@ const About = () => {
           </ul>
         </section>
 
+        {/* ===== Mobile Clinic — We Go Where You Are ===== */}
+        <section
+          aria-labelledby="wego-heading"
+          className="border-y border-border bg-muted"
+        >
+          <div className="container py-12 md:py-16">
+            <div className="grid items-start gap-8 lg:grid-cols-[1fr_320px]">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wide text-primary">
+                  Mobile Health Clinic
+                </p>
+                <h2
+                  id="wego-heading"
+                  className="mt-2 text-2xl font-semibold md:text-3xl"
+                >
+                  We Go Where You Are
+                </h2>
+                <div aria-hidden="true" className="mt-3 h-1 w-16 bg-accent-gold" />
+                <p className="mt-5 text-base leading-relaxed text-foreground/90">
+                  The WeGo Mobile Health Clinic brings preventive care,
+                  screenings, immunizations, and health education directly into
+                  the neighborhoods, schools, workplaces, and community events
+                  of East Central Georgia.
+                </p>
+                <p className="mt-3 text-base leading-relaxed text-foreground/90">
+                  No clinic visit, no transportation, no problem. Our team
+                  partners with churches, employers, schools, and community
+                  organizations across all 13 counties to remove the barriers
+                  that keep people from the care they need.
+                </p>
+                <p className="mt-3 text-base leading-relaxed text-foreground/90">
+                  It's a simple promise, and one we keep every week:
+                  <strong className="font-semibold"> we go where you are.</strong>
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <a
+                    href="/wego/schedule"
+                    className="inline-flex items-center justify-center gap-2 rounded bg-brand px-5 py-3 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                  >
+                    View Schedule
+                  </a>
+                  <a
+                    href="/wego"
+                    className="inline-flex items-center justify-center gap-2 rounded border border-primary px-5 py-3 text-sm font-semibold text-primary hover:bg-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  >
+                    Learn About WeGo
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                </div>
+              </div>
+
+              <aside
+                aria-label="Mobile Health Clinic at a glance"
+                className="rounded-lg border border-border bg-background p-5"
+              >
+                <h3 className="text-lg font-semibold">Mobile Clinic at a Glance</h3>
+                <dl className="mt-3 space-y-2 text-sm">
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-muted-foreground">Service area</dt>
+                    <dd className="font-medium">All 13 counties</dd>
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-muted-foreground">Care</dt>
+                    <dd className="font-medium">Preventive &amp; screenings</dd>
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-muted-foreground">Call</dt>
+                    <dd className="font-medium">
+                      <a
+                        href="tel:18778849346"
+                        className="text-primary underline-offset-2 hover:underline"
+                      >
+                        1-877-884-WEGO
+                      </a>
+                    </dd>
+                  </div>
+                </dl>
+              </aside>
+            </div>
+          </div>
+        </section>
+
         {/* ===== By the Numbers ===== */}
         <section
           aria-labelledby="impact-heading"
