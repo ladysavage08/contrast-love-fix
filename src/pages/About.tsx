@@ -42,7 +42,7 @@ const services = [
     icon: Users,
     title: "Community Outreach",
     body:
-      "The WeGo Mobile Health Clinic and partnerships that bring services directly into neighborhoods, schools, and events.",
+      "The Mobile Health Clinic and partnerships that bring services directly into neighborhoods, schools, and events.",
   },
   {
     icon: Leaf,
@@ -140,7 +140,7 @@ const About = () => {
               </p>
               <p className="mt-3 text-base leading-relaxed text-foreground/90">
                 Our county health departments, district programs, and the
-                <strong className="font-semibold"> WeGo Mobile Health Clinic </strong>
+                <strong className="font-semibold"> Mobile Health Clinic </strong>
                 work together to prevent disease, promote wellness, and protect
                 the public from environmental health hazards.
               </p>
@@ -273,7 +273,7 @@ const About = () => {
                 </h2>
                 <div aria-hidden="true" className="mt-3 h-1 w-16 bg-accent-gold" />
                 <p className="mt-5 text-base leading-relaxed text-foreground/90">
-                  The WeGo Mobile Health Clinic brings preventive care,
+                  The Mobile Health Clinic brings preventive care,
                   screenings, immunizations, and health education directly into
                   the neighborhoods, schools, workplaces, and community events
                   of East Central Georgia.
@@ -299,7 +299,7 @@ const About = () => {
                     href="/wego"
                     className="inline-flex items-center justify-center gap-2 rounded border border-primary px-5 py-3 text-sm font-semibold text-primary hover:bg-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                   >
-                    Learn About WeGo
+                    Learn About the Mobile Health Clinic
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </a>
                 </div>
@@ -489,7 +489,7 @@ const About = () => {
                   href="/wego"
                   className="inline-flex items-center gap-1 self-center text-sm font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
                 >
-                  Learn about WeGo <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  Learn about the Mobile Health Clinic <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </a>
               </div>
             </div>
