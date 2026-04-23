@@ -221,18 +221,23 @@ const Index = () => {
                             {e.title}
                           </a>
                         </h3>
-                        {(e.event_time || e.event_location) && (
-                          <p className="mt-0.5 text-xs text-muted-foreground">
-                            {e.event_time}
-                            {e.event_time && e.event_location && " • "}
-                            {e.event_location && (
-                              <>
-                                <MapPin className="mr-1 inline h-3 w-3" aria-hidden="true" />
-                                {e.event_location}
-                              </>
-                            )}
-                          </p>
-                        )}
+                        {(() => {
+                          const allDay = isAllDayEvent(e);
+                          const timeLabel = allDay ? "All day" : e.event_time;
+                          if (!timeLabel && !e.event_location) return null;
+                          return (
+                            <p className="mt-0.5 text-xs text-muted-foreground">
+                              {timeLabel}
+                              {timeLabel && e.event_location && " • "}
+                              {e.event_location && (
+                                <>
+                                  <MapPin className="mr-1 inline h-3 w-3" aria-hidden="true" />
+                                  {e.event_location}
+                                </>
+                              )}
+                            </p>
+                          );
+                        })()}
                         {e.excerpt && (
                           <p className="mt-1 text-sm text-muted-foreground">{e.excerpt}</p>
                         )}
