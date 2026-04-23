@@ -24,10 +24,15 @@ const SiteAlertModal = () => {
     if (!modal.enabled || !modal.showOnLoad) return;
     if (sessionStorage.getItem(STORAGE_KEY) === "1") return;
 
+    const delayMs =
+      typeof modal.openDelaySeconds === "number"
+        ? Math.max(0, modal.openDelaySeconds * 1000)
+        : modal.openDelayMs ?? 0;
+
     const t = setTimeout(() => {
       setOpen(true);
       sessionStorage.setItem(STORAGE_KEY, "1");
-    }, modal.openDelayMs);
+    }, delayMs);
 
     return () => clearTimeout(t);
   }, []);
