@@ -71,6 +71,24 @@ const WegoHome = () => {
       {/* ============ MAIN GRID ============ */}
       <div className="container grid gap-8 py-10 lg:grid-cols-[1fr_320px]">
         <div className="space-y-10">
+          {/* Video */}
+          <section aria-labelledby="video-heading">
+            <h2 id="video-heading" className="text-2xl font-semibold">
+              Watch: Mobile Health Clinic
+            </h2>
+            <div aria-hidden="true" className="mt-2 h-1 w-16 bg-accent-gold" />
+            <div className="mt-4 aspect-video w-full overflow-hidden rounded border border-border bg-muted">
+              <iframe
+                src="https://www.youtube.com/embed/8qkStjH0aUM"
+                title="Mobile Health Clinic video"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="h-full w-full"
+              />
+            </div>
+          </section>
+
           {/* About preview */}
           <section aria-labelledby="about-heading">
             <h2 id="about-heading" className="text-2xl font-semibold">
