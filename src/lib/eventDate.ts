@@ -92,3 +92,23 @@ export function formatDateKey(
 export function todayKey(): string {
   return dateKeyFromDate(new Date());
 }
+
+/**
+ * Should this event be treated as "All Day" on the public calendar?
+ *
+ * The backend has no dedicated `all_day` column. By convention an event is
+ * all-day when EITHER:
+ *   - `event_time` is null / empty, OR
+ *   - `event_time` is a textual marker such as "All Day", "all-day",
+ *     "All-day", "allday" (case-insensitive, ignoring punctuation/spaces).
+ *
+ * When this returns true, the public UI should hide explicit start/end time
+ * fields and instead label the event as "All day".
+ */
+export function isAllDayEvent(e: { event_time?: string | null }): boolean {
+  const raw = (e.event_time ?? "").trim();
+  if (!raw) return true;
+  const normalized = raw.toLowerCase().replace(/[\s\-_]/g, "");
+  return normalized === "allday";
+}
+
