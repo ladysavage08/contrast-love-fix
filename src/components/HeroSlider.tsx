@@ -95,7 +95,8 @@ const HeroSlider = () => {
               aria-roledescription="slide"
               aria-label={`Slide ${i + 1} of ${slides.length}`}
             >
-              <div className="relative aspect-[4/5] w-full sm:aspect-[16/9] md:aspect-[16/7]">
+              {/* Shorter, editorial mobile aspect; image as background, content stacked at bottom. */}
+              <div className="relative aspect-[5/4] w-full sm:aspect-[16/9] md:aspect-[16/7]">
                 <img
                   src={slide.image}
                   alt={slide.alt}
@@ -104,21 +105,21 @@ const HeroSlider = () => {
                   loading={i === 0 ? "eager" : "lazy"}
                   className={`absolute inset-0 h-full w-full object-cover ${slide.focal ?? "object-center"}`}
                 />
-                {/* Dark gradient ensures ≥4.5:1 contrast for white caption text */}
+                {/* Stronger bottom gradient on phones for readable caption; sides on desktop. */}
                 <div
                   aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/65 to-foreground/30 sm:bg-gradient-to-r sm:from-foreground/85 sm:via-foreground/55 sm:to-transparent"
+                  className="absolute inset-0 bg-gradient-to-t from-foreground/95 via-foreground/75 to-foreground/20 sm:bg-gradient-to-r sm:from-foreground/85 sm:via-foreground/55 sm:to-transparent"
                 />
-                <div className="relative flex h-full max-w-2xl flex-col justify-end gap-3 p-5 text-background sm:justify-center sm:p-8 md:p-10">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-background/90 sm:text-sm">
+                <div className="relative flex h-full max-w-2xl flex-col justify-end gap-2.5 p-4 pb-12 text-background sm:justify-center sm:gap-3 sm:p-8 sm:pb-8 md:p-10">
+                  <p className="text-[11px] font-semibold uppercase tracking-wide text-background/90 sm:text-sm">
                     {slide.eyebrow}
                   </p>
-                  <h2 className="text-xl font-bold leading-tight sm:text-3xl md:text-4xl">
+                  <h2 className="text-lg font-bold leading-snug sm:text-3xl sm:leading-tight md:text-4xl">
                     {slide.title}
                   </h2>
                   <a
                     href={slide.cta.href}
-                    className="mt-2 inline-flex w-fit items-center gap-2 rounded bg-background px-4 py-3 text-sm font-semibold text-primary hover:bg-background/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background"
+                    className="mt-1 inline-flex w-fit items-center gap-2 rounded bg-background px-4 py-2.5 text-sm font-semibold text-primary hover:bg-background/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background sm:mt-2 sm:py-3"
                   >
                     {slide.cta.label}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />

@@ -7,9 +7,11 @@ import CountiesDropdown from "@/components/CountiesDropdown";
  *
  * Desktop (md+): horizontal brand-blue bar — visually identical to the
  * pre-refactor inline nav so no design change is introduced.
- * Mobile (<md): a hamburger button opens an in-flow accordion-style panel
- * with full-width tap targets (>= 44px), an expandable Counties section,
- * and proper aria-expanded/aria-controls wiring.
+ * Mobile (<md): a hamburger button opens a smooth slide-down panel with
+ * full-width tap targets (≥ 44px), an expandable Counties section,
+ * Contact / Site Map utility links, and any page-supplied extras
+ * (e.g. Patient Portal, Employee Login, social row). Body scroll is
+ * locked while the menu is open.
  *
  * Always include the gold accent stripe at the bottom.
  */
@@ -48,48 +50,64 @@ const COUNTIES = [
 interface PrimaryNavProps {
   /** Slug of the current county (used for aria-current in dropdown). */
   currentCountySlug?: string;
+  /** Optional content rendered at the bottom of the mobile drawer (Patient Portal, social, etc). */
+  mobileDrawerExtras?: React.ReactNode;
+  /** Optional content rendered inline next to the hamburger button on mobile. */
+  mobileQuickAction?: React.ReactNode;
 }
 
-const PrimaryNav = ({ currentCountySlug }: PrimaryNavProps) => {
+const PrimaryNav = ({
+  currentCountySlug,
+  mobileDrawerExtras,
+  mobileQuickAction,
+}: PrimaryNavProps) => {
   const [open, setOpen] = useState(false);
   const [countiesOpen, setCountiesOpen] = useState(false);
 
-  // Close menu when route changes (popstate) or escape pressed.
+  // ESC closes; body scroll locks while open.
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
   }, [open]);
 
   return (
     <nav aria-label="Primary" className="bg-brand text-brand-foreground">
       {/* Mobile: hamburger row */}
-      <div className="container flex items-center justify-between md:hidden">
+      <div className="container flex items-center justify-between gap-2 md:hidden">
         <span className="py-3 text-sm font-semibold">Menu</span>
-        <button
-          type="button"
-          aria-expanded={open}
-          aria-controls="primary-mobile-menu"
-          aria-label={open ? "Close main menu" : "Open main menu"}
-          onClick={() => setOpen((o) => !o)}
-          className="my-2 inline-flex h-11 w-11 items-center justify-center rounded hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
-        >
-          {open ? (
-            <X className="h-6 w-6" aria-hidden="true" />
-          ) : (
-            <Menu className="h-6 w-6" aria-hidden="true" />
-          )}
-        </button>
+        <div className="flex items-center gap-2">
+          {mobileQuickAction}
+          <button
+            type="button"
+            aria-expanded={open}
+            aria-controls="primary-mobile-menu"
+            aria-label={open ? "Close main menu" : "Open main menu"}
+            onClick={() => setOpen((o) => !o)}
+            className="my-2 inline-flex h-11 w-11 items-center justify-center rounded hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+          >
+            {open ? (
+              <X className="h-6 w-6" aria-hidden="true" />
+            ) : (
+              <Menu className="h-6 w-6" aria-hidden="true" />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu panel */}
       <div
         id="primary-mobile-menu"
         hidden={!open}
-        className="md:hidden border-t border-brand-foreground/20"
+        className="md:hidden border-t border-brand-foreground/20 max-h-[calc(100vh-7rem)] overflow-y-auto"
       >
         <ul className="container flex flex-col py-2">
           {ITEMS.map(([label, href]) =>
@@ -100,7 +118,7 @@ const PrimaryNav = ({ currentCountySlug }: PrimaryNavProps) => {
                   aria-expanded={countiesOpen}
                   aria-controls="counties-mobile-panel"
                   onClick={() => setCountiesOpen((o) => !o)}
-                  className="flex w-full items-center justify-between px-1 py-3 text-base font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+                  className="flex min-h-[48px] w-full items-center justify-between px-2 py-3 text-base font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
                 >
                   <span>Counties</span>
                   <ChevronDown
@@ -116,7 +134,7 @@ const PrimaryNav = ({ currentCountySlug }: PrimaryNavProps) => {
                   <li>
                     <a
                       href="/counties"
-                      className="block py-2.5 text-sm font-semibold underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+                      className="block min-h-[44px] py-3 text-sm font-semibold underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
                     >
                       All Counties
                     </a>
@@ -130,7 +148,7 @@ const PrimaryNav = ({ currentCountySlug }: PrimaryNavProps) => {
                           aria-current={
                             currentCountySlug === slug ? "page" : undefined
                           }
-                          className={`block py-2.5 text-sm hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground ${
+                          className={`block min-h-[44px] py-3 text-sm hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground ${
                             currentCountySlug === slug ? "font-semibold underline" : ""
                           }`}
                         >
@@ -148,7 +166,7 @@ const PrimaryNav = ({ currentCountySlug }: PrimaryNavProps) => {
                   {...(href.startsWith("http")
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
-                  className="block px-1 py-3 text-base font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+                  className="block min-h-[48px] px-2 py-3 text-base font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
                 >
                   {label}
                   {href.startsWith("http") && (
@@ -159,6 +177,34 @@ const PrimaryNav = ({ currentCountySlug }: PrimaryNavProps) => {
             ),
           )}
         </ul>
+
+        {/* Utility links moved out of the top header on phones. */}
+        <div className="container border-t border-brand-foreground/20 py-3">
+          <ul className="flex flex-col">
+            <li>
+              <a
+                href="/contact"
+                className="block min-h-[44px] px-2 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+              >
+                Contact Us
+              </a>
+            </li>
+            <li>
+              <a
+                href="/sitemap"
+                className="block min-h-[44px] px-2 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+              >
+                Site Map
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        {mobileDrawerExtras && (
+          <div className="container border-t border-brand-foreground/20 py-4">
+            {mobileDrawerExtras}
+          </div>
+        )}
       </div>
 
       {/* Desktop: horizontal nav (md+) */}
