@@ -13,7 +13,7 @@ const socials = [
   { name: "Facebook", href: "https://www.facebook.com/ECPHD", Icon: Facebook },
   { name: "X", href: "https://x.com/EastCentralPH", Icon: Twitter },
   { name: "YouTube", href: "https://www.youtube.com/@eastcentralhealthdistrict2885", Icon: Youtube },
-  { name: "Instagram", href: "https://instagram.com", Icon: Instagram },
+  { name: "Instagram", href: "https://www.instagram.com/eastcentralhealth/", Icon: Instagram },
 ] as const;
 
 const BUTTON_SIZE: Record<Size, string> = {
