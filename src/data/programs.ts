@@ -20,6 +20,11 @@ export interface Program {
   /** Longer intro shown at the top of the program page. */
   intro: string;
   subtopics: ProgramSubtopic[];
+  /**
+   * Optional override that points the index tile to a custom section route
+   * (e.g. Environmental Health has its own dedicated section).
+   */
+  href?: string;
   /** Optional contact override; falls back to the district main line. */
   contact?: {
     phone?: string;
@@ -146,17 +151,17 @@ export const programs: Program[] = [
       "Inspections and permitting that protect public safety.",
     intro:
       "Environmental Health protects public safety through restaurant and pool inspections, on-site sewage permitting, rabies control, and a range of other regulatory programs.",
+    href: "/environmental-health",
     subtopics: [
-      { label: "Mosquito Control" },
-      { label: "Restaurant Scores" },
-      { label: "Food Services" },
-      { label: "Wastewater Management" },
-      { label: "Hotels, Motels and Campgrounds" },
-      { label: "Public swimming pools" },
-      { label: "Rabies Control program" },
-      { label: "Injury Prevention Program" },
-      { label: "Tattoo/Body Piercing program" },
-      { label: "Well Water" },
+      { label: "Foodservice", href: "/environmental-health/foodservice" },
+      { label: "Wastewater Management", href: "/environmental-health/wastewater-management" },
+      { label: "Hotels, Motels and Campgrounds", href: "/environmental-health/hotels-motels-campgrounds" },
+      { label: "Public Swimming Pools", href: "/environmental-health/public-swimming-pools" },
+      { label: "Rabies Control", href: "/environmental-health/rabies-control" },
+      { label: "Injury Prevention", href: "/environmental-health/injury-prevention" },
+      { label: "Tattoo and Body Piercing", href: "/environmental-health/tattoo-and-body-piercing" },
+      { label: "Well Water", href: "/environmental-health/well-water" },
+      { label: "Restaurant Scores", href: "/environmental-health/restaurant-scores" },
     ],
   },
   {

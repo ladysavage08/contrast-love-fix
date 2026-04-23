@@ -58,7 +58,7 @@ const Programs = () => {
               {programs.map((p) => (
                 <li key={p.slug}>
                   <Link
-                    to={`/programs/${p.slug}`}
+                    to={p.href ?? `/programs/${p.slug}`}
                     className="group flex h-full flex-col rounded-lg border border-border bg-card p-5 hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                   >
                     <h2 className="text-lg font-semibold text-primary">
