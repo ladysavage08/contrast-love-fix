@@ -111,23 +111,23 @@ const CountyPage = () => {
       </nav>
 
       {/* ============ MAIN ============ */}
-      <main id="main" className="container py-8 md:py-10">
+      <main id="main" className="container py-6 md:py-10">
         {/* Page Hero */}
         <section
           aria-labelledby="page-title"
-          className="mb-8 grid gap-6 md:mb-10 md:gap-8 lg:grid-cols-[1fr_420px] lg:items-center"
+          className="mb-6 grid gap-5 md:mb-10 md:gap-8 lg:grid-cols-[1fr_420px] lg:items-center"
         >
           <div>
-            <h1 id="page-title" className="text-3xl font-bold md:text-4xl">
+            <h1 id="page-title" className="text-2xl font-bold leading-tight sm:text-3xl md:text-4xl">
               {county.healthDept}
             </h1>
             <div aria-hidden="true" className="mt-3 h-1 w-20 bg-accent-gold" />
-            <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:mt-5 md:text-lg">
               {intro}
             </p>
             <a
               href={servicesUrl}
-              className="mt-6 inline-flex items-center gap-2 rounded bg-brand px-5 py-3 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded bg-brand px-5 py-3 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:mt-6 sm:w-auto"
             >
               View All Services <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </a>
@@ -157,7 +157,7 @@ const CountyPage = () => {
         </section>
 
         {/* Two-column body */}
-        <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div className="grid gap-6 md:gap-8 lg:grid-cols-[1fr_320px]">
           {/* Main column */}
           <div className="space-y-6">
             {county.nurseManager && (

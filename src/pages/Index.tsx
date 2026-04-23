@@ -132,26 +132,26 @@ const Index = () => {
 
             <ul className="divide-y divide-border">
               {news.map((item) => (
-                <li key={item.id} className="flex gap-4 py-5">
+                <li key={item.id} className="flex gap-3 py-4 sm:gap-4 sm:py-5">
                   {item.featured_image_url ? (
                     <img
                       src={item.featured_image_url}
                       alt={item.title}
                       loading="lazy"
-                      className="h-20 w-28 shrink-0 rounded object-cover"
+                      className="h-16 w-20 shrink-0 rounded object-cover sm:h-20 sm:w-28"
                     />
                   ) : (
                     <div
                       aria-hidden="true"
-                      className="h-20 w-28 shrink-0 rounded bg-muted"
+                      className="h-16 w-20 shrink-0 rounded bg-muted sm:h-20 sm:w-28"
                     />
                   )}
                   <div className="min-w-0">
-                    <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                    <p className="text-[11px] uppercase tracking-wide text-muted-foreground sm:text-xs">
                       {formatPostDate(item.published_at)}
                       {item.post_type === "event" && " • Event"}
                     </p>
-                    <h3 className="text-lg font-semibold">
+                    <h3 className="text-base font-semibold leading-snug sm:text-lg">
                       <a
                         href={`/news/${item.slug}`}
                         className="text-primary underline-offset-2 hover:underline focus-visible:underline"
@@ -160,7 +160,7 @@ const Index = () => {
                       </a>
                     </h3>
                     {item.excerpt && (
-                      <p className="mt-1 text-sm text-muted-foreground">
+                      <p className="mt-1 line-clamp-2 text-sm text-muted-foreground sm:line-clamp-none">
                         {item.excerpt}
                       </p>
                     )}

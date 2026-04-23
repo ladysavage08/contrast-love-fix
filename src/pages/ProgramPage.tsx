@@ -58,16 +58,16 @@ const ProgramPage = () => {
           </div>
         </nav>
 
-        <div className="container py-10">
-          <header className="mb-8 max-w-3xl">
-            <h1 className="text-3xl font-bold md:text-4xl">{program.title}</h1>
+        <div className="container py-6 md:py-10">
+          <header className="mb-6 max-w-3xl md:mb-8">
+            <h1 className="text-2xl font-bold leading-tight sm:text-3xl md:text-4xl">{program.title}</h1>
             <div aria-hidden="true" className="mt-3 h-1 w-20 bg-accent-gold" />
-            <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:mt-5 md:text-lg">
               {program.intro}
             </p>
           </header>
 
-          <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
+          <div className="grid gap-8 md:gap-10 lg:grid-cols-[1fr_320px]">
             <div className="space-y-10">
               {/* Topics / sub-services */}
               <section aria-labelledby="topics-heading">
