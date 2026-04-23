@@ -105,12 +105,8 @@ const Contact = () => {
                 </div>
                 <dl className="mt-3 space-y-2 text-sm">
                   <div className="flex justify-between gap-4">
-                    <dt className="text-muted-foreground">Monday – Thursday</dt>
+                    <dt className="text-muted-foreground">Monday – Friday</dt>
                     <dd className="font-medium">8:00 AM – 5:00 PM</dd>
-                  </div>
-                  <div className="flex justify-between gap-4">
-                    <dt className="text-muted-foreground">Friday</dt>
-                    <dd className="font-medium">Closed</dd>
                   </div>
                   <div className="flex justify-between gap-4">
                     <dt className="text-muted-foreground">Weekends</dt>
