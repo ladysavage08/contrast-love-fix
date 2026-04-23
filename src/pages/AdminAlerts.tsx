@@ -262,7 +262,15 @@ const AdminAlerts = () => {
                   <Label htmlFor="modal-preset">Message preset</Label>
                   <Select
                     value={settings.modal.preset}
-                    onValueChange={(v) => updateModal({ preset: v as ModalPresetKey, titleOverride: "", messageOverride: "", buttonOverride: undefined })}
+                    onValueChange={(v) => {
+                      const p = MODAL_PRESETS[v as ModalPresetKey] ?? MODAL_PRESETS.standard;
+                      updateModal({
+                        preset: v as ModalPresetKey,
+                        titleOverride: p.title,
+                        messageOverride: p.message,
+                        buttonOverride: p.button ? { ...p.button } : undefined,
+                      });
+                    }}
                   >
                     <SelectTrigger id="modal-preset" className="mt-1.5">
                       <SelectValue />
@@ -276,69 +284,73 @@ const AdminAlerts = () => {
                     </SelectContent>
                   </Select>
                   <p className="mt-1 text-xs text-muted-foreground">
-                    Pick a preset, then optionally override the text below.
+                    Pick a preset to load its text into the fields below, then edit freely.
                   </p>
                 </div>
 
                 <div>
-                  <Label htmlFor="modal-title">Title (override)</Label>
+                  <Label htmlFor="modal-title">Title</Label>
                   <Input
                     id="modal-title"
                     className="mt-1.5"
-                    value={settings.modal.titleOverride ?? ""}
+                    value={settings.modal.titleOverride ?? activePreset.title}
                     onChange={(e) => updateModal({ titleOverride: e.target.value })}
-                    placeholder={activePreset.title}
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="modal-message">Message (override)</Label>
+                  <Label htmlFor="modal-message">Message</Label>
                   <Textarea
                     id="modal-message"
                     className="mt-1.5"
                     rows={6}
-                    value={settings.modal.messageOverride ?? ""}
+                    value={settings.modal.messageOverride ?? activePreset.message}
                     onChange={(e) => updateModal({ messageOverride: e.target.value })}
-                    placeholder={activePreset.message}
                   />
                   <p className="mt-1 text-xs text-muted-foreground">
-                    Leave blank to use the preset text. Separate paragraphs with a blank line.
+                    Separate paragraphs with a blank line.
                   </p>
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div>
-                    <Label htmlFor="modal-btn-label">Button label (override)</Label>
+                    <Label htmlFor="modal-btn-label">Button label</Label>
                     <Input
                       id="modal-btn-label"
                       className="mt-1.5"
-                      value={settings.modal.buttonOverride?.label ?? ""}
+                      value={settings.modal.buttonOverride?.label ?? activePreset.button?.label ?? ""}
                       onChange={(e) =>
                         updateModal({
                           buttonOverride: {
                             label: e.target.value,
-                            href: settings.modal.buttonOverride?.href ?? activePreset.button?.href ?? "",
+                            href:
+                              settings.modal.buttonOverride?.href ??
+                              activePreset.button?.href ??
+                              "",
                           },
                         })
                       }
-                      placeholder={activePreset.button?.label ?? "Contact Us"}
+                      placeholder="Contact Us"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="modal-btn-href">Button link (override)</Label>
+                    <Label htmlFor="modal-btn-href">Button link</Label>
                     <Input
                       id="modal-btn-href"
                       className="mt-1.5"
-                      value={settings.modal.buttonOverride?.href ?? ""}
+                      value={settings.modal.buttonOverride?.href ?? activePreset.button?.href ?? ""}
                       onChange={(e) =>
                         updateModal({
                           buttonOverride: {
-                            label: settings.modal.buttonOverride?.label ?? activePreset.button?.label ?? "",
+                            label:
+                              settings.modal.buttonOverride?.label ??
+                              activePreset.button?.label ??
+                              "",
                             href: e.target.value,
                           },
                         })
                       }
-                      placeholder={activePreset.button?.href ?? "/contact"}
+                      placeholder="/contact"
                     />
                   </div>
                 </div>
