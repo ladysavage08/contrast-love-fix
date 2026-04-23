@@ -41,12 +41,19 @@ const Calendar = () => {
   const [cursor, setCursor] = useState(() => startOfMonth(new Date()));
   const [selected, setSelected] = useState<string | null>(null);
 
+  // Effective date for an event: event_date if present, otherwise the date
+  // portion of published_at. This ensures events created without an explicit
+  // event_date (e.g. from the mobile app or admin shortcut) still land on the
+  // calendar instead of being silently dropped.
+  const effectiveDateKey = (e: Post) =>
+    (e.event_date ?? e.published_at ?? "").slice(0, 10);
+
   // Group events by YYYY-MM-DD
   const eventsByDate = useMemo(() => {
     const map = new Map<string, Post[]>();
     for (const e of events) {
-      if (!e.event_date) continue;
-      const key = e.event_date.slice(0, 10);
+      const key = effectiveDateKey(e);
+      if (!key) continue;
       if (!map.has(key)) map.set(key, []);
       map.get(key)!.push(e);
     }
@@ -58,8 +65,8 @@ const Calendar = () => {
   const upcoming = useMemo(
     () =>
       events
-        .filter((e) => e.event_date && e.event_date >= todayKey)
-        .sort((a, b) => (a.event_date! < b.event_date! ? -1 : 1)),
+        .filter((e) => effectiveDateKey(e) >= todayKey)
+        .sort((a, b) => (effectiveDateKey(a) < effectiveDateKey(b) ? -1 : 1)),
     [events, todayKey],
   );
 
