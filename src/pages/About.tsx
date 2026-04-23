@@ -403,6 +403,56 @@ const About = () => {
           </div>
         </section>
 
+        {/* ===== HEALTH DIRECTOR'S MESSAGE ===== */}
+        <section
+          aria-labelledby="director-message-heading"
+          className="border-t border-border"
+        >
+          <div className="container py-12 md:py-16">
+            <div className="mx-auto max-w-3xl">
+              <h2
+                id="director-message-heading"
+                className="text-2xl font-semibold md:text-3xl"
+              >
+                Health Director's Message
+              </h2>
+              <div className="mt-6 space-y-4 text-base leading-relaxed text-foreground/90">
+                <p>
+                  Welcome to the East Central Public Health District website!
+                  I'm pleased you are reviewing our online resources and hope
+                  you will find this site easy to navigate and helpful.
+                </p>
+                <p>
+                  Our mission in public health is focused on creating healthier
+                  lives and a healthier community. We're all committed to
+                  improving quality of life through education, communication,
+                  and providing services, and close tracking of infectious
+                  diseases, as demonstrated in the ongoing pandemic.
+                </p>
+                <p>
+                  Relationships with local leaders, organizations, and schools
+                  are vital in maintaining a healthy, safe community for all
+                  those who live in our district.
+                </p>
+                <p>
+                  Please enjoy our website, know we are committed to ongoing
+                  health improvement efforts always and look forward to serving
+                  every member of our community in achieving greater health and
+                  longevity.
+                </p>
+              </div>
+              <footer className="mt-6 border-l-4 border-brand pl-4">
+                <p className="font-semibold text-foreground">
+                  — Lee Donohue, MD
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  District 6 Health Director
+                </p>
+              </footer>
+            </div>
+          </div>
+        </section>
+
         {/* ===== CTA ===== */}
         <section
           aria-labelledby="cta-heading"
