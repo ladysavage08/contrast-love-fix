@@ -30,7 +30,7 @@ import { usePosts, formatPostDate } from "@/hooks/usePosts";
 
 const quickLinks = [
   { icon: Stethoscope, label: "Mobile Health Clinic", href: "/wego" },
-  { icon: FileText, label: "Birth/Death Certificates", href: "/vital-records" },
+  { icon: FileText, label: "Birth/Death Certificates", href: "https://dph.georgia.gov/VitalRecords" },
   { icon: Phone, label: "ECHD Directory", href: "/directory" },
   { icon: Heart, label: "Immunizations", href: "/immunizations" },
   { icon: ClipboardCheck, label: "Restaurant Scores", href: "/restaurant-scores" },
@@ -156,19 +156,26 @@ const Index = () => {
               Quick Links
             </h2>
             <ul className="space-y-2">
-              {quickLinks.map(({ icon: Icon, label, href }) => (
-                <li key={href}>
-                  <a
-                    href={href}
-                    className="flex items-center gap-3 rounded px-3 py-2 text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
-                  >
-                    <Icon className="h-4 w-4" aria-hidden="true" />
-                    <span className="font-medium underline-offset-2 hover:underline">
-                      {label}
-                    </span>
-                  </a>
-                </li>
-              ))}
+              {quickLinks.map(({ icon: Icon, label, href }) => {
+                const external = href.startsWith("http");
+                return (
+                  <li key={href}>
+                    <a
+                      href={href}
+                      {...(external
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                      className="flex items-center gap-3 rounded px-3 py-2 text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+                    >
+                      <Icon className="h-4 w-4" aria-hidden="true" />
+                      <span className="font-medium underline-offset-2 hover:underline">
+                        {label}
+                        {external && <span className="sr-only"> (opens in new tab)</span>}
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
             <a
               href="/programs"
