@@ -119,6 +119,60 @@ export type Database = {
         }
         Relationships: []
       }
+      staff_directory: {
+        Row: {
+          county: string | null
+          created_at: string
+          department: string | null
+          display_order: number
+          email: string | null
+          full_name: string
+          id: string
+          job_title: string | null
+          last_name: string
+          notes: string | null
+          office_location: string | null
+          phone: string | null
+          photo_url: string | null
+          published: boolean
+          updated_at: string
+        }
+        Insert: {
+          county?: string | null
+          created_at?: string
+          department?: string | null
+          display_order?: number
+          email?: string | null
+          full_name: string
+          id?: string
+          job_title?: string | null
+          last_name: string
+          notes?: string | null
+          office_location?: string | null
+          phone?: string | null
+          photo_url?: string | null
+          published?: boolean
+          updated_at?: string
+        }
+        Update: {
+          county?: string | null
+          created_at?: string
+          department?: string | null
+          display_order?: number
+          email?: string | null
+          full_name?: string
+          id?: string
+          job_title?: string | null
+          last_name?: string
+          notes?: string | null
+          office_location?: string | null
+          phone?: string | null
+          photo_url?: string | null
+          published?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
