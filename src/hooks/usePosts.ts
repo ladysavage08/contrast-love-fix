@@ -42,20 +42,34 @@ export function useEvents(opts?: { upcomingOnly?: boolean; limit?: number }) {
   return useQuery({
     queryKey: ["events", upcomingOnly, limit ?? "all"],
     queryFn: async (): Promise<Post[]> => {
-      let q = supabase
+      // Fetch ALL published events. We sort & filter client-side so that events
+      // missing event_date (admin/mobile-app entries that only set published_at)
+      // still appear on the website calendar.
+      const { data, error } = await supabase
         .from("posts")
         .select("*")
         .eq("published", true)
-        .eq("post_type", "event")
-        .order("event_date", { ascending: true, nullsFirst: false });
+        .eq("post_type", "event");
+      if (error) throw error;
+      const all = (data ?? []) as Post[];
+
+      // Effective date used for sorting & filtering: event_date if present,
+      // otherwise the published_at date portion.
+      const effective = (e: Post) =>
+        (e.event_date ?? e.published_at ?? "").slice(0, 10);
+
+      let list = [...all].sort((a, b) => {
+        const ea = effective(a);
+        const eb = effective(b);
+        return ea < eb ? -1 : ea > eb ? 1 : 0;
+      });
+
       if (upcomingOnly) {
         const today = new Date().toISOString().slice(0, 10);
-        q = q.gte("event_date", today);
+        list = list.filter((e) => effective(e) >= today);
       }
-      if (limit) q = q.limit(limit);
-      const { data, error } = await q;
-      if (error) throw error;
-      return (data ?? []) as Post[];
+      if (limit) list = list.slice(0, limit);
+      return list;
     },
   });
 }
