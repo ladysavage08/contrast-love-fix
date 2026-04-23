@@ -201,13 +201,9 @@ const Index = () => {
               </div>
               <ul className="space-y-3">
                 {upcomingEvents.map((e) => {
-                  const [y, m, d] = (e.event_date ?? "").split("-").map(Number);
-                  const dateLabel = e.event_date
-                    ? new Date(y, (m || 1) - 1, d || 1).toLocaleDateString("en-US", {
-                        weekday: "short",
-                        month: "short",
-                        day: "numeric",
-                      })
+                  const key = eventDateKey(e);
+                  const dateLabel = key
+                    ? formatDateKey(key, { weekday: "short", month: "short", day: "numeric" })
                     : formatPostDate(e.published_at);
                   return (
                     <li key={e.id} className="flex gap-4 rounded-lg border border-border p-4">
