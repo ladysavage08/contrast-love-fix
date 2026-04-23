@@ -224,7 +224,7 @@ const Calendar = () => {
             {selected && (
               <div className="mt-6 border-t border-border pt-4">
                 <h3 className="mb-3 text-base font-semibold">
-                  {formatEventDate(selected)}
+                  {formatDateKey(selected)}
                 </h3>
                 {selectedEvents.length === 0 ? (
                   <p className="text-sm text-muted-foreground">No events scheduled.</p>
@@ -253,7 +253,7 @@ const Calendar = () => {
                 {upcoming.slice(0, 5).map((e) => (
                   <li key={e.id} className="border-b border-border/60 pb-3 last:border-0 last:pb-0">
                     <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                      {formatEventDate(effectiveDateKey(e))}
+                      {formatDateKey(eventDateKey(e))}
                     </p>
                     <p className="font-medium text-foreground">{e.title}</p>
                     {e.event_location && (
@@ -324,15 +324,11 @@ function EventCard({ event, compact = false }: { event: Post; compact?: boolean 
             {event.title}
           </h3>
           <dl className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted-foreground">
-            {(event.event_date || event.published_at) && (
+            {eventDateKey(event) && (
               <div className="inline-flex items-center gap-1.5">
                 <CalendarIcon className="h-4 w-4" aria-hidden="true" />
                 <dt className="sr-only">Date</dt>
-                <dd>
-                  {formatEventDate(
-                    (event.event_date ?? event.published_at).slice(0, 10),
-                  )}
-                </dd>
+                <dd>{formatDateKey(eventDateKey(event))}</dd>
               </div>
             )}
             {event.event_time && (
