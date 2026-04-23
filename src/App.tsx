@@ -17,6 +17,7 @@ import WomensHealthPage from "./pages/WomensHealthPage.tsx";
 import News from "./pages/News.tsx";
 import NewsPost from "./pages/NewsPost.tsx";
 import Services from "./pages/Services.tsx";
+import Directory from "./pages/Directory.tsx";
 import WegoHome from "./pages/wego/WegoHome.tsx";
 import WegoAbout from "./pages/wego/WegoAbout.tsx";
 import WegoServices from "./pages/wego/WegoServices.tsx";
@@ -48,6 +49,7 @@ const App = () => (
           <Route path="/news" element={<News />} />
           <Route path="/news/:slug" element={<NewsPost />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/directory" element={<Directory />} />
           <Route path="/wego" element={<WegoHome />} />
           <Route path="/wego/about" element={<WegoAbout />} />
           <Route path="/wego/services" element={<WegoServices />} />
