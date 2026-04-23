@@ -48,10 +48,13 @@ const Index = () => {
           <div className="flex flex-wrap items-center gap-2">
             <SocialIcons />
             <a
-              href="/employee-login"
+              href="https://ecphd.com/intranet/login/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded bg-brand px-3 py-2 text-sm font-medium text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
             >
               Employee Login
+              <span className="sr-only"> (opens in new tab)</span>
             </a>
             <a
               href="https://harrispublichealth.com/portal/"
