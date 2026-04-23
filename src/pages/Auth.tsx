@@ -32,7 +32,7 @@ const Auth = () => {
       setError(signInError.message);
       return;
     }
-    navigate("/directory");
+    navigate("/admin");
   };
 
   return (
