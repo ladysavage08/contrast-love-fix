@@ -59,22 +59,7 @@ const Counties = () => {
       </main>
 
       {/* ============ FOOTER ============ */}
-      <footer className="border-t border-border bg-muted">
-        <div className="container py-6 text-sm text-muted-foreground">
-          <div className="mb-4 flex items-center gap-3">
-            <SocialIcons />
-          </div>
-          <p>
-            <strong className="text-foreground">Disclaimer:</strong> Automatic
-            translation services are provided but have not been fully vetted by
-            ECHD staff.
-          </p>
-          <p className="mt-2">
-            © {new Date().getFullYear()} East Central Health District — Georgia
-            Department of Public Health.
-          </p>
-        </div>
-      </footer>
+      <SiteFooter showSocials />
     </div>
   );
 };
