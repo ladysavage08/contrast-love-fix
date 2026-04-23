@@ -69,11 +69,41 @@ const Index = () => {
             </a>
           </div>
         }
+        mobileQuickAction={
+          <a
+            href="https://harrispublichealth.com/portal/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded bg-brand-foreground px-3 py-2 text-xs font-semibold text-brand hover:bg-brand-foreground/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-foreground"
+          >
+            Patient Portal
+            <span className="sr-only"> (opens in new tab)</span>
+          </a>
+        }
+        mobileUtilityExtras={
+          <div className="flex flex-col gap-3">
+            <a
+              href="https://ecphd.com/intranet/login/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-full items-center justify-center rounded bg-brand-foreground px-4 py-3 text-sm font-semibold text-brand hover:bg-brand-foreground/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-foreground"
+            >
+              Employee Login
+              <span className="sr-only"> (opens in new tab)</span>
+            </a>
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-brand-foreground/80">
+                Follow us
+              </p>
+              <SocialIcons size="md" wrap />
+            </div>
+          </div>
+        }
       />
 
 
       {/* ============ MAIN ============ */}
-      <main id="main" className="container grid gap-8 py-10 lg:grid-cols-[1fr_320px]">
+      <main id="main" className="container grid gap-8 py-6 md:py-10 lg:grid-cols-[1fr_320px]">
         <section aria-label="Featured" className="space-y-8">
           <HeroSlider />
 
