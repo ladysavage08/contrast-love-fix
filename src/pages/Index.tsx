@@ -41,6 +41,7 @@ const quickLinks = [
 
 const Index = () => {
   const { data: news = [], isLoading: newsLoading } = usePosts(4);
+  const { data: upcomingEvents = [] } = useEvents({ upcomingOnly: true, limit: 4 });
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
