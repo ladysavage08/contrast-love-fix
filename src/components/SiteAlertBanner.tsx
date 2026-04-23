@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { X, Info, AlertTriangle, AlertOctagon } from "lucide-react";
-import { banner } from "@/config/siteAlerts";
+import { useSiteAlerts } from "@/hooks/useSiteAlerts";
 
 /**
- * Top-of-site alert banner. Reads everything from src/config/siteAlerts.ts.
- * Renders nothing when disabled or after the user dismisses it for the session.
+ * Top-of-site alert banner. Reads settings from the database (with the
+ * src/config/siteAlerts.ts file as a fallback default).
  */
 const STORAGE_KEY = "echd-banner-dismissed";
 
@@ -21,13 +21,15 @@ const ICONS = {
 } as const;
 
 const SiteAlertBanner = () => {
+  const { settings } = useSiteAlerts();
+  const banner = settings.banner;
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
     if (banner.dismissible && sessionStorage.getItem(STORAGE_KEY) === "1") {
       setDismissed(true);
     }
-  }, []);
+  }, [banner.dismissible]);
 
   if (!banner.enabled || dismissed) return null;
 

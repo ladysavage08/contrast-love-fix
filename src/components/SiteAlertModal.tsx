@@ -8,19 +8,21 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { modal, MODAL_PRESETS } from "@/config/siteAlerts";
+import { useSiteAlerts, resolveModalContent } from "@/hooks/useSiteAlerts";
 
 /**
- * Pop-up modal alert. Opens once per browser session when enabled.
- * Reads all content from src/config/siteAlerts.ts (preset + toggle).
- * Radix Dialog handles focus trap, ESC key, and ARIA roles automatically.
+ * Pop-up modal alert. Reads settings from the database (with the
+ * src/config/siteAlerts.ts file as a fallback default).
  */
 const STORAGE_KEY = "echd-modal-shown";
 
 const SiteAlertModal = () => {
+  const { settings, loaded } = useSiteAlerts();
+  const modal = settings.modal;
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    if (!loaded) return;
     if (!modal.enabled || !modal.showOnLoad) return;
     if (sessionStorage.getItem(STORAGE_KEY) === "1") return;
 
@@ -35,11 +37,11 @@ const SiteAlertModal = () => {
     }, delayMs);
 
     return () => clearTimeout(t);
-  }, []);
+  }, [loaded, modal.enabled, modal.showOnLoad, modal.openDelaySeconds, modal.openDelayMs]);
 
   if (!modal.enabled) return null;
 
-  const content = MODAL_PRESETS[modal.preset];
+  const content = resolveModalContent(modal);
   const paragraphs = content.message.split("\n\n").filter(Boolean);
 
   return (
