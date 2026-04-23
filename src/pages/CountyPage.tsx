@@ -1,9 +1,5 @@
 import { useParams, Navigate, Link } from "react-router-dom";
 import {
-  Facebook,
-  Twitter,
-  Youtube,
-  Instagram,
   Phone,
   MapPin,
   Clock,
@@ -17,6 +13,8 @@ import {
   ImageIcon,
 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import SocialIcons from "@/components/SocialIcons";
 import { counties, type CountyRelatedLink } from "@/data/counties";
 import burkeImage from "@/assets/county-burke.jpg";
 
@@ -38,33 +36,6 @@ const relatedIconMap: Record<CountyRelatedLink["icon"], typeof Calendar> = {
   newspaper: Newspaper,
   utensils: Utensils,
 };
-
-const socials: Array<{ name: string; href: string; Icon: typeof Facebook }> = [
-  { name: "Facebook", href: "https://facebook.com", Icon: Facebook },
-  { name: "Twitter", href: "https://twitter.com", Icon: Twitter },
-  { name: "YouTube", href: "https://youtube.com", Icon: Youtube },
-  { name: "Instagram", href: "https://instagram.com", Icon: Instagram },
-];
-
-const SocialIcons = ({ large = false }: { large?: boolean }) => (
-  <ul className="flex items-center gap-2">
-    {socials.map(({ name, href, Icon }) => (
-      <li key={name}>
-        <a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${name} (opens in new tab)`}
-          className={`flex items-center justify-center rounded-full bg-brand text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
-            large ? "h-10 w-10" : "h-8 w-8"
-          }`}
-        >
-          <Icon className={large ? "h-5 w-5" : "h-4 w-4"} aria-hidden="true" />
-        </a>
-      </li>
-    ))}
-  </ul>
-);
 
 const InfoCard = ({
   icon: Icon,
