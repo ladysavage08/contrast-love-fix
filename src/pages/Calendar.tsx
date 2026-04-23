@@ -9,6 +9,7 @@ import {
   dateKeyFromDate,
   eventDateKey,
   formatDateKey,
+  isAllDayEvent,
   todayKey as getTodayKey,
 } from "@/lib/eventDate";
 
@@ -331,12 +332,20 @@ function EventCard({ event, compact = false }: { event: Post; compact?: boolean 
                 <dd>{formatDateKey(eventDateKey(event))}</dd>
               </div>
             )}
-            {event.event_time && (
+            {isAllDayEvent(event) ? (
               <div className="inline-flex items-center gap-1.5">
                 <Clock className="h-4 w-4" aria-hidden="true" />
                 <dt className="sr-only">Time</dt>
-                <dd>{event.event_time}</dd>
+                <dd>All day</dd>
               </div>
+            ) : (
+              event.event_time && (
+                <div className="inline-flex items-center gap-1.5">
+                  <Clock className="h-4 w-4" aria-hidden="true" />
+                  <dt className="sr-only">Time</dt>
+                  <dd>{event.event_time}</dd>
+                </div>
+              )
             )}
             {event.event_location && (
               <div className="inline-flex items-center gap-1.5">
