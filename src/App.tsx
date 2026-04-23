@@ -8,6 +8,8 @@ import About from "./pages/About.tsx";
 import Contact from "./pages/Contact.tsx";
 import Counties from "./pages/Counties.tsx";
 import CountyPage from "./pages/CountyPage.tsx";
+import Programs from "./pages/Programs.tsx";
+import ProgramPage from "./pages/ProgramPage.tsx";
 import WegoHome from "./pages/wego/WegoHome.tsx";
 import WegoAbout from "./pages/wego/WegoAbout.tsx";
 import WegoServices from "./pages/wego/WegoServices.tsx";
@@ -30,6 +32,8 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/counties" element={<Counties />} />
           <Route path="/counties/:slug" element={<CountyPage />} />
+          <Route path="/programs" element={<Programs />} />
+          <Route path="/programs/:slug" element={<ProgramPage />} />
           <Route path="/wego" element={<WegoHome />} />
           <Route path="/wego/about" element={<WegoAbout />} />
           <Route path="/wego/services" element={<WegoServices />} />
