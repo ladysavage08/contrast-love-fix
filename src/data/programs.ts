@@ -20,6 +20,11 @@ export interface Program {
   /** Longer intro shown at the top of the program page. */
   intro: string;
   subtopics: ProgramSubtopic[];
+  /**
+   * Optional override that points the index tile to a custom section route
+   * (e.g. Environmental Health has its own dedicated section).
+   */
+  href?: string;
   /** Optional contact override; falls back to the district main line. */
   contact?: {
     phone?: string;
