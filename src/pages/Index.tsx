@@ -33,7 +33,7 @@ const quickLinks = [
   { icon: FileText, label: "Birth/Death Certificates", href: "https://dph.georgia.gov/VitalRecords" },
   { icon: Phone, label: "ECHD Directory", href: "/directory" },
   { icon: Heart, label: "Immunizations", href: "https://dph.georgia.gov/immunizations" },
-  { icon: ClipboardCheck, label: "Restaurant Scores", href: "/restaurant-scores" },
+  { icon: ClipboardCheck, label: "Restaurant Scores", href: "https://ga.healthinspections.us/stateofgeorgia/" },
   { icon: Apple, label: "WIC", href: "/wic" },
   { icon: Users, label: "Volunteers", href: "/volunteers" },
 ];
