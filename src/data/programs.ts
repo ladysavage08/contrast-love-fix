@@ -252,11 +252,15 @@ export const programs: Program[] = [
       "Preventive care and screenings for women — and resources for men.",
     intro:
       "Preventive services and screenings that support women's health across the lifespan, including breast and cervical cancer prevention, preconception health, and related resources for men.",
+    href: "/womens-health",
     subtopics: [
-      { label: "Men's Health" },
-      { label: "Colon Cancer" },
-      { label: "Breast and Cervical Cancer Prevention (BCCP)" },
-      { label: "Preconception Health" },
+      { label: "Breast and Cervical Cancer Prevention (BCCP)", href: "/womens-health/bccp" },
+      { label: "Family Planning / Reproductive Health", href: "/womens-health/family-planning" },
+      { label: "Preconception Health", href: "/womens-health/preconception-health" },
+      { label: "Breast Health", href: "/womens-health/breast-health" },
+      { label: "Cervical Health", href: "/womens-health/cervical-health" },
+      { label: "Cancer Screening Services", href: "/womens-health/cancer-screening-services" },
+      { label: "Men's Health", href: "/womens-health/mens-health" },
     ],
   },
 ];
