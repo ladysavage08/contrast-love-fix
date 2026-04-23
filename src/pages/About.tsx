@@ -12,6 +12,7 @@ import {
   HandHeart,
 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 import aboutHero from "@/assets/about-hero.jpg";
 import aboutWho from "@/assets/about-who.jpg";
 
@@ -364,19 +365,7 @@ const About = () => {
       </main>
 
       {/* ============ FOOTER ============ */}
-      <footer className="border-t border-border bg-muted">
-        <div className="container py-6 text-sm text-muted-foreground">
-          <p>
-            <strong className="text-foreground">Disclaimer:</strong> Automatic
-            translation services are provided but have not been fully vetted by
-            ECHD staff.
-          </p>
-          <p className="mt-2">
-            © {new Date().getFullYear()} East Central Health District — Georgia
-            Department of Public Health.
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };
