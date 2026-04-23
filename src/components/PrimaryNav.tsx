@@ -25,6 +25,7 @@ const ITEMS: NavItem[] = [
   ["Directory", "/directory"],
   ["Careers", "https://dph.georgia.gov/about-dph/careers"],
   ["News/Events", "/news"],
+  ["Calendar", "/calendar"],
   ["I Want To…", "/services"],
 ];
 

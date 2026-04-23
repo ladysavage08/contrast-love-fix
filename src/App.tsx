@@ -20,6 +20,7 @@ import Services from "./pages/Services.tsx";
 import Directory from "./pages/Directory.tsx";
 import Auth from "./pages/Auth.tsx";
 import Wic from "./pages/Wic.tsx";
+import Calendar from "./pages/Calendar.tsx";
 import WegoHome from "./pages/wego/WegoHome.tsx";
 import WegoAbout from "./pages/wego/WegoAbout.tsx";
 import WegoServices from "./pages/wego/WegoServices.tsx";
@@ -54,6 +55,8 @@ const App = () => (
           <Route path="/directory" element={<Directory />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/wic" element={<Wic />} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/events" element={<Calendar />} />
           <Route path="/wego" element={<WegoHome />} />
           <Route path="/wego/about" element={<WegoAbout />} />
           <Route path="/wego/services" element={<WegoServices />} />
