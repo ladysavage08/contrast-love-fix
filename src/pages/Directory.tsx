@@ -87,14 +87,49 @@ const Directory = () => {
           <span>ECPHD Directory</span>
         </nav>
 
-        <header className="mb-6 border-b border-border pb-4">
-          <div className="mb-2 h-1 w-16 rounded bg-accent" aria-hidden="true" />
-          <h1 className="text-3xl font-bold sm:text-4xl">ECPHD Directory</h1>
-          <p className="mt-3 max-w-3xl text-muted-foreground">
-            Search for East Central Public Health District staff and department
-            contacts. Filter by department or county to narrow your results.
-          </p>
+        <header className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-border pb-4">
+          <div>
+            <div className="mb-2 h-1 w-16 rounded bg-accent" aria-hidden="true" />
+            <h1 className="text-3xl font-bold sm:text-4xl">ECPHD Directory</h1>
+            <p className="mt-3 max-w-3xl text-muted-foreground">
+              Search for East Central Public Health District staff and department
+              contacts. Filter by department or county to narrow your results.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            {user ? (
+              <>
+                <span className="text-muted-foreground">
+                  Signed in{isAdmin ? " (admin)" : ""}
+                </span>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await supabase.auth.signOut();
+                  }}
+                  className="inline-flex items-center gap-1 rounded border border-input bg-background px-3 py-1.5 font-medium hover:bg-muted"
+                >
+                  <LogOut className="h-4 w-4" aria-hidden="true" /> Sign out
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/auth"
+                className="inline-flex items-center gap-1 rounded border border-input bg-background px-3 py-1.5 font-medium text-primary hover:bg-muted"
+              >
+                <LogIn className="h-4 w-4" aria-hidden="true" /> Staff sign in
+              </Link>
+            )}
+          </div>
         </header>
+
+        {isAdmin && (
+          <StaffImport
+            onComplete={() =>
+              queryClient.invalidateQueries({ queryKey: ["staff_directory"] })
+            }
+          />
+        )}
 
         {/* Search + filters */}
         <section
