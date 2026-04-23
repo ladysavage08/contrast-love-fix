@@ -125,14 +125,14 @@ const CountiesDropdown = ({ currentSlug }: CountiesDropdownProps) => {
   return (
     <li
       ref={containerRef}
-      className="relative flex items-stretch"
+      className="relative flex flex-1 items-stretch"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
       {/* Label → navigates to the Counties landing page. */}
       <a
         href="/counties"
-        className="flex items-center px-5 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+        className="flex flex-1 items-center justify-center px-3 py-3 text-center text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
       >
         Counties
       </a>
