@@ -10,7 +10,7 @@ import { Facebook, Twitter, Youtube, Instagram } from "lucide-react";
 type Size = "sm" | "md" | "lg";
 
 const socials = [
-  { name: "Facebook", href: "https://facebook.com", Icon: Facebook },
+  { name: "Facebook", href: "https://www.facebook.com/ECPHD", Icon: Facebook },
   { name: "Twitter", href: "https://twitter.com", Icon: Twitter },
   { name: "YouTube", href: "https://youtube.com", Icon: Youtube },
   { name: "Instagram", href: "https://instagram.com", Icon: Instagram },
