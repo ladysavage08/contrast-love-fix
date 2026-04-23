@@ -54,10 +54,13 @@ const Index = () => {
               Employee Login
             </a>
             <a
-              href="/patient-portal"
+              href="https://harrispublichealth.com/portal/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded bg-brand px-3 py-2 text-sm font-medium text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
             >
               Patient Portal
+              <span className="sr-only"> (opens in new tab)</span>
             </a>
           </div>
         }
