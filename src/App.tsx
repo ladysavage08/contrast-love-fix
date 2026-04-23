@@ -19,6 +19,7 @@ import NewsPost from "./pages/NewsPost.tsx";
 import Services from "./pages/Services.tsx";
 import Directory from "./pages/Directory.tsx";
 import Auth from "./pages/Auth.tsx";
+import Wic from "./pages/Wic.tsx";
 import WegoHome from "./pages/wego/WegoHome.tsx";
 import WegoAbout from "./pages/wego/WegoAbout.tsx";
 import WegoServices from "./pages/wego/WegoServices.tsx";
