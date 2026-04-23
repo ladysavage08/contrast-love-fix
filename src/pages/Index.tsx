@@ -13,6 +13,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SocialIcons from "@/components/SocialIcons";
 import { usePosts, useEvents, formatPostDate } from "@/hooks/usePosts";
+import { eventDateKey, formatDateKey } from "@/lib/eventDate";
 import { Calendar as CalendarIcon, MapPin } from "lucide-react";
 
 /**
