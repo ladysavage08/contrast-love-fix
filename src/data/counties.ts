@@ -314,7 +314,7 @@ export const counties: County[] = [
     intro: intro("Taliaferro County", "Taliaferro County Health Department"),
     hours: [
       { days: "Monday – Thursday", time: "8:00 AM – 4:30 PM" },
-      { days: "Friday", time: "8:00 AM – 1:00 PM (call for appointment)" },
+      { days: "Friday", time: "Closed" },
     ],
     servicesUrl: "https://www.echd.org/taliaferro-county-programs-and-services",
     relatedLinks: defaultRelated("Taliaferro County"),
