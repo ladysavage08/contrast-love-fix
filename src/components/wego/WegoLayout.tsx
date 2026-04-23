@@ -38,30 +38,6 @@ const SUBNAV: Array<{ label: string; to: string }> = [
   { label: "Contact", to: "/wego/contact" },
 ];
 
-const socials: Array<{ name: string; href: string; Icon: typeof Facebook }> = [
-  { name: "Facebook", href: "https://facebook.com", Icon: Facebook },
-  { name: "Twitter", href: "https://twitter.com", Icon: Twitter },
-  { name: "YouTube", href: "https://youtube.com", Icon: Youtube },
-  { name: "Instagram", href: "https://instagram.com", Icon: Instagram },
-];
-
-const SocialIcons = () => (
-  <ul className="flex flex-wrap items-center gap-2">
-    {socials.map(({ name, href, Icon }) => (
-      <li key={name}>
-        <a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${name} (opens in new tab)`}
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-brand text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-        >
-          <Icon className="h-4 w-4" aria-hidden="true" />
-        </a>
-      </li>
-    ))}
-  </ul>
-);
 
 const WegoLayout = ({ breadcrumb = [], children }: WegoLayoutProps) => {
   const { pathname } = useLocation();
@@ -230,23 +206,7 @@ const WegoLayout = ({ breadcrumb = [], children }: WegoLayoutProps) => {
       <main id="main">{children}</main>
 
       {/* ============ FOOTER ============ */}
-      <footer className="border-t border-border bg-muted">
-        <div className="container py-6 text-sm text-muted-foreground">
-          <div className="mb-4 flex items-center gap-3">
-            <SocialIcons />
-          </div>
-          <p>
-            <strong className="text-foreground">Disclaimer:</strong> Automatic
-            translation services are provided but have not been fully vetted by
-            ECHD staff.
-          </p>
-          <p className="mt-2">
-            © {new Date().getFullYear()} East Central Health District — Georgia
-            Department of Public Health. Mobile Health Clinic — 1-877-884-WEGO
-            (9346).
-          </p>
-        </div>
-      </footer>
+      <SiteFooter showSocials extraCopy="Mobile Health Clinic — 1-877-884-WEGO (9346)." />
     </div>
   );
 };
