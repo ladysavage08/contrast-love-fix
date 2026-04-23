@@ -53,6 +53,7 @@ const App = () => (
           <Route path="/services" element={<Services />} />
           <Route path="/directory" element={<Directory />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/wic" element={<Wic />} />
           <Route path="/wego" element={<WegoHome />} />
           <Route path="/wego/about" element={<WegoAbout />} />
           <Route path="/wego/services" element={<WegoServices />} />
