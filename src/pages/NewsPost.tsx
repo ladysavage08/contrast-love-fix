@@ -3,6 +3,7 @@ import { ArrowLeft, Calendar, Clock, MapPin, ExternalLink } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { usePost, formatPostDate } from "@/hooks/usePosts";
+import { isAllDayEvent } from "@/lib/eventDate";
 
 const NewsPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -114,14 +115,24 @@ const NewsPost = () => {
                         </span>
                       </li>
                     )}
-                    {post.event_time && (
+                    {isAllDayEvent(post) ? (
                       <li className="flex items-start gap-2">
                         <Clock className="mt-0.5 h-4 w-4 text-primary" aria-hidden="true" />
                         <span>
                           <span className="font-medium">Time: </span>
-                          {post.event_time}
+                          All day
                         </span>
                       </li>
+                    ) : (
+                      post.event_time && (
+                        <li className="flex items-start gap-2">
+                          <Clock className="mt-0.5 h-4 w-4 text-primary" aria-hidden="true" />
+                          <span>
+                            <span className="font-medium">Time: </span>
+                            {post.event_time}
+                          </span>
+                        </li>
+                      )
                     )}
                     {post.event_location && (
                       <li className="flex items-start gap-2">
