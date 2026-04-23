@@ -5,14 +5,31 @@ import PrimaryNav from "@/components/PrimaryNav";
  * Shared top header (DPH brand block + utility links + search + primary nav).
  * Used on Index, Counties, CountyPage, and inside WegoLayout — guarantees
  * consistent mobile behavior site-wide.
+ *
+ * Mobile refinement:
+ *  - Brand row is denser; utility text links (Contact / Site Map) collapse
+ *    into the hamburger drawer instead of stacking above search on phones.
+ *  - Search stays one-tap accessible.
+ *  - `utilityExtras` continues to render on md+ for desktop visibility, and
+ *    `mobileUtilityExtras` (when provided) is forwarded into the mobile menu
+ *    drawer via PrimaryNav so the top of the page stays clean on phones.
  */
 interface SiteHeaderProps {
   currentCountySlug?: string;
   /** Optional content rendered to the right of the brand on md+ (e.g. patient/employee buttons on home). */
   utilityExtras?: React.ReactNode;
+  /** Optional content rendered inside the mobile menu drawer (e.g. portals, social row). */
+  mobileUtilityExtras?: React.ReactNode;
+  /** Optional always-visible action shown next to the hamburger on mobile (e.g. Patient Portal). */
+  mobileQuickAction?: React.ReactNode;
 }
 
-const SiteHeader = ({ currentCountySlug, utilityExtras }: SiteHeaderProps) => {
+const SiteHeader = ({
+  currentCountySlug,
+  utilityExtras,
+  mobileUtilityExtras,
+  mobileQuickAction,
+}: SiteHeaderProps) => {
   return (
     <header className="border-b border-border">
       <a
@@ -21,7 +38,8 @@ const SiteHeader = ({ currentCountySlug, utilityExtras }: SiteHeaderProps) => {
       >
         Skip to main content
       </a>
-      <div className="container flex flex-col gap-4 py-4 md:flex-row md:items-center md:justify-between md:py-6">
+
+      <div className="container flex flex-col gap-3 py-3 md:flex-row md:items-center md:justify-between md:gap-4 md:py-6">
         <a
           href="/"
           className="flex items-center gap-3 text-foreground hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
@@ -29,12 +47,12 @@ const SiteHeader = ({ currentCountySlug, utilityExtras }: SiteHeaderProps) => {
         >
           <span
             aria-hidden="true"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded bg-destructive text-sm font-bold text-destructive-foreground sm:h-12 sm:w-12"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-destructive text-xs font-bold text-destructive-foreground sm:h-12 sm:w-12 sm:text-sm"
           >
             DPH
           </span>
           <span className="leading-tight">
-            <span className="block text-[11px] text-muted-foreground sm:text-xs">
+            <span className="block text-[10px] text-muted-foreground sm:text-xs">
               Georgia Department of Public Health
             </span>
             <span className="block text-sm font-semibold sm:text-base">
@@ -43,10 +61,11 @@ const SiteHeader = ({ currentCountySlug, utilityExtras }: SiteHeaderProps) => {
           </span>
         </a>
 
-        <div className="flex flex-col gap-3 md:items-end">
+        <div className="flex flex-col gap-2 md:items-end md:gap-3">
+          {/* Utility text links: hidden on phones (moved into drawer), visible on md+. */}
           <nav
             aria-label="Utility"
-            className="flex items-center gap-3 text-sm"
+            className="hidden items-center gap-3 text-sm md:flex"
           >
             <Info className="h-4 w-4 text-primary" aria-hidden="true" />
             <a
@@ -76,22 +95,30 @@ const SiteHeader = ({ currentCountySlug, utilityExtras }: SiteHeaderProps) => {
               id="site-search"
               type="search"
               placeholder="Search this site"
-              className="min-w-0 flex-1 bg-background px-3 py-2.5 text-base text-foreground placeholder:text-muted-foreground focus:outline-none md:text-sm md:py-2"
+              className="min-w-0 flex-1 bg-background px-3 py-2 text-base text-foreground placeholder:text-muted-foreground focus:outline-none md:text-sm"
             />
             <button
               type="submit"
-              className="flex items-center gap-1 bg-brand px-4 text-sm font-medium text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              aria-label="Search"
+              className="flex items-center gap-1 bg-brand px-3 text-sm font-medium text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:px-4"
             >
               <Search className="h-4 w-4" aria-hidden="true" />
-              Go
+              <span className="hidden sm:inline">Go</span>
             </button>
           </form>
 
-          {utilityExtras}
+          {/* Desktop-only utility extras (e.g. Employee Login + Patient Portal + social on home). */}
+          {utilityExtras && (
+            <div className="hidden md:block">{utilityExtras}</div>
+          )}
         </div>
       </div>
 
-      <PrimaryNav currentCountySlug={currentCountySlug} />
+      <PrimaryNav
+        currentCountySlug={currentCountySlug}
+        mobileDrawerExtras={mobileUtilityExtras}
+        mobileQuickAction={mobileQuickAction}
+      />
     </header>
   );
 };

@@ -29,15 +29,15 @@ const CountyTile = ({ county }: CountyTileProps) => {
   const isLive = county.status === "live";
 
   return (
-    <article className="flex h-full w-full min-h-[380px] flex-col overflow-hidden rounded-lg border border-t-[3px] border-border border-t-accent-gold bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-md focus-within:shadow-md sm:min-h-[420px]">
+    <article className="flex h-full w-full flex-col overflow-hidden rounded-lg border border-t-[3px] border-border border-t-accent-gold bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-md focus-within:shadow-md sm:min-h-[420px]">
       {/* Header */}
-      <header className="border-b border-border p-4 sm:p-5">
-        <h3 className="text-lg font-bold text-foreground sm:text-xl">{county.name}</h3>
-        <p className="mt-1 text-sm text-muted-foreground">{county.healthDept}</p>
+      <header className="border-b border-border px-4 py-3.5 sm:p-5">
+        <h3 className="text-base font-bold text-foreground sm:text-xl">{county.name}</h3>
+        <p className="mt-0.5 text-sm text-muted-foreground sm:mt-1">{county.healthDept}</p>
       </header>
 
       {/* Body */}
-      <div className="flex-1 p-4 sm:p-5">
+      <div className="flex-1 px-4 py-4 sm:p-5">
         {isLive ? (
           <dl className="space-y-4 text-sm">
             {county.address && (
