@@ -318,26 +318,14 @@ const CountyPage = () => {
               <h2 id="connect-heading" className="mb-3 text-lg font-semibold">
                 Stay Connected
               </h2>
-              <SocialIcons large />
+              <SocialIcons size="lg" />
             </section>
           </aside>
         </div>
       </main>
 
       {/* ============ FOOTER ============ */}
-      <footer className="border-t border-border bg-muted">
-        <div className="container py-6 text-sm text-muted-foreground">
-          <p>
-            <strong className="text-foreground">Disclaimer:</strong> Automatic
-            translation services are provided but have not been fully vetted by
-            ECHD staff.
-          </p>
-          <p className="mt-2">
-            © {new Date().getFullYear()} East Central Health District — Georgia
-            Department of Public Health.
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };

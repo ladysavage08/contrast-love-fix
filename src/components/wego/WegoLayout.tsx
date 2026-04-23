@@ -1,9 +1,5 @@
 import { ReactNode, useState } from "react";
 import {
-  Facebook,
-  Twitter,
-  Youtube,
-  Instagram,
   Phone,
   Calendar,
   ChevronRight,
@@ -11,6 +7,7 @@ import {
   X,
 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 import { Link, useLocation } from "react-router-dom";
 
 /**
