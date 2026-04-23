@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import About from "./pages/About.tsx";
+import Contact from "./pages/Contact.tsx";
 import Counties from "./pages/Counties.tsx";
 import CountyPage from "./pages/CountyPage.tsx";
 import WegoHome from "./pages/wego/WegoHome.tsx";
@@ -26,6 +27,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/counties" element={<Counties />} />
           <Route path="/counties/:slug" element={<CountyPage />} />
           <Route path="/wego" element={<WegoHome />} />
