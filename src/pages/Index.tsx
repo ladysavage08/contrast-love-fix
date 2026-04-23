@@ -12,7 +12,8 @@ import HeroSlider from "@/components/HeroSlider";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SocialIcons from "@/components/SocialIcons";
-import { usePosts, formatPostDate } from "@/hooks/usePosts";
+import { usePosts, useEvents, formatPostDate } from "@/hooks/usePosts";
+import { Calendar as CalendarIcon, MapPin } from "lucide-react";
 
 /**
  * Accessible rebuild of the ECHD homepage.
@@ -40,6 +41,7 @@ const quickLinks = [
 
 const Index = () => {
   const { data: news = [], isLoading: newsLoading } = usePosts(4);
+  const { data: upcomingEvents = [] } = useEvents({ upcomingOnly: true, limit: 4 });
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
@@ -153,6 +155,67 @@ const Index = () => {
               </a>
             </div>
           </section>
+
+          {upcomingEvents.length > 0 && (
+            <section aria-labelledby="upcoming-events-heading">
+              <div className="mb-4 flex items-end justify-between border-b border-border pb-2">
+                <h2 id="upcoming-events-heading" className="text-2xl font-semibold">
+                  Upcoming Events
+                </h2>
+                <a
+                  href="/calendar"
+                  className="text-sm font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
+                >
+                  View Full Calendar
+                </a>
+              </div>
+              <ul className="space-y-3">
+                {upcomingEvents.map((e) => {
+                  const [y, m, d] = (e.event_date ?? "").split("-").map(Number);
+                  const dateLabel = e.event_date
+                    ? new Date(y, (m || 1) - 1, d || 1).toLocaleDateString("en-US", {
+                        weekday: "short",
+                        month: "short",
+                        day: "numeric",
+                      })
+                    : formatPostDate(e.published_at);
+                  return (
+                    <li key={e.id} className="flex gap-4 rounded-lg border border-border p-4">
+                      <div className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded bg-muted text-center">
+                        <CalendarIcon className="h-4 w-4 text-primary" aria-hidden="true" />
+                        <span className="mt-0.5 text-xs font-semibold text-foreground">{dateLabel}</span>
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="font-semibold text-foreground">
+                          <a
+                            href="/calendar"
+                            className="text-primary underline-offset-2 hover:underline focus-visible:underline"
+                          >
+                            {e.title}
+                          </a>
+                        </h3>
+                        {(e.event_time || e.event_location) && (
+                          <p className="mt-0.5 text-xs text-muted-foreground">
+                            {e.event_time}
+                            {e.event_time && e.event_location && " • "}
+                            {e.event_location && (
+                              <>
+                                <MapPin className="mr-1 inline h-3 w-3" aria-hidden="true" />
+                                {e.event_location}
+                              </>
+                            )}
+                          </p>
+                        )}
+                        {e.excerpt && (
+                          <p className="mt-1 text-sm text-muted-foreground">{e.excerpt}</p>
+                        )}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          )}
         </section>
 
         {/* ============ SIDEBAR ============ */}

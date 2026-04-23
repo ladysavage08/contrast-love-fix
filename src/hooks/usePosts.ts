@@ -37,6 +37,29 @@ export function usePosts(limit?: number) {
   });
 }
 
+export function useEvents(opts?: { upcomingOnly?: boolean; limit?: number }) {
+  const { upcomingOnly = true, limit } = opts ?? {};
+  return useQuery({
+    queryKey: ["events", upcomingOnly, limit ?? "all"],
+    queryFn: async (): Promise<Post[]> => {
+      let q = supabase
+        .from("posts")
+        .select("*")
+        .eq("published", true)
+        .eq("post_type", "event")
+        .order("event_date", { ascending: true, nullsFirst: false });
+      if (upcomingOnly) {
+        const today = new Date().toISOString().slice(0, 10);
+        q = q.gte("event_date", today);
+      }
+      if (limit) q = q.limit(limit);
+      const { data, error } = await q;
+      if (error) throw error;
+      return (data ?? []) as Post[];
+    },
+  });
+}
+
 export function usePost(slug: string | undefined) {
   return useQuery({
     queryKey: ["post", slug],
