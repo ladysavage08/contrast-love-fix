@@ -12,7 +12,8 @@ import HeroSlider from "@/components/HeroSlider";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SocialIcons from "@/components/SocialIcons";
-import { usePosts, formatPostDate } from "@/hooks/usePosts";
+import { usePosts, useEvents, formatPostDate } from "@/hooks/usePosts";
+import { Calendar as CalendarIcon, MapPin } from "lucide-react";
 
 /**
  * Accessible rebuild of the ECHD homepage.
