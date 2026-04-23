@@ -15,6 +15,12 @@ interface SiteHeaderProps {
 const SiteHeader = ({ currentCountySlug, utilityExtras }: SiteHeaderProps) => {
   return (
     <header className="border-b border-border">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-brand focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-brand-foreground focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-brand"
+      >
+        Skip to main content
+      </a>
       <div className="container flex flex-col gap-4 py-4 md:flex-row md:items-center md:justify-between md:py-6">
         <a
           href="/"
@@ -44,7 +50,7 @@ const SiteHeader = ({ currentCountySlug, utilityExtras }: SiteHeaderProps) => {
           >
             <Info className="h-4 w-4 text-primary" aria-hidden="true" />
             <a
-              href="/contact-us"
+              href="/contact"
               className="text-primary underline-offset-2 hover:underline focus-visible:underline"
             >
               Contact Us
