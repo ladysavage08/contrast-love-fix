@@ -1,6 +1,7 @@
 import { Phone, Mail, MapPin, AlertTriangle, Clock } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import ContactForm from "@/components/ContactForm";
 
 /**
  * Contact ECHD — uses locked layout patterns:
@@ -121,6 +122,44 @@ const Contact = () => {
                   call ahead to confirm.
                 </p>
               </aside>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== Contact Form ===== */}
+        <section
+          aria-labelledby="contact-form-heading"
+          className="border-b border-border"
+        >
+          <div className="container py-12 md:py-16">
+            <div className="grid gap-10 md:grid-cols-3">
+              <div className="md:col-span-1">
+                <h2
+                  id="contact-form-heading"
+                  className="text-2xl font-semibold md:text-3xl"
+                >
+                  Send Us a Message
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-foreground/90">
+                  Use the form to send us a message. Submissions are routed
+                  directly to our district office at{" "}
+                  <span className="font-medium">ecphd@dph.ga.gov</span>.
+                </p>
+                <p className="mt-4 text-sm text-muted-foreground">
+                  For medical emergencies, call <strong>911</strong>. For
+                  urgent service questions during business hours, call{" "}
+                  <a
+                    href="tel:17067215800"
+                    className="font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
+                  >
+                    706-721-5800
+                  </a>
+                  .
+                </p>
+              </div>
+              <div className="md:col-span-2">
+                <ContactForm />
+              </div>
             </div>
           </div>
         </section>
