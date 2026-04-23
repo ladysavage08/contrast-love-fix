@@ -87,7 +87,7 @@ const WegoHome = () => {
               to="/wego/about"
               className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
             >
-              Learn more about WeGo <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              Learn more about the Mobile Health Clinic <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </section>
 

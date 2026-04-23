@@ -13,8 +13,8 @@ const WegoAbout = () => {
           </h1>
           <div aria-hidden="true" className="mt-3 h-1 w-20 bg-accent-gold" />
           <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
-            The Mobile Health Clinic — known as WeGo — is the East Central
-            Health District's traveling public health unit. It brings essential
+            The Mobile Health Clinic is the East Central Health District's
+            traveling public health unit. It brings essential
             screenings, immunizations, and clinical services directly to
             communities across our 13-county service area.
           </p>
