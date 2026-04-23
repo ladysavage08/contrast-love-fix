@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, AlertTriangle, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, AlertTriangle, Clock, CalendarX } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ContactForm from "@/components/ContactForm";
@@ -117,6 +117,40 @@ const Contact = () => {
                   Individual county offices may have different hours. Please
                   call ahead to confirm.
                 </p>
+
+                <div className="mt-5 border-t border-border pt-4">
+                  <div className="flex items-center gap-2">
+                    <CalendarX className="h-5 w-5 text-primary" aria-hidden="true" />
+                    <h3 className="text-lg font-semibold">Holiday Hours</h3>
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Offices are closed in observance of the following federal
+                    holidays:
+                  </p>
+                  <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
+                    <li>New Year's Day</li>
+                    <li>Martin Luther King Jr. Day</li>
+                    <li>Memorial Day</li>
+                    <li>Juneteenth</li>
+                    <li>Independence Day</li>
+                    <li>Labor Day</li>
+                    <li>Thanksgiving Day &amp; the day after</li>
+                    <li>Christmas Eve &amp; Christmas Day</li>
+                  </ul>
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    For the full Georgia state holiday schedule, see the{" "}
+                    <a
+                      href="https://team.georgia.gov/state-holidays/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary underline-offset-2 hover:underline"
+                    >
+                      official state holiday calendar
+                      <span className="sr-only"> (opens in new tab)</span>
+                    </a>
+                    .
+                  </p>
+                </div>
               </aside>
             </div>
           </div>
