@@ -5,29 +5,30 @@ import SiteFooter from "@/components/SiteFooter";
 import { useEvents } from "@/hooks/usePosts";
 import type { Post } from "@/hooks/usePosts";
 import { cn } from "@/lib/utils";
+import {
+  dateKeyFromDate,
+  eventDateKey,
+  formatDateKey,
+  todayKey as getTodayKey,
+} from "@/lib/eventDate";
 
 /**
  * Calendar of Events
  * - Data source: posts table where post_type = 'event' (managed in admin).
  * - Provides BOTH a monthly calendar view and a chronological list view.
  * - Mobile Clinic events (category includes "mobile") are visually highlighted.
+ *
+ * All date math (grid keys, selected-day lookup, upcoming filter, card labels)
+ * goes through the shared helpers in @/lib/eventDate so the same day is
+ * recognized consistently everywhere.
  */
 
 function isMobileClinic(e: Post) {
   const c = (e.category ?? "").toLowerCase();
   const t = (e.title ?? "").toLowerCase();
+  // "Mobile" event-type / category should still be treated as a regular event
+  // on the calendar — this only affects visual styling.
   return c.includes("mobile") || t.includes("mobile clinic") || t.includes("wego");
-}
-
-function formatEventDate(iso: string) {
-  // event_date is "YYYY-MM-DD" — parse as local date, not UTC.
-  const [y, m, d] = iso.split("-").map(Number);
-  return new Date(y, m - 1, d).toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
 }
 
 function startOfMonth(d: Date) {
@@ -41,18 +42,12 @@ const Calendar = () => {
   const [cursor, setCursor] = useState(() => startOfMonth(new Date()));
   const [selected, setSelected] = useState<string | null>(null);
 
-  // Effective date for an event: event_date if present, otherwise the date
-  // portion of published_at. This ensures events created without an explicit
-  // event_date (e.g. from the mobile app or admin shortcut) still land on the
-  // calendar instead of being silently dropped.
-  const effectiveDateKey = (e: Post) =>
-    (e.event_date ?? e.published_at ?? "").slice(0, 10);
-
-  // Group events by YYYY-MM-DD
+  // Group events by their canonical day key. Uses the SAME helper that the
+  // grid below uses to build cell keys — guarantees clicks match dots.
   const eventsByDate = useMemo(() => {
     const map = new Map<string, Post[]>();
     for (const e of events) {
-      const key = effectiveDateKey(e);
+      const key = eventDateKey(e);
       if (!key) continue;
       if (!map.has(key)) map.set(key, []);
       map.get(key)!.push(e);
@@ -60,17 +55,27 @@ const Calendar = () => {
     return map;
   }, [events]);
 
-  // Upcoming list (today onward)
-  const todayKey = new Date().toISOString().slice(0, 10);
+  // Today, in local time, as YYYY-MM-DD.
+  const todayKey = getTodayKey();
+
+  // Upcoming list (today onward), sorted by effective date.
   const upcoming = useMemo(
     () =>
       events
-        .filter((e) => effectiveDateKey(e) >= todayKey)
-        .sort((a, b) => (effectiveDateKey(a) < effectiveDateKey(b) ? -1 : 1)),
+        .filter((e) => {
+          const k = eventDateKey(e);
+          return k && k >= todayKey;
+        })
+        .sort((a, b) => {
+          const ka = eventDateKey(a);
+          const kb = eventDateKey(b);
+          return ka < kb ? -1 : ka > kb ? 1 : 0;
+        }),
     [events, todayKey],
   );
 
-  // Build calendar grid for current cursor month
+  // Build calendar grid for current cursor month — keys built via the SAME
+  // helper used by eventsByDate.
   const grid = useMemo(() => {
     const first = startOfMonth(cursor);
     const startWeekday = first.getDay();
@@ -79,8 +84,7 @@ const Calendar = () => {
     for (let i = 0; i < startWeekday; i++) cells.push({ date: null, key: null });
     for (let d = 1; d <= daysInMonth; d++) {
       const date = new Date(cursor.getFullYear(), cursor.getMonth(), d);
-      const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-      cells.push({ date, key });
+      cells.push({ date, key: dateKeyFromDate(date) });
     }
     while (cells.length % 7 !== 0) cells.push({ date: null, key: null });
     return cells;
@@ -88,6 +92,7 @@ const Calendar = () => {
 
   const monthLabel = cursor.toLocaleDateString("en-US", { month: "long", year: "numeric" });
   const selectedEvents = selected ? eventsByDate.get(selected) ?? [] : [];
+
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
@@ -219,7 +224,7 @@ const Calendar = () => {
             {selected && (
               <div className="mt-6 border-t border-border pt-4">
                 <h3 className="mb-3 text-base font-semibold">
-                  {formatEventDate(selected)}
+                  {formatDateKey(selected)}
                 </h3>
                 {selectedEvents.length === 0 ? (
                   <p className="text-sm text-muted-foreground">No events scheduled.</p>
@@ -248,7 +253,7 @@ const Calendar = () => {
                 {upcoming.slice(0, 5).map((e) => (
                   <li key={e.id} className="border-b border-border/60 pb-3 last:border-0 last:pb-0">
                     <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                      {formatEventDate(effectiveDateKey(e))}
+                      {formatDateKey(eventDateKey(e))}
                     </p>
                     <p className="font-medium text-foreground">{e.title}</p>
                     {e.event_location && (
@@ -319,15 +324,11 @@ function EventCard({ event, compact = false }: { event: Post; compact?: boolean 
             {event.title}
           </h3>
           <dl className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted-foreground">
-            {(event.event_date || event.published_at) && (
+            {eventDateKey(event) && (
               <div className="inline-flex items-center gap-1.5">
                 <CalendarIcon className="h-4 w-4" aria-hidden="true" />
                 <dt className="sr-only">Date</dt>
-                <dd>
-                  {formatEventDate(
-                    (event.event_date ?? event.published_at).slice(0, 10),
-                  )}
-                </dd>
+                <dd>{formatDateKey(eventDateKey(event))}</dd>
               </div>
             )}
             {event.event_time && (
