@@ -1,10 +1,12 @@
 import { useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { Search, Phone, Mail, MapPin, ChevronDown } from "lucide-react";
+import { Search, Phone, Mail, MapPin, ChevronDown, LogIn, LogOut } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import StaffImport from "@/components/StaffImport";
 import { supabase } from "@/integrations/supabase/client";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
 
 type Staff = {
   id: string;
@@ -36,6 +38,8 @@ const useStaff = () =>
 
 const Directory = () => {
   const { data: staff = [], isLoading, error } = useStaff();
+  const { isAdmin, user } = useAdminAuth();
+  const queryClient = useQueryClient();
   const [query, setQuery] = useState("");
   const [department, setDepartment] = useState("");
   const [county, setCounty] = useState("");
