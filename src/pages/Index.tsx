@@ -29,7 +29,7 @@ import { usePosts, formatPostDate } from "@/hooks/usePosts";
  */
 
 const quickLinks = [
-  { icon: Stethoscope, label: "Mobile Health Clinic", href: "/mobile-health-clinic" },
+  { icon: Stethoscope, label: "Mobile Health Clinic", href: "/wego" },
   { icon: FileText, label: "Birth/Death Certificates", href: "/vital-records" },
   { icon: Phone, label: "ECHD Directory", href: "/directory" },
   { icon: Heart, label: "Immunizations", href: "/immunizations" },
