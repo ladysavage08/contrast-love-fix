@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload, X } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
