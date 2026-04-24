@@ -112,7 +112,28 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  *:focus-visible {
+    outline: 3px solid hsl(var(--primary));
+    outline-offset: 3px;
+  }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  [role="button"],
+  [role="tab"],
+  summary {
+    min-height: 44px;
+  }
+
+  a,
+  button {
+    text-underline-offset: 0.2em;
   }
 }
