@@ -16,6 +16,7 @@ import SiteFooter from "@/components/SiteFooter";
 import directorHeadshot from "@/assets/director-headshot.jpg";
 import aboutHero from "@/assets/about-hero.jpg";
 import aboutWho from "@/assets/about-who.jpg";
+import { PUBLIC_HEALTH_SERIES_PATH } from "@/lib/publicHealthSeries";
 
 /**
  * About ECHD — mirrors the homepage rhythm:
@@ -149,6 +150,18 @@ const About = () => {
                 When transportation, time, or distance get in the way, we come
                 to you — because <em>we go where you are</em>.
               </p>
+              <div className="mt-6 rounded-lg border border-border bg-muted/40 p-4">
+                <h3 className="text-base font-semibold">What Is Public Health? Article Series</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Learn more about public health topics through our monthly Augusta Medical Examiner article series.
+                </p>
+                <a
+                  href={PUBLIC_HEALTH_SERIES_PATH}
+                  className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-primary underline underline-offset-2 hover:underline focus-visible:underline"
+                >
+                  Visit the article series <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </a>
+              </div>
             </div>
             <div>
               <img

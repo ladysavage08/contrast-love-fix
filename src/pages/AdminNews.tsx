@@ -28,6 +28,11 @@ type Draft = {
   slug: string;
   post_type: "news" | "event";
   category: string;
+  author_name: string;
+  publication_name: string;
+  article_page_reference: string;
+  external_publication_url: string;
+  download_url: string;
   excerpt: string;
   body: string;
   featured_image_url: string;
@@ -48,6 +53,11 @@ const emptyDraft = (): Draft => ({
   slug: "",
   post_type: "news",
   category: "",
+  author_name: "",
+  publication_name: "",
+  article_page_reference: "",
+  external_publication_url: "",
+  download_url: "",
   excerpt: "",
   body: "",
   featured_image_url: "",
@@ -80,6 +90,11 @@ function postToDraft(p: Post): Draft {
     slug: p.slug,
     post_type: p.post_type,
     category: p.category ?? "",
+    author_name: p.author_name ?? "",
+    publication_name: p.publication_name ?? "",
+    article_page_reference: p.article_page_reference ?? "",
+    external_publication_url: p.external_publication_url ?? "",
+    download_url: p.download_url ?? "",
     excerpt: p.excerpt ?? "",
     body: p.body ?? "",
     featured_image_url: p.featured_image_url ?? "",
@@ -170,6 +185,11 @@ const AdminNews = () => {
       slug,
       post_type: editing.post_type,
       category: editing.category.trim() || null,
+      author_name: editing.author_name.trim() || null,
+      publication_name: editing.publication_name.trim() || null,
+      article_page_reference: editing.article_page_reference.trim() || null,
+      external_publication_url: editing.external_publication_url.trim() || null,
+      download_url: editing.download_url.trim() || null,
       excerpt: editing.excerpt.trim() || null,
       body: editing.body.trim() || null,
       featured_image_url: editing.featured_image_url.trim() || null,
@@ -540,6 +560,63 @@ function PostEditor({
             onChange={(e) => set("category", e.target.value)}
             maxLength={80}
             placeholder="Announcement, Press release, etc."
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="author_name">Author (optional)</Label>
+          <Input
+            id="author_name"
+            value={draft.author_name}
+            onChange={(e) => set("author_name", e.target.value)}
+            maxLength={120}
+            placeholder="Lee Donohue, MD"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="publication_name">Publication (optional)</Label>
+          <Input
+            id="publication_name"
+            value={draft.publication_name}
+            onChange={(e) => set("publication_name", e.target.value)}
+            maxLength={160}
+            placeholder="Augusta Medical Examiner"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="article_page_reference">Article pages (optional)</Label>
+          <Input
+            id="article_page_reference"
+            value={draft.article_page_reference}
+            onChange={(e) => set("article_page_reference", e.target.value)}
+            maxLength={80}
+            placeholder="Pages 1 and 3"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="external_publication_url">External article link (optional)</Label>
+          <Input
+            id="external_publication_url"
+            type="url"
+            value={draft.external_publication_url}
+            onChange={(e) => set("external_publication_url", e.target.value)}
+            maxLength={500}
+            placeholder="https://issuu.com/..."
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="download_url">Download link (optional)</Label>
+          <Input
+            id="download_url"
+            type="url"
+            value={draft.download_url}
+            onChange={(e) => set("download_url", e.target.value)}
+            maxLength={500}
+            placeholder="https://...pdf"
           />
         </div>
 

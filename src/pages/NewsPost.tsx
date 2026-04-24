@@ -82,6 +82,28 @@ const NewsPost = () => {
                   {post.excerpt}
                 </p>
               )}
+              {(post.author_name || post.publication_name || post.article_page_reference) && (
+                <dl className="mt-4 grid gap-2 text-sm text-muted-foreground sm:grid-cols-3">
+                  {post.author_name && (
+                    <div>
+                      <dt className="font-semibold text-foreground">Author</dt>
+                      <dd>{post.author_name}</dd>
+                    </div>
+                  )}
+                  {post.publication_name && (
+                    <div>
+                      <dt className="font-semibold text-foreground">Publication</dt>
+                      <dd>{post.publication_name}</dd>
+                    </div>
+                  )}
+                  {post.article_page_reference && (
+                    <div>
+                      <dt className="font-semibold text-foreground">Pages</dt>
+                      <dd>{post.article_page_reference}</dd>
+                    </div>
+                  )}
+                </dl>
+              )}
             </header>
 
             {post.featured_image_url && (
@@ -174,6 +196,36 @@ const NewsPost = () => {
                 className="prose prose-slate max-w-none text-foreground prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-em:text-foreground prose-li:text-foreground prose-a:text-primary prose-a:underline prose-a:underline-offset-2"
                 dangerouslySetInnerHTML={{ __html: normalizeSanitizedPostBody(post.body) }}
               />
+            )}
+
+            {(post.external_publication_url || post.download_url) && (
+              <section aria-labelledby="publication-links" className="mt-8 rounded-lg border border-border bg-muted/40 p-5">
+                <h2 id="publication-links" className="text-lg font-semibold">Article Links</h2>
+                <div className="mt-3 flex flex-wrap gap-3">
+                  {post.external_publication_url && (
+                    <a
+                      href={post.external_publication_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                    >
+                      Read this article in the publication
+                      <span className="sr-only"> (opens in new tab)</span>
+                    </a>
+                  )}
+                  {post.download_url && (
+                    <a
+                      href={post.download_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded border border-border bg-background px-4 py-2.5 text-sm font-semibold text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                    >
+                      Download article PDF
+                      <span className="sr-only"> (opens in new tab)</span>
+                    </a>
+                  )}
+                </div>
+              </section>
             )}
 
             {post.cta_url && post.cta_label && (

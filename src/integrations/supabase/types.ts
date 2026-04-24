@@ -58,21 +58,26 @@ export type Database = {
       }
       posts: {
         Row: {
+          article_page_reference: string | null
+          author_name: string | null
           body: string | null
           category: string | null
           created_at: string
           cta_label: string | null
           cta_url: string | null
+          download_url: string | null
           event_date: string | null
           event_link: string | null
           event_location: string | null
           event_time: string | null
           excerpt: string | null
+          external_publication_url: string | null
           featured_image_alt: string | null
           featured_image_decorative: boolean
           featured_image_url: string | null
           id: string
           post_type: string
+          publication_name: string | null
           published: boolean
           published_at: string
           slug: string
@@ -80,21 +85,26 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          article_page_reference?: string | null
+          author_name?: string | null
           body?: string | null
           category?: string | null
           created_at?: string
           cta_label?: string | null
           cta_url?: string | null
+          download_url?: string | null
           event_date?: string | null
           event_link?: string | null
           event_location?: string | null
           event_time?: string | null
           excerpt?: string | null
+          external_publication_url?: string | null
           featured_image_alt?: string | null
           featured_image_decorative?: boolean
           featured_image_url?: string | null
           id?: string
           post_type?: string
+          publication_name?: string | null
           published?: boolean
           published_at?: string
           slug: string
@@ -102,21 +112,26 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          article_page_reference?: string | null
+          author_name?: string | null
           body?: string | null
           category?: string | null
           created_at?: string
           cta_label?: string | null
           cta_url?: string | null
+          download_url?: string | null
           event_date?: string | null
           event_link?: string | null
           event_location?: string | null
           event_time?: string | null
           excerpt?: string | null
+          external_publication_url?: string | null
           featured_image_alt?: string | null
           featured_image_decorative?: boolean
           featured_image_url?: string | null
           id?: string
           post_type?: string
+          publication_name?: string | null
           published?: boolean
           published_at?: string
           slug?: string

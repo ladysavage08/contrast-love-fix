@@ -14,6 +14,7 @@ import SiteFooter from "@/components/SiteFooter";
 import SocialIcons from "@/components/SocialIcons";
 import { usePosts, useEvents, formatPostDate } from "@/hooks/usePosts";
 import { eventDateKey, formatDateKey, isAllDayEvent } from "@/lib/eventDate";
+import { PUBLIC_HEALTH_SERIES_PATH } from "@/lib/publicHealthSeries";
 import { Calendar as CalendarIcon, MapPin } from "lucide-react";
 
 /**
@@ -195,6 +196,21 @@ const Index = () => {
                 View All News &amp; Events <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
+
+            <section aria-labelledby="public-health-series-callout" className="mt-6 rounded-lg border border-border bg-muted/40 p-5">
+              <h3 id="public-health-series-callout" className="text-lg font-semibold">
+                What Is Public Health? Article Series
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Read monthly public education articles from the Augusta Medical Examiner.
+              </p>
+              <a
+                href={PUBLIC_HEALTH_SERIES_PATH}
+                className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-primary underline underline-offset-2 hover:underline focus-visible:underline"
+              >
+                Browse the Public Health article series <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </section>
           </section>
 
           {upcomingEvents.length > 0 && (
