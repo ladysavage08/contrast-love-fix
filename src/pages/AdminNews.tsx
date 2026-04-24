@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft } from "lucide-react";
+import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload, X } from "lucide-react";
+import { useRef, useState as useReactState } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -538,14 +539,10 @@ function PostEditor({
         </div>
 
         <div className="sm:col-span-2">
-          <Label htmlFor="featured_image_url">Featured image URL (optional)</Label>
-          <Input
-            id="featured_image_url"
-            type="url"
+          <Label htmlFor="featured_image_url">Featured image (optional)</Label>
+          <FeaturedImageField
             value={draft.featured_image_url}
-            onChange={(e) => set("featured_image_url", e.target.value)}
-            maxLength={500}
-            placeholder="https://…"
+            onChange={(v) => set("featured_image_url", v)}
           />
         </div>
 
