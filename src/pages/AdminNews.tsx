@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft } from "lucide-react";
+import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload, X } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -538,14 +538,10 @@ function PostEditor({
         </div>
 
         <div className="sm:col-span-2">
-          <Label htmlFor="featured_image_url">Featured image URL (optional)</Label>
-          <Input
-            id="featured_image_url"
-            type="url"
+          <Label htmlFor="featured_image_url">Featured image (optional)</Label>
+          <FeaturedImageField
             value={draft.featured_image_url}
-            onChange={(e) => set("featured_image_url", e.target.value)}
-            maxLength={500}
-            placeholder="https://…"
+            onChange={(v) => set("featured_image_url", v)}
           />
         </div>
 
@@ -644,4 +640,114 @@ function PostEditor({
   );
 }
 
+function FeaturedImageField({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  const { toast } = useToast();
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+
+  async function handleFile(file: File) {
+    if (!file.type.startsWith("image/")) {
+      toast({ title: "Please choose an image file", variant: "destructive" });
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        title: "Image too large",
+        description: "Max 5 MB. Please resize and try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setUploading(true);
+    const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+    const safeExt = /^[a-z0-9]+$/.test(ext) ? ext : "jpg";
+    const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${safeExt}`;
+
+    const { error } = await supabase.storage
+      .from("post-images")
+      .upload(path, file, { cacheControl: "3600", upsert: false });
+
+    if (error) {
+      setUploading(false);
+      toast({
+        title: "Upload failed",
+        description: error.message,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const { data } = supabase.storage.from("post-images").getPublicUrl(path);
+    onChange(data.publicUrl);
+    setUploading(false);
+    toast({ title: "Image uploaded" });
+  }
+
+  return (
+    <div className="space-y-2">
+      <div className="flex flex-wrap gap-2">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => fileRef.current?.click()}
+          disabled={uploading}
+        >
+          <Upload className="mr-1 h-4 w-4" />
+          {uploading ? "Uploading…" : "Upload from computer"}
+        </Button>
+        {value && (
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => onChange("")}
+          >
+            <X className="mr-1 h-4 w-4" /> Remove
+          </Button>
+        )}
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => {
+            const f = e.target.files?.[0];
+            if (f) handleFile(f);
+            e.target.value = "";
+          }}
+        />
+      </div>
+      <Input
+        id="featured_image_url"
+        type="url"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        maxLength={500}
+        placeholder="…or paste an image URL"
+      />
+      {value && (
+        <div className="mt-2 overflow-hidden rounded-md border border-border">
+          <img
+            src={value}
+            alt="Featured preview"
+            className="max-h-48 w-auto object-contain"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).style.display = "none";
+            }}
+          />
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">
+        JPG, PNG, or WebP up to 5 MB. Uploaded images are publicly accessible.
+      </p>
+    </div>
+  );
+}
+
 export default AdminNews;
+
