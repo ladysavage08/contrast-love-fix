@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload, X } from "lucide-react";
+import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload, X, Heading2, Heading3, Bold, Italic, List, Link as LinkIcon, Pilcrow } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -20,6 +20,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import type { Post } from "@/hooks/usePosts";
 import { sortPostsChronologically } from "@/lib/sortPosts";
+import { cn } from "@/lib/utils";
 
 type Draft = {
   id?: string;
@@ -555,13 +556,20 @@ function PostEditor({
 
         <div className="sm:col-span-2">
           <Label htmlFor="body">Body</Label>
+          <RichTextToolbar
+            onInsert={(value) => set("body", insertIntoBody(draft.body, value))}
+          />
           <Textarea
             id="body"
             value={draft.body}
             onChange={(e) => set("body", e.target.value)}
             rows={10}
-            placeholder="Separate paragraphs with a blank line."
+            placeholder="Separate paragraphs with a blank line, or use safe HTML formatting."
+            aria-describedby="body-help"
           />
+          <p id="body-help" className="mt-2 text-xs text-muted-foreground">
+            HTML formatting is supported. Use safe tags only. Do not paste scripts.
+          </p>
         </div>
 
         <div className="sm:col-span-2">
