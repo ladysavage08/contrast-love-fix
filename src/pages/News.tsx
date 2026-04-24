@@ -104,10 +104,10 @@ const News = () => {
                   )}
                   <Link
                     to={`/news/${post.slug}`}
-                    className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-2 hover:underline"
-                    aria-label={`Read more: ${post.title}`}
+                    className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary underline underline-offset-2 hover:underline"
+                    aria-label={`Read the full article: ${post.title}`}
                   >
-                    Read More <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    Read Full Article <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </div>
               </li>
