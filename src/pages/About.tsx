@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import directorHeadshot from "@/assets/director-headshot.jpg";
 import aboutHero from "@/assets/about-hero.jpg";
 import aboutWho from "@/assets/about-who.jpg";
 
@@ -410,46 +411,58 @@ const About = () => {
           className="border-t border-border"
         >
           <div className="container py-12 md:py-16">
-            <div className="mx-auto max-w-3xl">
+            <div className="mx-auto max-w-5xl">
               <h2
                 id="director-message-heading"
                 className="text-2xl font-semibold md:text-3xl"
               >
                 Health Director's Message
               </h2>
-              <div className="mt-6 space-y-4 text-base leading-relaxed text-foreground/90">
-                <p>
-                  Welcome to the East Central Public Health District website!
-                  I'm pleased you are reviewing our online resources and hope
-                  you will find this site easy to navigate and helpful.
-                </p>
-                <p>
-                  Our mission in public health is focused on creating healthier
-                  lives and a healthier community. We're all committed to
-                  improving quality of life through education, communication,
-                  and providing services, and close tracking of infectious
-                  diseases, as demonstrated in the ongoing pandemic.
-                </p>
-                <p>
-                  Relationships with local leaders, organizations, and schools
-                  are vital in maintaining a healthy, safe community for all
-                  those who live in our district.
-                </p>
-                <p>
-                  Please enjoy our website, know we are committed to ongoing
-                  health improvement efforts always and look forward to serving
-                  every member of our community in achieving greater health and
-                  longevity.
-                </p>
+              <div className="mt-6 grid gap-8 md:grid-cols-[220px_1fr] md:items-start">
+                <figure className="mx-auto md:mx-0">
+                  <img
+                    src={directorHeadshot}
+                    alt="Lee Donohue, MD — District 6 Health Director"
+                    className="h-auto w-[220px] rounded-lg object-cover shadow-sm"
+                    loading="lazy"
+                  />
+                </figure>
+                <div>
+                  <div className="space-y-4 text-base leading-relaxed text-foreground/90">
+                    <p>
+                      Welcome to the East Central Public Health District website!
+                      I'm pleased you are reviewing our online resources and hope
+                      you will find this site easy to navigate and helpful.
+                    </p>
+                    <p>
+                      Our mission in public health is focused on creating healthier
+                      lives and a healthier community. We're all committed to
+                      improving quality of life through education, communication,
+                      and providing services, and close tracking of infectious
+                      diseases, as demonstrated in the ongoing pandemic.
+                    </p>
+                    <p>
+                      Relationships with local leaders, organizations, and schools
+                      are vital in maintaining a healthy, safe community for all
+                      those who live in our district.
+                    </p>
+                    <p>
+                      Please enjoy our website, know we are committed to ongoing
+                      health improvement efforts always and look forward to serving
+                      every member of our community in achieving greater health and
+                      longevity.
+                    </p>
+                  </div>
+                  <footer className="mt-6 border-l-4 border-brand pl-4">
+                    <p className="font-semibold text-foreground">
+                      — Lee Donohue, MD
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      District 6 Health Director
+                    </p>
+                  </footer>
+                </div>
               </div>
-              <footer className="mt-6 border-l-4 border-brand pl-4">
-                <p className="font-semibold text-foreground">
-                  — Lee Donohue, MD
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  District 6 Health Director
-                </p>
-              </footer>
             </div>
           </div>
         </section>
