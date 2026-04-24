@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { usePosts, formatPostDate } from "@/hooks/usePosts";
+import { PUBLIC_HEALTH_SERIES_CATEGORY, PUBLIC_HEALTH_SERIES_PATH, isPublicHealthSeriesPost } from "@/lib/publicHealthSeries";
 
 const News = () => {
   const { data: posts, isLoading, error } = usePosts();
+  const seriesPosts = posts?.filter((post) => isPublicHealthSeriesPost(post.category)) ?? [];
+  const regularPosts = posts?.filter((post) => !isPublicHealthSeriesPost(post.category)) ?? [];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -28,6 +31,29 @@ const News = () => {
           </p>
         </header>
 
+        <section aria-labelledby="public-health-series-heading" className="mb-8 rounded-lg border border-border bg-muted/40 p-5">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div className="max-w-3xl">
+              <h2 id="public-health-series-heading" className="text-xl font-semibold">
+                What Is Public Health? Article Series
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Explore monthly Augusta Medical Examiner articles that explain public health topics in clear, community-focused language.
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Category: {PUBLIC_HEALTH_SERIES_CATEGORY}
+                {seriesPosts.length > 0 ? ` • ${seriesPosts.length} published entr${seriesPosts.length === 1 ? "y" : "ies"}` : ""}
+              </p>
+            </div>
+            <Link
+              to={PUBLIC_HEALTH_SERIES_PATH}
+              className="inline-flex items-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+            >
+              View article series <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </section>
+
         {isLoading && (
           <p className="text-muted-foreground">Loading posts…</p>
         )}
@@ -41,9 +67,9 @@ const News = () => {
           <p className="text-muted-foreground">No posts have been published yet.</p>
         )}
 
-        {posts && posts.length > 0 && (
+        {regularPosts.length > 0 && (
           <ul className="grid gap-6 sm:grid-cols-2">
-            {posts.map((post) => (
+            {regularPosts.map((post) => (
               <li
                 key={post.id}
                 className="flex flex-col overflow-hidden rounded-lg border border-border bg-card"
