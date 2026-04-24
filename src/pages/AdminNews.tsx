@@ -29,6 +29,8 @@ type Draft = {
   excerpt: string;
   body: string;
   featured_image_url: string;
+  featured_image_alt: string;
+  featured_image_decorative: boolean;
   published: boolean;
   published_at: string; // ISO date (YYYY-MM-DD) for input[type=date]
   event_date: string; // YYYY-MM-DD
@@ -47,6 +49,8 @@ const emptyDraft = (): Draft => ({
   excerpt: "",
   body: "",
   featured_image_url: "",
+  featured_image_alt: "",
+  featured_image_decorative: false,
   published: true,
   published_at: new Date().toISOString().slice(0, 10),
   event_date: "",
@@ -77,6 +81,8 @@ function postToDraft(p: Post): Draft {
     excerpt: p.excerpt ?? "",
     body: p.body ?? "",
     featured_image_url: p.featured_image_url ?? "",
+    featured_image_alt: p.featured_image_alt ?? "",
+    featured_image_decorative: p.featured_image_decorative ?? false,
     published: p.published,
     published_at: (p.published_at ?? "").slice(0, 10),
     event_date: p.event_date ?? "",
