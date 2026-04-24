@@ -68,7 +68,7 @@ const Programs = () => {
                       {p.summary}
                     </p>
                     <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-2 group-hover:underline">
-                      Learn more
+                      Learn more about {p.title}
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </span>
                   </Link>
