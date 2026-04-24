@@ -1,4 +1,6 @@
-import DOMPurify from "dompurify";
+import createDOMPurify from "dompurify";
+
+const DOMPurify = createDOMPurify(typeof window !== "undefined" ? window : undefined);
 
 const SAFE_HTML_TAGS = [
   "a",
