@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import type { Post } from "@/hooks/usePosts";
+import { sortPostsChronologically } from "@/lib/sortPosts";
 
 type Draft = {
   id?: string;
