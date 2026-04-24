@@ -132,7 +132,7 @@ const CountiesDropdown = ({ currentSlug }: CountiesDropdownProps) => {
       {/* Label → navigates to the Counties landing page. */}
       <a
         href="/counties"
-        className="flex flex-1 items-center justify-center px-3 py-3 text-center text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+        className="flex flex-1 items-center justify-center px-3 py-3 text-center text-sm font-medium hover:bg-brand-hover"
       >
         Counties
       </a>
@@ -146,7 +146,7 @@ const CountiesDropdown = ({ currentSlug }: CountiesDropdownProps) => {
         aria-label={open ? "Close counties menu" : "Open counties menu"}
         onClick={() => (open ? close() : openAndFocus(0))}
         onKeyDown={onTriggerKeyDown}
-        className="flex items-center pr-3 text-xs hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+        className="flex min-w-[44px] items-center justify-center pr-3 text-xs hover:bg-brand-hover"
       >
         <span aria-hidden="true">▾</span>
       </button>
@@ -170,7 +170,7 @@ const CountiesDropdown = ({ currentSlug }: CountiesDropdownProps) => {
                 tabIndex={open ? 0 : -1}
                 aria-current={isCurrent ? "page" : undefined}
                 onKeyDown={(e) => onItemKeyDown(e, index)}
-                className={`block rounded px-3 py-2 text-sm font-medium text-primary hover:bg-muted hover:underline focus-visible:bg-muted focus-visible:underline focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary ${
+                className={`block rounded px-3 py-2 text-sm font-medium text-primary underline-offset-2 hover:bg-muted hover:underline focus-visible:bg-muted focus-visible:underline ${
                   isCurrent ? "bg-muted" : ""
                 }`}
               >
