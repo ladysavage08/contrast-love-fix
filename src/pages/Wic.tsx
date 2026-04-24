@@ -176,7 +176,7 @@ const Wic = () => {
                     Call for Assistance <Phone className="h-4 w-4" aria-hidden="true" />
                   </a>
                   <a
-                    href="https://dph.georgia.gov/wic"
+                    href="https://ecphd-getwic.qminder.site/#/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 rounded border border-primary px-4 py-2.5 text-sm font-semibold text-primary hover:bg-muted"
