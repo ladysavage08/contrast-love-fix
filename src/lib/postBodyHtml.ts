@@ -31,15 +31,18 @@ export function sanitizePostBodyHtml(input: string) {
 export function normalizeSanitizedPostBody(input: string) {
   if (!input.trim()) return "";
 
-  const sanitized = sanitizePostBodyHtml(input).trim();
-  const looksLikeHtml = /<\/?[a-z][\s\S]*>/i.test(input);
+  const trimmedInput = input.trim();
+  const decodedInput = decodeHtmlEntities(trimmedInput);
+  const source = looksLikeHtml(trimmedInput) || looksLikeEncodedHtml(trimmedInput)
+    ? decodedInput
+    : trimmedInput;
+  const sanitized = sanitizePostBodyHtml(source).trim();
 
-  if (looksLikeHtml || sanitized !== input.trim()) {
+  if (looksLikeHtml(source) || sanitized !== source) {
     return enforceAccessibleLinks(sanitized);
   }
 
-  return input
-    .trim()
+  return trimmedInput
     .split(/\n{2,}/)
     .map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br />")}</p>`)
     .join("");
@@ -93,4 +96,29 @@ function escapeHtml(text: string) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+function looksLikeHtml(value: string) {
+  return /<\/?[a-z][\s\S]*>/i.test(value);
+}
+
+function looksLikeEncodedHtml(value: string) {
+  return /&lt;\/?[a-z][\s\S]*?&gt;/i.test(value);
+}
+
+function decodeHtmlEntities(value: string) {
+  if (!value.includes("&")) return value;
+
+  if (typeof window !== "undefined") {
+    const textarea = window.document.createElement("textarea");
+    textarea.innerHTML = value;
+    return textarea.value;
+  }
+
+  return value
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/&amp;/gi, "&");
 }
