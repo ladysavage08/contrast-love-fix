@@ -12,7 +12,6 @@ import {
 
 import community from "@/assets/slide-community.jpg";
 import mobileClinic from "@/assets/hero-mobile-clinic.jpg";
-import mobileClinic2 from "@/assets/hero-mobile-clinic-2.jpg";
 import immunization from "@/assets/slide-immunization.jpg";
 
 type Slide = {
@@ -41,14 +40,6 @@ const slides: Slide[] = [
     cta: { label: "See the schedule", href: "/wego/schedule" },
     // Mobile (portrait): center on the truck/DPH seal. Desktop (wide): shift right so the seal & slogan stay in view next to the caption on the left.
     focal: "object-[60%_center] sm:object-[70%_center]",
-  },
-  {
-    image: mobileClinic2,
-    alt: "East Central Public Health District Mobile Health Clinic truck parked outside a clinic building, displaying the slogan 'We Go Where You Are!' and the DPH seal listing the counties served.",
-    eyebrow: "Mobile Health Clinic",
-    title: "We go where you are — care delivered to your community.",
-    cta: { label: "View the schedule", href: "/wego/schedule" },
-    focal: "object-center",
   },
   {
     image: immunization,
