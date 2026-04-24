@@ -68,6 +68,8 @@ export type Database = {
           event_location: string | null
           event_time: string | null
           excerpt: string | null
+          featured_image_alt: string | null
+          featured_image_decorative: boolean
           featured_image_url: string | null
           id: string
           post_type: string
@@ -88,6 +90,8 @@ export type Database = {
           event_location?: string | null
           event_time?: string | null
           excerpt?: string | null
+          featured_image_alt?: string | null
+          featured_image_decorative?: boolean
           featured_image_url?: string | null
           id?: string
           post_type?: string
@@ -108,6 +112,8 @@ export type Database = {
           event_location?: string | null
           event_time?: string | null
           excerpt?: string | null
+          featured_image_alt?: string | null
+          featured_image_decorative?: boolean
           featured_image_url?: string | null
           id?: string
           post_type?: string
