@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import type { Post } from "@/hooks/usePosts";
+import { sortPostsChronologically } from "@/lib/sortPosts";
 
 type Draft = {
   id?: string;
@@ -133,8 +134,8 @@ const AdminNews = () => {
   }, [user, isAdmin]);
 
   const filteredPosts = useMemo(() => {
-    if (filter === "all") return posts;
-    return posts.filter((p) => p.post_type === filter);
+    const scoped = filter === "all" ? posts : posts.filter((p) => p.post_type === filter);
+    return sortPostsChronologically(scoped);
   }, [posts, filter]);
 
   async function handleSave() {

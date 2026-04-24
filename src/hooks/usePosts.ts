@@ -22,19 +22,21 @@ export type Post = {
   cta_url: string | null;
 };
 
+import { sortPostsChronologically } from "@/lib/sortPosts";
+
 export function usePosts(limit?: number) {
   return useQuery({
     queryKey: ["posts", limit ?? "all"],
     queryFn: async (): Promise<Post[]> => {
-      let q = supabase
+      // Fetch all published posts; sort client-side so events use event_date
+      // and news uses published_at (see sortPostsChronologically).
+      const { data, error } = await supabase
         .from("posts")
         .select("*")
-        .eq("published", true)
-        .order("published_at", { ascending: false });
-      if (limit) q = q.limit(limit);
-      const { data, error } = await q;
+        .eq("published", true);
       if (error) throw error;
-      return (data ?? []) as Post[];
+      const sorted = sortPostsChronologically((data ?? []) as Post[]);
+      return limit ? sorted.slice(0, limit) : sorted;
     },
   });
 }
