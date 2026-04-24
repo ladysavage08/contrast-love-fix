@@ -26,6 +26,18 @@ const SiteFooter = ({ showSocials = false, extraCopy }: SiteFooterProps) => {
           translation services are provided but have not been fully vetted by
           ECHD staff.
         </p>
+        <nav aria-label="Footer" className="mt-4">
+          <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <li>
+              <a
+                href="/accessibility"
+                className="font-medium text-primary underline underline-offset-2 hover:underline focus-visible:underline"
+              >
+                Accessibility
+              </a>
+            </li>
+          </ul>
+        </nav>
         <p className="mt-2">
           © {new Date().getFullYear()} East Central Health District — Georgia
           Department of Public Health.{extraCopy ? ` ${extraCopy}` : ""}
