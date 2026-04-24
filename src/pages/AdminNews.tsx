@@ -158,6 +158,13 @@ const AdminNews = () => {
       excerpt: editing.excerpt.trim() || null,
       body: editing.body.trim() || null,
       featured_image_url: editing.featured_image_url.trim() || null,
+      featured_image_alt: editing.featured_image_url.trim()
+        ? (editing.featured_image_decorative
+            ? null
+            : editing.featured_image_alt.trim() || null)
+        : null,
+      featured_image_decorative:
+        !!editing.featured_image_url.trim() && editing.featured_image_decorative,
       published: editing.published,
       published_at: editing.published_at
         ? new Date(editing.published_at).toISOString()
