@@ -619,6 +619,9 @@ function PostEditor({
             maxLength={500}
             placeholder="https://issuu.com/..."
           />
+          <p className="mt-1 text-xs text-muted-foreground">
+            Secondary link only. The article summary or full content should be readable on this site.
+          </p>
         </div>
 
         <div>
@@ -630,6 +633,33 @@ function PostEditor({
             onChange={(e) => set("download_url", e.target.value)}
             maxLength={500}
             placeholder="https://...pdf"
+          />
+          <p className="mt-1 text-xs text-muted-foreground">
+            Optional secondary download for a PDF or file attachment.
+          </p>
+        </div>
+
+        <div>
+          <Label htmlFor="download_file_type">Download file type (optional)</Label>
+          <Input
+            id="download_file_type"
+            value={draft.download_file_type}
+            onChange={(e) => set("download_file_type", e.target.value)}
+            maxLength={40}
+            placeholder="PDF"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="download_page_count">Download page count (optional)</Label>
+          <Input
+            id="download_page_count"
+            type="number"
+            inputMode="numeric"
+            min={1}
+            value={draft.download_page_count}
+            onChange={(e) => set("download_page_count", e.target.value.replace(/[^0-9]/g, ""))}
+            placeholder="2"
           />
         </div>
 
@@ -654,11 +684,11 @@ function PostEditor({
             value={draft.body}
             onChange={(e) => set("body", e.target.value)}
             rows={10}
-            placeholder="Separate paragraphs with a blank line, or use safe HTML formatting."
+            placeholder="Add the on-site article summary or full article using plain text or safe HTML."
             aria-describedby="body-help"
           />
           <p id="body-help" className="mt-2 text-xs text-muted-foreground">
-            HTML formatting is supported. Use safe tags only. Do not paste scripts.
+            HTML formatting is supported. Use safe tags only. Do not paste scripts. For article series entries, this should contain the readable summary or full article shown on the website.
           </p>
         </div>
 
