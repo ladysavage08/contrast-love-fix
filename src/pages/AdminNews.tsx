@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload, X } from "lucide-react";
+import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload, X, Heading2, Heading3, Bold, Italic, List, Link as LinkIcon, Pilcrow } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -20,6 +20,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import type { Post } from "@/hooks/usePosts";
 import { sortPostsChronologically } from "@/lib/sortPosts";
+import { cn } from "@/lib/utils";
 
 type Draft = {
   id?: string;
@@ -555,13 +556,20 @@ function PostEditor({
 
         <div className="sm:col-span-2">
           <Label htmlFor="body">Body</Label>
+          <RichTextToolbar
+            onInsert={(value) => set("body", insertIntoBody(draft.body, value))}
+          />
           <Textarea
             id="body"
             value={draft.body}
             onChange={(e) => set("body", e.target.value)}
             rows={10}
-            placeholder="Separate paragraphs with a blank line."
+            placeholder="Separate paragraphs with a blank line, or use safe HTML formatting."
+            aria-describedby="body-help"
           />
+          <p id="body-help" className="mt-2 text-xs text-muted-foreground">
+            HTML formatting is supported. Use safe tags only. Do not paste scripts.
+          </p>
         </div>
 
         <div className="sm:col-span-2">
@@ -668,6 +676,63 @@ function PostEditor({
         </Button>
       </div>
     </form>
+  );
+}
+
+function insertIntoBody(current: string, addition: string) {
+  const trimmedCurrent = current.trimEnd();
+  const spacer = trimmedCurrent ? "\n\n" : "";
+  return `${trimmedCurrent}${spacer}${addition}`;
+}
+
+function RichTextToolbar({ onInsert }: { onInsert: (value: string) => void }) {
+  const actions: Array<{
+    label: string;
+    icon: typeof Heading2;
+    insert: () => string | null;
+  }> = [
+    { label: "Heading 2", icon: Heading2, insert: () => "<h2>Section heading</h2>" },
+    { label: "Heading 3", icon: Heading3, insert: () => "<h3>Subsection heading</h3>" },
+    { label: "Paragraph", icon: Pilcrow, insert: () => "<p>Paragraph text.</p>" },
+    { label: "Bold", icon: Bold, insert: () => "<strong>Bold text</strong>" },
+    { label: "Italic", icon: Italic, insert: () => "<em>Italic text</em>" },
+    { label: "Bullet list", icon: List, insert: () => "<ul>\n  <li>List item</li>\n  <li>List item</li>\n</ul>" },
+    {
+      label: "Link",
+      icon: LinkIcon,
+      insert: () => {
+        const href = window.prompt("Enter the link URL", "https://");
+        if (!href) return null;
+        const text = window.prompt("Enter the link text", "Link text");
+        if (!text) return null;
+        const openInNewTab = window.confirm("Open this link in a new tab?");
+        return openInNewTab
+          ? `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`
+          : `<a href="${href}">${text}</a>`;
+      },
+    },
+  ];
+
+  return (
+    <div className="mb-2 flex flex-wrap gap-2" aria-label="Body formatting tools">
+      {actions.map(({ label, icon: Icon, insert }) => (
+        <Button
+          key={label}
+          type="button"
+          variant="outline"
+          size="sm"
+          className={cn("min-h-11 px-3")}
+          onClick={() => {
+            const value = insert();
+            if (value) onInsert(value);
+          }}
+          aria-label={`Insert ${label}`}
+        >
+          <Icon className="h-4 w-4" aria-hidden="true" />
+          <span>{label}</span>
+        </Button>
+      ))}
+    </div>
   );
 }
 

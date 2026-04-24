@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { usePost, formatPostDate } from "@/hooks/usePosts";
 import { isAllDayEvent } from "@/lib/eventDate";
+import { normalizeSanitizedPostBody } from "@/lib/postBodyHtml";
 
 const NewsPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -169,13 +170,10 @@ const NewsPost = () => {
               )}
 
             {post.body && (
-              <div className="prose prose-slate max-w-none text-foreground">
-                {post.body.split(/\n\n+/).map((para, i) => (
-                  <p key={i} className="mb-4 leading-relaxed">
-                    {para}
-                  </p>
-                ))}
-              </div>
+              <div
+                className="prose prose-slate max-w-none text-foreground prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-em:text-foreground prose-li:text-foreground prose-a:text-primary prose-a:underline prose-a:underline-offset-2"
+                dangerouslySetInnerHTML={{ __html: normalizeSanitizedPostBody(post.body) }}
+              />
             )}
 
             {post.cta_url && post.cta_label && (
