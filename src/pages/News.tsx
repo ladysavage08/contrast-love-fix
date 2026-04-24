@@ -51,7 +51,14 @@ const News = () => {
                 {post.featured_image_url ? (
                   <img
                     src={post.featured_image_url}
-                    alt={post.title}
+                    alt={
+                      post.featured_image_decorative
+                        ? ""
+                        : post.featured_image_alt ?? ""
+                    }
+                    {...(post.featured_image_decorative
+                      ? { role: "presentation", "aria-hidden": true }
+                      : {})}
                     loading="lazy"
                     className="h-48 w-full object-cover"
                   />

@@ -8,6 +8,8 @@ export type Post = {
   excerpt: string | null;
   body: string | null;
   featured_image_url: string | null;
+  featured_image_alt: string | null;
+  featured_image_decorative: boolean;
   post_type: "news" | "event";
   category: string | null;
   published: boolean;

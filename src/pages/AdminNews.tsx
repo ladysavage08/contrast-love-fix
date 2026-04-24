@@ -29,6 +29,8 @@ type Draft = {
   excerpt: string;
   body: string;
   featured_image_url: string;
+  featured_image_alt: string;
+  featured_image_decorative: boolean;
   published: boolean;
   published_at: string; // ISO date (YYYY-MM-DD) for input[type=date]
   event_date: string; // YYYY-MM-DD
@@ -47,6 +49,8 @@ const emptyDraft = (): Draft => ({
   excerpt: "",
   body: "",
   featured_image_url: "",
+  featured_image_alt: "",
+  featured_image_decorative: false,
   published: true,
   published_at: new Date().toISOString().slice(0, 10),
   event_date: "",
@@ -77,6 +81,8 @@ function postToDraft(p: Post): Draft {
     excerpt: p.excerpt ?? "",
     body: p.body ?? "",
     featured_image_url: p.featured_image_url ?? "",
+    featured_image_alt: p.featured_image_alt ?? "",
+    featured_image_decorative: p.featured_image_decorative ?? false,
     published: p.published,
     published_at: (p.published_at ?? "").slice(0, 10),
     event_date: p.event_date ?? "",
@@ -142,6 +148,19 @@ const AdminNews = () => {
       toast({ title: "Slug is required", variant: "destructive" });
       return;
     }
+    if (
+      editing.featured_image_url.trim() &&
+      !editing.featured_image_decorative &&
+      !editing.featured_image_alt.trim()
+    ) {
+      toast({
+        title: "Alt text required",
+        description:
+          "For ADA compliance, describe the image or mark it as decorative.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     setSaving(true);
     const payload = {
@@ -152,6 +171,13 @@ const AdminNews = () => {
       excerpt: editing.excerpt.trim() || null,
       body: editing.body.trim() || null,
       featured_image_url: editing.featured_image_url.trim() || null,
+      featured_image_alt: editing.featured_image_url.trim()
+        ? (editing.featured_image_decorative
+            ? null
+            : editing.featured_image_alt.trim() || null)
+        : null,
+      featured_image_decorative:
+        !!editing.featured_image_url.trim() && editing.featured_image_decorative,
       published: editing.published,
       published_at: editing.published_at
         ? new Date(editing.published_at).toISOString()
@@ -541,7 +567,11 @@ function PostEditor({
           <Label htmlFor="featured_image_url">Featured image (optional)</Label>
           <FeaturedImageField
             value={draft.featured_image_url}
+            alt={draft.featured_image_alt}
+            decorative={draft.featured_image_decorative}
             onChange={(v) => set("featured_image_url", v)}
+            onAltChange={(v) => set("featured_image_alt", v)}
+            onDecorativeChange={(v) => set("featured_image_decorative", v)}
           />
         </div>
 
@@ -642,14 +672,24 @@ function PostEditor({
 
 function FeaturedImageField({
   value,
+  alt,
+  decorative,
   onChange,
+  onAltChange,
+  onDecorativeChange,
 }: {
   value: string;
+  alt: string;
+  decorative: boolean;
   onChange: (v: string) => void;
+  onAltChange: (v: string) => void;
+  onDecorativeChange: (v: boolean) => void;
 }) {
   const { toast } = useToast();
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+
+  const altMissing = !!value && !decorative && !alt.trim();
 
   async function handleFile(file: File) {
     if (!file.type.startsWith("image/")) {
@@ -734,7 +774,7 @@ function FeaturedImageField({
         <div className="mt-2 overflow-hidden rounded-md border border-border">
           <img
             src={value}
-            alt="Featured preview"
+            alt={decorative ? "" : alt || "Featured image preview"}
             className="max-h-48 w-auto object-contain"
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).style.display = "none";
@@ -742,6 +782,54 @@ function FeaturedImageField({
           />
         </div>
       )}
+
+      {value && (
+        <div className="mt-3 space-y-2 rounded-md border border-border bg-background p-3">
+          <Label htmlFor="featured_image_alt" className="text-sm font-semibold">
+            Alt text <span className="text-destructive">*</span>
+          </Label>
+          <Input
+            id="featured_image_alt"
+            value={alt}
+            onChange={(e) => onAltChange(e.target.value)}
+            maxLength={200}
+            disabled={decorative}
+            placeholder="Describe what's in the image (e.g. 'Nurse administering a flu shot to a patient')"
+            aria-describedby="alt-help"
+            aria-invalid={altMissing}
+          />
+          <p id="alt-help" className="text-xs text-muted-foreground">
+            Required for ADA / WCAG accessibility. Describe the image's
+            content and purpose for users who can't see it. Don't start with
+            "Image of…" — screen readers already announce that.
+          </p>
+          {altMissing && (
+            <p role="alert" className="text-xs font-medium text-destructive">
+              Add alt text or mark the image as decorative before saving.
+            </p>
+          )}
+          <div className="flex items-start gap-3 pt-1">
+            <Switch
+              id="featured_image_decorative"
+              checked={decorative}
+              onCheckedChange={onDecorativeChange}
+            />
+            <div>
+              <Label
+                htmlFor="featured_image_decorative"
+                className="cursor-pointer text-sm"
+              >
+                This image is decorative
+              </Label>
+              <p className="text-xs text-muted-foreground">
+                Use only if the image adds no information (pure decoration).
+                Screen readers will skip it.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <p className="text-xs text-muted-foreground">
         JPG, PNG, or WebP up to 5 MB. Uploaded images are publicly accessible.
       </p>
