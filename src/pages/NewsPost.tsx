@@ -86,7 +86,14 @@ const NewsPost = () => {
             {post.featured_image_url && (
               <img
                 src={post.featured_image_url}
-                alt={post.title}
+                alt={
+                  post.featured_image_decorative
+                    ? ""
+                    : post.featured_image_alt ?? ""
+                }
+                {...(post.featured_image_decorative
+                  ? { role: "presentation", "aria-hidden": true }
+                  : {})}
                 className="mb-6 w-full rounded-lg object-cover"
               />
             )}

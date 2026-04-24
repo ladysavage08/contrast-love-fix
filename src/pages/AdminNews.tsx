@@ -148,6 +148,19 @@ const AdminNews = () => {
       toast({ title: "Slug is required", variant: "destructive" });
       return;
     }
+    if (
+      editing.featured_image_url.trim() &&
+      !editing.featured_image_decorative &&
+      !editing.featured_image_alt.trim()
+    ) {
+      toast({
+        title: "Alt text required",
+        description:
+          "For ADA compliance, describe the image or mark it as decorative.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     setSaving(true);
     const payload = {
