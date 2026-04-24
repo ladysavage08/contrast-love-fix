@@ -36,10 +36,10 @@ const tools: Tool[] = [
   {
     title: "News & Events",
     description:
-      "View the public News and Calendar pages. Posts are managed in the backend database (posts table).",
-    to: "/news",
+      "Create, edit, publish, or remove news posts and calendar events. Changes go live immediately.",
+    to: "/admin/news",
     icon: Newspaper,
-    cta: "View news",
+    cta: "Manage posts",
   },
   {
     title: "Site Alerts",
