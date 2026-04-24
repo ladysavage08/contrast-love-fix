@@ -32,6 +32,8 @@ type Draft = {
   publication_name: string;
   article_page_reference: string;
   external_publication_url: string;
+  download_file_type: string;
+  download_page_count: string;
   download_url: string;
   excerpt: string;
   body: string;
@@ -57,6 +59,8 @@ const emptyDraft = (): Draft => ({
   publication_name: "",
   article_page_reference: "",
   external_publication_url: "",
+  download_file_type: "PDF",
+  download_page_count: "",
   download_url: "",
   excerpt: "",
   body: "",
@@ -94,6 +98,9 @@ function postToDraft(p: Post): Draft {
     publication_name: p.publication_name ?? "",
     article_page_reference: p.article_page_reference ?? "",
     external_publication_url: p.external_publication_url ?? "",
+    download_file_type: p.download_file_type ?? "PDF",
+    download_page_count:
+      typeof p.download_page_count === "number" ? String(p.download_page_count) : "",
     download_url: p.download_url ?? "",
     excerpt: p.excerpt ?? "",
     body: p.body ?? "",
@@ -189,6 +196,12 @@ const AdminNews = () => {
       publication_name: editing.publication_name.trim() || null,
       article_page_reference: editing.article_page_reference.trim() || null,
       external_publication_url: editing.external_publication_url.trim() || null,
+      download_file_type: editing.download_url.trim()
+        ? editing.download_file_type.trim() || "PDF"
+        : null,
+      download_page_count: editing.download_url.trim() && editing.download_page_count.trim()
+        ? Number(editing.download_page_count)
+        : null,
       download_url: editing.download_url.trim() || null,
       excerpt: editing.excerpt.trim() || null,
       body: editing.body.trim() || null,
