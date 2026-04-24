@@ -9,6 +9,8 @@ export type Post = {
   publication_name: string | null;
   article_page_reference: string | null;
   external_publication_url: string | null;
+  download_file_type: string | null;
+  download_page_count: number | null;
   download_url: string | null;
   excerpt: string | null;
   body: string | null;

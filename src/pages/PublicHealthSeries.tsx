@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { usePostsByCategory } from "@/hooks/usePosts";
 import { PUBLIC_HEALTH_SERIES_CATEGORY } from "@/lib/publicHealthSeries";
+import { normalizeSanitizedPostBody } from "@/lib/postBodyHtml";
 
 const PublicHealthSeries = () => {
   const { data: posts, isLoading, error } = usePostsByCategory(PUBLIC_HEALTH_SERIES_CATEGORY);
@@ -47,8 +48,9 @@ const PublicHealthSeries = () => {
           <ul className="space-y-5">
             {posts.map((post) => (
               <li key={post.id} className="rounded-lg border border-border bg-card p-5">
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div className="min-w-0 flex-1">
+                <article aria-labelledby={`series-entry-${post.id}`}>
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div className="min-w-0 flex-1">
                     <div className="mb-2 flex flex-wrap items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground">
                       <span className="inline-flex items-center gap-1">
                         <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
@@ -64,21 +66,32 @@ const PublicHealthSeries = () => {
                         </>
                       )}
                     </div>
-                    <h2 className="text-xl font-semibold leading-snug">
+                    <h2 id={`series-entry-${post.id}`} className="text-xl font-semibold leading-snug">
                       <Link to={`/news/${post.slug}`} className="text-primary underline-offset-2 hover:underline">
                         {post.title}
                       </Link>
                     </h2>
-                    {post.author_name && (
-                      <p className="mt-2 text-sm text-muted-foreground">By {post.author_name}</p>
-                    )}
-                    {post.excerpt && (
-                      <p className="mt-3 text-sm text-muted-foreground">{post.excerpt}</p>
-                    )}
-                    <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+                    <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-4">
+                      {post.author_name && (
+                        <div>
+                          <dt className="font-semibold text-foreground">Author</dt>
+                          <dd className="text-muted-foreground">{post.author_name}</dd>
+                        </div>
+                      )}
+                      {(post.publication_name || post.published_at) && (
+                        <div>
+                          <dt className="font-semibold text-foreground">Publication</dt>
+                          <dd className="text-muted-foreground">
+                            {post.publication_name ?? "Publication"}
+                            {post.published_at && (
+                              <>, {new Date(post.published_at).toLocaleDateString("en-US", { month: "long", year: "numeric" })}</>
+                            )}
+                          </dd>
+                        </div>
+                      )}
                       {post.article_page_reference && (
                         <div>
-                          <dt className="font-semibold text-foreground">Article pages</dt>
+                          <dt className="font-semibold text-foreground">Page references</dt>
                           <dd className="text-muted-foreground">{post.article_page_reference}</dd>
                         </div>
                       )}
@@ -105,8 +118,8 @@ const PublicHealthSeries = () => {
                         className="inline-flex items-center justify-center gap-2 rounded border border-border bg-background px-4 py-2.5 text-sm font-semibold text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                       >
                         <BookOpen className="h-4 w-4" aria-hidden="true" />
-                        Open Augusta Medical Examiner article
-                        <span className="sr-only"> (opens in new tab)</span>
+                        View full publication (external link)
+                        <span className="sr-only">, opens in new tab</span>
                       </a>
                     )}
                     {post.download_url && (
@@ -117,12 +130,27 @@ const PublicHealthSeries = () => {
                         className="inline-flex items-center justify-center gap-2 rounded border border-border bg-background px-4 py-2.5 text-sm font-semibold text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                       >
                         <Download className="h-4 w-4" aria-hidden="true" />
-                        Download article PDF
-                        <span className="sr-only"> (opens in new tab)</span>
+                        {`Download article ${post.download_file_type ?? "PDF"}${post.download_page_count ? ` (${post.download_page_count} pages)` : ""}`}
+                        <span className="sr-only">, opens in new tab</span>
                       </a>
                     )}
                   </div>
-                </div>
+                  </div>
+
+                  <div className="mt-6 border-t border-border pt-5">
+                    <h3 className="text-base font-semibold">Article summary on this website</h3>
+                    {post.body ? (
+                      <div
+                        className="prose prose-slate mt-3 max-w-none text-foreground prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-em:text-foreground prose-li:text-foreground prose-a:text-primary prose-a:underline prose-a:underline-offset-2"
+                        dangerouslySetInnerHTML={{ __html: normalizeSanitizedPostBody(post.body) }}
+                      />
+                    ) : post.excerpt ? (
+                      <p className="mt-3 text-sm text-muted-foreground">{post.excerpt}</p>
+                    ) : (
+                      <p className="mt-3 text-sm text-muted-foreground">A summary will be added to this article entry.</p>
+                    )}
+                  </div>
+                </article>
               </li>
             ))}
           </ul>

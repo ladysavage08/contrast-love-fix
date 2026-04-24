@@ -90,15 +90,20 @@ const NewsPost = () => {
                       <dd>{post.author_name}</dd>
                     </div>
                   )}
-                  {post.publication_name && (
+                  {(post.publication_name || post.published_at) && (
                     <div>
                       <dt className="font-semibold text-foreground">Publication</dt>
-                      <dd>{post.publication_name}</dd>
+                      <dd>
+                        {post.publication_name ?? "Publication"}
+                        {post.published_at && (
+                          <>, {new Date(post.published_at).toLocaleDateString("en-US", { month: "long", year: "numeric" })}</>
+                        )}
+                      </dd>
                     </div>
                   )}
                   {post.article_page_reference && (
                     <div>
-                      <dt className="font-semibold text-foreground">Pages</dt>
+                      <dt className="font-semibold text-foreground">Page references</dt>
                       <dd>{post.article_page_reference}</dd>
                     </div>
                   )}
@@ -209,8 +214,8 @@ const NewsPost = () => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                     >
-                      Read this article in the publication
-                      <span className="sr-only"> (opens in new tab)</span>
+                      View full publication (external link)
+                      <span className="sr-only">, opens in new tab</span>
                     </a>
                   )}
                   {post.download_url && (
@@ -220,8 +225,8 @@ const NewsPost = () => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded border border-border bg-background px-4 py-2.5 text-sm font-semibold text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                     >
-                      Download article PDF
-                      <span className="sr-only"> (opens in new tab)</span>
+                      {`Download article ${post.download_file_type ?? "PDF"}${post.download_page_count ? ` (${post.download_page_count} pages)` : ""}`}
+                      <span className="sr-only">, opens in new tab</span>
                     </a>
                   )}
                 </div>

@@ -65,6 +65,8 @@ export type Database = {
           created_at: string
           cta_label: string | null
           cta_url: string | null
+          download_file_type: string | null
+          download_page_count: number | null
           download_url: string | null
           event_date: string | null
           event_link: string | null
@@ -92,6 +94,8 @@ export type Database = {
           created_at?: string
           cta_label?: string | null
           cta_url?: string | null
+          download_file_type?: string | null
+          download_page_count?: number | null
           download_url?: string | null
           event_date?: string | null
           event_link?: string | null
@@ -119,6 +123,8 @@ export type Database = {
           created_at?: string
           cta_label?: string | null
           cta_url?: string | null
+          download_file_type?: string | null
+          download_page_count?: number | null
           download_url?: string | null
           event_date?: string | null
           event_link?: string | null
