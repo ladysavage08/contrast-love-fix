@@ -554,7 +554,11 @@ function PostEditor({
           <Label htmlFor="featured_image_url">Featured image (optional)</Label>
           <FeaturedImageField
             value={draft.featured_image_url}
+            alt={draft.featured_image_alt}
+            decorative={draft.featured_image_decorative}
             onChange={(v) => set("featured_image_url", v)}
+            onAltChange={(v) => set("featured_image_alt", v)}
+            onDecorativeChange={(v) => set("featured_image_decorative", v)}
           />
         </div>
 
@@ -655,14 +659,24 @@ function PostEditor({
 
 function FeaturedImageField({
   value,
+  alt,
+  decorative,
   onChange,
+  onAltChange,
+  onDecorativeChange,
 }: {
   value: string;
+  alt: string;
+  decorative: boolean;
   onChange: (v: string) => void;
+  onAltChange: (v: string) => void;
+  onDecorativeChange: (v: boolean) => void;
 }) {
   const { toast } = useToast();
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+
+  const altMissing = !!value && !decorative && !alt.trim();
 
   async function handleFile(file: File) {
     if (!file.type.startsWith("image/")) {
