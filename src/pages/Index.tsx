@@ -172,12 +172,12 @@ const Index = () => {
                         {item.excerpt}
                       </p>
                     )}
-                    <a
+                     <a
                       href={`/news/${item.slug}`}
-                      className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
-                      aria-label={`Read more: ${item.title}`}
+                       className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-primary underline underline-offset-2 hover:underline focus-visible:underline"
+                       aria-label={`Read the full article: ${item.title}`}
                     >
-                      Read More <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                       Read Full Article <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </a>
                   </div>
                 </li>
@@ -268,12 +268,12 @@ const Index = () => {
                 const external = href.startsWith("http");
                 return (
                   <li key={href}>
-                    <a
+                     <a
                       href={href}
                       {...(external
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
-                      className="flex items-center gap-3 rounded px-3 py-2 text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+                       className="flex items-center gap-3 rounded px-3 py-3 text-primary hover:bg-muted"
                     >
                       <Icon className="h-4 w-4" aria-hidden="true" />
                       <span className="font-medium underline-offset-2 hover:underline">
