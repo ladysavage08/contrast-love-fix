@@ -43,6 +43,14 @@ const slides: Slide[] = [
     focal: "object-[60%_center] sm:object-[70%_center]",
   },
   {
+    image: mobileClinic2,
+    alt: "East Central Public Health District Mobile Health Clinic truck parked outside a clinic building, displaying the slogan 'We Go Where You Are!' and the DPH seal listing the counties served.",
+    eyebrow: "Mobile Health Clinic",
+    title: "We go where you are — care delivered to your community.",
+    cta: { label: "View the schedule", href: "/wego/schedule" },
+    focal: "object-center",
+  },
+  {
     image: immunization,
     alt: "A nurse administering an immunization to a patient's arm.",
     eyebrow: "Immunizations",
