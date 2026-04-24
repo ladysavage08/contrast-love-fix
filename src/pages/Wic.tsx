@@ -170,7 +170,7 @@ const Wic = () => {
                     Find a Location <MapPin className="h-4 w-4" aria-hidden="true" />
                   </Link>
                   <a
-                    href="tel:7067215800"
+                    href="tel:+18663746942"
                     className="inline-flex items-center gap-2 rounded border border-primary px-4 py-2.5 text-sm font-semibold text-primary hover:bg-muted"
                   >
                     Call for Assistance <Phone className="h-4 w-4" aria-hidden="true" />
