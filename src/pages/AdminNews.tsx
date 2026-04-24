@@ -255,7 +255,7 @@ const AdminNews = () => {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <SiteHeader />
-        <main className="container py-10">
+        <main id="main" className="container py-10">
           <p className="text-muted-foreground">Loading…</p>
         </main>
         <SiteFooter />
@@ -269,7 +269,7 @@ const AdminNews = () => {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <SiteHeader />
-        <main className="container py-10">
+        <main id="main" className="container py-10">
           <p className="text-sm">
             Your account does not have the <strong>admin</strong> role, so you
             can't edit posts. Ask an administrator to grant you the admin role.

@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { Phone } from "lucide-react";
 import WegoLayout from "@/components/wego/WegoLayout";
 import { toast } from "@/hooks/use-toast";
@@ -14,6 +14,13 @@ import { toast } from "@/hooks/use-toast";
 const WegoContact = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const errorRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    if (error) {
+      errorRef.current?.focus();
+    }
+  }, [error]);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -133,7 +140,7 @@ const WegoContact = () => {
               </div>
 
               {error && (
-                <p id="wego-contact-error" role="alert" className="text-sm font-medium text-destructive">
+                <p ref={errorRef} id="wego-contact-error" tabIndex={-1} role="alert" className="text-sm font-medium text-destructive">
                   {error}
                 </p>
               )}

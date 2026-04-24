@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,8 +16,15 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const errorRef = useRef<HTMLParagraphElement>(null);
   const emailError = error?.toLowerCase().includes("email") ? error : null;
   const passwordError = !emailError && error ? error : null;
+
+  useEffect(() => {
+    if (error) {
+      errorRef.current?.focus();
+    }
+  }, [error]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,7 +92,7 @@ const Auth = () => {
             </label>
 
             {error && (
-              <p id="auth-error" role="alert" className="text-sm text-destructive">{error}</p>
+              <p ref={errorRef} id="auth-error" tabIndex={-1} role="alert" className="text-sm text-destructive">{error}</p>
             )}
 
             <button
