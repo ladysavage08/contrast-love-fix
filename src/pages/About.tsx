@@ -403,6 +403,37 @@ const About = () => {
               </dl>
             </aside>
           </div>
+
+          <div className="mt-10">
+            <h3 className="text-xl font-semibold md:text-2xl">
+              Public Health Managers
+            </h3>
+            <div aria-hidden="true" className="mt-2 h-1 w-12 bg-accent-gold" />
+            <ul className="mt-5 grid gap-x-8 gap-y-2 text-base text-foreground/90 sm:grid-cols-2">
+              {[
+                ["District Health Director", "Lee Donohue, MD"],
+                ["Deputy Director", "Jonathan Adriano"],
+                ["District Nursing Director", "Rebecca Kershner"],
+                ["Chronic Disease Coordinator", "Sadie Stockton"],
+                ["Emergency Preparedness and Response Director", "Ella Gardner"],
+                ["Environmental Health Director", "Jasmine Anderson"],
+                ["Epidemiology", "Peyton Durflinger"],
+                ["Family Planning Coordinator", "Shalonna Stewart"],
+                ["Immunization Coordinators", "Heather Parnell"],
+                ["Information Technology Director", "Betty McCall"],
+                ["MRC Coordinator", "Ella Gardner"],
+                ["Public Information Officer", "Sadie Stockton"],
+                ["WIC/Nutritional Services Coordinator", "Lisa Murray"],
+                ["Communications Director", "Sadie Stockton (Interim)"],
+                ["Vital Records", "Kiffiny Cofer"],
+              ].map(([role, name]) => (
+                <li key={role} className="flex flex-col">
+                  <span className="text-sm text-muted-foreground">{role}</span>
+                  <span className="font-medium text-foreground">{name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
 
         {/* ===== HEALTH DIRECTOR'S MESSAGE ===== */}
