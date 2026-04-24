@@ -133,8 +133,8 @@ const AdminNews = () => {
   }, [user, isAdmin]);
 
   const filteredPosts = useMemo(() => {
-    if (filter === "all") return posts;
-    return posts.filter((p) => p.post_type === filter);
+    const scoped = filter === "all" ? posts : posts.filter((p) => p.post_type === filter);
+    return sortPostsChronologically(scoped);
   }, [posts, filter]);
 
   async function handleSave() {
