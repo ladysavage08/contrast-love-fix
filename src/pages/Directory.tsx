@@ -137,7 +137,7 @@ const Directory = () => {
           className="mb-6 grid gap-3 rounded-lg border border-border bg-card p-4 sm:grid-cols-[1fr_auto_auto]"
         >
           <label className="relative block">
-            <span className="sr-only">Search by name, title, department, or location</span>
+            <span className="mb-1 block text-sm font-medium text-foreground">Search directory</span>
             <Search
               className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
               aria-hidden="true"
@@ -152,7 +152,7 @@ const Directory = () => {
           </label>
 
           <label className="block">
-            <span className="sr-only">Filter by department</span>
+            <span className="mb-1 block text-sm font-medium text-foreground">Filter by department</span>
             <select
               value={department}
               onChange={(e) => setDepartment(e.target.value)}
@@ -166,7 +166,7 @@ const Directory = () => {
           </label>
 
           <label className="block">
-            <span className="sr-only">Filter by county</span>
+            <span className="mb-1 block text-sm font-medium text-foreground">Filter by county</span>
             <select
               value={county}
               onChange={(e) => setCounty(e.target.value)}
@@ -208,7 +208,7 @@ const Directory = () => {
                     className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted text-sm font-semibold text-muted-foreground"
                   >
                     {s.photo_url ? (
-                      <img src={s.photo_url} alt="" className="h-full w-full object-cover" />
+                       <img src={s.photo_url} alt={`${s.full_name} staff photo`} className="h-full w-full object-cover" />
                     ) : (
                       s.full_name.split(" ").map((n) => n[0]).slice(0, 2).join("")
                     )}
