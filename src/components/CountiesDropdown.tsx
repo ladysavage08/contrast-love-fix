@@ -132,7 +132,7 @@ const CountiesDropdown = ({ currentSlug }: CountiesDropdownProps) => {
       {/* Label → navigates to the Counties landing page. */}
       <a
         href="/counties"
-        className="flex flex-1 items-center justify-center px-3 py-3 text-center text-sm font-medium hover:bg-brand-hover"
+        className="flex flex-1 items-center justify-center px-3 py-3 text-center text-sm font-medium hover:bg-brand-hover focus-visible:bg-brand-hover"
       >
         Counties
       </a>
@@ -146,7 +146,7 @@ const CountiesDropdown = ({ currentSlug }: CountiesDropdownProps) => {
         aria-label={open ? "Close counties menu" : "Open counties menu"}
         onClick={() => (open ? close() : openAndFocus(0))}
         onKeyDown={onTriggerKeyDown}
-        className="flex min-w-[44px] items-center justify-center pr-3 text-xs hover:bg-brand-hover"
+        className="flex min-h-[44px] min-w-[44px] items-center justify-center pr-3 text-xs hover:bg-brand-hover focus-visible:bg-brand-hover"
       >
         <span aria-hidden="true">▾</span>
       </button>
