@@ -54,6 +54,7 @@ const ContactForm = () => {
   const [errorMsg, setErrorMsg] = useState<string>("");
   const startedAtRef = useRef<number>(Date.now());
   const successRef = useRef<HTMLDivElement>(null);
+  const errorSummaryRef = useRef<HTMLDivElement>(null);
 
   // Reset start time on mount (covers HMR & navigation)
   useEffect(() => {
@@ -65,6 +66,12 @@ const ContactForm = () => {
       successRef.current.focus();
     }
   }, [status]);
+
+  useEffect(() => {
+    if (status === "error" && errorMsg && errorSummaryRef.current) {
+      errorSummaryRef.current.focus();
+    }
+  }, [status, errorMsg]);
 
   const update = (field: keyof FormState) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -227,6 +234,10 @@ const ContactForm = () => {
         />
       </div>
 
+      <p className="text-sm text-muted-foreground">
+        Fields marked with <span aria-hidden="true">*</span> are required.
+      </p>
+
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className={labelBase}>
@@ -325,7 +336,9 @@ const ContactForm = () => {
 
       {status === "error" && errorMsg && (
         <div
+          ref={errorSummaryRef}
           id="form-error"
+          tabIndex={-1}
           role="alert"
           className="flex items-start gap-2 rounded border border-destructive/40 bg-background p-3 text-sm text-destructive"
         >
