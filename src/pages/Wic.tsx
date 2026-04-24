@@ -202,7 +202,7 @@ const Wic = () => {
                   For the complete, up-to-date Georgia WIC Approved Food List,
                   visit the{" "}
                   <a
-                    href="https://dph.georgia.gov/wic-foods"
+                    href="https://dph.georgia.gov/WIC"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-primary underline-offset-2 hover:underline"
