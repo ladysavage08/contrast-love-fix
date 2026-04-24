@@ -137,7 +137,14 @@ const Index = () => {
                   {item.featured_image_url ? (
                     <img
                       src={item.featured_image_url}
-                      alt={item.title}
+                      alt={
+                        item.featured_image_decorative
+                          ? ""
+                          : item.featured_image_alt ?? ""
+                      }
+                      {...(item.featured_image_decorative
+                        ? { role: "presentation", "aria-hidden": true }
+                        : {})}
                       loading="lazy"
                       className="h-16 w-20 shrink-0 rounded object-cover sm:h-20 sm:w-28"
                     />
