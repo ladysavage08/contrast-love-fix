@@ -679,6 +679,63 @@ function PostEditor({
   );
 }
 
+function insertIntoBody(current: string, addition: string) {
+  const trimmedCurrent = current.trimEnd();
+  const spacer = trimmedCurrent ? "\n\n" : "";
+  return `${trimmedCurrent}${spacer}${addition}`;
+}
+
+function RichTextToolbar({ onInsert }: { onInsert: (value: string) => void }) {
+  const actions: Array<{
+    label: string;
+    icon: typeof Heading2;
+    insert: () => string | null;
+  }> = [
+    { label: "Heading 2", icon: Heading2, insert: () => "<h2>Section heading</h2>" },
+    { label: "Heading 3", icon: Heading3, insert: () => "<h3>Subsection heading</h3>" },
+    { label: "Paragraph", icon: Pilcrow, insert: () => "<p>Paragraph text.</p>" },
+    { label: "Bold", icon: Bold, insert: () => "<strong>Bold text</strong>" },
+    { label: "Italic", icon: Italic, insert: () => "<em>Italic text</em>" },
+    { label: "Bullet list", icon: List, insert: () => "<ul>\n  <li>List item</li>\n  <li>List item</li>\n</ul>" },
+    {
+      label: "Link",
+      icon: LinkIcon,
+      insert: () => {
+        const href = window.prompt("Enter the link URL", "https://");
+        if (!href) return null;
+        const text = window.prompt("Enter the link text", "Link text");
+        if (!text) return null;
+        const openInNewTab = window.confirm("Open this link in a new tab?");
+        return openInNewTab
+          ? `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`
+          : `<a href="${href}">${text}</a>`;
+      },
+    },
+  ];
+
+  return (
+    <div className="mb-2 flex flex-wrap gap-2" aria-label="Body formatting tools">
+      {actions.map(({ label, icon: Icon, insert }) => (
+        <Button
+          key={label}
+          type="button"
+          variant="outline"
+          size="sm"
+          className={cn("min-h-11 px-3")}
+          onClick={() => {
+            const value = insert();
+            if (value) onInsert(value);
+          }}
+          aria-label={`Insert ${label}`}
+        >
+          <Icon className="h-4 w-4" aria-hidden="true" />
+          <span>{label}</span>
+        </Button>
+      ))}
+    </div>
+  );
+}
+
 function FeaturedImageField({
   value,
   alt,
