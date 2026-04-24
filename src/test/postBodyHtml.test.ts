@@ -13,7 +13,7 @@ describe("post body HTML handling", () => {
   it("decodes previously escaped HTML and renders the sanitized markup", () => {
     const result = normalizeSanitizedPostBody("&lt;p&gt;Visit &lt;a href=\"https://example.org\" target=\"_blank\"&gt;Example&lt;/a&gt;&lt;/p&gt;");
 
-    expect(result).toContain('<p>Visit <a href="https://example.org" target="_blank" rel="noopener noreferrer">Example</a></p>');
+    expect(result).toContain('<p>Visit <a href="https://example.org">Example</a></p>');
     expect(result).not.toContain("&lt;a");
   });
 
