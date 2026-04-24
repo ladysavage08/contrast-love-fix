@@ -185,6 +185,9 @@ const Wic = () => {
                     <span className="sr-only"> (opens in new tab)</span>
                   </a>
                 </div>
+                <p className="mt-4 text-sm text-foreground/90">
+                  WIC Call Center: +1 866 374 6942
+                </p>
               </section>
 
               {/* WIC Approved Foods */}
