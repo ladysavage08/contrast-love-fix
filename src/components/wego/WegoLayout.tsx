@@ -65,7 +65,7 @@ const WegoLayout = ({ breadcrumb = [], children }: WegoLayoutProps) => {
               aria-expanded={subOpen}
               aria-controls="wego-subnav"
               onClick={() => setSubOpen((o) => !o)}
-              className="flex w-full items-center justify-between rounded border border-border bg-background px-3 py-3 text-sm font-semibold text-primary"
+              className="flex w-full items-center justify-between rounded border border-border bg-background px-3 py-3 text-sm font-semibold text-primary hover:bg-muted focus-visible:bg-muted"
             >
               <span>
                 <span className="text-muted-foreground">Section: </span>
@@ -90,7 +90,7 @@ const WegoLayout = ({ breadcrumb = [], children }: WegoLayoutProps) => {
                     <Link
                       to={to}
                       aria-current={isActive ? "page" : undefined}
-                      className={`block border-b border-border px-3 py-3 text-sm font-medium last:border-b-0 underline-offset-2 hover:bg-muted hover:underline ${
+                      className={`block min-h-[48px] border-b border-border px-3 py-3 text-sm font-medium last:border-b-0 underline-offset-2 hover:bg-muted hover:underline focus-visible:bg-muted ${
                         isActive
                           ? "bg-muted text-primary"
                           : "text-primary"
@@ -114,7 +114,7 @@ const WegoLayout = ({ breadcrumb = [], children }: WegoLayoutProps) => {
                   <Link
                     to={to}
                     aria-current={isActive ? "page" : undefined}
-                    className={`block rounded px-3 py-2 text-sm font-medium underline-offset-2 hover:bg-muted hover:underline ${
+                    className={`block min-h-[44px] rounded px-3 py-2 text-sm font-medium underline-offset-2 hover:bg-muted hover:underline focus-visible:bg-muted ${
                       isActive
                         ? "bg-muted text-primary underline"
                         : "text-primary"
