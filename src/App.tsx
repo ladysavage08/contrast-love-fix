@@ -40,6 +40,12 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <a
+        href="#main"
+        className="skip-link"
+      >
+        Skip to main content
+      </a>
       <Toaster />
       <Sonner />
       <SiteAlertBanner />

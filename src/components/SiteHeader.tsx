@@ -32,13 +32,6 @@ const SiteHeader = ({
 }: SiteHeaderProps) => {
   return (
     <header className="border-b border-border">
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-[60] focus:rounded focus:bg-brand focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-brand-foreground"
-      >
-        Skip to main content
-      </a>
-
       <div className="container flex flex-col gap-3 py-3 md:flex-row md:items-center md:justify-between md:gap-4 md:py-6">
         <a
           href="/"
