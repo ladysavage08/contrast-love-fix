@@ -12,6 +12,7 @@ import {
 
 import community from "@/assets/slide-community.jpg";
 import mobileClinic from "@/assets/hero-mobile-clinic.jpg";
+import mobileClinic2 from "@/assets/hero-mobile-clinic-2.jpg";
 import immunization from "@/assets/slide-immunization.jpg";
 
 type Slide = {
