@@ -761,7 +761,7 @@ function FeaturedImageField({
         <div className="mt-2 overflow-hidden rounded-md border border-border">
           <img
             src={value}
-            alt="Featured preview"
+            alt={decorative ? "" : alt || "Featured image preview"}
             className="max-h-48 w-auto object-contain"
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).style.display = "none";
@@ -769,6 +769,54 @@ function FeaturedImageField({
           />
         </div>
       )}
+
+      {value && (
+        <div className="mt-3 space-y-2 rounded-md border border-border bg-background p-3">
+          <Label htmlFor="featured_image_alt" className="text-sm font-semibold">
+            Alt text <span className="text-destructive">*</span>
+          </Label>
+          <Input
+            id="featured_image_alt"
+            value={alt}
+            onChange={(e) => onAltChange(e.target.value)}
+            maxLength={200}
+            disabled={decorative}
+            placeholder="Describe what's in the image (e.g. 'Nurse administering a flu shot to a patient')"
+            aria-describedby="alt-help"
+            aria-invalid={altMissing}
+          />
+          <p id="alt-help" className="text-xs text-muted-foreground">
+            Required for ADA / WCAG accessibility. Describe the image's
+            content and purpose for users who can't see it. Don't start with
+            "Image of…" — screen readers already announce that.
+          </p>
+          {altMissing && (
+            <p role="alert" className="text-xs font-medium text-destructive">
+              Add alt text or mark the image as decorative before saving.
+            </p>
+          )}
+          <div className="flex items-start gap-3 pt-1">
+            <Switch
+              id="featured_image_decorative"
+              checked={decorative}
+              onCheckedChange={onDecorativeChange}
+            />
+            <div>
+              <Label
+                htmlFor="featured_image_decorative"
+                className="cursor-pointer text-sm"
+              >
+                This image is decorative
+              </Label>
+              <p className="text-xs text-muted-foreground">
+                Use only if the image adds no information (pure decoration).
+                Screen readers will skip it.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <p className="text-xs text-muted-foreground">
         JPG, PNG, or WebP up to 5 MB. Uploaded images are publicly accessible.
       </p>
