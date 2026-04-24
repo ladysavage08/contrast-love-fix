@@ -17,8 +17,8 @@ const socials = [
 ] as const;
 
 const BUTTON_SIZE: Record<Size, string> = {
-  sm: "h-8 w-8",
-  md: "h-9 w-9",
+  sm: "h-11 w-11",
+  md: "h-11 w-11",
   lg: "h-11 w-11",
 };
 
