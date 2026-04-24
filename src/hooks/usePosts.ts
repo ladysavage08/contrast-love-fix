@@ -5,6 +5,11 @@ export type Post = {
   id: string;
   title: string;
   slug: string;
+  author_name: string | null;
+  publication_name: string | null;
+  article_page_reference: string | null;
+  external_publication_url: string | null;
+  download_url: string | null;
   excerpt: string | null;
   body: string | null;
   featured_image_url: string | null;
@@ -91,6 +96,23 @@ export function usePost(slug: string | undefined) {
         .maybeSingle();
       if (error) throw error;
       return (data as Post) ?? null;
+    },
+  });
+}
+
+export function usePostsByCategory(category: string) {
+  return useQuery({
+    queryKey: ["posts", "category", category],
+    queryFn: async (): Promise<Post[]> => {
+      const { data, error } = await supabase
+        .from("posts")
+        .select("*")
+        .eq("published", true)
+        .eq("category", category)
+        .order("published_at", { ascending: false });
+
+      if (error) throw error;
+      return (data ?? []) as Post[];
     },
   });
 }
