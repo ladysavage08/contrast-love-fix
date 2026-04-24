@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Autoplay from "embla-carousel-autoplay";
-import { ArrowRight, Pause, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import {
   Carousel,
   CarouselApi,
@@ -51,29 +50,14 @@ const slides: Slide[] = [
 ];
 
 const HeroSlider = () => {
-  const autoplay = useRef(
-    Autoplay({ delay: 6000, stopOnInteraction: false, stopOnMouseEnter: true }),
-  );
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
     if (!api) return;
     setCurrent(api.selectedScrollSnap());
     api.on("select", () => setCurrent(api.selectedScrollSnap()));
   }, [api]);
-
-  const togglePlay = () => {
-    const ap = autoplay.current;
-    if (isPlaying) {
-      ap.stop();
-      setIsPlaying(false);
-    } else {
-      ap.play();
-      setIsPlaying(true);
-    }
-  };
 
   return (
     <section
@@ -83,7 +67,6 @@ const HeroSlider = () => {
     >
       <Carousel
         opts={{ loop: true }}
-        plugins={[autoplay.current]}
         setApi={setApi}
         className="w-full"
       >
@@ -133,16 +116,15 @@ const HeroSlider = () => {
         {/* Prev/Next — overridden to use brand tokens with strong contrast */}
         <CarouselPrevious
           aria-label="Previous slide"
-          className="left-3 h-10 w-10 border-0 bg-brand text-brand-foreground hover:bg-brand-hover hover:text-brand-foreground"
+          className="left-3 h-11 w-11 border-0 bg-brand text-brand-foreground hover:bg-brand-hover hover:text-brand-foreground"
         />
         <CarouselNext
           aria-label="Next slide"
-          className="right-3 h-10 w-10 border-0 bg-brand text-brand-foreground hover:bg-brand-hover hover:text-brand-foreground"
+          className="right-3 h-11 w-11 border-0 bg-brand text-brand-foreground hover:bg-brand-hover hover:text-brand-foreground"
         />
       </Carousel>
 
-      {/* Controls bar: dots + play/pause */}
-      <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-full bg-foreground/70 px-3 py-1.5 backdrop-blur">
+      <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-full bg-foreground/70 px-3 py-2 backdrop-blur">
         <ul className="flex items-center gap-2" role="tablist" aria-label="Choose slide">
           {slides.map((_, i) => (
             <li key={i}>
@@ -152,28 +134,15 @@ const HeroSlider = () => {
                 aria-selected={current === i}
                 aria-label={`Go to slide ${i + 1}`}
                 onClick={() => api?.scrollTo(i)}
-                className={`block h-2.5 rounded-full transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background ${
+                className={`block min-h-[44px] rounded-full transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background ${
                   current === i
-                    ? "w-6 bg-background"
-                    : "w-2.5 bg-background/60 hover:bg-background/90"
+                    ? "w-11 bg-background"
+                    : "w-11 bg-background/60 hover:bg-background/90"
                 }`}
               />
             </li>
           ))}
         </ul>
-        <button
-          type="button"
-          onClick={togglePlay}
-          aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
-          aria-pressed={!isPlaying}
-          className="flex h-7 w-7 items-center justify-center rounded-full bg-background text-foreground hover:bg-background/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background"
-        >
-          {isPlaying ? (
-            <Pause className="h-3.5 w-3.5" aria-hidden="true" />
-          ) : (
-            <Play className="h-3.5 w-3.5" aria-hidden="true" />
-          )}
-        </button>
       </div>
     </section>
   );
