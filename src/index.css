@@ -121,7 +121,6 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 
-  a,
   button,
   input,
   select,
@@ -129,6 +128,10 @@ All colors MUST be HSL.
   [role="button"],
   [role="tab"],
   summary {
+    min-height: 44px;
+  }
+
+  a:where(.inline-flex, .flex, .grid, .block) {
     min-height: 44px;
   }
 
