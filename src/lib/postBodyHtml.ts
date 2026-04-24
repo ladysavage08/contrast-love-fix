@@ -1,7 +1,5 @@
 import createDOMPurify from "dompurify";
 
-const DOMPurify = createDOMPurify(typeof window !== "undefined" ? window : undefined);
-
 const SAFE_HTML_TAGS = [
   "a",
   "br",
@@ -21,7 +19,9 @@ const SAFE_HTML_ATTRS = ["href", "target", "rel"] as const;
 const SAFE_URI_PATTERN = /^(?:(?:https?:|mailto:|tel:)|\/|#)/i;
 
 export function sanitizePostBodyHtml(input: string) {
-  return DOMPurify.sanitize(input, {
+  const purifier = getPurifier();
+
+  return purifier.sanitize(input, {
     ALLOWED_TAGS: [...SAFE_HTML_TAGS],
     ALLOWED_ATTR: [...SAFE_HTML_ATTRS],
     ALLOW_DATA_ATTR: false,
@@ -123,4 +123,12 @@ function decodeHtmlEntities(value: string) {
     .replace(/&quot;/gi, '"')
     .replace(/&#39;/gi, "'")
     .replace(/&amp;/gi, "&");
+}
+
+function getPurifier() {
+  if (typeof window === "undefined") {
+    throw new Error("HTML sanitization requires a browser environment.");
+  }
+
+  return createDOMPurify(window);
 }
