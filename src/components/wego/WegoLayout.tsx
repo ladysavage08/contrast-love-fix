@@ -50,13 +50,6 @@ const WegoLayout = ({ breadcrumb = [], children }: WegoLayoutProps) => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-brand focus:px-4 focus:py-2 focus:text-brand-foreground"
-      >
-        Skip to main content
-      </a>
-
       <SiteHeader />
 
       {/* ============ WEGO SUB-NAV ============ */}
@@ -72,7 +65,7 @@ const WegoLayout = ({ breadcrumb = [], children }: WegoLayoutProps) => {
               aria-expanded={subOpen}
               aria-controls="wego-subnav"
               onClick={() => setSubOpen((o) => !o)}
-              className="flex w-full items-center justify-between rounded border border-border bg-background px-3 py-3 text-sm font-semibold text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+              className="flex w-full items-center justify-between rounded border border-border bg-background px-3 py-3 text-sm font-semibold text-primary"
             >
               <span>
                 <span className="text-muted-foreground">Section: </span>
@@ -97,7 +90,7 @@ const WegoLayout = ({ breadcrumb = [], children }: WegoLayoutProps) => {
                     <Link
                       to={to}
                       aria-current={isActive ? "page" : undefined}
-                      className={`block border-b border-border px-3 py-3 text-sm font-medium last:border-b-0 hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary ${
+                      className={`block border-b border-border px-3 py-3 text-sm font-medium last:border-b-0 underline-offset-2 hover:bg-muted hover:underline ${
                         isActive
                           ? "bg-muted text-primary"
                           : "text-primary"
@@ -121,7 +114,7 @@ const WegoLayout = ({ breadcrumb = [], children }: WegoLayoutProps) => {
                   <Link
                     to={to}
                     aria-current={isActive ? "page" : undefined}
-                    className={`block rounded px-3 py-2 text-sm font-medium underline-offset-2 hover:bg-muted hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary ${
+                    className={`block rounded px-3 py-2 text-sm font-medium underline-offset-2 hover:bg-muted hover:underline ${
                       isActive
                         ? "bg-muted text-primary underline"
                         : "text-primary"

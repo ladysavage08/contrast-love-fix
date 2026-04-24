@@ -34,7 +34,7 @@ const SiteHeader = ({
     <header className="border-b border-border">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-brand focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-brand-foreground focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-brand"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-[60] focus:rounded focus:bg-brand focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-brand-foreground"
       >
         Skip to main content
       </a>
@@ -99,11 +99,11 @@ const SiteHeader = ({
             />
             <button
               type="submit"
-              aria-label="Search"
-              className="flex items-center gap-1 bg-brand px-3 text-sm font-medium text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:px-4"
+              aria-label="Search the site"
+              className="flex min-w-[44px] items-center gap-1 bg-brand px-3 text-sm font-medium text-brand-foreground hover:bg-brand-hover sm:px-4"
             >
               <Search className="h-4 w-4" aria-hidden="true" />
-              <span className="hidden sm:inline">Go</span>
+              <span className="hidden sm:inline">Search</span>
             </button>
           </form>
 

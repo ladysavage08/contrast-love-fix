@@ -92,7 +92,7 @@ const PrimaryNav = ({
             aria-controls="primary-mobile-menu"
             aria-label={open ? "Close main menu" : "Open main menu"}
             onClick={() => setOpen((o) => !o)}
-            className="my-2 inline-flex h-11 w-11 items-center justify-center rounded hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+            className="my-2 inline-flex h-11 w-11 items-center justify-center rounded hover:bg-brand-hover"
           >
             {open ? (
               <X className="h-6 w-6" aria-hidden="true" />
@@ -118,7 +118,7 @@ const PrimaryNav = ({
                   aria-expanded={countiesOpen}
                   aria-controls="counties-mobile-panel"
                   onClick={() => setCountiesOpen((o) => !o)}
-                  className="flex min-h-[48px] w-full items-center justify-between px-2 py-3 text-base font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+                  className="flex min-h-[48px] w-full items-center justify-between px-2 py-3 text-base font-medium hover:bg-brand-hover"
                 >
                   <span>Counties</span>
                   <ChevronDown
@@ -134,7 +134,7 @@ const PrimaryNav = ({
                   <li>
                     <a
                       href="/counties"
-                      className="block min-h-[44px] py-3 text-sm font-semibold underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+                      className="block min-h-[44px] py-3 text-sm font-semibold underline underline-offset-2 hover:underline"
                     >
                       All Counties
                     </a>
@@ -148,7 +148,7 @@ const PrimaryNav = ({
                           aria-current={
                             currentCountySlug === slug ? "page" : undefined
                           }
-                          className={`block min-h-[44px] py-3 text-sm hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground ${
+                          className={`block min-h-[44px] py-3 text-sm underline-offset-2 hover:underline ${
                             currentCountySlug === slug ? "font-semibold underline" : ""
                           }`}
                         >
@@ -166,7 +166,7 @@ const PrimaryNav = ({
                   {...(href.startsWith("http")
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
-                  className="block min-h-[48px] px-2 py-3 text-base font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+                  className="block min-h-[48px] px-2 py-3 text-base font-medium hover:bg-brand-hover"
                 >
                   {label}
                   {href.startsWith("http") && (
@@ -184,7 +184,7 @@ const PrimaryNav = ({
             <li>
               <a
                 href="/contact"
-                className="block min-h-[44px] px-2 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+                className="block min-h-[44px] px-2 py-3 text-sm font-medium underline-offset-2 hover:bg-brand-hover hover:underline"
               >
                 Contact Us
               </a>
@@ -192,7 +192,7 @@ const PrimaryNav = ({
             <li>
               <a
                 href="/sitemap"
-                className="block min-h-[44px] px-2 py-3 text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+                className="block min-h-[44px] px-2 py-3 text-sm font-medium underline-offset-2 hover:bg-brand-hover hover:underline"
               >
                 Site Map
               </a>
@@ -219,7 +219,7 @@ const PrimaryNav = ({
                 {...(href.startsWith("http")
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : {})}
-                className="flex w-full items-center justify-center px-3 py-3 text-center text-sm font-medium hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-foreground"
+                className="flex w-full items-center justify-center px-3 py-3 text-center text-sm font-medium hover:bg-brand-hover"
               >
                 {label}
                 {href.startsWith("http") && (

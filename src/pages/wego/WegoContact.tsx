@@ -13,9 +13,17 @@ import { toast } from "@/hooks/use-toast";
  */
 const WegoContact = () => {
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (!form.checkValidity()) {
+      setError("Please complete the required fields before sending your message.");
+      form.reportValidity();
+      return;
+    }
+    setError(null);
     setSubmitting(true);
     // Placeholder — show confirmation. Replace with real submission later.
     setTimeout(() => {
@@ -50,7 +58,10 @@ const WegoContact = () => {
               Fields marked with <span aria-hidden="true">*</span> are required.
             </p>
 
-            <form onSubmit={onSubmit} className="mt-5 space-y-4" noValidate>
+            <form onSubmit={onSubmit} className="mt-5 space-y-4" noValidate aria-describedby={error ? "wego-contact-error" : "wego-contact-required"}>
+              <p id="wego-contact-required" className="text-sm text-muted-foreground">
+                Fields marked with <span aria-hidden="true">*</span> are required.
+              </p>
               <div>
                 <label
                   htmlFor="name"
@@ -64,6 +75,7 @@ const WegoContact = () => {
                   type="text"
                   required
                   autoComplete="name"
+                  aria-required="true"
                   className="mt-1 block w-full rounded border border-border bg-background px-3 py-2 text-base text-foreground focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 />
               </div>
@@ -81,6 +93,7 @@ const WegoContact = () => {
                   type="email"
                   required
                   autoComplete="email"
+                  aria-required="true"
                   className="mt-1 block w-full rounded border border-border bg-background px-3 py-2 text-base text-foreground focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 />
               </div>
@@ -113,10 +126,17 @@ const WegoContact = () => {
                   id="message"
                   name="message"
                   required
+                  aria-required="true"
                   rows={5}
                   className="mt-1 block w-full rounded border border-border bg-background px-3 py-2 text-base text-foreground focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 />
               </div>
+
+              {error && (
+                <p id="wego-contact-error" role="alert" className="text-sm font-medium text-destructive">
+                  {error}
+                </p>
+              )}
 
               <button
                 type="submit"
