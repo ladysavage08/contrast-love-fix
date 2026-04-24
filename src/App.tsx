@@ -16,6 +16,7 @@ import WomensHealth from "./pages/WomensHealth.tsx";
 import WomensHealthPage from "./pages/WomensHealthPage.tsx";
 import News from "./pages/News.tsx";
 import NewsPost from "./pages/NewsPost.tsx";
+import PublicHealthSeries from "./pages/PublicHealthSeries.tsx";
 import Accessibility from "./pages/Accessibility.tsx";
 import Services from "./pages/Services.tsx";
 import Directory from "./pages/Directory.tsx";
@@ -66,6 +67,7 @@ const App = () => (
           <Route path="/womens-health" element={<WomensHealth />} />
           <Route path="/womens-health/:slug" element={<WomensHealthPage />} />
           <Route path="/news" element={<News />} />
+          <Route path="/news/what-is-public-health-article-series" element={<PublicHealthSeries />} />
           <Route path="/news/:slug" element={<NewsPost />} />
           <Route path="/accessibility" element={<Accessibility />} />
           <Route path="/services" element={<Services />} />
