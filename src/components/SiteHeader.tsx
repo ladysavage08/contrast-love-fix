@@ -145,16 +145,14 @@ const SiteHeader = ({
             </button>
           </form>
 
-          {/* Desktop-only utility extras (e.g. Employee Login + Patient Portal + social on home). */}
-          {utilityExtras && (
-            <div className="hidden md:block">{utilityExtras}</div>
-          )}
+          {/* Desktop-only utility extras (Employee Portal + social icons by default). */}
+          <div className="hidden md:block">{resolvedUtilityExtras}</div>
         </div>
       </div>
 
       <PrimaryNav
         currentCountySlug={currentCountySlug}
-        mobileDrawerExtras={mobileUtilityExtras}
+        mobileDrawerExtras={resolvedMobileUtilityExtras}
         mobileQuickAction={mobileQuickAction}
       />
     </header>
