@@ -72,6 +72,9 @@ const SiteHeader = ({
   mobileUtilityExtras,
   mobileQuickAction,
 }: SiteHeaderProps) => {
+  const resolvedUtilityExtras = utilityExtras ?? <DefaultUtilityExtras />;
+  const resolvedMobileUtilityExtras =
+    mobileUtilityExtras ?? <DefaultMobileUtilityExtras />;
   return (
     <header className="border-b border-border">
       <div className="container flex flex-col gap-3 py-3 md:flex-row md:items-center md:justify-between md:gap-4 md:py-6">
