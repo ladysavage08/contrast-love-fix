@@ -1,5 +1,47 @@
 import { Search, Info } from "lucide-react";
 import PrimaryNav from "@/components/PrimaryNav";
+import SocialIcons from "@/components/SocialIcons";
+
+/**
+ * Default Employee Portal link — same URL used historically across the site.
+ * Centralized here so every page gets it without per-page wiring.
+ */
+const EMPLOYEE_PORTAL_URL = "https://ecphd.com/intranet/login/";
+
+const DefaultUtilityExtras = () => (
+  <div className="flex flex-wrap items-center gap-2">
+    <SocialIcons />
+    <a
+      href={EMPLOYEE_PORTAL_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="rounded bg-brand px-3 py-2 text-sm font-medium text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+    >
+      Employee Portal
+      <span className="sr-only"> (opens in new tab)</span>
+    </a>
+  </div>
+);
+
+const DefaultMobileUtilityExtras = () => (
+  <div className="flex flex-col gap-3">
+    <a
+      href={EMPLOYEE_PORTAL_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex w-full items-center justify-center rounded bg-brand-foreground px-4 py-3 text-sm font-semibold text-brand hover:bg-brand-foreground/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-foreground"
+    >
+      Employee Portal
+      <span className="sr-only"> (opens in new tab)</span>
+    </a>
+    <div>
+      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-brand-foreground/80">
+        Follow us
+      </p>
+      <SocialIcons size="md" wrap />
+    </div>
+  </div>
+);
 
 /**
  * Shared top header (DPH brand block + utility links + search + primary nav).
