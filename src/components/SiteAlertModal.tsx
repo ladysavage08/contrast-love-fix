@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
@@ -13,18 +14,27 @@ import { useSiteAlerts, resolveModalContent } from "@/hooks/useSiteAlerts";
 /**
  * Pop-up modal alert. Reads settings from the database (with the
  * src/config/siteAlerts.ts file as a fallback default).
+ *
+ * Behavior:
+ * - Shows ONLY on the homepage ("/")
+ * - Shows ONCE per browser session (uses sessionStorage)
+ * - Does NOT re-trigger on SPA navigation or refresh within the same session
+ * - Can be manually re-opened via the global `echd:open-site-alert` event
  */
-const STORAGE_KEY = "echd-modal-shown";
+const STORAGE_KEY = "siteAlertModalShown";
 
 const SiteAlertModal = () => {
   const { settings, loaded } = useSiteAlerts();
   const modal = settings.modal;
+  const location = useLocation();
   const [open, setOpen] = useState(false);
 
+  // Auto-open: only on homepage, only once per session.
   useEffect(() => {
     if (!loaded) return;
+    if (location.pathname !== "/") return;
     if (!modal.enabled || !modal.showOnLoad) return;
-    if (sessionStorage.getItem(STORAGE_KEY) === "1") return;
+    if (sessionStorage.getItem(STORAGE_KEY) === "true") return;
 
     const delayMs =
       typeof modal.openDelaySeconds === "number"
@@ -33,11 +43,18 @@ const SiteAlertModal = () => {
 
     const t = setTimeout(() => {
       setOpen(true);
-      sessionStorage.setItem(STORAGE_KEY, "1");
+      sessionStorage.setItem(STORAGE_KEY, "true");
     }, delayMs);
 
     return () => clearTimeout(t);
-  }, [loaded, modal.enabled, modal.showOnLoad, modal.openDelaySeconds, modal.openDelayMs]);
+  }, [loaded, location.pathname, modal.enabled, modal.showOnLoad, modal.openDelaySeconds, modal.openDelayMs]);
+
+  // Manual re-open via custom event (e.g., footer "Show Announcement" link).
+  useEffect(() => {
+    const handler = () => setOpen(true);
+    window.addEventListener("echd:open-site-alert", handler);
+    return () => window.removeEventListener("echd:open-site-alert", handler);
+  }, []);
 
   if (!modal.enabled) return null;
 
