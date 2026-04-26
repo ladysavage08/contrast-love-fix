@@ -36,6 +36,15 @@ const SiteFooter = ({ showSocials = false, extraCopy }: SiteFooterProps) => {
                 Accessibility
               </a>
             </li>
+            <li>
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new CustomEvent("echd:open-site-alert"))}
+                className="font-medium text-primary underline underline-offset-2 hover:underline focus-visible:underline"
+              >
+                Show Announcement
+              </button>
+            </li>
           </ul>
         </nav>
         <p className="mt-2">
