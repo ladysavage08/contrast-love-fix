@@ -241,6 +241,33 @@ const Index = () => {
                 </a>
               </div>
               <ul className="space-y-3">
+          <section aria-labelledby="upcoming-events-heading">
+            <div className="mb-4 flex items-end justify-between border-b border-border pb-2">
+              <h2 id="upcoming-events-heading" className="text-2xl font-semibold">
+                Upcoming Events
+              </h2>
+              <a
+                href="/calendar"
+                className="text-sm font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
+              >
+                View Full Calendar
+              </a>
+            </div>
+            {upcomingEvents.length === 0 ? (
+              <div className="rounded-lg border border-border p-4">
+                <p className="text-sm text-muted-foreground">
+                  No upcoming events in the next two weeks.{" "}
+                  <a
+                    href="/calendar"
+                    className="font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
+                  >
+                    View the full calendar
+                  </a>{" "}
+                  for more events.
+                </p>
+              </div>
+            ) : (
+              <ul className="space-y-3">
                 {upcomingEvents.map((e) => {
                   const key = eventDateKey(e);
                   const dateLabel = key
@@ -286,8 +313,8 @@ const Index = () => {
                   );
                 })}
               </ul>
-            </section>
-          )}
+            )}
+          </section>
         </section>
 
         {/* ============ SIDEBAR ============ */}
