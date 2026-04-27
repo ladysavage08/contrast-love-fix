@@ -43,7 +43,21 @@ const quickLinks = [
 
 const Index = () => {
   const { data: news = [], isLoading: newsLoading } = usePosts(4);
-  const { data: upcomingEvents = [] } = useEvents({ upcomingOnly: true, limit: 4 });
+  const { data: allUpcomingEvents = [] } = useEvents({ upcomingOnly: true });
+  const upcomingEvents = (() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const cutoff = new Date(today);
+    cutoff.setDate(cutoff.getDate() + 14);
+    const cutoffKey = cutoff.toISOString().slice(0, 10);
+    const todayKey = today.toISOString().slice(0, 10);
+    return allUpcomingEvents
+      .filter((e) => {
+        const key = (e.event_date ?? e.published_at ?? "").slice(0, 10);
+        return key >= todayKey && key <= cutoffKey;
+      })
+      .slice(0, 4);
+  })();
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
@@ -213,19 +227,32 @@ const Index = () => {
             </section>
           </section>
 
-          {upcomingEvents.length > 0 && (
-            <section aria-labelledby="upcoming-events-heading">
-              <div className="mb-4 flex items-end justify-between border-b border-border pb-2">
-                <h2 id="upcoming-events-heading" className="text-2xl font-semibold">
-                  Upcoming Events
-                </h2>
-                <a
-                  href="/calendar"
-                  className="text-sm font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
-                >
-                  View Full Calendar
-                </a>
+          <section aria-labelledby="upcoming-events-heading">
+            <div className="mb-4 flex items-end justify-between border-b border-border pb-2">
+              <h2 id="upcoming-events-heading" className="text-2xl font-semibold">
+                Upcoming Events
+              </h2>
+              <a
+                href="/calendar"
+                className="text-sm font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
+              >
+                View Full Calendar
+              </a>
+            </div>
+            {upcomingEvents.length === 0 ? (
+              <div className="rounded-lg border border-border p-4">
+                <p className="text-sm text-muted-foreground">
+                  No upcoming events in the next two weeks.{" "}
+                  <a
+                    href="/calendar"
+                    className="font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
+                  >
+                    View the full calendar
+                  </a>{" "}
+                  for more events.
+                </p>
               </div>
+            ) : (
               <ul className="space-y-3">
                 {upcomingEvents.map((e) => {
                   const key = eventDateKey(e);
@@ -272,8 +299,8 @@ const Index = () => {
                   );
                 })}
               </ul>
-            </section>
-          )}
+            )}
+          </section>
         </section>
 
         {/* ============ SIDEBAR ============ */}
