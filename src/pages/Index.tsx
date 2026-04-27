@@ -227,20 +227,6 @@ const Index = () => {
             </section>
           </section>
 
-          {upcomingEvents.length > 0 && (
-            <section aria-labelledby="upcoming-events-heading">
-              <div className="mb-4 flex items-end justify-between border-b border-border pb-2">
-                <h2 id="upcoming-events-heading" className="text-2xl font-semibold">
-                  Upcoming Events
-                </h2>
-                <a
-                  href="/calendar"
-                  className="text-sm font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
-                >
-                  View Full Calendar
-                </a>
-              </div>
-              <ul className="space-y-3">
           <section aria-labelledby="upcoming-events-heading">
             <div className="mb-4 flex items-end justify-between border-b border-border pb-2">
               <h2 id="upcoming-events-heading" className="text-2xl font-semibold">
