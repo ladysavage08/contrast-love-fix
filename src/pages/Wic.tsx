@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import {
-  ArrowRight, Phone, MapPin, Apple, HeartHandshake,
+  ArrowRight, Phone, Apple, HeartHandshake,
   GraduationCap, Baby, Users, ClipboardList, HelpCircle,
 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
@@ -27,8 +27,11 @@ const eligibility = [
   "Children up to age 5 (including foster children)",
 ];
 
-const applySteps = [
-  "Call your nearest county health department or WIC office to schedule an appointment.",
+const applySteps: Array<string | { text: string; link: { href: string; label: string } }> = [
+  {
+    text: "Apply online at ",
+    link: { href: "https://www.ecphd.com/getwic", label: "ecphd.com/getwic" },
+  },
   "Gather proof of identity, address, household income, and your child's medical/immunization records.",
   "Attend your appointment for a brief health and nutrition screening.",
   "Receive your WIC benefits and nutrition education materials.",
@@ -160,17 +163,41 @@ const Wic = () => {
                 <h2 id="apply-heading" className="text-2xl font-semibold">How to Apply</h2>
                 <div aria-hidden="true" className="mt-2 h-1 w-16 bg-accent-gold" />
                 <ol className="mt-4 list-decimal space-y-2 pl-6 text-base text-foreground/90">
-                  {applySteps.map((s) => <li key={s}>{s}</li>)}
+                  {applySteps.map((s, i) => (
+                    <li key={typeof s === "string" ? s : s.link.href}>
+                      {typeof s === "string" ? (
+                        s
+                      ) : (
+                        <>
+                          {s.text}
+                          <a
+                            href={s.link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary underline-offset-2 hover:underline"
+                          >
+                            {s.link.label}
+                            <span className="sr-only"> (opens in new tab)</span>
+                          </a>
+                          {" "}for a same-day appointment.
+                        </>
+                      )}
+                    </li>
+                  ))}
                 </ol>
                 <div className="mt-5 flex flex-wrap gap-3">
-                  <Link
-                    to="/counties"
+                  <a
+                    href="https://www.ecphd.com/getwic"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Apply for a same-day WIC appointment (opens in new tab)"
                     className="inline-flex items-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                   >
-                    Find a Location <MapPin className="h-4 w-4" aria-hidden="true" />
-                  </Link>
+                    Apply for Same-Day Appointment <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
                   <a
-                    href="tel:+18663746942"
+                    href="tel:18663746942"
+                    aria-label="Call the WIC Call Center at 1-866-374-6942"
                     className="inline-flex items-center gap-2 rounded border border-primary px-4 py-2.5 text-sm font-semibold text-primary hover:bg-muted"
                   >
                     Call for Assistance <Phone className="h-4 w-4" aria-hidden="true" />
@@ -179,14 +206,14 @@ const Wic = () => {
                     href="https://ecphd-getwic.qminder.site/#/"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Apply for WIC (opens in new tab)"
                     className="inline-flex items-center gap-2 rounded border border-primary px-4 py-2.5 text-sm font-semibold text-primary hover:bg-muted"
                   >
                     Apply for WIC <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    <span className="sr-only"> (opens in new tab)</span>
                   </a>
                 </div>
                 <p className="mt-4 text-sm text-foreground/90">
-                  WIC Call Center: +1 866 374 6942
+                  WIC Call Center: <a href="tel:18663746942" className="text-primary underline-offset-2 hover:underline">+1 866-374-6942</a>
                 </p>
               </section>
 
@@ -258,25 +285,6 @@ const Wic = () => {
 
             {/* Sidebar */}
             <aside aria-label="Sidebar" className="space-y-6">
-              <section aria-labelledby="cta-heading" className="rounded-lg border border-border p-5">
-                <h2 id="cta-heading" className="text-xl font-semibold">Get Started</h2>
-                <p className="mt-2 text-sm text-foreground/90">
-                  Reach out today to see if your family qualifies for WIC.
-                </p>
-                <a
-                  href="tel:7067215800"
-                  className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-                >
-                  <Phone className="h-4 w-4" aria-hidden="true" /> 706-721-5800
-                </a>
-                <Link
-                  to="/counties"
-                  className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded border border-primary px-4 py-2.5 text-sm font-semibold text-primary hover:bg-muted"
-                >
-                  <MapPin className="h-4 w-4" aria-hidden="true" /> Find a Location
-                </Link>
-              </section>
-
               <section aria-labelledby="related-heading" className="rounded-lg border border-border p-5">
                 <h2 id="related-heading" className="text-xl font-semibold">Related</h2>
                 <ul className="mt-3 space-y-2 text-sm">
