@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import {
-  ArrowRight, Phone, MapPin, Apple, HeartHandshake,
+  ArrowRight, Phone, Apple, HeartHandshake,
   GraduationCap, Baby, Users, ClipboardList, HelpCircle,
 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
