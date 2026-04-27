@@ -25,14 +25,6 @@ type Slide = {
 
 const slides: Slide[] = [
   {
-    image: communityCrowd,
-    alt: "Illustration of a large, diverse crowd of people representing the communities served across East Central Georgia.",
-    eyebrow: "Serving 13 Counties",
-    title: "Public health for every person, every community.",
-    cta: { label: "Explore our programs", href: "/programs" },
-    focal: "object-[center_top] sm:object-[center_30%]",
-  },
-  {
     image: mobileClinic,
     alt: "East Central Public Health District Mobile Health Clinic vehicle with DPH branding and the slogan 'We Go Where You Are!'",
     eyebrow: "Care that comes to you",
@@ -40,6 +32,14 @@ const slides: Slide[] = [
     cta: { label: "See the schedule", href: "/wego/schedule" },
     // Mobile (portrait): center on the truck/DPH seal. Desktop (wide): shift right so the seal & slogan stay in view next to the caption on the left.
     focal: "object-[60%_center] sm:object-[70%_center]",
+  },
+  {
+    image: communityCrowd,
+    alt: "Illustration of a large, diverse crowd of people representing the communities served across East Central Georgia.",
+    eyebrow: "Serving 13 Counties",
+    title: "Public health for every person, every community.",
+    cta: { label: "Explore our programs", href: "/programs" },
+    focal: "object-[center_top] sm:object-[center_30%]",
   },
   {
     image: immunization,
