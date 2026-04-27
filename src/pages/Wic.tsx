@@ -105,7 +105,7 @@ const Wic = () => {
             </p>
           </header>
 
-          <div className="grid gap-10">
+          <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
             <div className="space-y-10">
               {/* What is WIC */}
               <section aria-labelledby="what-heading">
