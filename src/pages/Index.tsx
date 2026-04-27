@@ -43,7 +43,21 @@ const quickLinks = [
 
 const Index = () => {
   const { data: news = [], isLoading: newsLoading } = usePosts(4);
-  const { data: upcomingEvents = [] } = useEvents({ upcomingOnly: true, limit: 4 });
+  const { data: allUpcomingEvents = [] } = useEvents({ upcomingOnly: true });
+  const upcomingEvents = (() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const cutoff = new Date(today);
+    cutoff.setDate(cutoff.getDate() + 14);
+    const cutoffKey = cutoff.toISOString().slice(0, 10);
+    const todayKey = today.toISOString().slice(0, 10);
+    return allUpcomingEvents
+      .filter((e) => {
+        const key = (e.event_date ?? e.published_at ?? "").slice(0, 10);
+        return key >= todayKey && key <= cutoffKey;
+      })
+      .slice(0, 4);
+  })();
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
