@@ -119,15 +119,15 @@ const HeroSlider = () => {
         {/* Prev/Next — overridden to use brand tokens with strong contrast */}
         <CarouselPrevious
           aria-label="Previous slide"
-          className="left-3 h-11 w-11 border-0 bg-brand text-brand-foreground hover:bg-brand-hover hover:text-brand-foreground"
+          className="left-2 h-9 w-9 border-0 bg-brand text-brand-foreground hover:bg-brand-hover hover:text-brand-foreground sm:left-3 sm:h-11 sm:w-11"
         />
         <CarouselNext
           aria-label="Next slide"
-          className="right-3 h-11 w-11 border-0 bg-brand text-brand-foreground hover:bg-brand-hover hover:text-brand-foreground"
+          className="right-2 h-9 w-9 border-0 bg-brand text-brand-foreground hover:bg-brand-hover hover:text-brand-foreground sm:right-3 sm:h-11 sm:w-11"
         />
       </Carousel>
 
-      <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-full bg-foreground/70 px-3 py-2 backdrop-blur">
+      <div className="absolute bottom-3 left-1/2 flex max-w-[calc(100%-1rem)] -translate-x-1/2 items-center gap-3 rounded-full bg-foreground/70 px-3 py-2 backdrop-blur">
         <ul className="flex items-center gap-2" role="tablist" aria-label="Choose slide">
           {slides.map((_, i) => (
             <li key={i}>
@@ -137,10 +137,10 @@ const HeroSlider = () => {
                 aria-selected={current === i}
                 aria-label={`Go to slide ${i + 1}`}
                 onClick={() => api?.scrollTo(i)}
-                className={`block min-h-[44px] rounded-full transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background ${
+                className={`block h-2 min-h-[44px] rounded-full transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background ${
                   current === i
-                    ? "w-11 bg-background"
-                    : "w-11 bg-background/60 hover:bg-background/90"
+                    ? "w-8 bg-background sm:w-11"
+                    : "w-8 bg-background/60 hover:bg-background/90 sm:w-11"
                 }`}
               />
             </li>
