@@ -50,9 +50,9 @@ const App = () => (
       </a>
       <Toaster />
       <Sonner />
-      <SiteAlertBanner />
-      <SiteAlertModal />
       <BrowserRouter>
+        <SiteAlertBanner />
+        <SiteAlertModal />
         <AnalyticsTracker />
         <Routes>
           <Route path="/" element={<Index />} />
