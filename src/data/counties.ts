@@ -19,6 +19,17 @@ export interface CountyRelatedLink {
   icon: "calendar" | "barChart" | "newspaper" | "utensils";
 }
 
+export interface CountyClinicSite {
+  name: string;
+  contactName?: string;
+  addressLines: string[];
+  phone?: string;
+  phoneHref?: string;
+  hours?: CountyHoursRow[];
+  walkInHours?: CountyHoursRow[];
+  notes?: string[];
+}
+
 export interface County {
   slug: string;
   name: string;
@@ -48,6 +59,8 @@ export interface County {
   heroImage?: string;
   heroAlt?: string;
   relatedLinks?: CountyRelatedLink[];
+  /** Optional list of additional clinic / office sites for this county. */
+  clinicSites?: CountyClinicSite[];
 }
 
 const defaultRelated = (countyName: string): CountyRelatedLink[] => [
