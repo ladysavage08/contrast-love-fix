@@ -7,13 +7,15 @@ export async function logAuditEvent(
   details: { email?: string | null; user_id?: string | null; metadata?: Record<string, unknown> } = {},
 ) {
   try {
-    await supabase.from("admin_audit_log").insert({
-      event_type,
-      email: details.email ?? null,
-      user_id: details.user_id ?? null,
-      user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
-      metadata: details.metadata ?? {},
-    });
+    await supabase.from("admin_audit_log").insert([
+      {
+        event_type,
+        email: details.email ?? undefined,
+        user_id: details.user_id ?? undefined,
+        user_agent: typeof navigator !== "undefined" ? navigator.userAgent : undefined,
+        metadata: (details.metadata ?? {}) as never,
+      },
+    ]);
   } catch {
     // Never let logging break auth flow.
   }
