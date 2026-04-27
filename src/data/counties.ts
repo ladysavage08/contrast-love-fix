@@ -292,8 +292,8 @@ export const counties: County[] = [
     clinicSites: [
       {
         name: "Environmental Health",
-        contactName: "Andrea Frazier (Interim)",
-        addressLines: ["1916 North Leg Road", "Building K", "Augusta, GA 30909"],
+        contactName: "Jasmine Anderson",
+        addressLines: ["1916 North Leg Road", "Building L", "Augusta, GA 30909"],
         phone: "(706) 667-4234",
         phoneHref: "tel:7066674234",
         hours: [{ days: "Monday – Friday", time: "8:00 AM – 5:00 PM" }],
