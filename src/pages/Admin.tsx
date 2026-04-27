@@ -124,7 +124,7 @@ const Admin = () => {
                   : "bg-muted text-muted-foreground"
               }`}
             >
-              {isAdmin ? "Admin" : "Signed in (no admin role)"}
+              {isAdmin ? "Admin" : isEditor ? "Editor" : "Signed in"}
             </span>
             <button
               type="button"
@@ -139,14 +139,13 @@ const Admin = () => {
           </div>
         </header>
 
-        {!isAdmin && (
+        {!isAdmin && isEditor && (
           <div
             role="status"
             className="mb-6 rounded-md border border-border bg-muted/40 p-4 text-sm"
           >
-            Your account is signed in but does not have the <strong>admin</strong> role.
-            Most management tools below will be read-only. Ask an administrator to grant
-            you the admin role.
+            You are signed in as an <strong>editor</strong>. Some admin-only actions
+            (such as managing user roles) are unavailable.
           </div>
         )}
 
