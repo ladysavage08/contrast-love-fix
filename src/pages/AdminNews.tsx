@@ -120,7 +120,7 @@ function postToDraft(p: Post): Draft {
 
 const AdminNews = () => {
   const navigate = useNavigate();
-  const { user, isAdmin, loading } = useAdminAuth();
+  const { user, isAdmin, canManage, loading } = useAdminAuth();
   const { toast } = useToast();
 
   const [posts, setPosts] = useState<Post[]>([]);
