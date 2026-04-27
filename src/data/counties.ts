@@ -19,6 +19,17 @@ export interface CountyRelatedLink {
   icon: "calendar" | "barChart" | "newspaper" | "utensils";
 }
 
+export interface CountyClinicSite {
+  name: string;
+  contactName?: string;
+  addressLines: string[];
+  phone?: string;
+  phoneHref?: string;
+  hours?: CountyHoursRow[];
+  walkInHours?: CountyHoursRow[];
+  notes?: string[];
+}
+
 export interface County {
   slug: string;
   name: string;
@@ -48,6 +59,8 @@ export interface County {
   heroImage?: string;
   heroAlt?: string;
   relatedLinks?: CountyRelatedLink[];
+  /** Optional list of additional clinic / office sites for this county. */
+  clinicSites?: CountyClinicSite[];
 }
 
 const defaultRelated = (countyName: string): CountyRelatedLink[] => [
@@ -276,6 +289,62 @@ export const counties: County[] = [
     ],
     servicesUrl: "https://www.echd.org/richmond-county-programs-and-services",
     relatedLinks: defaultRelated("Richmond County"),
+    clinicSites: [
+      {
+        name: "Environmental Health",
+        contactName: "Andrea Frazier (Interim)",
+        addressLines: ["1916 North Leg Road", "Building K", "Augusta, GA 30909"],
+        phone: "(706) 667-4234",
+        phoneHref: "tel:7066674234",
+        hours: [{ days: "Monday – Friday", time: "8:00 AM – 5:00 PM" }],
+        notes: ["Please call to check for any schedule changes."],
+      },
+      {
+        name: "Laney Walker Clinic",
+        addressLines: ["950 Laney-Walker Blvd.", "Augusta, Georgia 30901"],
+        phone: "(706) 721-5900",
+        phoneHref: "tel:7067215900",
+        hours: [
+          { days: "Monday – Friday", time: "8:00 AM – 5:00 PM" },
+          { days: "Daily", time: "Closed for Lunch 12:00 PM – 1:00 PM" },
+        ],
+        notes: [
+          "Check-in times vary; please call for more information.",
+          "Please call to check for any schedule changes.",
+        ],
+      },
+      {
+        name: "South Augusta Clinic",
+        addressLines: ["2420 Windsor Spring Road", "Augusta, Georgia 30906"],
+        phone: "(706) 721-5800",
+        phoneHref: "tel:7067215800",
+        hours: [
+          { days: "Monday & Wednesday", time: "8:00 AM – 5:00 PM" },
+          { days: "Tuesday & Thursday", time: "8:00 AM – 6:00 PM" },
+          { days: "Friday", time: "8:00 AM – 3:00 PM" },
+        ],
+        walkInHours: [
+          { days: "Monday", time: "8–11 AM & 1–4 PM" },
+          { days: "Tuesday", time: "8–11 AM & 1–5 PM" },
+          { days: "Wednesday", time: "8–11 AM & 1–4 PM" },
+          { days: "Thursday", time: "8–11 AM & 1–5 PM" },
+          { days: "Friday", time: "8–11 AM & 1–2 PM" },
+        ],
+        notes: ["Please call to check for any schedule changes."],
+      },
+      {
+        name: "TB Control Clinic",
+        addressLines: ["950 Laney Walker Blvd.", "Augusta, GA 30901"],
+        phone: "(706) 721-5840",
+        phoneHref: "tel:7067215840",
+        hours: [
+          { days: "Monday – Friday", time: "8:00 AM – 11:00 AM / 1:00 PM – 4:00 PM" },
+        ],
+        notes: [
+          "For chest X-rays, please call TB Control for schedule adjustments during scheduled holiday closings.",
+        ],
+      },
+    ],
   },
   {
     slug: "screven",
