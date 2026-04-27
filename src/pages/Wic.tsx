@@ -27,8 +27,11 @@ const eligibility = [
   "Children up to age 5 (including foster children)",
 ];
 
-const applySteps = [
-  "Call your nearest county health department or WIC office to schedule an appointment.",
+const applySteps: Array<string | { text: string; link: { href: string; label: string } }> = [
+  {
+    text: "Apply online at ",
+    link: { href: "https://www.ecphd.com/getwic", label: "ecphd.com/getwic" },
+  },
   "Gather proof of identity, address, household income, and your child's medical/immunization records.",
   "Attend your appointment for a brief health and nutrition screening.",
   "Receive your WIC benefits and nutrition education materials.",
