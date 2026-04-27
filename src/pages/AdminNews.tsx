@@ -120,7 +120,7 @@ function postToDraft(p: Post): Draft {
 
 const AdminNews = () => {
   const navigate = useNavigate();
-  const { user, isAdmin, loading } = useAdminAuth();
+  const { user, isAdmin, canManage, loading } = useAdminAuth();
   const { toast } = useToast();
 
   const [posts, setPosts] = useState<Post[]>([]);
@@ -132,7 +132,8 @@ const AdminNews = () => {
   useEffect(() => {
     if (loading) return;
     if (!user) navigate("/auth", { replace: true });
-  }, [user, loading, navigate]);
+    else if (!canManage) navigate("/", { replace: true });
+  }, [user, canManage, loading, navigate]);
 
   async function loadPosts() {
     setListLoading(true);

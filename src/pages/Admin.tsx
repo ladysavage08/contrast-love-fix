@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
 import { Users, Upload, Newspaper, LogOut, ExternalLink, Megaphone } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
+import { useIdleSignOut } from "@/hooks/useIdleSignOut";
+import { logAuditEvent } from "@/lib/auditLog";
 import { supabase } from "@/integrations/supabase/client";
 
 type Tool = {
@@ -53,12 +55,31 @@ const tools: Tool[] = [
 
 const Admin = () => {
   const navigate = useNavigate();
-  const { user, isAdmin, loading } = useAdminAuth();
+  const { user, isAdmin, isEditor, canManage, loading } = useAdminAuth();
+  const loggedAccessRef = useRef(false);
 
   useEffect(() => {
     if (loading) return;
-    if (!user) navigate("/auth", { replace: true });
-  }, [user, loading, navigate]);
+    if (!user) {
+      navigate("/auth", { replace: true });
+      return;
+    }
+    // Role gate: only admin OR editor can access /admin
+    if (!canManage) {
+      navigate("/", { replace: true });
+      return;
+    }
+    if (!loggedAccessRef.current) {
+      loggedAccessRef.current = true;
+      void logAuditEvent("admin_access", {
+        email: user.email ?? null,
+        user_id: user.id,
+        metadata: { role: isAdmin ? "admin" : "editor" },
+      });
+    }
+  }, [user, canManage, isAdmin, loading, navigate]);
+
+  useIdleSignOut(!!user, () => navigate("/auth", { replace: true }));
 
   if (loading) {
     return (
@@ -72,7 +93,7 @@ const Admin = () => {
     );
   }
 
-  if (!user) return null;
+  if (!user || !canManage) return null;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -103,7 +124,7 @@ const Admin = () => {
                   : "bg-muted text-muted-foreground"
               }`}
             >
-              {isAdmin ? "Admin" : "Signed in (no admin role)"}
+              {isAdmin ? "Admin" : isEditor ? "Editor" : "Signed in"}
             </span>
             <button
               type="button"
@@ -118,14 +139,13 @@ const Admin = () => {
           </div>
         </header>
 
-        {!isAdmin && (
+        {!isAdmin && isEditor && (
           <div
             role="status"
             className="mb-6 rounded-md border border-border bg-muted/40 p-4 text-sm"
           >
-            Your account is signed in but does not have the <strong>admin</strong> role.
-            Most management tools below will be read-only. Ask an administrator to grant
-            you the admin role.
+            You are signed in as an <strong>editor</strong>. Some admin-only actions
+            (such as managing user roles) are unavailable.
           </div>
         )}
 

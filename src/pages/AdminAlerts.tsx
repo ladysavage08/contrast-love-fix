@@ -28,15 +28,17 @@ import { MODAL_PRESETS, type ModalPresetKey } from "@/config/siteAlerts";
 const AdminAlerts = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user, isAdmin, loading: authLoading } = useAdminAuth();
+  const { user, isAdmin, canManage, loading: authLoading } = useAdminAuth();
 
   const [settings, setSettings] = useState<SiteAlertsSettings>(DEFAULT_SETTINGS);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (!authLoading && !user) navigate("/auth", { replace: true });
-  }, [user, authLoading, navigate]);
+    if (authLoading) return;
+    if (!user) navigate("/auth", { replace: true });
+    else if (!canManage) navigate("/", { replace: true });
+  }, [user, canManage, authLoading, navigate]);
 
   useEffect(() => {
     async function load() {

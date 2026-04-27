@@ -4,11 +4,23 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import {
+  clearAttempts,
+  formatRemaining,
+  getLockoutRemainingMs,
+  recordFailedAttempt,
+} from "@/lib/loginThrottle";
+import { logAuditEvent } from "@/lib/auditLog";
 
 const credentialsSchema = z.object({
   email: z.string().trim().email({ message: "Enter a valid email" }).max(255),
-  password: z.string().min(6, { message: "Password must be at least 6 characters" }).max(72),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters" })
+    .max(72),
 });
+
+const GENERIC_ERROR = "Invalid email or password.";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -17,8 +29,6 @@ const Auth = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
-  const emailError = error?.toLowerCase().includes("email") ? error : null;
-  const passwordError = !emailError && error ? error : null;
 
   useEffect(() => {
     if (error) {
@@ -29,18 +39,51 @@ const Auth = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
     const parsed = credentialsSchema.safeParse({ email, password });
     if (!parsed.success) {
-      setError(parsed.error.issues[0]?.message ?? "Invalid input");
+      // Use generic error to avoid revealing which field is "wrong" in
+      // a way that could be probed. Validation messages are still shown
+      // for clearly user-side issues like format.
+      setError(parsed.error.issues[0]?.message ?? GENERIC_ERROR);
       return;
     }
+
+    const remaining = getLockoutRemainingMs(parsed.data.email);
+    if (remaining > 0) {
+      setError(
+        `Too many failed attempts. Please try again in ${formatRemaining(remaining)}.`,
+      );
+      return;
+    }
+
     setSubmitting(true);
-    const { error: signInError } = await supabase.auth.signInWithPassword(parsed.data);
+    const { data, error: signInError } = await supabase.auth.signInWithPassword(
+      parsed.data,
+    );
     setSubmitting(false);
+
     if (signInError) {
-      setError(signInError.message);
+      const result = recordFailedAttempt(parsed.data.email);
+      void logAuditEvent("login_failed", {
+        email: parsed.data.email,
+        metadata: { reason: signInError.message },
+      });
+      if (result.locked) {
+        setError(
+          `Too many failed attempts. Please try again in ${formatRemaining(result.remainingMs)}.`,
+        );
+      } else {
+        setError(GENERIC_ERROR);
+      }
       return;
     }
+
+    clearAttempts(parsed.data.email);
+    void logAuditEvent("login_success", {
+      email: parsed.data.email,
+      user_id: data.user?.id ?? null,
+    });
     navigate("/admin");
   };
 
@@ -70,11 +113,8 @@ const Auth = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 autoComplete="email"
-                aria-invalid={!!emailError}
-                aria-describedby={emailError ? "auth-email-error" : undefined}
                 className="w-full rounded border border-input bg-background px-3 py-2.5 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
               />
-              {emailError && <span id="auth-email-error" className="mt-1 block text-sm text-destructive">{emailError}</span>}
             </label>
             <label className="block">
               <span className="mb-1 block text-sm font-medium">Password <span aria-hidden="true" className="text-destructive">*</span></span>
@@ -84,11 +124,12 @@ const Auth = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 autoComplete="current-password"
-                aria-invalid={!!passwordError}
-                aria-describedby={passwordError ? "auth-password-error" : undefined}
+                minLength={8}
                 className="w-full rounded border border-input bg-background px-3 py-2.5 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
               />
-              {passwordError && <span id="auth-password-error" className="mt-1 block text-sm text-destructive">{passwordError}</span>}
+              <span className="mt-1 block text-xs text-muted-foreground">
+                Minimum 8 characters. Strong, unique passwords required for staff accounts.
+              </span>
             </label>
 
             {error && (
