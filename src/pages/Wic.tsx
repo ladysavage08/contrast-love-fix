@@ -163,17 +163,41 @@ const Wic = () => {
                 <h2 id="apply-heading" className="text-2xl font-semibold">How to Apply</h2>
                 <div aria-hidden="true" className="mt-2 h-1 w-16 bg-accent-gold" />
                 <ol className="mt-4 list-decimal space-y-2 pl-6 text-base text-foreground/90">
-                  {applySteps.map((s) => <li key={s}>{s}</li>)}
+                  {applySteps.map((s, i) => (
+                    <li key={typeof s === "string" ? s : s.link.href}>
+                      {typeof s === "string" ? (
+                        s
+                      ) : (
+                        <>
+                          {s.text}
+                          <a
+                            href={s.link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary underline-offset-2 hover:underline"
+                          >
+                            {s.link.label}
+                            <span className="sr-only"> (opens in new tab)</span>
+                          </a>
+                          {" "}for a same-day appointment.
+                        </>
+                      )}
+                    </li>
+                  ))}
                 </ol>
                 <div className="mt-5 flex flex-wrap gap-3">
-                  <Link
-                    to="/counties"
+                  <a
+                    href="https://www.ecphd.com/getwic"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Apply for a same-day WIC appointment (opens in new tab)"
                     className="inline-flex items-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                   >
-                    Find a Location <MapPin className="h-4 w-4" aria-hidden="true" />
-                  </Link>
+                    Apply for Same-Day Appointment <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
                   <a
-                    href="tel:+18663746942"
+                    href="tel:18663746942"
+                    aria-label="Call the WIC Call Center at 1-866-374-6942"
                     className="inline-flex items-center gap-2 rounded border border-primary px-4 py-2.5 text-sm font-semibold text-primary hover:bg-muted"
                   >
                     Call for Assistance <Phone className="h-4 w-4" aria-hidden="true" />
@@ -182,14 +206,14 @@ const Wic = () => {
                     href="https://ecphd-getwic.qminder.site/#/"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Apply for WIC (opens in new tab)"
                     className="inline-flex items-center gap-2 rounded border border-primary px-4 py-2.5 text-sm font-semibold text-primary hover:bg-muted"
                   >
                     Apply for WIC <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    <span className="sr-only"> (opens in new tab)</span>
                   </a>
                 </div>
                 <p className="mt-4 text-sm text-foreground/90">
-                  WIC Call Center: +1 866 374 6942
+                  WIC Call Center: <a href="tel:18663746942" className="text-primary underline-offset-2 hover:underline">+1 866-374-6942</a>
                 </p>
               </section>
 
