@@ -93,7 +93,7 @@ const Admin = () => {
     );
   }
 
-  if (!user) return null;
+  if (!user || !canManage) return null;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
