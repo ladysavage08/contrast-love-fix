@@ -132,7 +132,8 @@ const AdminNews = () => {
   useEffect(() => {
     if (loading) return;
     if (!user) navigate("/auth", { replace: true });
-  }, [user, loading, navigate]);
+    else if (!canManage) navigate("/", { replace: true });
+  }, [user, canManage, loading, navigate]);
 
   async function loadPosts() {
     setListLoading(true);
