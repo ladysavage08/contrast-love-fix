@@ -6,44 +6,52 @@ export type AdminAuthState = {
   user: User | null;
   session: Session | null;
   isAdmin: boolean;
+  isEditor: boolean;
+  canManage: boolean; // admin OR editor
   loading: boolean;
 };
 
 export function useAdminAuth(): AdminAuthState {
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isEditor, setIsEditor] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
       setSession(s);
-      // Defer role check to avoid recursion in auth callback
       if (s?.user) {
         setTimeout(() => {
-          checkAdmin(s.user.id);
+          checkRoles(s.user.id);
         }, 0);
       } else {
         setIsAdmin(false);
+        setIsEditor(false);
       }
     });
 
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
       if (data.session?.user) {
-        checkAdmin(data.session.user.id);
+        checkRoles(data.session.user.id);
       } else {
         setLoading(false);
       }
     });
 
-    async function checkAdmin(userId: string) {
+    async function checkRoles(userId: string) {
       const { data, error } = await supabase
         .from("user_roles")
         .select("role")
-        .eq("user_id", userId)
-        .eq("role", "admin")
-        .maybeSingle();
-      setIsAdmin(!error && !!data);
+        .eq("user_id", userId);
+      if (error || !data) {
+        setIsAdmin(false);
+        setIsEditor(false);
+      } else {
+        const roles = data.map((r) => r.role);
+        setIsAdmin(roles.includes("admin"));
+        setIsEditor(roles.includes("editor"));
+      }
       setLoading(false);
     }
 
@@ -52,5 +60,12 @@ export function useAdminAuth(): AdminAuthState {
     };
   }, []);
 
-  return { user: session?.user ?? null, session, isAdmin, loading };
+  return {
+    user: session?.user ?? null,
+    session,
+    isAdmin,
+    isEditor,
+    canManage: isAdmin || isEditor,
+    loading,
+  };
 }
