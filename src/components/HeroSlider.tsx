@@ -9,6 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
+import communityCrowd from "@/assets/slide-community-crowd.jpg";
 import community from "@/assets/slide-community.jpg";
 import mobileClinic from "@/assets/hero-mobile-clinic.jpg";
 import immunization from "@/assets/slide-immunization.jpg";
@@ -25,11 +26,19 @@ type Slide = {
 
 const slides: Slide[] = [
   {
+    image: communityCrowd,
+    alt: "Illustration of a large, diverse crowd of people representing the communities served across East Central Georgia.",
+    eyebrow: "Serving 13 Counties",
+    title: "Public health for every person, every community.",
+    cta: { label: "Explore our programs", href: "/programs" },
+    focal: "object-[center_top] sm:object-[center_30%]",
+  },
+  {
     image: community,
     alt: "Families and a public health nurse at a community wellness event.",
-    eyebrow: "Serving 13 Counties",
+    eyebrow: "Community Wellness",
     title: "Healthy people, strong communities across East Central Georgia.",
-    cta: { label: "Explore our programs", href: "/programs" },
+    cta: { label: "Learn about us", href: "/about" },
   },
   {
     image: mobileClinic,
