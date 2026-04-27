@@ -242,6 +242,109 @@ const CountyPage = () => {
               </a>
             </section>
 
+            {/* Clinic and Office Sites */}
+            {county.clinicSites && county.clinicSites.length > 0 && (
+              <section aria-labelledby="clinic-sites-heading" className="space-y-4">
+                <h2 id="clinic-sites-heading" className="text-2xl font-bold text-foreground">
+                  Clinic and Office Sites
+                </h2>
+                <div className="grid gap-4">
+                  {county.clinicSites.map((site) => {
+                    const mapsQuery = encodeURIComponent(site.addressLines.join(", "));
+                    return (
+                      <article
+                        key={site.name}
+                        className="rounded-lg border border-t-[3px] border-border border-t-accent-gold bg-card p-6 shadow-sm"
+                      >
+                        <h3 className="text-lg font-semibold text-foreground">
+                          {site.name}
+                        </h3>
+                        {site.contactName && (
+                          <p className="mt-1 text-sm text-muted-foreground">
+                            {site.contactName}
+                          </p>
+                        )}
+                        <address className="mt-3 not-italic text-sm leading-relaxed text-foreground">
+                          {site.addressLines.map((line) => (
+                            <span key={line} className="block">{line}</span>
+                          ))}
+                        </address>
+                        <a
+                          href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
+                        >
+                          Get Directions <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                          <span className="sr-only">(opens in new tab)</span>
+                        </a>
+                        {site.phone && site.phoneHref && (
+                          <p className="mt-3 flex items-start gap-2 text-sm">
+                            <Phone className="mt-0.5 h-4 w-4 text-primary" aria-hidden="true" />
+                            <a
+                              href={site.phoneHref}
+                              className="font-semibold text-primary underline-offset-2 hover:underline focus-visible:underline"
+                            >
+                              {site.phone}
+                            </a>
+                          </p>
+                        )}
+                        {site.hours && site.hours.length > 0 && (
+                          <div className="mt-4">
+                            <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold text-foreground">
+                              <Clock className="h-4 w-4 text-primary" aria-hidden="true" /> Hours
+                            </h4>
+                            <table className="w-full text-left text-sm">
+                              <caption className="sr-only">{site.name} hours</caption>
+                              <thead className="sr-only">
+                                <tr><th>Days</th><th>Hours</th></tr>
+                              </thead>
+                              <tbody>
+                                {site.hours.map((row) => (
+                                  <tr key={row.days} className="border-b border-border last:border-0">
+                                    <td className="py-1.5 pr-4 font-medium text-foreground">{row.days}</td>
+                                    <td className="py-1.5 text-muted-foreground">{row.time}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        )}
+                        {site.walkInHours && site.walkInHours.length > 0 && (
+                          <div className="mt-4">
+                            <h4 className="mb-2 text-sm font-semibold text-foreground">
+                              Walk-In Hours
+                            </h4>
+                            <table className="w-full text-left text-sm">
+                              <caption className="sr-only">{site.name} walk-in hours</caption>
+                              <thead className="sr-only">
+                                <tr><th>Days</th><th>Hours</th></tr>
+                              </thead>
+                              <tbody>
+                                {site.walkInHours.map((row) => (
+                                  <tr key={row.days} className="border-b border-border last:border-0">
+                                    <td className="py-1.5 pr-4 font-medium text-foreground">{row.days}</td>
+                                    <td className="py-1.5 text-muted-foreground">{row.time}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        )}
+                        {site.notes && site.notes.length > 0 && (
+                          <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
+                            {site.notes.map((note) => (
+                              <li key={note}>Note: {note}</li>
+                            ))}
+                          </ul>
+                        )}
+                      </article>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
+
             {/* Related links */}
             {related.length > 0 && (
               <section
