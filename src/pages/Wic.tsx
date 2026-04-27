@@ -285,25 +285,6 @@ const Wic = () => {
 
             {/* Sidebar */}
             <aside aria-label="Sidebar" className="space-y-6">
-              <section aria-labelledby="cta-heading" className="rounded-lg border border-border p-5">
-                <h2 id="cta-heading" className="text-xl font-semibold">Get Started</h2>
-                <p className="mt-2 text-sm text-foreground/90">
-                  Reach out today to see if your family qualifies for WIC.
-                </p>
-                <a
-                  href="tel:7067215800"
-                  className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-                >
-                  <Phone className="h-4 w-4" aria-hidden="true" /> 706-721-5800
-                </a>
-                <Link
-                  to="/counties"
-                  className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded border border-primary px-4 py-2.5 text-sm font-semibold text-primary hover:bg-muted"
-                >
-                  <MapPin className="h-4 w-4" aria-hidden="true" /> Find a Location
-                </Link>
-              </section>
-
               <section aria-labelledby="related-heading" className="rounded-lg border border-border p-5">
                 <h2 id="related-heading" className="text-xl font-semibold">Related</h2>
                 <ul className="mt-3 space-y-2 text-sm">
