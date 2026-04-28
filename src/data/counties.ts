@@ -53,7 +53,7 @@ export interface County {
   /** Structured hours table rows for the detail page. */
   hours?: CountyHoursRow[];
   /** External services page (echd.org). */
-  servicesUrl?: string;
+  // servicesUrl removed: View All Services now routes to internal /programs
   servicesLabel?: string;
   /** Hero image import path under src/assets, or undefined for placeholder. */
   heroImage?: string;
@@ -91,7 +91,6 @@ export const counties: County[] = [
       { days: "Friday", time: "Closed every other Friday — call for dates" },
       { days: "Daily", time: "Closed Noon – 1:00 PM" },
     ],
-    servicesUrl: "https://www.echd.org/burke-county-programs-and-services",
     heroImage: "county-burke.jpg",
     heroAlt: "Burke County courthouse and surrounding landscape",
     relatedLinks: defaultRelated("Burke County"),
@@ -108,7 +107,6 @@ export const counties: County[] = [
     nurseManager: "LeAnna Niki Crawford, MSN, APRN, FNP-c",
     intro: intro("Columbia County", "Columbia County Health Department"),
     hours: [{ days: "Monday – Friday", time: "8:00 AM – 5:00 PM" }],
-    servicesUrl: "https://www.echd.org/columbia-county-programs-and-services",
     relatedLinks: defaultRelated("Columbia County"),
   },
   {
@@ -135,7 +133,6 @@ export const counties: County[] = [
       { days: "Tuesday", time: "8:00 AM – 6:30 PM" },
       { days: "Friday", time: "8:00 AM – 2:00 PM" },
     ],
-    servicesUrl: "https://www.echd.org/emanuel-county-programs-and-services",
     relatedLinks: defaultRelated("Emanuel County"),
   },
   {
@@ -160,7 +157,6 @@ export const counties: County[] = [
       { days: "Friday", time: "8:00 AM – 2:30 PM" },
       { days: "Daily", time: "Closed 12:00 – 12:30 PM" },
     ],
-    servicesUrl: "https://www.echd.org/glascock-county-programs-and-services",
     relatedLinks: defaultRelated("Glascock County"),
   },
   {
@@ -188,7 +184,6 @@ export const counties: County[] = [
       { days: "Wednesday", time: "8:00 AM – 6:30 PM" },
       { days: "Friday", time: "8:00 AM – 2:30 PM" },
     ],
-    servicesUrl: "https://www.echd.org/jefferson-county-programs-and-services",
     relatedLinks: defaultRelated("Jefferson County"),
   },
   {
@@ -212,7 +207,6 @@ export const counties: County[] = [
       { days: "Friday – Sunday", time: "Closed" },
       { days: "Daily", time: "Lunch 12:00 – 12:30 PM" },
     ],
-    servicesUrl: "https://www.echd.org/jenkins-county-programs-and-services",
     relatedLinks: defaultRelated("Jenkins County"),
   },
   {
@@ -239,7 +233,6 @@ export const counties: County[] = [
       { days: "Tuesday", time: "8:00 AM – 6:30 PM" },
       { days: "Friday", time: "8:00 AM – 2:30 PM" },
     ],
-    servicesUrl: "https://www.echd.org/lincoln-county-programs-and-services",
     relatedLinks: defaultRelated("Lincoln County"),
   },
   {
@@ -268,7 +261,6 @@ export const counties: County[] = [
       { days: "Friday", time: "8:00 AM – 2:00 PM" },
       { days: "Daily", time: "Closed 12:30 – 1:30 PM" },
     ],
-    servicesUrl: "https://www.echd.org/mcduffie-county-programs-and-services",
     relatedLinks: defaultRelated("McDuffie County"),
   },
   {
@@ -287,7 +279,6 @@ export const counties: County[] = [
       { days: "Monday – Friday", time: "8:00 AM – 5:00 PM" },
       { days: "Daily (Laney Walker)", time: "Closed 12:00 – 1:00 PM" },
     ],
-    servicesUrl: "https://www.echd.org/richmond-county-programs-and-services",
     relatedLinks: defaultRelated("Richmond County"),
     clinicSites: [
       {
@@ -359,7 +350,6 @@ export const counties: County[] = [
     nurseManager: "Tiffany Rollins, RN, BSN",
     intro: intro("Screven County", "Screven County Health Department"),
     hours: [{ days: "Monday – Friday", time: "8:00 AM – 4:00 PM" }],
-    servicesUrl: "https://www.echd.org/screven-county-programs-and-services",
     relatedLinks: defaultRelated("Screven County"),
   },
   {
@@ -385,7 +375,6 @@ export const counties: County[] = [
       { days: "Monday – Thursday", time: "8:00 AM – 4:30 PM" },
       { days: "Friday", time: "Closed" },
     ],
-    servicesUrl: "https://www.echd.org/taliaferro-county-programs-and-services",
     relatedLinks: defaultRelated("Taliaferro County"),
   },
   {
@@ -408,7 +397,6 @@ export const counties: County[] = [
       { days: "Monday – Thursday", time: "8:00 AM – 4:30 PM" },
       { days: "Friday", time: "Closed" },
     ],
-    servicesUrl: "https://www.echd.org/warren-county-programs-and-services",
     relatedLinks: defaultRelated("Warren County"),
   },
   {
@@ -427,7 +415,6 @@ export const counties: County[] = [
       { days: "Monday – Thursday", time: "7:30 AM – 4:30 PM" },
       { days: "Friday", time: "7:30 AM – 1:30 PM" },
     ],
-    servicesUrl: "https://www.echd.org/wilkes-county-programs-and-services",
     relatedLinks: defaultRelated("Wilkes County"),
   },
 ];
