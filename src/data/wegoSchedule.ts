@@ -242,5 +242,7 @@ export function entryTypeLabel(type: ScheduleEntryType): string {
       return "Training";
     case "tbd":
       return "TBD";
+    case "special":
+      return "Special Event";
   }
 }
