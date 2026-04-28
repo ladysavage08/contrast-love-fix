@@ -71,7 +71,7 @@ const CountyPage = () => {
   if (!county) return <Navigate to="/counties" replace />;
 
   const heroSrc = county.heroImage ? heroImageMap[county.heroImage] : undefined;
-  const servicesUrl = county.servicesUrl ?? "#";
+  
   const servicesLabel =
     county.servicesLabel ??
     `Click here to view all services provided by the ${county.healthDept}.`;
@@ -125,12 +125,12 @@ const CountyPage = () => {
             <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:mt-5 md:text-lg">
               {intro}
             </p>
-            <a
-              href={servicesUrl}
+            <Link
+              to="/programs"
               className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded bg-brand px-5 py-3 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:mt-6 sm:w-auto"
             >
               View All Services <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </a>
+            </Link>
           </div>
           <div className="overflow-hidden rounded-lg border border-border shadow-sm">
             {heroSrc ? (
@@ -234,12 +234,12 @@ const CountyPage = () => {
                 Services at {county.healthDept}
               </h2>
               <p className="mt-2 text-sm opacity-95">{servicesLabel}</p>
-              <a
-                href={servicesUrl}
+              <Link
+                to="/programs"
                 className="mt-4 inline-flex items-center gap-2 rounded bg-accent-gold px-5 py-2.5 text-sm font-semibold text-accent-gold-foreground hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-foreground"
               >
                 View All Services <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </a>
+              </Link>
             </section>
 
             {/* Clinic and Office Sites */}
