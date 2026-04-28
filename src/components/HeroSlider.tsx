@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import {
   Carousel,
@@ -8,6 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useHeroSlides } from "@/hooks/useHeroSlides";
 
 import communityCrowd from "@/assets/slide-community-crowd.jpg";
 import mobileClinic from "@/assets/hero-mobile-clinic.jpg";
@@ -18,19 +19,21 @@ type Slide = {
   alt: string;
   eyebrow: string;
   title: string;
+  subtitle?: string;
   cta: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
   /** Tailwind object-position classes, e.g. "object-center sm:object-right". Keeps focal subject visible across breakpoints. */
   focal?: string;
 };
 
-const slides: Slide[] = [
+/** Fallback slides used when no admin-managed slides exist or fetch fails. */
+const defaultSlides: Slide[] = [
   {
     image: mobileClinic,
     alt: "East Central Public Health District Mobile Health Clinic vehicle with DPH branding and the slogan 'We Go Where You Are!'",
     eyebrow: "Care that comes to you",
     title: "The Mobile Health Clinic brings services to your neighborhood.",
     cta: { label: "See the schedule", href: "/wego/schedule" },
-    // Mobile (portrait): center on the truck/DPH seal. Desktop (wide): shift right so the seal & slogan stay in view next to the caption on the left.
     focal: "object-[60%_center] sm:object-[70%_center]",
   },
   {
@@ -53,6 +56,28 @@ const slides: Slide[] = [
 const HeroSlider = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
+  const { slides: dbSlides, loading } = useHeroSlides();
+
+  // Map DB slides into the existing Slide shape so the render code below stays unchanged.
+  const slides: Slide[] =
+    !loading && dbSlides && dbSlides.length > 0
+      ? dbSlides.map((s) => ({
+          image: s.image_url || mobileClinic,
+          alt: s.image_alt || "",
+          eyebrow: s.eyebrow ?? "",
+          title: s.title,
+          subtitle: s.subtitle ?? undefined,
+          cta: {
+            label: s.cta_label ?? "",
+            href: s.cta_href ?? "#",
+          },
+          secondaryCta:
+            s.secondary_cta_label && s.secondary_cta_href
+              ? { label: s.secondary_cta_label, href: s.secondary_cta_href }
+              : undefined,
+          focal: s.focal ?? undefined,
+        }))
+      : defaultSlides;
 
   useEffect(() => {
     if (!api) return;
@@ -74,7 +99,7 @@ const HeroSlider = () => {
         <CarouselContent>
           {slides.map((slide, i) => (
             <CarouselItem
-              key={slide.image}
+              key={`${i}-${slide.image}`}
               role="group"
               aria-roledescription="slide"
               aria-label={`Slide ${i + 1} of ${slides.length}`}
@@ -97,19 +122,38 @@ const HeroSlider = () => {
                 />
                 {/* pb-20 on mobile clears the dots pill so the CTA is always fully visible. */}
                 <div className="relative flex h-full w-full min-w-0 max-w-2xl flex-col justify-end gap-2.5 p-4 pb-20 text-background sm:justify-center sm:gap-3 sm:p-8 sm:pb-8 md:p-10">
-                  <p className="text-[11px] font-semibold uppercase tracking-wide text-background/90 sm:text-sm">
-                    {slide.eyebrow}
-                  </p>
+                  {slide.eyebrow ? (
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-background/90 sm:text-sm">
+                      {slide.eyebrow}
+                    </p>
+                  ) : null}
                   <h2 className="break-words text-lg font-bold leading-snug sm:text-3xl sm:leading-tight md:text-4xl">
                     {slide.title}
                   </h2>
-                  <a
-                    href={slide.cta.href}
-                    className="mt-1 inline-flex w-fit max-w-full items-center gap-2 rounded bg-background px-4 py-2.5 text-sm font-semibold text-primary hover:bg-background/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background sm:mt-2 sm:py-3"
-                  >
-                    <span className="truncate">{slide.cta.label}</span>
-                    <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  </a>
+                  {slide.subtitle ? (
+                    <p className="max-w-xl text-sm text-background/90 sm:text-base">
+                      {slide.subtitle}
+                    </p>
+                  ) : null}
+                  <div className="mt-1 flex flex-wrap items-center gap-2 sm:mt-2">
+                    {slide.cta.label ? (
+                      <a
+                        href={slide.cta.href}
+                        className="inline-flex w-fit max-w-full items-center gap-2 rounded bg-background px-4 py-2.5 text-sm font-semibold text-primary hover:bg-background/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background sm:py-3"
+                      >
+                        <span className="truncate">{slide.cta.label}</span>
+                        <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                      </a>
+                    ) : null}
+                    {slide.secondaryCta ? (
+                      <a
+                        href={slide.secondaryCta.href}
+                        className="inline-flex w-fit max-w-full items-center gap-2 rounded border border-background/80 px-4 py-2.5 text-sm font-semibold text-background hover:bg-background/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background sm:py-3"
+                      >
+                        <span className="truncate">{slide.secondaryCta.label}</span>
+                      </a>
+                    ) : null}
+                  </div>
                 </div>
               </div>
             </CarouselItem>
