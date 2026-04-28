@@ -52,7 +52,6 @@ export interface County {
   intro?: string;
   /** Structured hours table rows for the detail page. */
   hours?: CountyHoursRow[];
-  /** External services page (echd.org). */
   // servicesUrl removed: View All Services now routes to internal /programs
   servicesLabel?: string;
   /** Hero image import path under src/assets, or undefined for placeholder. */
