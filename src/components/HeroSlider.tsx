@@ -56,6 +56,28 @@ const defaultSlides: Slide[] = [
 const HeroSlider = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
+  const { slides: dbSlides, loading } = useHeroSlides();
+
+  // Map DB slides into the existing Slide shape so the render code below stays unchanged.
+  const slides: Slide[] =
+    !loading && dbSlides && dbSlides.length > 0
+      ? dbSlides.map((s) => ({
+          image: s.image_url || mobileClinic,
+          alt: s.image_alt || "",
+          eyebrow: s.eyebrow ?? "",
+          title: s.title,
+          subtitle: s.subtitle ?? undefined,
+          cta: {
+            label: s.cta_label ?? "",
+            href: s.cta_href ?? "#",
+          },
+          secondaryCta:
+            s.secondary_cta_label && s.secondary_cta_href
+              ? { label: s.secondary_cta_label, href: s.secondary_cta_href }
+              : undefined,
+          focal: s.focal ?? undefined,
+        }))
+      : defaultSlides;
 
   useEffect(() => {
     if (!api) return;
