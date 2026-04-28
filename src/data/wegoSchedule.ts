@@ -182,6 +182,15 @@ const may2026: MonthlySchedule = {
       address: "201 Church St., Newington",
     },
     { date: "2026-05-29", type: "maintenance" },
+    {
+      date: "2026-05-31",
+      type: "special",
+      county: "Richmond",
+      time: "12:00 PM – 3:00 PM",
+      location: "Strong Tower Christian Fellowship",
+      address: "Wylds Rd, Augusta, GA",
+      note: "Special Event",
+    },
   ],
 };
 
