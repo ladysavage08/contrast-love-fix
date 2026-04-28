@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import {
   Carousel,
@@ -8,6 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useHeroSlides } from "@/hooks/useHeroSlides";
 
 import communityCrowd from "@/assets/slide-community-crowd.jpg";
 import mobileClinic from "@/assets/hero-mobile-clinic.jpg";
@@ -18,19 +19,21 @@ type Slide = {
   alt: string;
   eyebrow: string;
   title: string;
+  subtitle?: string;
   cta: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
   /** Tailwind object-position classes, e.g. "object-center sm:object-right". Keeps focal subject visible across breakpoints. */
   focal?: string;
 };
 
-const slides: Slide[] = [
+/** Fallback slides used when no admin-managed slides exist or fetch fails. */
+const defaultSlides: Slide[] = [
   {
     image: mobileClinic,
     alt: "East Central Public Health District Mobile Health Clinic vehicle with DPH branding and the slogan 'We Go Where You Are!'",
     eyebrow: "Care that comes to you",
     title: "The Mobile Health Clinic brings services to your neighborhood.",
     cta: { label: "See the schedule", href: "/wego/schedule" },
-    // Mobile (portrait): center on the truck/DPH seal. Desktop (wide): shift right so the seal & slogan stay in view next to the caption on the left.
     focal: "object-[60%_center] sm:object-[70%_center]",
   },
   {
