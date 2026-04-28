@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
-import { Users, Upload, Newspaper, LogOut, ExternalLink, Megaphone } from "lucide-react";
+import { Users, Upload, Newspaper, LogOut, ExternalLink, Megaphone, Image as ImageIcon } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -50,6 +50,14 @@ const tools: Tool[] = [
     to: "/admin/alerts",
     icon: Megaphone,
     cta: "Edit alerts",
+  },
+  {
+    title: "Homepage Hero",
+    description:
+      "Edit the homepage hero banner slides — headline, description, buttons, image, alt text, order, and on/off. Saves live.",
+    to: "/admin/hero",
+    icon: ImageIcon,
+    cta: "Edit hero",
   },
 ];
 
