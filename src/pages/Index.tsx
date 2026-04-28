@@ -304,7 +304,7 @@ const Index = () => {
         </section>
 
         {/* ============ SIDEBAR ============ */}
-        <aside aria-label="Sidebar" className="space-y-8">
+        <aside aria-label="Sidebar" className="min-w-0 space-y-8">
           <section aria-labelledby="quick-links-heading" className="rounded-lg border border-border p-5">
             <h2 id="quick-links-heading" className="mb-4 text-xl font-semibold">
               Quick Links
