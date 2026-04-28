@@ -1,4 +1,14 @@
-import { Phone, MapPin, Clock, AlertCircle } from "lucide-react";
+import { useMemo, useState } from "react";
+import {
+  Phone,
+  MapPin,
+  Clock,
+  AlertCircle,
+  Download,
+  LayoutGrid,
+  Table as TableIcon,
+  Filter,
+} from "lucide-react";
 import WegoLayout from "@/components/wego/WegoLayout";
 import {
   currentMonthKey,
@@ -14,30 +24,38 @@ import {
  * WeGo Schedule page.
  *
  * Renders the current month's Mobile Health Clinic schedule from a single
- * structured data file (src/data/wegoSchedule.ts). To publish a new month:
- *   1. Add a new MonthlySchedule entry in that file.
- *   2. Update `currentMonthKey` to point to it.
+ * structured data file (src/data/wegoSchedule.ts).
  *
- * Layout:
- *  - One accessible card per calendar date.
- *  - Each date can contain multiple entries (e.g. an AM stop + a PM stop).
- *  - Maintenance, Training, and TBD days are intentionally shown so the
- *    public sees the full month at a glance.
+ * Features:
+ *  - Card grid (mobile-first) and table view (desktop-friendly) toggle.
+ *  - Filter by county.
+ *  - Each clinic stop links its address to Google Maps.
+ *  - Sticky CTA banner with phone + website.
+ *  - Download Full Calendar (PDF) link.
+ *  - Maintenance / Training / TBD days shown muted (so the public sees
+ *    the full month at a glance) — accessible labels included.
  */
 
 const TYPE_BADGE: Record<ScheduleEntryType, string> = {
-  clinic:
-    "bg-brand text-brand-foreground",
-  maintenance:
-    "bg-muted text-foreground border border-border",
-  training:
-    "bg-accent-gold text-accent-gold-foreground",
-  tbd:
-    "border border-dashed border-border bg-background text-muted-foreground",
+  clinic: "bg-brand text-brand-foreground",
+  maintenance: "bg-muted text-foreground border border-border",
+  training: "bg-accent-gold text-accent-gold-foreground",
+  tbd: "border border-dashed border-border bg-background text-muted-foreground",
+  special: "bg-accent-gold text-accent-gold-foreground",
 };
 
+const PDF_HREF = "/wego-may-2026-schedule.pdf";
+
+/** Build a Google Maps search URL for a venue + address. */
+const mapsHref = (entry: ScheduleEntry) => {
+  const q = [entry.location, entry.address].filter(Boolean).join(", ");
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+};
+
+const isPublic = (e: ScheduleEntry) => e.type === "clinic" || e.type === "special";
+
 const EntryRow = ({ entry }: { entry: ScheduleEntry }) => {
-  const isClinic = entry.type === "clinic";
+  const showCounty = isPublic(entry) && entry.county;
   return (
     <li className="border-t border-border pt-4 first:border-0 first:pt-0">
       <div className="flex flex-wrap items-center gap-2">
@@ -46,12 +64,12 @@ const EntryRow = ({ entry }: { entry: ScheduleEntry }) => {
         >
           {entryTypeLabel(entry.type)}
         </span>
-        {isClinic && entry.county && (
+        {showCounty && (
           <h3 className="text-lg font-semibold text-foreground">
             {entry.county} County
           </h3>
         )}
-        {!isClinic && entry.note && (
+        {!isPublic(entry) && entry.note && (
           <span className="text-sm text-muted-foreground">{entry.note}</span>
         )}
       </div>
@@ -87,6 +105,17 @@ const EntryRow = ({ entry }: { entry: ScheduleEntry }) => {
                       {entry.address}
                     </address>
                   )}
+                  {isPublic(entry) && (entry.location || entry.address) && (
+                    <a
+                      href={mapsHref(entry)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-primary underline-offset-2 hover:underline focus-visible:underline"
+                      aria-label={`Open ${entry.location ?? "location"} in Google Maps (opens in new tab)`}
+                    >
+                      Get directions
+                    </a>
+                  )}
                 </dd>
               </div>
             </div>
@@ -97,13 +126,44 @@ const EntryRow = ({ entry }: { entry: ScheduleEntry }) => {
   );
 };
 
+type ViewMode = "cards" | "table";
+
 const WegoSchedule = () => {
   const month = monthlySchedules[currentMonthKey];
-  const grouped = groupByDate(month.entries);
+
+  const [view, setView] = useState<ViewMode>("cards");
+  const [county, setCounty] = useState<string>("all");
+
+  const counties = useMemo(() => {
+    const set = new Set<string>();
+    for (const e of month.entries) {
+      if (isPublic(e) && e.county) set.add(e.county);
+    }
+    return Array.from(set).sort();
+  }, [month.entries]);
+
+  const filtered = useMemo(() => {
+    if (county === "all") return month.entries;
+    // When filtering by county, only show matching public stops.
+    return month.entries.filter(
+      (e) => isPublic(e) && e.county === county,
+    );
+  }, [month.entries, county]);
+
+  const grouped = useMemo(() => groupByDate(filtered), [filtered]);
+
+  // Flat chronological list for table view (skip non-public when filtered).
+  const tableRows = useMemo(
+    () =>
+      filtered
+        .filter((e) => (county === "all" ? true : isPublic(e)))
+        .sort((a, b) => a.date.localeCompare(b.date)),
+    [filtered, county],
+  );
 
   return (
     <WegoLayout breadcrumb={[{ label: "Schedule" }]}>
-      <div className="container py-10">
+      <div className="container py-10 pb-32">
         <header className="mb-8 max-w-3xl">
           <h1 className="text-3xl font-bold md:text-4xl">
             Mobile Health Clinic Schedule
@@ -117,13 +177,11 @@ const WegoSchedule = () => {
 
         <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
           <section aria-labelledby="month-heading">
-            <div className="flex items-baseline justify-between gap-4">
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
               <h2 id="month-heading" className="text-2xl font-semibold">
                 {month.label} Schedule
               </h2>
-              <p className="text-sm text-muted-foreground">
-                Subject to change
-              </p>
+              <p className="text-sm text-muted-foreground">Subject to change</p>
             </div>
 
             {/* Highlighted callout */}
@@ -148,26 +206,201 @@ const WegoSchedule = () => {
               </p>
             </div>
 
-            <ol
-              className="mt-6 grid gap-4 sm:grid-cols-2"
-              aria-label={`${month.label} clinic stops by date`}
+            {/* Toolbar: filter + view toggle + PDF download */}
+            <div
+              className="mt-6 flex flex-col gap-3 rounded-lg border border-border bg-card p-3 sm:flex-row sm:items-center sm:justify-between"
+              role="toolbar"
+              aria-label="Schedule controls"
             >
-              {grouped.map(({ date, entries }) => (
-                <li
-                  key={date}
-                  className="flex h-full flex-col rounded-lg border border-t-[3px] border-border border-t-accent-gold bg-card p-5 shadow-sm"
+              <div className="flex flex-1 flex-wrap items-center gap-2">
+                <label
+                  htmlFor="county-filter"
+                  className="inline-flex items-center gap-1 text-sm font-medium text-foreground"
                 >
-                  <h3 className="text-sm font-bold uppercase tracking-wide text-primary">
-                    <time dateTime={date}>{formatLongDate(date)}</time>
-                  </h3>
-                  <ul className="mt-4 space-y-4">
-                    {entries.map((entry, i) => (
-                      <EntryRow key={`${entry.date}-${i}`} entry={entry} />
+                  <Filter className="h-4 w-4 text-primary" aria-hidden="true" />
+                  Filter by county
+                </label>
+                <select
+                  id="county-filter"
+                  value={county}
+                  onChange={(e) => setCounty(e.target.value)}
+                  className="min-h-[40px] flex-1 rounded border border-border bg-background px-3 py-2 text-sm text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:flex-none"
+                >
+                  <option value="all">All counties</option>
+                  {counties.map((c) => (
+                    <option key={c} value={c}>
+                      {c} County
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <div
+                  className="inline-flex rounded border border-border"
+                  role="group"
+                  aria-label="View mode"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setView("cards")}
+                    aria-pressed={view === "cards"}
+                    className={`inline-flex min-h-[40px] items-center gap-1 rounded-l px-3 py-2 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                      view === "cards"
+                        ? "bg-brand text-brand-foreground"
+                        : "bg-background text-primary hover:bg-muted"
+                    }`}
+                  >
+                    <LayoutGrid className="h-4 w-4" aria-hidden="true" />
+                    Cards
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setView("table")}
+                    aria-pressed={view === "table"}
+                    className={`inline-flex min-h-[40px] items-center gap-1 rounded-r px-3 py-2 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                      view === "table"
+                        ? "bg-brand text-brand-foreground"
+                        : "bg-background text-primary hover:bg-muted"
+                    }`}
+                  >
+                    <TableIcon className="h-4 w-4" aria-hidden="true" />
+                    Table
+                  </button>
+                </div>
+
+                <a
+                  href={PDF_HREF}
+                  download
+                  className="inline-flex min-h-[40px] items-center gap-1 rounded border border-primary px-3 py-2 text-sm font-semibold text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                >
+                  <Download className="h-4 w-4" aria-hidden="true" />
+                  Download PDF
+                </a>
+              </div>
+            </div>
+
+            {/* Empty state */}
+            {grouped.length === 0 && (
+              <p
+                role="status"
+                className="mt-6 rounded-lg border border-dashed border-border bg-muted/40 p-6 text-center text-sm text-muted-foreground"
+              >
+                No stops scheduled for {county} County this month. Try another
+                county or call 1-877-884-WEGO.
+              </p>
+            )}
+
+            {/* Cards view */}
+            {view === "cards" && grouped.length > 0 && (
+              <ol
+                className="mt-6 grid gap-4 sm:grid-cols-2"
+                aria-label={`${month.label} clinic stops by date`}
+              >
+                {grouped.map(({ date, entries }) => (
+                  <li
+                    key={date}
+                    className="flex h-full flex-col rounded-lg border border-t-[3px] border-border border-t-accent-gold bg-card p-5 shadow-sm"
+                  >
+                    <h3 className="text-sm font-bold uppercase tracking-wide text-primary">
+                      <time dateTime={date}>{formatLongDate(date)}</time>
+                    </h3>
+                    <ul className="mt-4 space-y-4">
+                      {entries.map((entry, i) => (
+                        <EntryRow key={`${entry.date}-${i}`} entry={entry} />
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ol>
+            )}
+
+            {/* Table view */}
+            {view === "table" && tableRows.length > 0 && (
+              <div className="mt-6 overflow-x-auto rounded-lg border border-border">
+                <table className="w-full min-w-[640px] text-left text-sm">
+                  <caption className="sr-only">
+                    {month.label} Mobile Health Clinic schedule
+                  </caption>
+                  <thead className="bg-muted/60 text-xs uppercase tracking-wide text-foreground">
+                    <tr>
+                      <th scope="col" className="px-3 py-3">
+                        Date
+                      </th>
+                      <th scope="col" className="px-3 py-3">
+                        County
+                      </th>
+                      <th scope="col" className="px-3 py-3">
+                        Time
+                      </th>
+                      <th scope="col" className="px-3 py-3">
+                        Location
+                      </th>
+                      <th scope="col" className="px-3 py-3">
+                        Type
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tableRows.map((entry, i) => (
+                      <tr
+                        key={`${entry.date}-${i}`}
+                        className={`border-t border-border ${
+                          isPublic(entry) ? "" : "bg-muted/30 text-muted-foreground"
+                        }`}
+                      >
+                        <td className="px-3 py-3 align-top">
+                          <time dateTime={entry.date} className="font-medium text-foreground">
+                            {formatLongDate(entry.date)}
+                          </time>
+                        </td>
+                        <td className="px-3 py-3 align-top font-semibold">
+                          {entry.county ? `${entry.county} County` : "—"}
+                        </td>
+                        <td className="px-3 py-3 align-top">
+                          {entry.time ?? "—"}
+                        </td>
+                        <td className="px-3 py-3 align-top">
+                          {entry.location || entry.address ? (
+                            <>
+                              {entry.location && (
+                                <span className="block font-medium text-foreground">
+                                  {entry.location}
+                                </span>
+                              )}
+                              {entry.address && (
+                                <address className="not-italic text-muted-foreground">
+                                  {entry.address}
+                                </address>
+                              )}
+                              {isPublic(entry) && (
+                                <a
+                                  href={mapsHref(entry)}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="mt-1 inline-block text-xs font-semibold text-primary underline-offset-2 hover:underline focus-visible:underline"
+                                >
+                                  Get directions
+                                </a>
+                              )}
+                            </>
+                          ) : (
+                            "—"
+                          )}
+                        </td>
+                        <td className="px-3 py-3 align-top">
+                          <span
+                            className={`inline-flex items-center rounded px-2 py-0.5 text-xs font-semibold uppercase tracking-wide ${TYPE_BADGE[entry.type]}`}
+                          >
+                            {entryTypeLabel(entry.type)}
+                          </span>
+                        </td>
+                      </tr>
                     ))}
-                  </ul>
-                </li>
-              ))}
-            </ol>
+                  </tbody>
+                </table>
+              </div>
+            )}
           </section>
 
           <aside aria-label="Sidebar" className="space-y-6">
@@ -205,6 +438,12 @@ const WegoSchedule = () => {
                   <span className="text-muted-foreground">Open to public</span>
                 </li>
                 <li className="flex items-center gap-2">
+                  <span className={`inline-flex rounded px-2 py-0.5 text-xs font-semibold uppercase tracking-wide ${TYPE_BADGE.special}`}>
+                    Special Event
+                  </span>
+                  <span className="text-muted-foreground">Community event</span>
+                </li>
+                <li className="flex items-center gap-2">
                   <span className={`inline-flex rounded px-2 py-0.5 text-xs font-semibold uppercase tracking-wide ${TYPE_BADGE.maintenance}`}>
                     Maintenance
                   </span>
@@ -225,6 +464,34 @@ const WegoSchedule = () => {
               </ul>
             </section>
           </aside>
+        </div>
+      </div>
+
+      {/* Sticky CTA banner */}
+      <div
+        role="region"
+        aria-label="Mobile Health Clinic contact"
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-primary text-primary-foreground shadow-lg"
+      >
+        <div className="container flex flex-col items-center justify-between gap-2 py-3 text-center sm:flex-row sm:text-left">
+          <p className="text-sm font-semibold sm:text-base">
+            We Go Where You Are
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm">
+            <a
+              href="tel:18778849346"
+              className="inline-flex items-center gap-1 font-semibold underline-offset-2 hover:underline focus-visible:underline"
+            >
+              <Phone className="h-4 w-4" aria-hidden="true" />
+              Call 1-877-884-WEGO
+            </a>
+            <a
+              href="https://www.ecphd.com/wego"
+              className="font-semibold underline-offset-2 hover:underline focus-visible:underline"
+            >
+              www.ecphd.com/wego
+            </a>
+          </div>
         </div>
       </div>
     </WegoLayout>
