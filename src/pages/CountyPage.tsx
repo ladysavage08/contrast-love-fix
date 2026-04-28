@@ -71,7 +71,7 @@ const CountyPage = () => {
   if (!county) return <Navigate to="/counties" replace />;
 
   const heroSrc = county.heroImage ? heroImageMap[county.heroImage] : undefined;
-  const servicesUrl = county.servicesUrl ?? "#";
+  
   const servicesLabel =
     county.servicesLabel ??
     `Click here to view all services provided by the ${county.healthDept}.`;
