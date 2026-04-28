@@ -11,7 +11,12 @@
  *  - "tbd":         Stop confirmed but details pending.
  */
 
-export type ScheduleEntryType = "clinic" | "maintenance" | "training" | "tbd";
+export type ScheduleEntryType =
+  | "clinic"
+  | "maintenance"
+  | "training"
+  | "tbd"
+  | "special";
 
 export interface ScheduleEntry {
   /** ISO date (YYYY-MM-DD) — used for sorting and accessible labels. */
@@ -69,7 +74,7 @@ const may2026: MonthlySchedule = {
       county: "Warren",
       time: "9:00 AM – 12:00 PM",
       location: "Library",
-      address: "10 Warren St., Warren",
+      address: "10 Warren St., Warrenton",
     },
     {
       date: "2026-05-06",
@@ -92,8 +97,8 @@ const may2026: MonthlySchedule = {
       type: "clinic",
       county: "McDuffie",
       time: "1:00 PM – 4:00 PM",
-      location: "Dearing Community Center",
-      address: "4616 Augusta Hwy, Dearing",
+      location: "Dearing Town Hall",
+      address: "4577 Augusta Hwy, Dearing",
     },
     { date: "2026-05-08", type: "maintenance" },
     { date: "2026-05-11", type: "maintenance" },
