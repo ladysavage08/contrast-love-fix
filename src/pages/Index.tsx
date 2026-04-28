@@ -119,8 +119,8 @@ const Index = () => {
 
 
       {/* ============ MAIN ============ */}
-      <main id="main" className="container grid gap-8 py-6 md:py-10 lg:grid-cols-[1fr_320px]">
-        <section aria-labelledby="home-highlights-heading" className="space-y-8">
+      <main id="main" className="container grid w-full min-w-0 max-w-full gap-8 py-6 md:py-10 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <section aria-labelledby="home-highlights-heading" className="min-w-0 space-y-8">
           <h1 id="home-highlights-heading" className="sr-only">
             East Central Health District
           </h1>
