@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
-import { Users, Upload, Newspaper, LogOut, ExternalLink, Megaphone, Image as ImageIcon } from "lucide-react";
+import { Users, Upload, Newspaper, LogOut, ExternalLink, Megaphone, Image as ImageIcon, Link2 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -58,6 +58,14 @@ const tools: Tool[] = [
     to: "/admin/hero",
     icon: ImageIcon,
     cta: "Edit hero",
+  },
+  {
+    title: "Link Manager",
+    description:
+      "Update public-facing URLs (CTAs, external links, portals, social) without redeploying. Slug-based with active/inactive toggle and last-updated timestamp.",
+    to: "/admin/links",
+    icon: Link2,
+    cta: "Manage links",
   },
 ];
 
