@@ -12,6 +12,7 @@ import HeroSlider from "@/components/HeroSlider";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SocialIcons from "@/components/SocialIcons";
+import ManagedLink from "@/components/ManagedLink";
 import { usePosts, useEvents, formatPostDate } from "@/hooks/usePosts";
 import { eventDateKey, formatDateKey, isAllDayEvent } from "@/lib/eventDate";
 import { PUBLIC_HEALTH_SERIES_PATH } from "@/lib/publicHealthSeries";
@@ -65,48 +66,36 @@ const Index = () => {
         utilityExtras={
           <div className="flex flex-wrap items-center gap-2">
             <SocialIcons />
-            <a
-              href="https://ecphd.com/intranet/login/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <ManagedLink
+              slug="employee-portal"
+              defaultHref="https://ecphd.com/intranet/login/"
+              defaultLabel="Employee Login"
               className="rounded bg-brand px-3 py-2 text-sm font-medium text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-            >
-              Employee Login
-              <span className="sr-only"> (opens in new tab)</span>
-            </a>
-            <a
-              href="https://harrispublichealth.com/portal/"
-              target="_blank"
-              rel="noopener noreferrer"
+            />
+            <ManagedLink
+              slug="patient-portal"
+              defaultHref="https://harrispublichealth.com/portal/"
+              defaultLabel="Patient Portal"
               className="rounded bg-brand px-3 py-2 text-sm font-medium text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-            >
-              Patient Portal
-              <span className="sr-only"> (opens in new tab)</span>
-            </a>
+            />
           </div>
         }
         mobileQuickAction={
-          <a
-            href="https://harrispublichealth.com/portal/"
-            target="_blank"
-            rel="noopener noreferrer"
+          <ManagedLink
+            slug="patient-portal"
+            defaultHref="https://harrispublichealth.com/portal/"
+            defaultLabel="Patient Portal"
             className="rounded bg-brand-foreground px-3 py-2 text-xs font-semibold text-brand hover:bg-brand-foreground/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-foreground"
-          >
-            Patient Portal
-            <span className="sr-only"> (opens in new tab)</span>
-          </a>
+          />
         }
         mobileUtilityExtras={
           <div className="flex flex-col gap-3">
-            <a
-              href="https://ecphd.com/intranet/login/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <ManagedLink
+              slug="employee-portal"
+              defaultHref="https://ecphd.com/intranet/login/"
+              defaultLabel="Employee Login"
               className="inline-flex w-full items-center justify-center rounded bg-brand-foreground px-4 py-3 text-sm font-semibold text-brand hover:bg-brand-foreground/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-foreground"
-            >
-              Employee Login
-              <span className="sr-only"> (opens in new tab)</span>
-            </a>
+            />
             <div>
               <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-brand-foreground/80">
                 Follow us
