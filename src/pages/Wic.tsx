@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import ManagedLink from "@/components/ManagedLink";
 
 /**
  * Dedicated WIC (Women, Infants, and Children) program page.
@@ -186,15 +187,15 @@ const Wic = () => {
                   ))}
                 </ol>
                 <div className="mt-5 flex flex-wrap gap-3">
-                  <a
-                    href="https://ecphd-getwic.qminder.site/#/"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <ManagedLink
+                    slug="wic-apply"
+                    defaultHref="https://ecphd-getwic.qminder.site/#/"
+                    defaultLabel="Apply for Same-Day Appointment"
                     aria-label="Apply for a same-day WIC appointment (opens in new tab)"
                     className="inline-flex items-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                   >
                     Apply for Same-Day Appointment <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </a>
+                  </ManagedLink>
                   <a
                     href="tel:18663746942"
                     aria-label="Call the WIC Call Center at 1-866-374-6942"
@@ -202,15 +203,15 @@ const Wic = () => {
                   >
                     Call for Assistance <Phone className="h-4 w-4" aria-hidden="true" />
                   </a>
-                  <a
-                    href="https://ecphd-getwic.qminder.site/#/"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <ManagedLink
+                    slug="wic-apply"
+                    defaultHref="https://ecphd-getwic.qminder.site/#/"
+                    defaultLabel="Apply for WIC"
                     aria-label="Apply for WIC (opens in new tab)"
                     className="inline-flex items-center gap-2 rounded border border-primary px-4 py-2.5 text-sm font-semibold text-primary hover:bg-muted"
                   >
                     Apply for WIC <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </a>
+                  </ManagedLink>
                 </div>
                 <p className="mt-4 text-sm text-foreground/90">
                   WIC Call Center: <a href="tel:18663746942" className="text-primary underline-offset-2 hover:underline">+1 866-374-6942</a>
@@ -231,15 +232,15 @@ const Wic = () => {
                 <p className="mt-3 text-sm text-muted-foreground">
                   For the complete, up-to-date Georgia WIC Approved Food List,
                   visit the{" "}
-                  <a
-                    href="https://dph.georgia.gov/WIC"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <ManagedLink
+                    slug="wic-foods"
+                    defaultHref="https://dph.georgia.gov/WIC"
+                    defaultLabel="Georgia DPH WIC Foods page"
                     className="text-primary underline-offset-2 hover:underline"
                   >
                     Georgia DPH WIC Foods page
                     <span className="sr-only"> (opens in new tab)</span>
-                  </a>.
+                  </ManagedLink>.
                 </p>
               </section>
 
