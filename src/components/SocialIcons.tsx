@@ -1,19 +1,18 @@
 import { Facebook, Twitter, Youtube, Instagram } from "lucide-react";
+import ManagedLink from "@/components/ManagedLink";
 
 /**
  * Shared social icon row — reused across home, about, counties, county, and wego pages.
- * `size` controls icon button dimensions while keeping markup/structure identical.
- *  - sm: 32px (default sidebar usage)
- *  - md: 36px (wego footer)
- *  - lg: 40-44px (sidebar "Stay Connected" blocks)
+ * Each link is admin-managed via the Link Manager (slug `social-*`); falls back to the
+ * hardcoded URL below if no active row exists.
  */
 type Size = "sm" | "md" | "lg";
 
 const socials = [
-  { name: "Facebook", href: "https://www.facebook.com/ECPHD", Icon: Facebook },
-  { name: "X", href: "https://x.com/EastCentralPH", Icon: Twitter },
-  { name: "YouTube", href: "https://www.youtube.com/@eastcentralhealthdistrict2885", Icon: Youtube },
-  { name: "Instagram", href: "https://www.instagram.com/eastcentralhealth/", Icon: Instagram },
+  { name: "Facebook", slug: "social-facebook", href: "https://www.facebook.com/ECPHD", Icon: Facebook },
+  { name: "X", slug: "social-x", href: "https://x.com/EastCentralPH", Icon: Twitter },
+  { name: "YouTube", slug: "social-youtube", href: "https://www.youtube.com/@eastcentralhealthdistrict2885", Icon: Youtube },
+  { name: "Instagram", slug: "social-instagram", href: "https://www.instagram.com/eastcentralhealth/", Icon: Instagram },
 ] as const;
 
 const BUTTON_SIZE: Record<Size, string> = {
@@ -36,17 +35,17 @@ interface SocialIconsProps {
 
 const SocialIcons = ({ size = "sm", wrap = false }: SocialIconsProps) => (
   <ul className={`flex items-center gap-2 ${wrap ? "flex-wrap" : ""}`}>
-    {socials.map(({ name, href, Icon }) => (
+    {socials.map(({ name, slug, href, Icon }) => (
       <li key={name}>
-        <a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
+        <ManagedLink
+          slug={slug}
+          defaultHref={href}
+          defaultLabel={name}
           aria-label={`${name} (opens in new tab)`}
           className={`flex items-center justify-center rounded-full bg-brand text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${BUTTON_SIZE[size]}`}
         >
           <Icon className={ICON_SIZE[size]} aria-hidden="true" />
-        </a>
+        </ManagedLink>
       </li>
     ))}
   </ul>
