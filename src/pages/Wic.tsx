@@ -187,7 +187,7 @@ const Wic = () => {
                 </ol>
                 <div className="mt-5 flex flex-wrap gap-3">
                   <a
-                    href="https://www.ecphd.com/getwic"
+                    href="https://ecphd-getwic.qminder.site/#/"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Apply for a same-day WIC appointment (opens in new tab)"
