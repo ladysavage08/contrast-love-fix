@@ -10,6 +10,7 @@ import {
   Filter,
 } from "lucide-react";
 import WegoLayout from "@/components/wego/WegoLayout";
+import ManagedLink from "@/components/ManagedLink";
 import {
   currentMonthKey,
   entryTypeLabel,
@@ -485,12 +486,12 @@ const WegoSchedule = () => {
               <Phone className="h-4 w-4" aria-hidden="true" />
               Call 1-877-884-WEGO
             </a>
-            <a
-              href="https://www.ecphd.com/wego"
+            <ManagedLink
+              slug="wego-site"
+              defaultHref="https://www.ecphd.com/wego"
+              defaultLabel="www.ecphd.com/wego"
               className="font-semibold underline-offset-2 hover:underline focus-visible:underline"
-            >
-              www.ecphd.com/wego
-            </a>
+            />
           </div>
         </div>
       </div>

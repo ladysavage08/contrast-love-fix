@@ -2,6 +2,7 @@ import { Phone, Mail, MapPin, AlertTriangle, Clock, CalendarX } from "lucide-rea
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ContactForm from "@/components/ContactForm";
+import ManagedLink from "@/components/ManagedLink";
 
 /**
  * Contact ECHD — uses locked layout patterns:
@@ -139,15 +140,15 @@ const Contact = () => {
                   </ul>
                   <p className="mt-3 text-xs text-muted-foreground">
                     For the full Georgia state holiday schedule, see the{" "}
-                    <a
-                      href="https://team.georgia.gov/state-holidays/"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <ManagedLink
+                      slug="ga-state-holidays"
+                      defaultHref="https://team.georgia.gov/state-holidays/"
+                      defaultLabel="official state holiday calendar"
                       className="text-primary underline-offset-2 hover:underline"
                     >
                       official state holiday calendar
                       <span className="sr-only"> (opens in new tab)</span>
-                    </a>
+                    </ManagedLink>
                     .
                   </p>
                 </div>
