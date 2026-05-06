@@ -539,6 +539,16 @@ const AdminNews = () => {
                       >
                         <Pencil className="mr-1 h-4 w-4" /> Edit
                       </Button>
+                      {isArchived(p) && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleRestore(p)}
+                          aria-label={`Restore ${p.title} to upcoming`}
+                        >
+                          <RotateCcw className="mr-1 h-4 w-4" /> Restore
+                        </Button>
+                      )}
                       <Button
                         size="sm"
                         variant="outline"
