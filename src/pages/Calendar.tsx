@@ -60,13 +60,13 @@ const Calendar = () => {
   // Today, in local time, as YYYY-MM-DD.
   const todayKey = getTodayKey();
 
-  // Upcoming list (today onward), sorted by effective date.
+  // Upcoming list (events whose final date is today or later), sorted by start date.
   const upcoming = useMemo(
     () =>
       events
         .filter((e) => {
-          const k = eventDateKey(e);
-          return k && k >= todayKey;
+          const end = eventEndKey(e);
+          return end && end >= todayKey;
         })
         .sort((a, b) => {
           const ka = eventDateKey(a);
