@@ -22,6 +22,7 @@
 
 export type EventLike = {
   event_date?: string | null;
+  event_end_date?: string | null;
   published_at?: string | null;
 };
 
