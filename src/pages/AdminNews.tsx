@@ -312,6 +312,35 @@ const AdminNews = () => {
     loadPosts();
   }
 
+  async function handleRestore(p: Post) {
+    const today = new Date().toISOString().slice(0, 10);
+    // Push the event's effective end date to today so it re-appears as upcoming.
+    const updates: Record<string, unknown> = { event_end_date: today };
+    if (!p.event_date) updates.event_date = today;
+    const { error } = await supabase.from("posts").update(updates).eq("id", p.id);
+    if (error) {
+      toast({
+        title: "Restore failed",
+        description: error.message,
+        variant: "destructive",
+      });
+      return;
+    }
+    toast({ title: "Event restored", description: "Now showing as upcoming." });
+    loadPosts();
+  }
+      .eq("id", p.id);
+    if (error) {
+      toast({
+        title: "Update failed",
+        description: error.message,
+        variant: "destructive",
+      });
+      return;
+    }
+    loadPosts();
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background text-foreground">
