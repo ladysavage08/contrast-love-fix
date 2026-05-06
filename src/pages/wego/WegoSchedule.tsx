@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import WegoLayout from "@/components/wego/WegoLayout";
 import ManagedLink from "@/components/ManagedLink";
+import { todayKey as getTodayKey } from "@/lib/eventDate";
 import {
   currentMonthKey,
   entryTypeLabel,
