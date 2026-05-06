@@ -164,10 +164,25 @@ const AdminNews = () => {
     if (user && isAdmin) loadPosts();
   }, [user, isAdmin]);
 
+  const today = getTodayKey();
+  const isArchived = (p: Post) => {
+    if (p.post_type !== "event") return false;
+    const end = eventEndKey(p);
+    return !!end && end < today;
+  };
+
   const filteredPosts = useMemo(() => {
-    const scoped = filter === "all" ? posts : posts.filter((p) => p.post_type === filter);
+    let scoped = filter === "all" ? posts : posts.filter((p) => p.post_type === filter);
+    if (filter !== "news") {
+      // Apply archive filter to events. When viewing "news only", scope doesn't apply.
+      if (eventScope === "upcoming") {
+        scoped = scoped.filter((p) => p.post_type !== "event" || !isArchived(p));
+      } else if (eventScope === "archived") {
+        scoped = scoped.filter((p) => p.post_type === "event" && isArchived(p));
+      }
+    }
     return sortPostsChronologically(scoped);
-  }, [posts, filter]);
+  }, [posts, filter, eventScope, today]);
 
   async function handleSave() {
     if (!editing) return;
