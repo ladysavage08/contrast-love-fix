@@ -59,13 +59,18 @@ const isPublic = (e: ScheduleEntry) => e.type === "clinic" || e.type === "specia
 const EntryRow = ({ entry, cancelled = false }: { entry: ScheduleEntry; cancelled?: boolean }) => {
   const showCounty = isPublic(entry) && entry.county;
   return (
-    <li className="border-t border-border pt-4 first:border-0 first:pt-0">
+    <li className={`border-t border-border pt-4 first:border-0 first:pt-0 ${cancelled ? "line-through decoration-destructive/70 decoration-2 text-muted-foreground" : ""}`}>
       <div className="flex flex-wrap items-center gap-2">
         <span
-          className={`inline-flex items-center rounded px-2 py-0.5 text-xs font-semibold uppercase tracking-wide ${TYPE_BADGE[entry.type]}`}
+          className={`inline-flex items-center rounded px-2 py-0.5 text-xs font-semibold uppercase tracking-wide no-underline ${TYPE_BADGE[entry.type]}`}
         >
           {entryTypeLabel(entry.type)}
         </span>
+        {cancelled && (
+          <span className="inline-flex items-center rounded bg-destructive px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-destructive-foreground no-underline">
+            Cancelled today
+          </span>
+        )}
         {showCounty && (
           <h3 className="text-lg font-semibold text-foreground">
             {entry.county} County
