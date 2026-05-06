@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload, X, Heading2, Heading3, Bold, Italic, List, Link as LinkIcon, Pilcrow } from "lucide-react";
+import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload, X, Heading2, Heading3, Bold, Italic, List, Link as LinkIcon, Pilcrow, RotateCcw } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -21,6 +21,7 @@ import { useToast } from "@/hooks/use-toast";
 import type { Post } from "@/hooks/usePosts";
 import { sortPostsChronologically } from "@/lib/sortPosts";
 import { cn } from "@/lib/utils";
+import { eventEndKey, todayKey as getTodayKey } from "@/lib/eventDate";
 
 type Draft = {
   id?: string;
@@ -43,6 +44,7 @@ type Draft = {
   published: boolean;
   published_at: string; // ISO date (YYYY-MM-DD) for input[type=date]
   event_date: string; // YYYY-MM-DD
+  event_end_date: string; // YYYY-MM-DD (final/end date for multi-day or recurring events)
   event_time: string;
   event_location: string;
   event_link: string;
@@ -70,6 +72,7 @@ const emptyDraft = (): Draft => ({
   published: true,
   published_at: new Date().toISOString().slice(0, 10),
   event_date: "",
+  event_end_date: "",
   event_time: "",
   event_location: "",
   event_link: "",
@@ -110,6 +113,7 @@ function postToDraft(p: Post): Draft {
     published: p.published,
     published_at: (p.published_at ?? "").slice(0, 10),
     event_date: p.event_date ?? "",
+    event_end_date: p.event_end_date ?? "",
     event_time: p.event_time ?? "",
     event_location: p.event_location ?? "",
     event_link: p.event_link ?? "",
@@ -126,6 +130,9 @@ const AdminNews = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [listLoading, setListLoading] = useState(true);
   const [filter, setFilter] = useState<"all" | "news" | "event">("all");
+  const [eventScope, setEventScope] = useState<"upcoming" | "archived" | "all">(
+    "upcoming",
+  );
   const [editing, setEditing] = useState<Draft | null>(null);
   const [saving, setSaving] = useState(false);
 
@@ -157,10 +164,25 @@ const AdminNews = () => {
     if (user && isAdmin) loadPosts();
   }, [user, isAdmin]);
 
+  const today = getTodayKey();
+  const isArchived = (p: Post) => {
+    if (p.post_type !== "event") return false;
+    const end = eventEndKey(p);
+    return !!end && end < today;
+  };
+
   const filteredPosts = useMemo(() => {
-    const scoped = filter === "all" ? posts : posts.filter((p) => p.post_type === filter);
+    let scoped = filter === "all" ? posts : posts.filter((p) => p.post_type === filter);
+    if (filter !== "news") {
+      // Apply archive filter to events. When viewing "news only", scope doesn't apply.
+      if (eventScope === "upcoming") {
+        scoped = scoped.filter((p) => p.post_type !== "event" || !isArchived(p));
+      } else if (eventScope === "archived") {
+        scoped = scoped.filter((p) => p.post_type === "event" && isArchived(p));
+      }
+    }
     return sortPostsChronologically(scoped);
-  }, [posts, filter]);
+  }, [posts, filter, eventScope, today]);
 
   async function handleSave() {
     if (!editing) return;
@@ -221,6 +243,10 @@ const AdminNews = () => {
       event_date: editing.post_type === "event" && editing.event_date
         ? editing.event_date
         : null,
+      event_end_date:
+        editing.post_type === "event" && editing.event_end_date
+          ? editing.event_end_date
+          : null,
       event_time:
         editing.post_type === "event" && editing.event_time.trim()
           ? editing.event_time.trim()
@@ -283,6 +309,24 @@ const AdminNews = () => {
       });
       return;
     }
+    loadPosts();
+  }
+
+  async function handleRestore(p: Post) {
+    const today = new Date().toISOString().slice(0, 10);
+    // Push the event's effective end date to today so it re-appears as upcoming.
+    const updates: { event_end_date: string; event_date?: string } = { event_end_date: today };
+    if (!p.event_date) updates.event_date = today;
+    const { error } = await supabase.from("posts").update(updates).eq("id", p.id);
+    if (error) {
+      toast({
+        title: "Restore failed",
+        description: error.message,
+        variant: "destructive",
+      });
+      return;
+    }
+    toast({ title: "Event restored", description: "Now showing as upcoming." });
     loadPosts();
   }
 
@@ -378,6 +422,45 @@ const AdminNews = () => {
               ))}
             </div>
 
+            {filter !== "news" && (
+              <div
+                className="mb-3 flex flex-wrap items-center gap-2 text-sm"
+                role="group"
+                aria-label="Event archive filter"
+              >
+                <span className="text-muted-foreground">Events:</span>
+                {([
+                  { key: "upcoming", label: "Upcoming Events" },
+                  { key: "archived", label: "Archived Events" },
+                  { key: "all", label: "All Events" },
+                ] as const).map((opt) => (
+                  <button
+                    key={opt.key}
+                    type="button"
+                    onClick={() => setEventScope(opt.key)}
+                    aria-pressed={eventScope === opt.key}
+                    className={`rounded-full border px-3 py-1 ${
+                      eventScope === opt.key
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-border bg-background hover:bg-muted"
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {eventScope === "archived" && filter !== "news" && (
+              <p
+                role="note"
+                className="mb-4 rounded-md border-l-4 border-accent-gold bg-muted/40 p-3 text-xs text-muted-foreground"
+              >
+                Archived events are hidden from the public site but saved for
+                records. You can still edit, view, or restore them.
+              </p>
+            )}
+
             {listLoading ? (
               <p className="text-muted-foreground">Loading posts…</p>
             ) : filteredPosts.length === 0 ? (
@@ -409,6 +492,14 @@ const AdminNews = () => {
                             <span aria-hidden>•</span>
                             <span className="rounded bg-muted px-1.5 py-0.5 font-semibold text-muted-foreground">
                               Draft
+                            </span>
+                          </>
+                        )}
+                        {isArchived(p) && (
+                          <>
+                            <span aria-hidden>•</span>
+                            <span className="rounded bg-muted px-1.5 py-0.5 font-semibold text-muted-foreground">
+                              Archived
                             </span>
                           </>
                         )}
@@ -448,6 +539,16 @@ const AdminNews = () => {
                       >
                         <Pencil className="mr-1 h-4 w-4" /> Edit
                       </Button>
+                      {isArchived(p) && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleRestore(p)}
+                          aria-label={`Restore ${p.title} to upcoming`}
+                        >
+                          <RotateCcw className="mr-1 h-4 w-4" /> Restore
+                        </Button>
+                      )}
                       <Button
                         size="sm"
                         variant="outline"
@@ -715,6 +816,24 @@ function PostEditor({
                 value={draft.event_date}
                 onChange={(e) => set("event_date", e.target.value)}
               />
+            </div>
+            <div>
+              <Label htmlFor="event_end_date">End date (optional)</Label>
+              <Input
+                id="event_end_date"
+                type="date"
+                value={draft.event_end_date}
+                min={draft.event_date || undefined}
+                onChange={(e) => set("event_end_date", e.target.value)}
+                aria-describedby="event_end_date_help"
+              />
+              <p
+                id="event_end_date_help"
+                className="mt-1 text-xs text-muted-foreground"
+              >
+                For multi-day or recurring events. The event archives the day
+                after this date. Leave blank for a single-day event.
+              </p>
             </div>
             <div>
               <Label htmlFor="event_time">Event time</Label>

@@ -22,6 +22,7 @@
 
 export type EventLike = {
   event_date?: string | null;
+  event_end_date?: string | null;
   published_at?: string | null;
 };
 
@@ -70,6 +71,19 @@ export function toDateKey(input: string | Date | null | undefined): string {
  */
 export function eventDateKey(e: EventLike): string {
   return toDateKey(e.event_date) || toDateKey(e.published_at);
+}
+
+/**
+ * The final calendar day an event spans through. For multi-day or recurring
+ * events this is `event_end_date`; for single-day events it falls back to
+ * the start date. Used to decide when to archive an event.
+ */
+export function eventEndKey(e: EventLike): string {
+  return (
+    toDateKey(e.event_end_date) ||
+    toDateKey(e.event_date) ||
+    toDateKey(e.published_at)
+  );
 }
 
 /** Format a "YYYY-MM-DD" key as a long, human-readable date (local). */

@@ -153,6 +153,7 @@ export type Database = {
           download_page_count: number | null
           download_url: string | null
           event_date: string | null
+          event_end_date: string | null
           event_link: string | null
           event_location: string | null
           event_time: string | null
@@ -182,6 +183,7 @@ export type Database = {
           download_page_count?: number | null
           download_url?: string | null
           event_date?: string | null
+          event_end_date?: string | null
           event_link?: string | null
           event_location?: string | null
           event_time?: string | null
@@ -211,6 +213,7 @@ export type Database = {
           download_page_count?: number | null
           download_url?: string | null
           event_date?: string | null
+          event_end_date?: string | null
           event_link?: string | null
           event_location?: string | null
           event_time?: string | null
