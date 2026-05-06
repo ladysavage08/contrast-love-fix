@@ -818,6 +818,24 @@ function PostEditor({
               />
             </div>
             <div>
+              <Label htmlFor="event_end_date">End date (optional)</Label>
+              <Input
+                id="event_end_date"
+                type="date"
+                value={draft.event_end_date}
+                min={draft.event_date || undefined}
+                onChange={(e) => set("event_end_date", e.target.value)}
+                aria-describedby="event_end_date_help"
+              />
+              <p
+                id="event_end_date_help"
+                className="mt-1 text-xs text-muted-foreground"
+              >
+                For multi-day or recurring events. The event archives the day
+                after this date. Leave blank for a single-day event.
+              </p>
+            </div>
+            <div>
               <Label htmlFor="event_time">Event time</Label>
               <Input
                 id="event_time"
