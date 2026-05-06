@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import WegoLayout from "@/components/wego/WegoLayout";
 import ManagedLink from "@/components/ManagedLink";
+import { todayKey as getTodayKey } from "@/lib/eventDate";
 import {
   currentMonthKey,
   entryTypeLabel,
@@ -55,16 +56,21 @@ const mapsHref = (entry: ScheduleEntry) => {
 
 const isPublic = (e: ScheduleEntry) => e.type === "clinic" || e.type === "special";
 
-const EntryRow = ({ entry }: { entry: ScheduleEntry }) => {
+const EntryRow = ({ entry, cancelled = false }: { entry: ScheduleEntry; cancelled?: boolean }) => {
   const showCounty = isPublic(entry) && entry.county;
   return (
-    <li className="border-t border-border pt-4 first:border-0 first:pt-0">
+    <li className={`border-t border-border pt-4 first:border-0 first:pt-0 ${cancelled ? "line-through decoration-destructive/70 decoration-2 text-muted-foreground" : ""}`}>
       <div className="flex flex-wrap items-center gap-2">
         <span
-          className={`inline-flex items-center rounded px-2 py-0.5 text-xs font-semibold uppercase tracking-wide ${TYPE_BADGE[entry.type]}`}
+          className={`inline-flex items-center rounded px-2 py-0.5 text-xs font-semibold uppercase tracking-wide no-underline ${TYPE_BADGE[entry.type]}`}
         >
           {entryTypeLabel(entry.type)}
         </span>
+        {cancelled && (
+          <span className="inline-flex items-center rounded bg-destructive px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-destructive-foreground no-underline">
+            Cancelled today
+          </span>
+        )}
         {showCounty && (
           <h3 className="text-lg font-semibold text-foreground">
             {entry.county} County
@@ -131,6 +137,7 @@ type ViewMode = "cards" | "table";
 
 const WegoSchedule = () => {
   const month = monthlySchedules[currentMonthKey];
+  const todayKey = getTodayKey();
 
   const [view, setView] = useState<ViewMode>("cards");
   const [county, setCounty] = useState<string>("all");
@@ -299,21 +306,24 @@ const WegoSchedule = () => {
                 className="mt-6 grid gap-4 sm:grid-cols-2"
                 aria-label={`${month.label} clinic stops by date`}
               >
-                {grouped.map(({ date, entries }) => (
+                {grouped.map(({ date, entries }) => {
+                  const isToday = date === todayKey;
+                  return (
                   <li
                     key={date}
-                    className="flex h-full flex-col rounded-lg border border-t-[3px] border-border border-t-accent-gold bg-card p-5 shadow-sm"
+                    className={`flex h-full flex-col rounded-lg border border-t-[3px] border-border bg-card p-5 shadow-sm ${isToday ? "border-t-destructive" : "border-t-accent-gold"}`}
                   >
-                    <h3 className="text-sm font-bold uppercase tracking-wide text-primary">
-                      <time dateTime={date}>{formatLongDate(date)}</time>
+                    <h3 className={`text-sm font-bold uppercase tracking-wide ${isToday ? "text-destructive line-through decoration-destructive/70 decoration-2" : "text-primary"}`}>
+                      <time dateTime={date}>{formatLongDate(date)}{isToday ? " — Cancelled" : ""}</time>
                     </h3>
                     <ul className="mt-4 space-y-4">
                       {entries.map((entry, i) => (
-                        <EntryRow key={`${entry.date}-${i}`} entry={entry} />
+                        <EntryRow key={`${entry.date}-${i}`} entry={entry} cancelled={isToday} />
                       ))}
                     </ul>
                   </li>
-                ))}
+                  );
+                })}
               </ol>
             )}
 
@@ -344,17 +354,24 @@ const WegoSchedule = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {tableRows.map((entry, i) => (
+                    {tableRows.map((entry, i) => {
+                      const isToday = entry.date === todayKey;
+                      return (
                       <tr
                         key={`${entry.date}-${i}`}
                         className={`border-t border-border ${
-                          isPublic(entry) ? "" : "bg-muted/30 text-muted-foreground"
-                        }`}
+                          isToday ? "line-through decoration-destructive/70 decoration-2" : ""
+                        } ${isPublic(entry) ? "" : "bg-muted/30 text-muted-foreground"}`}
                       >
                         <td className="px-3 py-3 align-top">
                           <time dateTime={entry.date} className="font-medium text-foreground">
                             {formatLongDate(entry.date)}
                           </time>
+                          {isToday && (
+                            <span className="ml-2 inline-flex items-center rounded bg-destructive px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-destructive-foreground no-underline">
+                              Cancelled
+                            </span>
+                          )}
                         </td>
                         <td className="px-3 py-3 align-top font-semibold">
                           {entry.county ? `${entry.county} County` : "—"}
@@ -398,7 +415,8 @@ const WegoSchedule = () => {
                           </span>
                         </td>
                       </tr>
-                    ))}
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

@@ -232,7 +232,7 @@ const Calendar = () => {
                 ) : (
                   <ul className="space-y-3">
                     {selectedEvents.map((e) => (
-                      <EventCard key={e.id} event={e} compact />
+                      <EventCard key={e.id} event={e} compact cancelled={selected === todayKey} />
                     ))}
                   </ul>
                 )}
@@ -251,17 +251,25 @@ const Calendar = () => {
                 <p className="text-sm text-muted-foreground">No upcoming events scheduled.</p>
               )}
               <ul className="space-y-3">
-                {upcoming.slice(0, 5).map((e) => (
-                  <li key={e.id} className="border-b border-border/60 pb-3 last:border-0 last:pb-0">
-                    <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                {upcoming.slice(0, 5).map((e) => {
+                  const isToday = eventDateKey(e) === todayKey;
+                  return (
+                  <li key={e.id} className={`border-b border-border/60 pb-3 last:border-0 last:pb-0 ${isToday ? "line-through decoration-destructive/70 decoration-2 text-muted-foreground" : ""}`}>
+                    <p className="text-xs uppercase tracking-wide text-muted-foreground no-underline">
                       {formatDateKey(eventDateKey(e))}
+                      {isToday && (
+                        <span className="ml-2 inline-flex items-center rounded bg-destructive px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-destructive-foreground no-underline">
+                          Cancelled
+                        </span>
+                      )}
                     </p>
                     <p className="font-medium text-foreground">{e.title}</p>
                     {e.event_location && (
                       <p className="text-xs text-muted-foreground">{e.event_location}</p>
                     )}
                   </li>
-                ))}
+                  );
+                })}
               </ul>
             </section>
             <a
@@ -294,7 +302,7 @@ const Calendar = () => {
 
           <ul className="space-y-4">
             {upcoming.map((e) => (
-              <EventCard key={e.id} event={e} />
+              <EventCard key={e.id} event={e} cancelled={eventDateKey(e) === todayKey} />
             ))}
           </ul>
         </section>
@@ -305,19 +313,25 @@ const Calendar = () => {
   );
 };
 
-function EventCard({ event, compact = false }: { event: Post; compact?: boolean }) {
+function EventCard({ event, compact = false, cancelled = false }: { event: Post; compact?: boolean; cancelled?: boolean }) {
   const mobile = isMobileClinic(event);
   return (
     <li
       className={cn(
         "rounded-lg border p-4 sm:p-5",
         mobile ? "border-accent bg-accent/5" : "border-border bg-card",
+        cancelled && "line-through decoration-destructive/70 decoration-2 text-muted-foreground",
       )}
     >
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="min-w-0">
+          {cancelled && (
+            <span className="mb-2 mr-2 inline-flex items-center rounded bg-destructive px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-destructive-foreground no-underline">
+              Cancelled today
+            </span>
+          )}
           {mobile && (
-            <span className="mb-2 inline-flex items-center gap-1 rounded bg-accent px-2 py-0.5 text-xs font-semibold text-accent-foreground">
+            <span className="mb-2 inline-flex items-center gap-1 rounded bg-accent px-2 py-0.5 text-xs font-semibold text-accent-foreground no-underline">
               <Stethoscope className="h-3 w-3" aria-hidden="true" /> Mobile Clinic
             </span>
           )}
