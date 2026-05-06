@@ -329,17 +329,6 @@ const AdminNews = () => {
     toast({ title: "Event restored", description: "Now showing as upcoming." });
     loadPosts();
   }
-      .eq("id", p.id);
-    if (error) {
-      toast({
-        title: "Update failed",
-        description: error.message,
-        variant: "destructive",
-      });
-      return;
-    }
-    loadPosts();
-  }
 
   if (loading) {
     return (
