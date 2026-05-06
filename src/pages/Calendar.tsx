@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import {
   dateKeyFromDate,
   eventDateKey,
+  eventEndKey,
   formatDateKey,
   isAllDayEvent,
   todayKey as getTodayKey,
