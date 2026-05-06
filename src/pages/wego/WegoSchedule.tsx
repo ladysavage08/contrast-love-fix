@@ -354,17 +354,24 @@ const WegoSchedule = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {tableRows.map((entry, i) => (
+                    {tableRows.map((entry, i) => {
+                      const isToday = entry.date === todayKey;
+                      return (
                       <tr
                         key={`${entry.date}-${i}`}
                         className={`border-t border-border ${
-                          isPublic(entry) ? "" : "bg-muted/30 text-muted-foreground"
-                        }`}
+                          isToday ? "line-through decoration-destructive/70 decoration-2" : ""
+                        } ${isPublic(entry) ? "" : "bg-muted/30 text-muted-foreground"}`}
                       >
                         <td className="px-3 py-3 align-top">
                           <time dateTime={entry.date} className="font-medium text-foreground">
                             {formatLongDate(entry.date)}
                           </time>
+                          {isToday && (
+                            <span className="ml-2 inline-flex items-center rounded bg-destructive px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-destructive-foreground no-underline">
+                              Cancelled
+                            </span>
+                          )}
                         </td>
                         <td className="px-3 py-3 align-top font-semibold">
                           {entry.county ? `${entry.county} County` : "—"}
