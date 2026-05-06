@@ -306,21 +306,24 @@ const WegoSchedule = () => {
                 className="mt-6 grid gap-4 sm:grid-cols-2"
                 aria-label={`${month.label} clinic stops by date`}
               >
-                {grouped.map(({ date, entries }) => (
+                {grouped.map(({ date, entries }) => {
+                  const isToday = date === todayKey;
+                  return (
                   <li
                     key={date}
-                    className="flex h-full flex-col rounded-lg border border-t-[3px] border-border border-t-accent-gold bg-card p-5 shadow-sm"
+                    className={`flex h-full flex-col rounded-lg border border-t-[3px] border-border bg-card p-5 shadow-sm ${isToday ? "border-t-destructive" : "border-t-accent-gold"}`}
                   >
-                    <h3 className="text-sm font-bold uppercase tracking-wide text-primary">
-                      <time dateTime={date}>{formatLongDate(date)}</time>
+                    <h3 className={`text-sm font-bold uppercase tracking-wide ${isToday ? "text-destructive line-through decoration-destructive/70 decoration-2" : "text-primary"}`}>
+                      <time dateTime={date}>{formatLongDate(date)}{isToday ? " — Cancelled" : ""}</time>
                     </h3>
                     <ul className="mt-4 space-y-4">
                       {entries.map((entry, i) => (
-                        <EntryRow key={`${entry.date}-${i}`} entry={entry} />
+                        <EntryRow key={`${entry.date}-${i}`} entry={entry} cancelled={isToday} />
                       ))}
                     </ul>
                   </li>
-                ))}
+                  );
+                })}
               </ol>
             )}
 
