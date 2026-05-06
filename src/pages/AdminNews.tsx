@@ -404,6 +404,45 @@ const AdminNews = () => {
               ))}
             </div>
 
+            {filter !== "news" && (
+              <div
+                className="mb-3 flex flex-wrap items-center gap-2 text-sm"
+                role="group"
+                aria-label="Event archive filter"
+              >
+                <span className="text-muted-foreground">Events:</span>
+                {([
+                  { key: "upcoming", label: "Upcoming Events" },
+                  { key: "archived", label: "Archived Events" },
+                  { key: "all", label: "All Events" },
+                ] as const).map((opt) => (
+                  <button
+                    key={opt.key}
+                    type="button"
+                    onClick={() => setEventScope(opt.key)}
+                    aria-pressed={eventScope === opt.key}
+                    className={`rounded-full border px-3 py-1 ${
+                      eventScope === opt.key
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-border bg-background hover:bg-muted"
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {eventScope === "archived" && filter !== "news" && (
+              <p
+                role="note"
+                className="mb-4 rounded-md border-l-4 border-accent-gold bg-muted/40 p-3 text-xs text-muted-foreground"
+              >
+                Archived events are hidden from the public site but saved for
+                records. You can still edit, view, or restore them.
+              </p>
+            )}
+
             {listLoading ? (
               <p className="text-muted-foreground">Loading posts…</p>
             ) : filteredPosts.length === 0 ? (
