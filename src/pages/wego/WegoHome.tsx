@@ -1,4 +1,4 @@
-import { AlertCircle, ArrowRight, Calendar, HeartPulse, MapPin, Phone } from "lucide-react";
+import { ArrowRight, Calendar, HeartPulse, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import WegoLayout from "@/components/wego/WegoLayout";
 
