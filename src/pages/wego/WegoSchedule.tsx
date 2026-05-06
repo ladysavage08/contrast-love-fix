@@ -176,6 +176,7 @@ const WegoSchedule = () => {
           </p>
         </header>
 
+
         <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
           <section aria-labelledby="month-heading">
             <div className="flex flex-wrap items-baseline justify-between gap-4">
