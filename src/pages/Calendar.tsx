@@ -320,12 +320,18 @@ function EventCard({ event, compact = false, cancelled = false }: { event: Post;
       className={cn(
         "rounded-lg border p-4 sm:p-5",
         mobile ? "border-accent bg-accent/5" : "border-border bg-card",
+        cancelled && "line-through decoration-destructive/70 decoration-2 text-muted-foreground",
       )}
     >
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="min-w-0">
+          {cancelled && (
+            <span className="mb-2 mr-2 inline-flex items-center rounded bg-destructive px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-destructive-foreground no-underline">
+              Cancelled today
+            </span>
+          )}
           {mobile && (
-            <span className="mb-2 inline-flex items-center gap-1 rounded bg-accent px-2 py-0.5 text-xs font-semibold text-accent-foreground">
+            <span className="mb-2 inline-flex items-center gap-1 rounded bg-accent px-2 py-0.5 text-xs font-semibold text-accent-foreground no-underline">
               <Stethoscope className="h-3 w-3" aria-hidden="true" /> Mobile Clinic
             </span>
           )}
