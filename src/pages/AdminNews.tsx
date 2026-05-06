@@ -112,6 +112,7 @@ function postToDraft(p: Post): Draft {
     published: p.published,
     published_at: (p.published_at ?? "").slice(0, 10),
     event_date: p.event_date ?? "",
+    event_end_date: p.event_end_date ?? "",
     event_time: p.event_time ?? "",
     event_location: p.event_location ?? "",
     event_link: p.event_link ?? "",
