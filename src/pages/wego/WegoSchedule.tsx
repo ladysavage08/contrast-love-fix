@@ -176,33 +176,6 @@ const WegoSchedule = () => {
           </p>
         </header>
 
-        <div
-          role="alert"
-          aria-live="polite"
-          className="mb-8 flex items-start gap-3 rounded-lg border-l-4 border-destructive bg-destructive/10 p-4"
-        >
-          <AlertCircle
-            className="mt-0.5 h-5 w-5 shrink-0 text-destructive"
-            aria-hidden="true"
-          />
-          <div className="text-sm leading-relaxed text-foreground">
-            <p className="font-semibold text-destructive">
-              Today's Mobile Health Clinic visit is cancelled.
-            </p>
-            <p className="mt-1">
-              Due to maintenance issues, the Mobile Health Clinic will not be in
-              service today. We apologize for the inconvenience. For questions,
-              call{" "}
-              <a
-                href="tel:18778849346"
-                className="font-semibold text-primary underline-offset-2 hover:underline focus-visible:underline"
-              >
-                1-877-884-WEGO (9346)
-              </a>
-              .
-            </p>
-          </div>
-        </div>
 
         <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
           <section aria-labelledby="month-heading">
