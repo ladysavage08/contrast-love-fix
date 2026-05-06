@@ -21,6 +21,7 @@ import { useToast } from "@/hooks/use-toast";
 import type { Post } from "@/hooks/usePosts";
 import { sortPostsChronologically } from "@/lib/sortPosts";
 import { cn } from "@/lib/utils";
+import { eventEndKey, todayKey as getTodayKey } from "@/lib/eventDate";
 
 type Draft = {
   id?: string;
