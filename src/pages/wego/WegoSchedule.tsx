@@ -137,6 +137,7 @@ type ViewMode = "cards" | "table";
 
 const WegoSchedule = () => {
   const month = monthlySchedules[currentMonthKey];
+  const todayKey = getTodayKey();
 
   const [view, setView] = useState<ViewMode>("cards");
   const [county, setCounty] = useState<string>("all");
