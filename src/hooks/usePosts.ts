@@ -65,10 +65,16 @@ export function useEvents(opts?: { upcomingOnly?: boolean; limit?: number }) {
       if (error) throw error;
       const all = (data ?? []) as Post[];
 
-      // Effective date used for sorting & filtering: event_date if present,
+      // Effective START date used for sorting: event_date if present,
       // otherwise the published_at date portion.
       const effective = (e: Post) =>
         (e.event_date ?? e.published_at ?? "").slice(0, 10);
+
+      // Effective END date used for archival: event_end_date if present,
+      // otherwise the start/event_date — so multi-day or recurring events
+      // only archive after the LAST date has passed.
+      const effectiveEnd = (e: Post) =>
+        (e.event_end_date ?? e.event_date ?? e.published_at ?? "").slice(0, 10);
 
       let list = [...all].sort((a, b) => {
         const ea = effective(a);
@@ -78,7 +84,7 @@ export function useEvents(opts?: { upcomingOnly?: boolean; limit?: number }) {
 
       if (upcomingOnly) {
         const today = new Date().toISOString().slice(0, 10);
-        list = list.filter((e) => effective(e) >= today);
+        list = list.filter((e) => effectiveEnd(e) >= today);
       }
       if (limit) list = list.slice(0, limit);
       return list;
