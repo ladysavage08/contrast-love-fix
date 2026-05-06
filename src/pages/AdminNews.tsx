@@ -130,6 +130,9 @@ const AdminNews = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [listLoading, setListLoading] = useState(true);
   const [filter, setFilter] = useState<"all" | "news" | "event">("all");
+  const [eventScope, setEventScope] = useState<"upcoming" | "archived" | "all">(
+    "upcoming",
+  );
   const [editing, setEditing] = useState<Draft | null>(null);
   const [saving, setSaving] = useState(false);
 
