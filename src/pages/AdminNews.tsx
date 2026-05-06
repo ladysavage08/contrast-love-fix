@@ -71,6 +71,7 @@ const emptyDraft = (): Draft => ({
   published: true,
   published_at: new Date().toISOString().slice(0, 10),
   event_date: "",
+  event_end_date: "",
   event_time: "",
   event_location: "",
   event_link: "",
