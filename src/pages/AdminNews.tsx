@@ -43,6 +43,7 @@ type Draft = {
   published: boolean;
   published_at: string; // ISO date (YYYY-MM-DD) for input[type=date]
   event_date: string; // YYYY-MM-DD
+  event_end_date: string; // YYYY-MM-DD (final/end date for multi-day or recurring events)
   event_time: string;
   event_location: string;
   event_link: string;
