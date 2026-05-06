@@ -315,7 +315,7 @@ const AdminNews = () => {
   async function handleRestore(p: Post) {
     const today = new Date().toISOString().slice(0, 10);
     // Push the event's effective end date to today so it re-appears as upcoming.
-    const updates: Record<string, unknown> = { event_end_date: today };
+    const updates: { event_end_date: string; event_date?: string } = { event_end_date: today };
     if (!p.event_date) updates.event_date = today;
     const { error } = await supabase.from("posts").update(updates).eq("id", p.id);
     if (error) {
