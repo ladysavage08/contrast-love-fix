@@ -22,6 +22,7 @@ export type Post = {
   published: boolean;
   published_at: string;
   event_date: string | null;
+  event_end_date: string | null;
   event_time: string | null;
   event_location: string | null;
   event_link: string | null;
