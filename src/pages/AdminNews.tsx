@@ -224,6 +224,10 @@ const AdminNews = () => {
       event_date: editing.post_type === "event" && editing.event_date
         ? editing.event_date
         : null,
+      event_end_date:
+        editing.post_type === "event" && editing.event_end_date
+          ? editing.event_end_date
+          : null,
       event_time:
         editing.post_type === "event" && editing.event_time.trim()
           ? editing.event_time.trim()
