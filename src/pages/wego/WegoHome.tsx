@@ -29,34 +29,6 @@ const faqPreview = [
 const WegoHome = () => {
   return (
     <WegoLayout>
-      {/* Today's cancellation notice */}
-      <div className="border-b border-border bg-destructive/10">
-        <div
-          role="alert"
-          aria-live="polite"
-          className="container flex items-start gap-3 py-4"
-        >
-          <AlertCircle
-            className="mt-0.5 h-5 w-5 shrink-0 text-destructive"
-            aria-hidden="true"
-          />
-          <div className="text-sm leading-relaxed text-foreground">
-            <span className="font-semibold text-destructive">
-              Today's Mobile Health Clinic visit is cancelled
-            </span>{" "}
-            due to maintenance issues. We apologize for the inconvenience. For
-            questions, call{" "}
-            <a
-              href="tel:18778849346"
-              className="font-semibold text-primary underline-offset-2 hover:underline focus-visible:underline"
-            >
-              1-877-884-WEGO (9346)
-            </a>
-            .
-          </div>
-        </div>
-      </div>
-
       {/* ============ HERO ============ */}
       <section
         aria-label="Mobile Health Clinic introduction"
