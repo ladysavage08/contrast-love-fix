@@ -495,6 +495,14 @@ const AdminNews = () => {
                             </span>
                           </>
                         )}
+                        {isArchived(p) && (
+                          <>
+                            <span aria-hidden>•</span>
+                            <span className="rounded bg-muted px-1.5 py-0.5 font-semibold text-muted-foreground">
+                              Archived
+                            </span>
+                          </>
+                        )}
                       </div>
                       <h2 className="mt-1 truncate text-base font-semibold">
                         {p.title}
