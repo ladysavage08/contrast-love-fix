@@ -302,7 +302,7 @@ const Calendar = () => {
 
           <ul className="space-y-4">
             {upcoming.map((e) => (
-              <EventCard key={e.id} event={e} />
+              <EventCard key={e.id} event={e} cancelled={eventDateKey(e) === todayKey} />
             ))}
           </ul>
         </section>
@@ -313,7 +313,7 @@ const Calendar = () => {
   );
 };
 
-function EventCard({ event, compact = false }: { event: Post; compact?: boolean }) {
+function EventCard({ event, compact = false, cancelled = false }: { event: Post; compact?: boolean; cancelled?: boolean }) {
   const mobile = isMobileClinic(event);
   return (
     <li
