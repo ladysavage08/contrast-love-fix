@@ -56,7 +56,7 @@ const mapsHref = (entry: ScheduleEntry) => {
 
 const isPublic = (e: ScheduleEntry) => e.type === "clinic" || e.type === "special";
 
-const EntryRow = ({ entry }: { entry: ScheduleEntry }) => {
+const EntryRow = ({ entry, cancelled = false }: { entry: ScheduleEntry; cancelled?: boolean }) => {
   const showCounty = isPublic(entry) && entry.county;
   return (
     <li className="border-t border-border pt-4 first:border-0 first:pt-0">
