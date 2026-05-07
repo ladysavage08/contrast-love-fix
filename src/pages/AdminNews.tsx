@@ -605,6 +605,28 @@ const AdminNews = () => {
                           <RotateCcw className="mr-1 h-4 w-4" /> Restore
                         </Button>
                       )}
+                      {p.post_type === "event" && !isArchived(p) && (
+                        p.cancelled ? (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleUncancel(p)}
+                            aria-label={`Remove cancellation from ${p.title}`}
+                          >
+                            <Undo2 className="mr-1 h-4 w-4" /> Uncancel
+                          </Button>
+                        ) : (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => { setCancelTarget(p); setCancelNote(""); }}
+                            aria-label={`Cancel event ${p.title}`}
+                            className="text-destructive hover:text-destructive"
+                          >
+                            <Ban className="mr-1 h-4 w-4" /> Cancel Event
+                          </Button>
+                        )
+                      )}
                       <Button
                         size="sm"
                         variant="outline"
