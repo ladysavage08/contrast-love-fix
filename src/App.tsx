@@ -39,7 +39,17 @@ import SiteAlertBanner from "./components/SiteAlertBanner.tsx";
 import SiteAlertModal from "./components/SiteAlertModal.tsx";
 import AnalyticsTracker from "./components/AnalyticsTracker.tsx";
 
-const queryClient = new QueryClient();
+// Keep cached data for navigation, but always revalidate on focus/mount
+// so admin updates flow to the live site without a page refresh.
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 30_000,
+      refetchOnWindowFocus: true,
+      refetchOnMount: true,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
