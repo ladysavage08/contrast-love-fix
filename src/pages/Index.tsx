@@ -44,21 +44,13 @@ const quickLinks = [
 
 const Index = () => {
   const { data: news = [], isLoading: newsLoading } = usePosts(4);
+  // useEvents({ upcomingOnly: true }) already:
+  //   - excludes events whose effective END date has passed (multi-day safe;
+  //     start date is used as the end when no event_end_date is set)
+  //   - sorts ascending by effective START date (earliest upcoming first)
+  // So here we just take the next few items for the homepage widget.
   const { data: allUpcomingEvents = [] } = useEvents({ upcomingOnly: true });
-  const upcomingEvents = (() => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const cutoff = new Date(today);
-    cutoff.setDate(cutoff.getDate() + 14);
-    const cutoffKey = cutoff.toISOString().slice(0, 10);
-    const todayKey = today.toISOString().slice(0, 10);
-    return allUpcomingEvents
-      .filter((e) => {
-        const key = (e.event_date ?? e.published_at ?? "").slice(0, 10);
-        return key >= todayKey && key <= cutoffKey;
-      })
-      .slice(0, 4);
-  })();
+  const upcomingEvents = allUpcomingEvents.slice(0, 4);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
@@ -231,7 +223,7 @@ const Index = () => {
             {upcomingEvents.length === 0 ? (
               <div className="rounded-lg border border-border p-4">
                 <p className="text-sm text-muted-foreground">
-                  No upcoming events in the next two weeks.{" "}
+                  No upcoming events scheduled.{" "}
                   <a
                     href="/calendar"
                     className="font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
