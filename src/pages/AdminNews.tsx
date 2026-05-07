@@ -551,6 +551,14 @@ const AdminNews = () => {
                             </span>
                           </>
                         )}
+                        {p.post_type === "event" && p.cancelled && (
+                          <>
+                            <span aria-hidden>•</span>
+                            <span className="rounded bg-destructive/10 px-1.5 py-0.5 font-semibold text-destructive">
+                              Canceled
+                            </span>
+                          </>
+                        )}
                       </div>
                       <h2 className="mt-1 truncate text-base font-semibold">
                         {p.title}
