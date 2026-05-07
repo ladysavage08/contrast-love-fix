@@ -332,7 +332,7 @@ function EventCard({ event, compact = false, cancelled = false }: { event: Post;
         <div className="min-w-0">
           {cancelled && (
             <span className="mb-2 mr-2 inline-flex items-center rounded bg-destructive px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-destructive-foreground no-underline">
-              Cancelled today
+              Canceled
             </span>
           )}
           {mobile && (
