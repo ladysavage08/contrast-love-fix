@@ -307,7 +307,7 @@ const Calendar = () => {
 
           <ul className="space-y-4">
             {upcoming.map((e) => (
-              <EventCard key={e.id} event={e} cancelled={eventDateKey(e) === todayKey} />
+              <EventCard key={e.id} event={e} cancelled={!!e.cancelled || eventDateKey(e) === todayKey} />
             ))}
           </ul>
         </section>
