@@ -1,6 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload, X, Heading2, Heading3, Bold, Italic, List, Link as LinkIcon, Pilcrow, RotateCcw } from "lucide-react";
+import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload, X, Heading2, Heading3, Bold, Italic, List, Link as LinkIcon, Pilcrow, RotateCcw, Ban, Undo2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
