@@ -145,6 +145,9 @@ const AdminNews = () => {
   );
   const [editing, setEditing] = useState<Draft | null>(null);
   const [saving, setSaving] = useState(false);
+  const [cancelTarget, setCancelTarget] = useState<Post | null>(null);
+  const [cancelNote, setCancelNote] = useState("");
+  const [cancelSaving, setCancelSaving] = useState(false);
 
   useEffect(() => {
     if (loading) return;
