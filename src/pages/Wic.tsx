@@ -31,7 +31,7 @@ const eligibility = [
 const applySteps: Array<string | { text: string; link: { href: string; label: string } }> = [
   {
     text: "Apply online at ",
-    link: { href: "https://www.ecphd.com/getwic", label: "ecphd.com/getwic" },
+    link: { href: "https://ecphd-getwic.qminder.site/#/", label: "ecphd.com/getwic" },
   },
   "Gather proof of identity, address, household income, and your child's medical/immunization records.",
   "Attend your appointment for a brief health and nutrition screening.",
