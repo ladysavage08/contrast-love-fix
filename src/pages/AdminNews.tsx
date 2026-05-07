@@ -343,6 +343,41 @@ const AdminNews = () => {
     loadPosts();
   }
 
+  async function confirmCancelEvent() {
+    if (!cancelTarget) return;
+    setCancelSaving(true);
+    const { error } = await supabase
+      .from("posts")
+      .update({
+        cancelled: true,
+        cancellation_note: cancelNote.trim() || null,
+        cancelled_at: new Date().toISOString(),
+      })
+      .eq("id", cancelTarget.id);
+    setCancelSaving(false);
+    if (error) {
+      toast({ title: "Cancel failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "Event canceled", description: "Marked as canceled on the public site." });
+    setCancelTarget(null);
+    setCancelNote("");
+    loadPosts();
+  }
+
+  async function handleUncancel(p: Post) {
+    const { error } = await supabase
+      .from("posts")
+      .update({ cancelled: false, cancellation_note: null, cancelled_at: null })
+      .eq("id", p.id);
+    if (error) {
+      toast({ title: "Update failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "Cancellation removed" });
+    loadPosts();
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background text-foreground">
