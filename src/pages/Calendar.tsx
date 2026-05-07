@@ -377,6 +377,12 @@ function EventCard({ event, compact = false, cancelled = false }: { event: Post;
           {event.excerpt && (
             <p className="mt-2 text-sm text-foreground/80">{event.excerpt}</p>
           )}
+          {event.cancelled && event.cancellation_note && (
+            <p className="mt-2 text-sm font-medium text-destructive no-underline">
+              <span className="sr-only">Cancellation note: </span>
+              Note: {event.cancellation_note}
+            </p>
+          )}
         </div>
       </div>
 
