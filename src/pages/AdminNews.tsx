@@ -1,6 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload, X, Heading2, Heading3, Bold, Italic, List, Link as LinkIcon, Pilcrow, RotateCcw } from "lucide-react";
+import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload, X, Heading2, Heading3, Bold, Italic, List, Link as LinkIcon, Pilcrow, RotateCcw, Ban, Undo2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -135,6 +145,9 @@ const AdminNews = () => {
   );
   const [editing, setEditing] = useState<Draft | null>(null);
   const [saving, setSaving] = useState(false);
+  const [cancelTarget, setCancelTarget] = useState<Post | null>(null);
+  const [cancelNote, setCancelNote] = useState("");
+  const [cancelSaving, setCancelSaving] = useState(false);
 
   useEffect(() => {
     if (loading) return;
@@ -330,6 +343,41 @@ const AdminNews = () => {
     loadPosts();
   }
 
+  async function confirmCancelEvent() {
+    if (!cancelTarget) return;
+    setCancelSaving(true);
+    const { error } = await supabase
+      .from("posts")
+      .update({
+        cancelled: true,
+        cancellation_note: cancelNote.trim() || null,
+        cancelled_at: new Date().toISOString(),
+      })
+      .eq("id", cancelTarget.id);
+    setCancelSaving(false);
+    if (error) {
+      toast({ title: "Cancel failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "Event canceled", description: "Marked as canceled on the public site." });
+    setCancelTarget(null);
+    setCancelNote("");
+    loadPosts();
+  }
+
+  async function handleUncancel(p: Post) {
+    const { error } = await supabase
+      .from("posts")
+      .update({ cancelled: false, cancellation_note: null, cancelled_at: null })
+      .eq("id", p.id);
+    if (error) {
+      toast({ title: "Update failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "Cancellation removed" });
+    loadPosts();
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background text-foreground">
@@ -503,6 +551,14 @@ const AdminNews = () => {
                             </span>
                           </>
                         )}
+                        {p.post_type === "event" && p.cancelled && (
+                          <>
+                            <span aria-hidden>•</span>
+                            <span className="rounded bg-destructive/10 px-1.5 py-0.5 font-semibold text-destructive">
+                              Canceled
+                            </span>
+                          </>
+                        )}
                       </div>
                       <h2 className="mt-1 truncate text-base font-semibold">
                         {p.title}
@@ -549,6 +605,28 @@ const AdminNews = () => {
                           <RotateCcw className="mr-1 h-4 w-4" /> Restore
                         </Button>
                       )}
+                      {p.post_type === "event" && !isArchived(p) && (
+                        p.cancelled ? (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleUncancel(p)}
+                            aria-label={`Remove cancellation from ${p.title}`}
+                          >
+                            <Undo2 className="mr-1 h-4 w-4" /> Uncancel
+                          </Button>
+                        ) : (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => { setCancelTarget(p); setCancelNote(""); }}
+                            aria-label={`Cancel event ${p.title}`}
+                            className="text-destructive hover:text-destructive"
+                          >
+                            <Ban className="mr-1 h-4 w-4" /> Cancel Event
+                          </Button>
+                        )
+                      )}
                       <Button
                         size="sm"
                         variant="outline"
@@ -565,6 +643,40 @@ const AdminNews = () => {
           </>
         )}
       </main>
+      <AlertDialog open={!!cancelTarget} onOpenChange={(o) => { if (!o) { setCancelTarget(null); setCancelNote(""); } }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure you want to cancel this event?</AlertDialogTitle>
+            <AlertDialogDescription>
+              "{cancelTarget?.title}" will be marked as <strong>Canceled</strong> on the public schedule. The event is not deleted and can be uncanceled later.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="space-y-2">
+            <Label htmlFor="cancel-note">Cancellation note (optional)</Label>
+            <Textarea
+              id="cancel-note"
+              value={cancelNote}
+              onChange={(e) => setCancelNote(e.target.value)}
+              maxLength={500}
+              rows={3}
+              placeholder="e.g. Canceled due to maintenance. Please call 1-877-884-WEGO."
+            />
+            <p className="text-xs text-muted-foreground">
+              If provided, this note is shown on the public schedule.
+            </p>
+          </div>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={cancelSaving}>Keep event</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => { e.preventDefault(); confirmCancelEvent(); }}
+              disabled={cancelSaving}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {cancelSaving ? "Canceling…" : "Yes, cancel event"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       <SiteFooter />
     </div>
   );

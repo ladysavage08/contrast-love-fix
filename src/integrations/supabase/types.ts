@@ -145,6 +145,9 @@ export type Database = {
           article_page_reference: string | null
           author_name: string | null
           body: string | null
+          cancellation_note: string | null
+          cancelled: boolean
+          cancelled_at: string | null
           category: string | null
           created_at: string
           cta_label: string | null
@@ -175,6 +178,9 @@ export type Database = {
           article_page_reference?: string | null
           author_name?: string | null
           body?: string | null
+          cancellation_note?: string | null
+          cancelled?: boolean
+          cancelled_at?: string | null
           category?: string | null
           created_at?: string
           cta_label?: string | null
@@ -205,6 +211,9 @@ export type Database = {
           article_page_reference?: string | null
           author_name?: string | null
           body?: string | null
+          cancellation_note?: string | null
+          cancelled?: boolean
+          cancelled_at?: string | null
           category?: string | null
           created_at?: string
           cta_label?: string | null

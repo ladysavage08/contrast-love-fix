@@ -233,7 +233,7 @@ const Calendar = () => {
                 ) : (
                   <ul className="space-y-3">
                     {selectedEvents.map((e) => (
-                      <EventCard key={e.id} event={e} compact cancelled={selected === todayKey} />
+                      <EventCard key={e.id} event={e} compact cancelled={!!e.cancelled || selected === todayKey} />
                     ))}
                   </ul>
                 )}
@@ -254,19 +254,23 @@ const Calendar = () => {
               <ul className="space-y-3">
                 {upcoming.slice(0, 5).map((e) => {
                   const isToday = eventDateKey(e) === todayKey;
+                  const isCancelled = !!e.cancelled || isToday;
                   return (
-                  <li key={e.id} className={`border-b border-border/60 pb-3 last:border-0 last:pb-0 ${isToday ? "line-through decoration-destructive/70 decoration-2 text-muted-foreground" : ""}`}>
+                  <li key={e.id} className={`border-b border-border/60 pb-3 last:border-0 last:pb-0 ${isCancelled ? "line-through decoration-destructive/70 decoration-2 text-muted-foreground" : ""}`}>
                     <p className="text-xs uppercase tracking-wide text-muted-foreground no-underline">
                       {formatDateKey(eventDateKey(e))}
-                      {isToday && (
+                      {isCancelled && (
                         <span className="ml-2 inline-flex items-center rounded bg-destructive px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-destructive-foreground no-underline">
-                          Cancelled
+                          Canceled
                         </span>
                       )}
                     </p>
                     <p className="font-medium text-foreground">{e.title}</p>
                     {e.event_location && (
                       <p className="text-xs text-muted-foreground">{e.event_location}</p>
+                    )}
+                    {e.cancelled && e.cancellation_note && (
+                      <p className="mt-1 text-xs text-destructive no-underline">Note: {e.cancellation_note}</p>
                     )}
                   </li>
                   );
@@ -303,7 +307,7 @@ const Calendar = () => {
 
           <ul className="space-y-4">
             {upcoming.map((e) => (
-              <EventCard key={e.id} event={e} cancelled={eventDateKey(e) === todayKey} />
+              <EventCard key={e.id} event={e} cancelled={!!e.cancelled || eventDateKey(e) === todayKey} />
             ))}
           </ul>
         </section>
@@ -328,7 +332,7 @@ function EventCard({ event, compact = false, cancelled = false }: { event: Post;
         <div className="min-w-0">
           {cancelled && (
             <span className="mb-2 mr-2 inline-flex items-center rounded bg-destructive px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-destructive-foreground no-underline">
-              Cancelled today
+              Canceled
             </span>
           )}
           {mobile && (
@@ -372,6 +376,12 @@ function EventCard({ event, compact = false, cancelled = false }: { event: Post;
           </dl>
           {event.excerpt && (
             <p className="mt-2 text-sm text-foreground/80">{event.excerpt}</p>
+          )}
+          {event.cancelled && event.cancellation_note && (
+            <p className="mt-2 text-sm font-medium text-destructive no-underline">
+              <span className="sr-only">Cancellation note: </span>
+              Note: {event.cancellation_note}
+            </p>
           )}
         </div>
       </div>
