@@ -223,7 +223,7 @@ const Index = () => {
             {upcomingEvents.length === 0 ? (
               <div className="rounded-lg border border-border p-4">
                 <p className="text-sm text-muted-foreground">
-                  No upcoming events in the next two weeks.{" "}
+                  No upcoming events scheduled.{" "}
                   <a
                     href="/calendar"
                     className="font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
