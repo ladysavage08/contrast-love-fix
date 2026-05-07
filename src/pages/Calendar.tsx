@@ -233,7 +233,7 @@ const Calendar = () => {
                 ) : (
                   <ul className="space-y-3">
                     {selectedEvents.map((e) => (
-                      <EventCard key={e.id} event={e} compact cancelled={selected === todayKey} />
+                      <EventCard key={e.id} event={e} compact cancelled={!!e.cancelled || selected === todayKey} />
                     ))}
                   </ul>
                 )}
