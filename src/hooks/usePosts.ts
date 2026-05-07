@@ -28,6 +28,9 @@ export type Post = {
   event_link: string | null;
   cta_label: string | null;
   cta_url: string | null;
+  cancelled: boolean;
+  cancellation_note: string | null;
+  cancelled_at: string | null;
 };
 
 import { sortPostsChronologically } from "@/lib/sortPosts";
