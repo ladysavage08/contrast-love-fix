@@ -643,6 +643,40 @@ const AdminNews = () => {
           </>
         )}
       </main>
+      <AlertDialog open={!!cancelTarget} onOpenChange={(o) => { if (!o) { setCancelTarget(null); setCancelNote(""); } }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure you want to cancel this event?</AlertDialogTitle>
+            <AlertDialogDescription>
+              "{cancelTarget?.title}" will be marked as <strong>Canceled</strong> on the public schedule. The event is not deleted and can be uncanceled later.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="space-y-2">
+            <Label htmlFor="cancel-note">Cancellation note (optional)</Label>
+            <Textarea
+              id="cancel-note"
+              value={cancelNote}
+              onChange={(e) => setCancelNote(e.target.value)}
+              maxLength={500}
+              rows={3}
+              placeholder="e.g. Canceled due to maintenance. Please call 1-877-884-WEGO."
+            />
+            <p className="text-xs text-muted-foreground">
+              If provided, this note is shown on the public schedule.
+            </p>
+          </div>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={cancelSaving}>Keep event</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => { e.preventDefault(); confirmCancelEvent(); }}
+              disabled={cancelSaving}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {cancelSaving ? "Canceling…" : "Yes, cancel event"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       <SiteFooter />
     </div>
   );
