@@ -155,9 +155,10 @@ const WegoSchedule = () => {
       <div className="container py-10 pb-32">
         <header className="mb-8 max-w-3xl">
           <h1 className="text-3xl font-bold md:text-4xl">
-            Mobile Health Clinic Schedule
+            {monthLabel} Mobile Health Clinic Schedule
           </h1>
           <div aria-hidden="true" className="mt-3 h-1 w-20 bg-accent-gold" />
+          <p className="mt-2 text-sm text-muted-foreground">Updated 5-8-2026</p>
           <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
             Dates, times, and locations may change. Please call ahead to
             confirm a stop before traveling.
