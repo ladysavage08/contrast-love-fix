@@ -27,6 +27,7 @@ import AdminNews from "./pages/AdminNews.tsx";
 import AdminHero from "./pages/AdminHero.tsx";
 import AdminLinks from "./pages/AdminLinks.tsx";
 import Wic from "./pages/Wic.tsx";
+import GetWicRedirect from "./pages/GetWicRedirect.tsx";
 import Calendar from "./pages/Calendar.tsx";
 import WegoHome from "./pages/wego/WegoHome.tsx";
 import WegoAbout from "./pages/wego/WegoAbout.tsx";
@@ -91,6 +92,11 @@ const App = () => (
           <Route path="/admin/hero" element={<AdminHero />} />
           <Route path="/admin/links" element={<AdminLinks />} />
           <Route path="/wic" element={<Wic />} />
+          <Route path="/getwic" element={<GetWicRedirect />} />
+          <Route path="/getwic/" element={<GetWicRedirect />} />
+          <Route path="/GetWIC" element={<GetWicRedirect />} />
+          <Route path="/GetWic" element={<GetWicRedirect />} />
+          <Route path="/GETWIC" element={<GetWicRedirect />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/events" element={<Calendar />} />
           <Route path="/wego" element={<WegoHome />} />

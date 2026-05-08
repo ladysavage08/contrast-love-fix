@@ -13,6 +13,9 @@
   RewriteEngine On
   RewriteBase /
 
+  # 301 redirect: /getwic (any case, with or without trailing slash) -> Qminder check-in
+  RewriteRule ^getwic/?$ https://ecphd-getwic.qminder.site/#/ [R=301,L,NC]
+
   # If the request is for a real file or folder, serve it directly.
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
