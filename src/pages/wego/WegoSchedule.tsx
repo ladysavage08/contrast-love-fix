@@ -46,15 +46,18 @@ const mapsHref = (entry: ScheduleEntry) => {
 };
 
 const isPublic = (e: ScheduleEntry) =>
-  e.type === "clinic" || e.type === "special";
+  e.type === "clinic" || e.type === "special" || e.type === "tbd";
 
 /** Map a Post (database event) into the ScheduleEntry shape this page renders. */
 function postToEntry(p: Post): ScheduleEntry | null {
   const date = (p.event_date ?? p.published_at ?? "").slice(0, 10);
   if (!date) return null;
-  // Extract county from title like "Mobile Health Clinic — Warren County"
-  const m = p.title.match(/—\s*(.+?)\s+County/i);
-  const county = m?.[1];
+  const cat = (p.category ?? "").toLowerCase();
+  // Try new title format ("Burke County Mobile Clinic – June 2, 2026") first,
+  // then fall back to the legacy format ("Mobile Health Clinic — Burke County").
+  const newFmt = p.title.match(/^\s*([A-Za-z.\s]+?)\s+County\b/i);
+  const oldFmt = p.title.match(/—\s*(.+?)\s+County/i);
+  const county = (newFmt?.[1] ?? oldFmt?.[1])?.trim();
   // Split location into venue + address if formatted "Venue — address"
   let location: string | undefined;
   let address: string | undefined;
@@ -63,9 +66,11 @@ function postToEntry(p: Post): ScheduleEntry | null {
     location = parts[0]?.trim();
     address = parts[1]?.trim();
   }
-  const type: ScheduleEntryType = (p.category ?? "").toLowerCase().includes("special")
-    ? "special"
-    : "clinic";
+  const type: ScheduleEntryType = cat.includes("tbd")
+    ? "tbd"
+    : cat.includes("special")
+      ? "special"
+      : "clinic";
   return {
     date,
     type,
@@ -150,9 +155,10 @@ const WegoSchedule = () => {
       <div className="container py-10 pb-32">
         <header className="mb-8 max-w-3xl">
           <h1 className="text-3xl font-bold md:text-4xl">
-            Mobile Health Clinic Schedule
+            {monthLabel} Mobile Health Clinic Schedule
           </h1>
           <div aria-hidden="true" className="mt-3 h-1 w-20 bg-accent-gold" />
+          <p className="mt-2 text-sm text-muted-foreground">Updated 5-8-2026</p>
           <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
             Dates, times, and locations may change. Please call ahead to
             confirm a stop before traveling.
