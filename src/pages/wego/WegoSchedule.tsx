@@ -46,15 +46,18 @@ const mapsHref = (entry: ScheduleEntry) => {
 };
 
 const isPublic = (e: ScheduleEntry) =>
-  e.type === "clinic" || e.type === "special";
+  e.type === "clinic" || e.type === "special" || e.type === "tbd";
 
 /** Map a Post (database event) into the ScheduleEntry shape this page renders. */
 function postToEntry(p: Post): ScheduleEntry | null {
   const date = (p.event_date ?? p.published_at ?? "").slice(0, 10);
   if (!date) return null;
-  // Extract county from title like "Mobile Health Clinic — Warren County"
-  const m = p.title.match(/—\s*(.+?)\s+County/i);
-  const county = m?.[1];
+  const cat = (p.category ?? "").toLowerCase();
+  // Try new title format ("Burke County Mobile Clinic – June 2, 2026") first,
+  // then fall back to the legacy format ("Mobile Health Clinic — Burke County").
+  const newFmt = p.title.match(/^\s*([A-Za-z.\s]+?)\s+County\b/i);
+  const oldFmt = p.title.match(/—\s*(.+?)\s+County/i);
+  const county = (newFmt?.[1] ?? oldFmt?.[1])?.trim();
   // Split location into venue + address if formatted "Venue — address"
   let location: string | undefined;
   let address: string | undefined;
@@ -63,9 +66,11 @@ function postToEntry(p: Post): ScheduleEntry | null {
     location = parts[0]?.trim();
     address = parts[1]?.trim();
   }
-  const type: ScheduleEntryType = (p.category ?? "").toLowerCase().includes("special")
-    ? "special"
-    : "clinic";
+  const type: ScheduleEntryType = cat.includes("tbd")
+    ? "tbd"
+    : cat.includes("special")
+      ? "special"
+      : "clinic";
   return {
     date,
     type,
