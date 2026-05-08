@@ -14,7 +14,8 @@
   RewriteBase /
 
   # 301 redirect: /getwic (any case, with or without trailing slash) -> Qminder check-in
-  RewriteRule ^getwic/?$ https://ecphd-getwic.qminder.site/#/ [R=301,L,NC]
+  # NE (no-escape) prevents Apache from encoding the # as %23
+  RewriteRule ^getwic/?$ https://ecphd-getwic.qminder.site/#/ [R=301,L,NC,NE]
 
   # If the request is for a real file or folder, serve it directly.
   RewriteCond %{REQUEST_FILENAME} -f [OR]
