@@ -1,12 +1,5 @@
 import { ReactNode, useState } from "react";
-import {
-  Phone,
-  Calendar,
-  ChevronRight,
-  Menu,
-  X,
-  AlertCircle,
-} from "lucide-react";
+import { Phone, Calendar, ChevronRight, Menu, X } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { Link, useLocation } from "react-router-dom";
