@@ -233,7 +233,7 @@ const Calendar = () => {
                 ) : (
                   <ul className="space-y-3">
                     {selectedEvents.map((e) => (
-                      <EventCard key={e.id} event={e} compact cancelled={!!e.cancelled || selected === todayKey} />
+                      <EventCard key={e.id} event={e} compact cancelled={!!e.cancelled} />
                     ))}
                   </ul>
                 )}
@@ -254,7 +254,7 @@ const Calendar = () => {
               <ul className="space-y-3">
                 {upcoming.slice(0, 5).map((e) => {
                   const isToday = eventDateKey(e) === todayKey;
-                  const isCancelled = !!e.cancelled || isToday;
+                  const isCancelled = !!e.cancelled;
                   return (
                   <li key={e.id} className={`border-b border-border/60 pb-3 last:border-0 last:pb-0 ${isCancelled ? "line-through decoration-destructive/70 decoration-2 text-muted-foreground" : ""}`}>
                     <p className="text-xs uppercase tracking-wide text-muted-foreground no-underline">
@@ -307,7 +307,7 @@ const Calendar = () => {
 
           <ul className="space-y-4">
             {upcoming.map((e) => (
-              <EventCard key={e.id} event={e} cancelled={!!e.cancelled || eventDateKey(e) === todayKey} />
+              <EventCard key={e.id} event={e} cancelled={!!e.cancelled} />
             ))}
           </ul>
         </section>
