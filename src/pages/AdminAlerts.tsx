@@ -20,8 +20,10 @@ import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { supabase } from "@/integrations/supabase/client";
 import {
   DEFAULT_SETTINGS,
+  DEFAULT_SECONDARY_BANNER,
   SITE_ALERTS_KEY,
   type SiteAlertsSettings,
+  type BannerSettings,
 } from "@/hooks/useSiteAlerts";
 import { MODAL_PRESETS, type ModalPresetKey } from "@/config/siteAlerts";
 
@@ -54,6 +56,9 @@ const AdminAlerts = () => {
         const v = data.value as Partial<SiteAlertsSettings>;
         setSettings({
           banner: { ...DEFAULT_SETTINGS.banner, ...(v.banner ?? {}) },
+          secondaryBanner: v.secondaryBanner
+            ? { ...DEFAULT_SECONDARY_BANNER, ...v.secondaryBanner }
+            : undefined,
           modal: { ...DEFAULT_SETTINGS.modal, ...(v.modal ?? {}) },
         });
         setMeta({
@@ -83,6 +88,12 @@ const AdminAlerts = () => {
       },
     }));
 
+  const updateSecondary = (patch: Partial<BannerSettings>) =>
+    setSettings((s) => ({
+      ...s,
+      secondaryBanner: { ...DEFAULT_SECONDARY_BANNER, ...(s.secondaryBanner ?? {}), ...patch },
+    }));
+
   // Validation
   const bannerMessageError = !settings.banner.message?.trim()
     ? "Banner message is required."
@@ -102,7 +113,24 @@ const AdminAlerts = () => {
   const bannerWindowError = validateWindow(settings.banner.startAt, settings.banner.endAt);
   const modalWindowError = validateWindow(settings.modal.startAt, settings.modal.endAt);
 
-  const hasErrors = !!(bannerMessageError || bannerHrefError || bannerWindowError || modalWindowError);
+  // Secondary banner validation (only when enabled)
+  const sb = settings.secondaryBanner;
+  const sbActive = !!sb?.enabled;
+  const secondaryMessageError = sbActive && !sb?.message?.trim()
+    ? "Secondary banner message is required when enabled."
+    : sbActive && (sb?.message.length ?? 0) > 280
+      ? "Keep secondary banner under 280 characters."
+      : null;
+  const secondaryWindowError = validateWindow(sb?.startAt, sb?.endAt);
+
+  const hasErrors = !!(
+    bannerMessageError ||
+    bannerHrefError ||
+    bannerWindowError ||
+    modalWindowError ||
+    secondaryMessageError ||
+    secondaryWindowError
+  );
 
   async function handleSave() {
     if (hasErrors) {
@@ -306,6 +334,96 @@ const AdminAlerts = () => {
                     <p className="sm:col-span-2 text-xs text-destructive">Button link: {bannerHrefError}</p>
                   )}
                 </div>
+              </div>
+            </section>
+
+            {/* ---------------- Secondary banner ---------------- */}
+            <section className="rounded-lg border border-border bg-card p-5 lg:col-span-2">
+              <h2 className="text-xl font-semibold">Second top-of-site banner</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Optional second banner shown above the primary banner. Use for closures or temporary notices.
+                Toggle off (or set an end date) when no longer needed — this does not affect the primary banner.
+              </p>
+
+              <div className="mt-5 grid gap-5 sm:grid-cols-2">
+                <div className="flex items-center justify-between gap-4 rounded-md border border-border p-3 sm:col-span-2">
+                  <div>
+                    <Label htmlFor="sb-enabled" className="text-sm font-medium">Secondary banner enabled</Label>
+                    <p className="text-xs text-muted-foreground">Master on/off switch for the second banner.</p>
+                  </div>
+                  <Switch
+                    id="sb-enabled"
+                    checked={!!sb?.enabled}
+                    onCheckedChange={(v) => updateSecondary({ enabled: v })}
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="sb-style">Style</Label>
+                  <Select
+                    value={sb?.style ?? "alert"}
+                    onValueChange={(v) => updateSecondary({ style: v as "info" | "warning" | "alert" })}
+                  >
+                    <SelectTrigger id="sb-style" className="mt-1.5">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="info">Info (blue)</SelectItem>
+                      <SelectItem value="warning">Warning (amber)</SelectItem>
+                      <SelectItem value="alert">Alert (red)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="flex items-center justify-between gap-4 rounded-md border border-border p-3">
+                  <div>
+                    <Label htmlFor="sb-dismissible" className="text-sm font-medium">Dismissible</Label>
+                    <p className="text-xs text-muted-foreground">Visitors can close it for the session.</p>
+                  </div>
+                  <Switch
+                    id="sb-dismissible"
+                    checked={sb?.dismissible ?? true}
+                    onCheckedChange={(v) => updateSecondary({ dismissible: v })}
+                  />
+                </div>
+
+                <div className="sm:col-span-2">
+                  <Label htmlFor="sb-message">Message</Label>
+                  <Textarea
+                    id="sb-message"
+                    className="mt-1.5"
+                    rows={2}
+                    value={sb?.message ?? ""}
+                    onChange={(e) => updateSecondary({ message: e.target.value })}
+                  />
+                  {secondaryMessageError && (
+                    <p className="mt-1 text-xs text-destructive">{secondaryMessageError}</p>
+                  )}
+                </div>
+
+                <div>
+                  <Label htmlFor="sb-start">Show from (optional)</Label>
+                  <Input
+                    id="sb-start"
+                    type="datetime-local"
+                    className="mt-1.5"
+                    value={sb?.startAt ?? ""}
+                    onChange={(e) => updateSecondary({ startAt: e.target.value || null })}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="sb-end">Hide after (optional)</Label>
+                  <Input
+                    id="sb-end"
+                    type="datetime-local"
+                    className="mt-1.5"
+                    value={sb?.endAt ?? ""}
+                    onChange={(e) => updateSecondary({ endAt: e.target.value || null })}
+                  />
+                </div>
+                {secondaryWindowError && (
+                  <p className="sm:col-span-2 text-xs text-destructive">{secondaryWindowError}</p>
+                )}
               </div>
             </section>
 

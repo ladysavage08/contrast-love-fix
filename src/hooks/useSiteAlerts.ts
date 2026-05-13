@@ -23,7 +23,20 @@ export type ModalSettings = typeof defaultModal & {
 
 export type SiteAlertsSettings = {
   banner: BannerSettings;
+  /** Optional second top-of-site banner, rendered above the primary banner. */
+  secondaryBanner?: BannerSettings;
   modal: ModalSettings;
+};
+
+/** Default shape for the optional secondary banner (off by default). */
+export const DEFAULT_SECONDARY_BANNER: BannerSettings = {
+  enabled: false,
+  style: "alert",
+  message: "",
+  button: undefined,
+  dismissible: true,
+  startAt: null,
+  endAt: null,
 };
 
 export type SiteAlertsMeta = {
@@ -93,6 +106,9 @@ export function useSiteAlerts() {
         const v = data.value as Partial<SiteAlertsSettings>;
         setSettings({
           banner: { ...DEFAULT_SETTINGS.banner, ...(v.banner ?? {}) },
+          secondaryBanner: v.secondaryBanner
+            ? { ...DEFAULT_SECONDARY_BANNER, ...v.secondaryBanner }
+            : undefined,
           modal: { ...DEFAULT_SETTINGS.modal, ...(v.modal ?? {}) },
         });
         setMeta({
@@ -126,8 +142,13 @@ export function useSiteAlerts() {
     const isDraft = meta.status === "draft";
     const bannerInWindow = isWithinWindow(settings.banner.startAt, settings.banner.endAt);
     const modalInWindow = isWithinWindow(settings.modal.startAt, settings.modal.endAt);
+    const sb = settings.secondaryBanner;
+    const sbInWindow = sb ? isWithinWindow(sb.startAt, sb.endAt) : false;
     return {
       banner: { ...settings.banner, enabled: settings.banner.enabled && !isDraft && bannerInWindow },
+      secondaryBanner: sb
+        ? { ...sb, enabled: sb.enabled && !isDraft && sbInWindow }
+        : undefined,
       modal: { ...settings.modal, enabled: settings.modal.enabled && !isDraft && modalInWindow },
     };
   }, [settings, meta.status]);

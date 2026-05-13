@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { X, Info, AlertTriangle, AlertOctagon } from "lucide-react";
-import { useSiteAlerts } from "@/hooks/useSiteAlerts";
+import { useSiteAlerts, type BannerSettings } from "@/hooks/useSiteAlerts";
 
 /**
- * Top-of-site alert banner. Reads settings from the database (with the
- * src/config/siteAlerts.ts file as a fallback default).
+ * Top-of-site alert banner(s). Reads settings from the database. Supports
+ * an optional secondary banner stacked above the primary one — each is
+ * dismissible independently and can be toggled/scheduled separately.
  */
-const STORAGE_KEY = "echd-banner-dismissed";
+const STORAGE_KEY_PRIMARY = "echd-banner-dismissed";
+const STORAGE_KEY_SECONDARY = "echd-banner-secondary-dismissed";
 
 const STYLE_CLASSES = {
   info: "bg-primary text-primary-foreground border-b border-primary",
@@ -20,24 +22,22 @@ const ICONS = {
   alert: AlertOctagon,
 } as const;
 
-const SiteAlertBanner = () => {
-  const { settings } = useSiteAlerts();
-  const banner = settings.banner;
+function BannerRow({ banner, storageKey }: { banner: BannerSettings; storageKey: string }) {
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    if (banner.dismissible && sessionStorage.getItem(STORAGE_KEY) === "1") {
+    if (banner.dismissible && sessionStorage.getItem(storageKey) === "1") {
       setDismissed(true);
     }
-  }, [banner.dismissible]);
+  }, [banner.dismissible, storageKey]);
 
-  if (!banner.enabled || dismissed) return null;
+  if (!banner.enabled || dismissed || !banner.message?.trim()) return null;
 
   const Icon = ICONS[banner.style];
   const role = banner.style === "alert" ? "alert" : "status";
 
   const handleDismiss = () => {
-    sessionStorage.setItem(STORAGE_KEY, "1");
+    sessionStorage.setItem(storageKey, "1");
     setDismissed(true);
   };
 
@@ -54,7 +54,7 @@ const SiteAlertBanner = () => {
         </div>
 
         <div className="flex items-center gap-2 self-end sm:self-auto">
-          {banner.button && (
+          {banner.button && banner.button.label && banner.button.href && (
             <a
               href={banner.button.href}
               {...(banner.button.external
@@ -78,6 +78,18 @@ const SiteAlertBanner = () => {
         </div>
       </div>
     </div>
+  );
+}
+
+const SiteAlertBanner = () => {
+  const { settings } = useSiteAlerts();
+  return (
+    <>
+      {settings.secondaryBanner && (
+        <BannerRow banner={settings.secondaryBanner} storageKey={STORAGE_KEY_SECONDARY} />
+      )}
+      <BannerRow banner={settings.banner} storageKey={STORAGE_KEY_PRIMARY} />
+    </>
   );
 };
 
