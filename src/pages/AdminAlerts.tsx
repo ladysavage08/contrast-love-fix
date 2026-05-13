@@ -218,6 +218,9 @@ const AdminAlerts = () => {
                     value={settings.banner.message}
                     onChange={(e) => updateBanner({ message: e.target.value })}
                   />
+                  {bannerMessageError && (
+                    <p className="mt-1 text-xs text-destructive">{bannerMessageError}</p>
+                  )}
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-2">
@@ -272,6 +275,36 @@ const AdminAlerts = () => {
                     checked={settings.banner.dismissible}
                     onCheckedChange={(v) => updateBanner({ dismissible: v })}
                   />
+                </div>
+
+                {/* Scheduling window */}
+                <div className="grid gap-3 sm:grid-cols-2 rounded-md border border-border p-3">
+                  <div>
+                    <Label htmlFor="banner-start">Show from (optional)</Label>
+                    <Input
+                      id="banner-start"
+                      type="datetime-local"
+                      className="mt-1.5"
+                      value={settings.banner.startAt ?? ""}
+                      onChange={(e) => updateBanner({ startAt: e.target.value || null })}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="banner-end">Hide after (optional)</Label>
+                    <Input
+                      id="banner-end"
+                      type="datetime-local"
+                      className="mt-1.5"
+                      value={settings.banner.endAt ?? ""}
+                      onChange={(e) => updateBanner({ endAt: e.target.value || null })}
+                    />
+                  </div>
+                  {bannerWindowError && (
+                    <p className="sm:col-span-2 text-xs text-destructive">{bannerWindowError}</p>
+                  )}
+                  {bannerHrefError && (
+                    <p className="sm:col-span-2 text-xs text-destructive">Button link: {bannerHrefError}</p>
+                  )}
                 </div>
               </div>
             </section>
@@ -418,6 +451,33 @@ const AdminAlerts = () => {
                       updateModal({ openDelaySeconds: Number(e.target.value) || 0 })
                     }
                   />
+                </div>
+
+                {/* Scheduling window */}
+                <div className="grid gap-3 sm:grid-cols-2 rounded-md border border-border p-3">
+                  <div>
+                    <Label htmlFor="modal-start">Show from (optional)</Label>
+                    <Input
+                      id="modal-start"
+                      type="datetime-local"
+                      className="mt-1.5"
+                      value={settings.modal.startAt ?? ""}
+                      onChange={(e) => updateModal({ startAt: e.target.value || null })}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="modal-end">Hide after (optional)</Label>
+                    <Input
+                      id="modal-end"
+                      type="datetime-local"
+                      className="mt-1.5"
+                      value={settings.modal.endAt ?? ""}
+                      onChange={(e) => updateModal({ endAt: e.target.value || null })}
+                    />
+                  </div>
+                  {modalWindowError && (
+                    <p className="sm:col-span-2 text-xs text-destructive">{modalWindowError}</p>
+                  )}
                 </div>
               </div>
             </section>
