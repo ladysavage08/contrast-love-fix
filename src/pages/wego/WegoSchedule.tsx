@@ -148,7 +148,7 @@ const WegoSchedule = () => {
   const entryKey = (e: ScheduleEntry) =>
     `${e.date}|${e.county ?? ""}|${e.time ?? ""}`;
   const isEntryCancelled = (e: ScheduleEntry) =>
-    cancelledKeys.has(entryKey(e)) || e.date === todayKey;
+    cancelledKeys.has(entryKey(e));
 
   return (
     <WegoLayout breadcrumb={[{ label: "Schedule" }]}>
