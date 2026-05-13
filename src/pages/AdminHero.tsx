@@ -41,7 +41,7 @@ const blankSlide = (order: number): Omit<HeroSlideRow, "id"> => ({
 
 const AdminHero = () => {
   const navigate = useNavigate();
-  const { user, isAdmin, canManage, loading: authLoading } = useAdminAuth();
+  const { user, canManage, loading: authLoading } = useAdminAuth();
   const [slides, setSlides] = useState<HeroSlideRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [savingId, setSavingId] = useState<string | null>(null);
@@ -52,8 +52,8 @@ const AdminHero = () => {
   useEffect(() => {
     if (authLoading) return;
     if (!user) return navigate("/auth", { replace: true });
-    if (!isAdmin) return navigate("/admin", { replace: true });
-  }, [authLoading, user, isAdmin, navigate]);
+    if (!canManage) return navigate("/admin", { replace: true });
+  }, [authLoading, user, canManage, navigate]);
 
   const loadSlides = useCallback(async () => {
     setLoading(true);
@@ -70,8 +70,8 @@ const AdminHero = () => {
   }, []);
 
   useEffect(() => {
-    if (isAdmin) void loadSlides();
-  }, [isAdmin, loadSlides]);
+    if (canManage) void loadSlides();
+  }, [canManage, loadSlides]);
 
   const updateField = <K extends keyof HeroSlideRow>(id: string, key: K, value: HeroSlideRow[K]) => {
     setSlides((prev) => prev.map((s) => (s.id === id ? { ...s, [key]: value } : s)));
@@ -90,14 +90,25 @@ const AdminHero = () => {
       });
       return;
     }
+    const ctaErr = validateHref(slide.cta_href) || validateHref(slide.secondary_cta_href);
+    if (ctaErr) {
+      toast({ title: "Invalid button link", description: ctaErr, variant: "destructive" });
+      return;
+    }
+    if (slide.start_at && slide.end_at && Date.parse(slide.end_at) <= Date.parse(slide.start_at)) {
+      toast({ title: "Invalid schedule", description: "End must be after start.", variant: "destructive" });
+      return;
+    }
     setSavingId(slide.id);
-    const { id, ...payload } = slide;
+    const { id, updated_at, updated_by_email, ...rest } = slide;
+    const payload = { ...rest, updated_by_email: user?.email ?? null };
     const { error } = await supabase.from("hero_slides").update(payload).eq("id", id);
     setSavingId(null);
     if (error) {
       toast({ title: "Save failed", description: error.message, variant: "destructive" });
     } else {
-      toast({ title: "Saved", description: "Hero slide updated." });
+      toast({ title: "Saved", description: "Hero slide updated. Live site will reflect changes immediately." });
+      void loadSlides();
     }
   };
 
@@ -144,7 +155,7 @@ const AdminHero = () => {
     toast({ title: "Image uploaded", description: "Click Save to apply." });
   };
 
-  if (authLoading || !user || !isAdmin) {
+  if (authLoading || !user || !canManage) {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <SiteHeader />
