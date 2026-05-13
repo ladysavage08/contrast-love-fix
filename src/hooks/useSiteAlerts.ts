@@ -23,7 +23,20 @@ export type ModalSettings = typeof defaultModal & {
 
 export type SiteAlertsSettings = {
   banner: BannerSettings;
+  /** Optional second top-of-site banner, rendered above the primary banner. */
+  secondaryBanner?: BannerSettings;
   modal: ModalSettings;
+};
+
+/** Default shape for the optional secondary banner (off by default). */
+export const DEFAULT_SECONDARY_BANNER: BannerSettings = {
+  enabled: false,
+  style: "alert",
+  message: "",
+  button: undefined,
+  dismissible: true,
+  startAt: null,
+  endAt: null,
 };
 
 export type SiteAlertsMeta = {
