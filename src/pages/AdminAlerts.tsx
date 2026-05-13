@@ -56,6 +56,9 @@ const AdminAlerts = () => {
         const v = data.value as Partial<SiteAlertsSettings>;
         setSettings({
           banner: { ...DEFAULT_SETTINGS.banner, ...(v.banner ?? {}) },
+          secondaryBanner: v.secondaryBanner
+            ? { ...DEFAULT_SECONDARY_BANNER, ...v.secondaryBanner }
+            : undefined,
           modal: { ...DEFAULT_SETTINGS.modal, ...(v.modal ?? {}) },
         });
         setMeta({
