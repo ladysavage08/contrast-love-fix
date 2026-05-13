@@ -28,9 +28,12 @@ import { MODAL_PRESETS, type ModalPresetKey } from "@/config/siteAlerts";
 const AdminAlerts = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user, isAdmin, canManage, loading: authLoading } = useAdminAuth();
+  const { user, canManage, loading: authLoading } = useAdminAuth();
 
   const [settings, setSettings] = useState<SiteAlertsSettings>(DEFAULT_SETTINGS);
+  const [meta, setMeta] = useState<{ updated_at: string | null; updated_by_email: string | null }>(
+    { updated_at: null, updated_by_email: null },
+  );
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -44,7 +47,7 @@ const AdminAlerts = () => {
     async function load() {
       const { data } = await supabase
         .from("site_settings")
-        .select("value")
+        .select("value, updated_at, updated_by_email")
         .eq("key", SITE_ALERTS_KEY)
         .maybeSingle();
       if (data?.value) {
@@ -52,6 +55,10 @@ const AdminAlerts = () => {
         setSettings({
           banner: { ...DEFAULT_SETTINGS.banner, ...(v.banner ?? {}) },
           modal: { ...DEFAULT_SETTINGS.modal, ...(v.modal ?? {}) },
+        });
+        setMeta({
+          updated_at: (data as any).updated_at ?? null,
+          updated_by_email: (data as any).updated_by_email ?? null,
         });
       }
       setLoading(false);
@@ -76,16 +83,43 @@ const AdminAlerts = () => {
       },
     }));
 
+  // Validation
+  const bannerMessageError = !settings.banner.message?.trim()
+    ? "Banner message is required."
+    : settings.banner.message.length > 280
+      ? "Keep banner under 280 characters."
+      : null;
+  const validateHref = (href: string | undefined) => {
+    if (!href) return null;
+    if (href.startsWith("/") || href.startsWith("tel:") || href.startsWith("mailto:")) return null;
+    try { new URL(href); return null; } catch { return "Use a full URL (https://…), a path (/foo), tel:, or mailto:."; }
+  };
+  const bannerHrefError = validateHref(settings.banner.button?.href);
+  const validateWindow = (s?: string | null, e?: string | null) => {
+    if (s && e && Date.parse(e) <= Date.parse(s)) return "End must be after start.";
+    return null;
+  };
+  const bannerWindowError = validateWindow(settings.banner.startAt, settings.banner.endAt);
+  const modalWindowError = validateWindow(settings.modal.startAt, settings.modal.endAt);
+
+  const hasErrors = !!(bannerMessageError || bannerHrefError || bannerWindowError || modalWindowError);
+
   async function handleSave() {
-    if (!isAdmin) {
-      toast({ title: "Admin access required", variant: "destructive" });
+    if (hasErrors) {
+      toast({ title: "Fix errors first", variant: "destructive" });
       return;
     }
     setSaving(true);
     const { error } = await supabase
       .from("site_settings")
       .upsert(
-        { key: SITE_ALERTS_KEY, value: settings as any, updated_by: user!.id },
+        {
+          key: SITE_ALERTS_KEY,
+          value: settings as any,
+          updated_by: user!.id,
+          updated_by_email: user!.email ?? null,
+          status: "published",
+        },
         { onConflict: "key" },
       );
     setSaving(false);
@@ -93,6 +127,7 @@ const AdminAlerts = () => {
       toast({ title: "Save failed", description: error.message, variant: "destructive" });
     } else {
       toast({ title: "Saved", description: "Alert settings updated. Live site will reflect changes immediately." });
+      setMeta({ updated_at: new Date().toISOString(), updated_by_email: user!.email ?? null });
     }
   }
 
@@ -124,10 +159,11 @@ const AdminAlerts = () => {
           </p>
         </header>
 
-        {!isAdmin && (
-          <div role="status" className="mb-6 rounded-md border border-border bg-muted/40 p-4 text-sm">
-            Your account does not have the <strong>admin</strong> role. You can preview the form but cannot save.
-          </div>
+        {meta.updated_at && (
+          <p className="mb-4 text-xs text-muted-foreground">
+            Last updated {new Date(meta.updated_at).toLocaleString()}
+            {meta.updated_by_email ? ` by ${meta.updated_by_email}` : ""}
+          </p>
         )}
 
         {loading ? (
@@ -182,6 +218,9 @@ const AdminAlerts = () => {
                     value={settings.banner.message}
                     onChange={(e) => updateBanner({ message: e.target.value })}
                   />
+                  {bannerMessageError && (
+                    <p className="mt-1 text-xs text-destructive">{bannerMessageError}</p>
+                  )}
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-2">
@@ -236,6 +275,36 @@ const AdminAlerts = () => {
                     checked={settings.banner.dismissible}
                     onCheckedChange={(v) => updateBanner({ dismissible: v })}
                   />
+                </div>
+
+                {/* Scheduling window */}
+                <div className="grid gap-3 sm:grid-cols-2 rounded-md border border-border p-3">
+                  <div>
+                    <Label htmlFor="banner-start">Show from (optional)</Label>
+                    <Input
+                      id="banner-start"
+                      type="datetime-local"
+                      className="mt-1.5"
+                      value={settings.banner.startAt ?? ""}
+                      onChange={(e) => updateBanner({ startAt: e.target.value || null })}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="banner-end">Hide after (optional)</Label>
+                    <Input
+                      id="banner-end"
+                      type="datetime-local"
+                      className="mt-1.5"
+                      value={settings.banner.endAt ?? ""}
+                      onChange={(e) => updateBanner({ endAt: e.target.value || null })}
+                    />
+                  </div>
+                  {bannerWindowError && (
+                    <p className="sm:col-span-2 text-xs text-destructive">{bannerWindowError}</p>
+                  )}
+                  {bannerHrefError && (
+                    <p className="sm:col-span-2 text-xs text-destructive">Button link: {bannerHrefError}</p>
+                  )}
                 </div>
               </div>
             </section>
@@ -383,13 +452,40 @@ const AdminAlerts = () => {
                     }
                   />
                 </div>
+
+                {/* Scheduling window */}
+                <div className="grid gap-3 sm:grid-cols-2 rounded-md border border-border p-3">
+                  <div>
+                    <Label htmlFor="modal-start">Show from (optional)</Label>
+                    <Input
+                      id="modal-start"
+                      type="datetime-local"
+                      className="mt-1.5"
+                      value={settings.modal.startAt ?? ""}
+                      onChange={(e) => updateModal({ startAt: e.target.value || null })}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="modal-end">Hide after (optional)</Label>
+                    <Input
+                      id="modal-end"
+                      type="datetime-local"
+                      className="mt-1.5"
+                      value={settings.modal.endAt ?? ""}
+                      onChange={(e) => updateModal({ endAt: e.target.value || null })}
+                    />
+                  </div>
+                  {modalWindowError && (
+                    <p className="sm:col-span-2 text-xs text-destructive">{modalWindowError}</p>
+                  )}
+                </div>
               </div>
             </section>
           </div>
         )}
 
         <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-border pt-6">
-          <Button onClick={handleSave} disabled={saving || !isAdmin}>
+          <Button onClick={handleSave} disabled={saving || hasErrors}>
             {saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
             Save changes
           </Button>

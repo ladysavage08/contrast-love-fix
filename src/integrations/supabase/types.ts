@@ -93,6 +93,7 @@ export type Database = {
           cta_label: string | null
           display_order: number
           enabled: boolean
+          end_at: string | null
           eyebrow: string | null
           focal: string | null
           id: string
@@ -100,9 +101,12 @@ export type Database = {
           image_url: string | null
           secondary_cta_href: string | null
           secondary_cta_label: string | null
+          start_at: string | null
+          status: string
           subtitle: string | null
           title: string
           updated_at: string
+          updated_by_email: string | null
         }
         Insert: {
           created_at?: string
@@ -110,6 +114,7 @@ export type Database = {
           cta_label?: string | null
           display_order?: number
           enabled?: boolean
+          end_at?: string | null
           eyebrow?: string | null
           focal?: string | null
           id?: string
@@ -117,9 +122,12 @@ export type Database = {
           image_url?: string | null
           secondary_cta_href?: string | null
           secondary_cta_label?: string | null
+          start_at?: string | null
+          status?: string
           subtitle?: string | null
           title: string
           updated_at?: string
+          updated_by_email?: string | null
         }
         Update: {
           created_at?: string
@@ -127,6 +135,7 @@ export type Database = {
           cta_label?: string | null
           display_order?: number
           enabled?: boolean
+          end_at?: string | null
           eyebrow?: string | null
           focal?: string | null
           id?: string
@@ -134,9 +143,12 @@ export type Database = {
           image_url?: string | null
           secondary_cta_href?: string | null
           secondary_cta_label?: string | null
+          start_at?: string | null
+          status?: string
           subtitle?: string | null
           title?: string
           updated_at?: string
+          updated_by_email?: string | null
         }
         Relationships: []
       }
@@ -252,6 +264,7 @@ export type Database = {
           notes: string | null
           slug: string
           updated_at: string
+          updated_by_email: string | null
           url: string
         }
         Insert: {
@@ -263,6 +276,7 @@ export type Database = {
           notes?: string | null
           slug: string
           updated_at?: string
+          updated_by_email?: string | null
           url: string
         }
         Update: {
@@ -274,30 +288,40 @@ export type Database = {
           notes?: string | null
           slug?: string
           updated_at?: string
+          updated_by_email?: string | null
           url?: string
         }
         Relationships: []
       }
       site_settings: {
         Row: {
+          draft_value: Json | null
           id: string
           key: string
+          status: string
           updated_at: string
           updated_by: string | null
+          updated_by_email: string | null
           value: Json
         }
         Insert: {
+          draft_value?: Json | null
           id?: string
           key: string
+          status?: string
           updated_at?: string
           updated_by?: string | null
+          updated_by_email?: string | null
           value?: Json
         }
         Update: {
+          draft_value?: Json | null
           id?: string
           key?: string
+          status?: string
           updated_at?: string
           updated_by?: string | null
+          updated_by_email?: string | null
           value?: Json
         }
         Relationships: []

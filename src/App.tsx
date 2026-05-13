@@ -26,6 +26,8 @@ import AdminAlerts from "./pages/AdminAlerts.tsx";
 import AdminNews from "./pages/AdminNews.tsx";
 import AdminHero from "./pages/AdminHero.tsx";
 import AdminLinks from "./pages/AdminLinks.tsx";
+import AdminContent from "./pages/AdminContent.tsx";
+import AdminFooter from "./pages/AdminFooter.tsx";
 import Wic from "./pages/Wic.tsx";
 import GetWicRedirect from "./pages/GetWicRedirect.tsx";
 import Calendar from "./pages/Calendar.tsx";
@@ -91,6 +93,8 @@ const App = () => (
           <Route path="/admin/news" element={<AdminNews />} />
           <Route path="/admin/hero" element={<AdminHero />} />
           <Route path="/admin/links" element={<AdminLinks />} />
+          <Route path="/admin/content" element={<AdminContent />} />
+          <Route path="/admin/footer" element={<AdminFooter />} />
           <Route path="/wic" element={<Wic />} />
           <Route path="/getwic" element={<GetWicRedirect />} />
           <Route path="/getwic/" element={<GetWicRedirect />} />
