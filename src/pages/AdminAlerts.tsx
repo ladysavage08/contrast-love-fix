@@ -20,8 +20,10 @@ import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { supabase } from "@/integrations/supabase/client";
 import {
   DEFAULT_SETTINGS,
+  DEFAULT_SECONDARY_BANNER,
   SITE_ALERTS_KEY,
   type SiteAlertsSettings,
+  type BannerSettings,
 } from "@/hooks/useSiteAlerts";
 import { MODAL_PRESETS, type ModalPresetKey } from "@/config/siteAlerts";
 
