@@ -142,8 +142,13 @@ export function useSiteAlerts() {
     const isDraft = meta.status === "draft";
     const bannerInWindow = isWithinWindow(settings.banner.startAt, settings.banner.endAt);
     const modalInWindow = isWithinWindow(settings.modal.startAt, settings.modal.endAt);
+    const sb = settings.secondaryBanner;
+    const sbInWindow = sb ? isWithinWindow(sb.startAt, sb.endAt) : false;
     return {
       banner: { ...settings.banner, enabled: settings.banner.enabled && !isDraft && bannerInWindow },
+      secondaryBanner: sb
+        ? { ...sb, enabled: sb.enabled && !isDraft && sbInWindow }
+        : undefined,
       modal: { ...settings.modal, enabled: settings.modal.enabled && !isDraft && modalInWindow },
     };
   }, [settings, meta.status]);
