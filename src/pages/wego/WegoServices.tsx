@@ -24,7 +24,7 @@ const SERVICES: Service[] = [
   {
     title: "Blood Pressure Checks",
     description:
-      "Free blood pressure screenings with on-the-spot results and referrals when follow-up is needed.",
+      "Blood pressure screenings with on-the-spot results and referrals when follow-up is needed.",
   },
   {
     title: "Cholesterol & A1C Screenings",
