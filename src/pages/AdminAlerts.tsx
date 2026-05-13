@@ -159,10 +159,11 @@ const AdminAlerts = () => {
           </p>
         </header>
 
-        {!isAdmin && (
-          <div role="status" className="mb-6 rounded-md border border-border bg-muted/40 p-4 text-sm">
-            Your account does not have the <strong>admin</strong> role. You can preview the form but cannot save.
-          </div>
+        {meta.updated_at && (
+          <p className="mb-4 text-xs text-muted-foreground">
+            Last updated {new Date(meta.updated_at).toLocaleString()}
+            {meta.updated_by_email ? ` by ${meta.updated_by_email}` : ""}
+          </p>
         )}
 
         {loading ? (
@@ -424,7 +425,7 @@ const AdminAlerts = () => {
         )}
 
         <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-border pt-6">
-          <Button onClick={handleSave} disabled={saving || !isAdmin}>
+          <Button onClick={handleSave} disabled={saving || hasErrors}>
             {saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
             Save changes
           </Button>
