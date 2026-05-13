@@ -88,6 +88,12 @@ const AdminAlerts = () => {
       },
     }));
 
+  const updateSecondary = (patch: Partial<BannerSettings>) =>
+    setSettings((s) => ({
+      ...s,
+      secondaryBanner: { ...DEFAULT_SECONDARY_BANNER, ...(s.secondaryBanner ?? {}), ...patch },
+    }));
+
   // Validation
   const bannerMessageError = !settings.banner.message?.trim()
     ? "Banner message is required."
@@ -107,7 +113,24 @@ const AdminAlerts = () => {
   const bannerWindowError = validateWindow(settings.banner.startAt, settings.banner.endAt);
   const modalWindowError = validateWindow(settings.modal.startAt, settings.modal.endAt);
 
-  const hasErrors = !!(bannerMessageError || bannerHrefError || bannerWindowError || modalWindowError);
+  // Secondary banner validation (only when enabled)
+  const sb = settings.secondaryBanner;
+  const sbActive = !!sb?.enabled;
+  const secondaryMessageError = sbActive && !sb?.message?.trim()
+    ? "Secondary banner message is required when enabled."
+    : sbActive && (sb?.message.length ?? 0) > 280
+      ? "Keep secondary banner under 280 characters."
+      : null;
+  const secondaryWindowError = validateWindow(sb?.startAt, sb?.endAt);
+
+  const hasErrors = !!(
+    bannerMessageError ||
+    bannerHrefError ||
+    bannerWindowError ||
+    modalWindowError ||
+    secondaryMessageError ||
+    secondaryWindowError
+  );
 
   async function handleSave() {
     if (hasErrors) {
