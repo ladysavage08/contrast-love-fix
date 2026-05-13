@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { isWithinWindow } from "@/hooks/useSiteAlerts";
 
 export type HeroSlide = {
   id: string;
@@ -15,10 +16,15 @@ export type HeroSlide = {
   focal: string | null;
   display_order: number;
   enabled: boolean;
+  status?: "draft" | "published" | null;
+  start_at?: string | null;
+  end_at?: string | null;
+  updated_at?: string | null;
+  updated_by_email?: string | null;
 };
 
 /**
- * Fetches enabled hero slides ordered by display_order.
+ * Fetches enabled, currently-in-window, published hero slides ordered by display_order.
  * Returns { slides, loading, error }. Caller decides whether to fall back
  * to defaults when slides is empty.
  */
@@ -33,7 +39,7 @@ export function useHeroSlides() {
       const { data, error } = await supabase
         .from("hero_slides")
         .select(
-          "id, eyebrow, title, subtitle, cta_label, cta_href, secondary_cta_label, secondary_cta_href, image_url, image_alt, focal, display_order, enabled"
+          "id, eyebrow, title, subtitle, cta_label, cta_href, secondary_cta_label, secondary_cta_href, image_url, image_alt, focal, display_order, enabled, status, start_at, end_at, updated_at, updated_by_email"
         )
         .eq("enabled", true)
         .order("display_order", { ascending: true });
@@ -43,7 +49,12 @@ export function useHeroSlides() {
         setError(error.message);
         setSlides([]);
       } else {
-        setSlides((data ?? []) as HeroSlide[]);
+        const filtered = (data ?? []).filter((s: any) => {
+          const status = s.status ?? "published";
+          if (status !== "published") return false;
+          return isWithinWindow(s.start_at, s.end_at);
+        });
+        setSlides(filtered as HeroSlide[]);
       }
       setLoading(false);
     })();
