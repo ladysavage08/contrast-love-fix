@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
-import { Users, Upload, Newspaper, LogOut, ExternalLink, Megaphone, Image as ImageIcon, Link2 } from "lucide-react";
+import { Users, Upload, Newspaper, LogOut, ExternalLink, Megaphone, Image as ImageIcon, Link2, LayoutDashboard } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -19,6 +19,14 @@ type Tool = {
 };
 
 const tools: Tool[] = [
+  {
+    title: "Site Content Manager",
+    description:
+      "Edit alerts, hero, footer, links, and the Mobile Clinic schedule. All changes go live instantly — no redeploy.",
+    to: "/admin/content",
+    icon: LayoutDashboard,
+    cta: "Open content manager",
+  },
   {
     title: "Staff Directory",
     description:
