@@ -248,6 +248,17 @@ const AdminHero = () => {
                         className="w-20 rounded border border-input bg-background px-2 py-1"
                       />
                     </label>
+                    <label className="flex items-center gap-2 text-sm">
+                      Status
+                      <select
+                        value={slide.status ?? "published"}
+                        onChange={(e) => updateField(slide.id, "status", e.target.value as "draft" | "published")}
+                        className="rounded border border-input bg-background px-2 py-1"
+                      >
+                        <option value="draft">Draft</option>
+                        <option value="published">Published</option>
+                      </select>
+                    </label>
                   </div>
                   <div className="flex gap-2">
                     <button
