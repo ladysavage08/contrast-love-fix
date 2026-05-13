@@ -22,6 +22,11 @@ type HeroSlideRow = {
   focal: string | null;
   display_order: number;
   enabled: boolean;
+  status: "draft" | "published";
+  start_at: string | null;
+  end_at: string | null;
+  updated_at?: string | null;
+  updated_by_email?: string | null;
 };
 
 const blankSlide = (order: number): Omit<HeroSlideRow, "id"> => ({
@@ -37,7 +42,16 @@ const blankSlide = (order: number): Omit<HeroSlideRow, "id"> => ({
   focal: "",
   display_order: order,
   enabled: true,
+  status: "draft",
+  start_at: null,
+  end_at: null,
 });
+
+const validateHref = (href: string | null | undefined) => {
+  if (!href) return null;
+  if (href.startsWith("/") || href.startsWith("tel:") || href.startsWith("mailto:")) return null;
+  try { new URL(href); return null; } catch { return "Use a full URL, a path (/foo), tel:, or mailto:."; }
+};
 
 const AdminHero = () => {
   const navigate = useNavigate();
