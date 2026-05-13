@@ -169,7 +169,7 @@ const WegoSchedule = () => {
           <section aria-labelledby="month-heading">
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <h2 id="month-heading" className="text-2xl font-semibold">
-                {monthLabel} Schedule
+                Schedule
               </h2>
               <p className="text-sm text-muted-foreground">Subject to change</p>
             </div>
