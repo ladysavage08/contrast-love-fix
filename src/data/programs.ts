@@ -174,6 +174,16 @@ export const programs: Program[] = [
     subtopics: [{ label: "Public Health Liaison" }],
   },
   {
+    slug: "home-visiting-program",
+    title: "DPH Home Visiting Program",
+    summary:
+      "Free home visiting services provided by public health nurses and trained staff to support expectant mothers during pregnancy through the first year of the baby's life.",
+    intro:
+      "Free home visiting services for expectant mothers from pregnancy through the first year of their baby's life, provided by public health nurses and trained staff at no cost to patients or providers.",
+    href: "/programs/home-visiting-program",
+    subtopics: [],
+  },
+  {
     slug: "immunizations",
     title: "Immunizations",
     summary:
