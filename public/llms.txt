@@ -1,0 +1,28 @@
+# East Central Health District
+
+> Public health services, immunizations, WIC, environmental health, and a Mobile Health Clinic across 13 counties in East Central Georgia. Part of the Georgia Department of Public Health.
+
+## Pages
+
+- [Home](/): Overview of East Central Health District services.
+- [About](/about): Mission, leadership, and the 13-county service area.
+- [Counties](/counties): County health department locations and contacts.
+- [Programs](/programs): Public health programs offered across the district.
+- [Services](/services): Clinical and community health services.
+- [Environmental Health](/environmental-health): Inspections, permits, and environmental programs.
+- [Women's Health](/womens-health): Women's health services and clinics.
+- [WIC](/wic): Women, Infants, and Children nutrition program.
+- [News](/news): District news and announcements.
+- [Calendar](/calendar): Upcoming events and clinics.
+- [Directory](/directory): Staff and office directory.
+- [Contact](/contact): Get in touch with the district.
+- [Mobile Health Clinic (WeGo)](/wego): The Mobile Health Clinic that brings services to neighborhoods.
+- [WeGo Schedule](/wego/schedule): Where the mobile clinic will be next.
+- [WeGo Services](/wego/services): Services offered onboard the mobile clinic.
+- [Accessibility](/accessibility): Accessibility statement.
+
+## Optional
+
+- [WeGo About](/wego/about)
+- [WeGo FAQ](/wego/faq)
+- [WeGo Contact](/wego/contact)
