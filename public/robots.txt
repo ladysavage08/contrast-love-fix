@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://contrast-love-fix.lovable.app/sitemap.xml

@@ -113,6 +113,8 @@ const HeroSlider = () => {
                   width={1280}
                   height={576}
                   loading={i === 0 ? "eager" : "lazy"}
+                  fetchPriority={i === 0 ? "high" : "auto"}
+                  decoding={i === 0 ? "sync" : "async"}
                   className={`absolute inset-0 h-full w-full object-cover ${slide.focal ?? "object-center"}`}
                 />
                 {/* Stronger bottom gradient on phones for readable caption; sides on desktop. */}
