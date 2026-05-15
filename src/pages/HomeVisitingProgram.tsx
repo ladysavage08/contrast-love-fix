@@ -125,7 +125,29 @@ const HomeVisitingProgram = () => {
             </p>
           </header>
 
-          {/* Callout */}
+          {/* Program video */}
+          <section
+            aria-labelledby="program-video-heading"
+            className="mb-10 max-w-4xl"
+          >
+            <h2 id="program-video-heading" className="sr-only">
+              DPH Home Visiting Program video
+            </h2>
+            <div className="overflow-hidden rounded-lg border border-border bg-black shadow-sm">
+              <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/4CGBwQUEGt4?rel=0"
+                  title="DPH Home Visiting Program video"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  className="absolute inset-0 h-full w-full"
+                />
+              </div>
+            </div>
+          </section>
+
           <aside
             aria-label="Program highlight"
             className="mb-10 flex items-start gap-4 rounded-lg border-l-4 border-accent-gold bg-muted/40 p-5 md:p-6"
