@@ -9,6 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import HeroSlider from "@/components/HeroSlider";
+import TaliaferroClosureBanner from "@/components/TaliaferroClosureBanner";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SocialIcons from "@/components/SocialIcons";
@@ -98,6 +99,7 @@ const Index = () => {
         }
       />
 
+      <TaliaferroClosureBanner />
 
       {/* ============ MAIN ============ */}
       <main id="main" className="container grid w-full min-w-0 max-w-full gap-8 py-6 md:py-10 lg:grid-cols-[minmax(0,1fr)_320px]">
