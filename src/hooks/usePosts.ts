@@ -35,6 +35,23 @@ export type Post = {
 
 import { sortPostsChronologically } from "@/lib/sortPosts";
 
+// Strip common markdown formatting (bold/italic/code) from a title so that
+// admin-entered titles like "**Measles Update**" render cleanly on the site.
+export function cleanTitle(title: string): string {
+  if (!title) return title;
+  return title
+    .replace(/\*\*\*(.+?)\*\*\*/g, "$1")
+    .replace(/\*\*(.+?)\*\*/g, "$1")
+    .replace(/(?<!\w)_([^_]+)_(?!\w)/g, "$1")
+    .replace(/(?<!\w)\*([^*]+)\*(?!\w)/g, "$1")
+    .replace(/`([^`]+)`/g, "$1")
+    .trim();
+}
+
+function sanitizePost<T extends { title: string }>(p: T): T {
+  return { ...p, title: cleanTitle(p.title) };
+}
+
 export function usePosts(limit?: number) {
   return useQuery({
     queryKey: ["posts", limit ?? "all"],
