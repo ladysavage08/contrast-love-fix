@@ -141,7 +141,7 @@ export function usePostsByCategory(category: string) {
         .order("published_at", { ascending: false });
 
       if (error) throw error;
-      return (data ?? []) as Post[];
+      return ((data ?? []) as Post[]).map(sanitizePost);
     },
   });
 }
