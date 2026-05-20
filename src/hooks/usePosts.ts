@@ -124,7 +124,7 @@ export function usePost(slug: string | undefined) {
         .eq("published", true)
         .maybeSingle();
       if (error) throw error;
-      return (data as Post) ?? null;
+      return data ? sanitizePost(data as Post) : null;
     },
   });
 }
