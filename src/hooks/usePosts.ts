@@ -63,7 +63,7 @@ export function usePosts(limit?: number) {
         .select("*")
         .eq("published", true);
       if (error) throw error;
-      const sorted = sortPostsChronologically((data ?? []) as Post[]);
+      const sorted = sortPostsChronologically((data ?? []) as Post[]).map(sanitizePost);
       return limit ? sorted.slice(0, limit) : sorted;
     },
   });
