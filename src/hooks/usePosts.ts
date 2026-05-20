@@ -107,7 +107,7 @@ export function useEvents(opts?: { upcomingOnly?: boolean; limit?: number }) {
         list = list.filter((e) => effectiveEnd(e) >= today);
       }
       if (limit) list = list.slice(0, limit);
-      return list;
+      return list.map(sanitizePost);
     },
   });
 }
