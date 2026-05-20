@@ -35,6 +35,23 @@ export type Post = {
 
 import { sortPostsChronologically } from "@/lib/sortPosts";
 
+// Strip common markdown formatting (bold/italic/code) from a title so that
+// admin-entered titles like "**Measles Update**" render cleanly on the site.
+export function cleanTitle(title: string): string {
+  if (!title) return title;
+  return title
+    .replace(/\*\*\*(.+?)\*\*\*/g, "$1")
+    .replace(/\*\*(.+?)\*\*/g, "$1")
+    .replace(/(?<!\w)_([^_]+)_(?!\w)/g, "$1")
+    .replace(/(?<!\w)\*([^*]+)\*(?!\w)/g, "$1")
+    .replace(/`([^`]+)`/g, "$1")
+    .trim();
+}
+
+function sanitizePost<T extends { title: string }>(p: T): T {
+  return { ...p, title: cleanTitle(p.title) };
+}
+
 export function usePosts(limit?: number) {
   return useQuery({
     queryKey: ["posts", limit ?? "all"],
@@ -46,7 +63,7 @@ export function usePosts(limit?: number) {
         .select("*")
         .eq("published", true);
       if (error) throw error;
-      const sorted = sortPostsChronologically((data ?? []) as Post[]);
+      const sorted = sortPostsChronologically((data ?? []) as Post[]).map(sanitizePost);
       return limit ? sorted.slice(0, limit) : sorted;
     },
   });
@@ -90,7 +107,7 @@ export function useEvents(opts?: { upcomingOnly?: boolean; limit?: number }) {
         list = list.filter((e) => effectiveEnd(e) >= today);
       }
       if (limit) list = list.slice(0, limit);
-      return list;
+      return list.map(sanitizePost);
     },
   });
 }
@@ -107,7 +124,7 @@ export function usePost(slug: string | undefined) {
         .eq("published", true)
         .maybeSingle();
       if (error) throw error;
-      return (data as Post) ?? null;
+      return data ? sanitizePost(data as Post) : null;
     },
   });
 }
@@ -124,7 +141,7 @@ export function usePostsByCategory(category: string) {
         .order("published_at", { ascending: false });
 
       if (error) throw error;
-      return (data ?? []) as Post[];
+      return ((data ?? []) as Post[]).map(sanitizePost);
     },
   });
 }
