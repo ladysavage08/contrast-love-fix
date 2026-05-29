@@ -305,8 +305,8 @@ const WegoSchedule = () => {
                 role="status"
                 className="mt-6 rounded-lg border border-dashed border-border bg-muted/40 p-6 text-center text-sm text-muted-foreground"
               >
-                No stops scheduled this month. Try another county or call
-                1-877-884-WEGO.
+                No stops scheduled in the next two months. Try another county or
+                call 1-877-884-WEGO.
               </p>
             )}
 
