@@ -86,7 +86,7 @@ export function useEvents(opts?: { upcomingOnly?: boolean; limit?: number; inclu
         .eq("published", true)
         .eq("post_type", "event");
       if (error) throw error;
-      const all = (data ?? []) as Post[];
+      const all = ((data ?? []) as Post[]).filter((e) => includeCancelled || !e.cancelled);
 
       // Effective START date used for sorting: event_date if present,
       // otherwise the published_at date portion.
