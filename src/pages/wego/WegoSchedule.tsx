@@ -90,7 +90,15 @@ const WegoSchedule = () => {
   // Build the entry list from live database events (Mobile Clinic category).
   // Show entries from the current month onward (or just current month).
   const { entries, monthLabel, cancelledKeys, noteByKey } = useMemo(() => {
-    const monthPrefix = todayKey.slice(0, 7); // YYYY-MM
+    // Show two months at a time: the current month + the next month, so
+    // visitors don't have to wait for the next month to roll over to see
+    // upcoming stops (e.g. on May 25 a June 25 stop is visible).
+    const currentMonthPrefix = todayKey.slice(0, 7); // YYYY-MM
+    const [cy, cm] = currentMonthPrefix.split("-").map(Number);
+    const nextDt = new Date(cy, cm, 1); // cm is 1-12 → month index = cm → next month
+    const nextMonthPrefix = `${nextDt.getFullYear()}-${String(nextDt.getMonth() + 1).padStart(2, "0")}`;
+    const allowedPrefixes = [currentMonthPrefix, nextMonthPrefix];
+
     const cancelled = new Set<string>();
     const notes = new Map<string, string>();
     const list: ScheduleEntry[] = [];
@@ -102,7 +110,7 @@ const WegoSchedule = () => {
       }
       const entry = postToEntry(p);
       if (!entry) continue;
-      if (!entry.date.startsWith(monthPrefix)) continue;
+      if (!allowedPrefixes.some((pref) => entry.date.startsWith(pref))) continue;
       list.push(entry);
       const key = `${entry.date}|${entry.county ?? ""}|${entry.time ?? ""}`;
       if (p.cancelled) {
@@ -111,11 +119,12 @@ const WegoSchedule = () => {
       }
     }
 
-    const dt = new Date(`${monthPrefix}-01T00:00:00`);
-    const monthLabel = dt.toLocaleDateString("en-US", {
-      month: "long",
-      year: "numeric",
-    });
+    const fmt = (prefix: string) =>
+      new Date(`${prefix}-01T00:00:00`).toLocaleDateString("en-US", {
+        month: "long",
+        year: "numeric",
+      });
+    const monthLabel = `${fmt(currentMonthPrefix)} – ${fmt(nextMonthPrefix)}`;
     return { entries: list, monthLabel, cancelledKeys: cancelled, noteByKey: notes };
   }, [events, todayKey]);
 
