@@ -40,7 +40,7 @@ function startOfMonth(d: Date) {
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const Calendar = () => {
-  const { data: events = [], isLoading } = useEvents({ upcomingOnly: false });
+  const { data: events = [], isLoading } = useEvents({ upcomingOnly: false, includeCancelled: true });
   const [cursor, setCursor] = useState(() => startOfMonth(new Date()));
   const [selected, setSelected] = useState<string | null>(null);
 

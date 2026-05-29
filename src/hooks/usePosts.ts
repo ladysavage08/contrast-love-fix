@@ -63,16 +63,19 @@ export function usePosts(limit?: number) {
         .select("*")
         .eq("published", true);
       if (error) throw error;
-      const sorted = sortPostsChronologically((data ?? []) as Post[]).map(sanitizePost);
+      // Hide cancelled posts from generic news/event lists.
+      // (The Calendar page opts in via useEvents({ includeCancelled: true }).)
+      const visible = ((data ?? []) as Post[]).filter((p) => !p.cancelled);
+      const sorted = sortPostsChronologically(visible).map(sanitizePost);
       return limit ? sorted.slice(0, limit) : sorted;
     },
   });
 }
 
-export function useEvents(opts?: { upcomingOnly?: boolean; limit?: number }) {
-  const { upcomingOnly = true, limit } = opts ?? {};
+export function useEvents(opts?: { upcomingOnly?: boolean; limit?: number; includeCancelled?: boolean }) {
+  const { upcomingOnly = true, limit, includeCancelled = false } = opts ?? {};
   return useQuery({
-    queryKey: ["events", upcomingOnly, limit ?? "all"],
+    queryKey: ["events", upcomingOnly, limit ?? "all", includeCancelled],
     queryFn: async (): Promise<Post[]> => {
       // Fetch ALL published events. We sort & filter client-side so that events
       // missing event_date (admin/mobile-app entries that only set published_at)
@@ -83,7 +86,7 @@ export function useEvents(opts?: { upcomingOnly?: boolean; limit?: number }) {
         .eq("published", true)
         .eq("post_type", "event");
       if (error) throw error;
-      const all = (data ?? []) as Post[];
+      const all = ((data ?? []) as Post[]).filter((e) => includeCancelled || !e.cancelled);
 
       // Effective START date used for sorting: event_date if present,
       // otherwise the published_at date portion.
