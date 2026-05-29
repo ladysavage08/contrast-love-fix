@@ -72,10 +72,10 @@ export function usePosts(limit?: number) {
   });
 }
 
-export function useEvents(opts?: { upcomingOnly?: boolean; limit?: number }) {
-  const { upcomingOnly = true, limit } = opts ?? {};
+export function useEvents(opts?: { upcomingOnly?: boolean; limit?: number; includeCancelled?: boolean }) {
+  const { upcomingOnly = true, limit, includeCancelled = false } = opts ?? {};
   return useQuery({
-    queryKey: ["events", upcomingOnly, limit ?? "all"],
+    queryKey: ["events", upcomingOnly, limit ?? "all", includeCancelled],
     queryFn: async (): Promise<Post[]> => {
       // Fetch ALL published events. We sort & filter client-side so that events
       // missing event_date (admin/mobile-app entries that only set published_at)
