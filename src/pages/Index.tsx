@@ -44,14 +44,46 @@ const quickLinks = [
 ];
 
 const Index = () => {
-  const { data: news = [], isLoading: newsLoading } = usePosts(4);
+  const { data: allNews = [], isLoading: newsLoading } = usePosts();
   // useEvents({ upcomingOnly: true }) already:
   //   - excludes events whose effective END date has passed (multi-day safe;
   //     start date is used as the end when no event_end_date is set)
   //   - sorts ascending by effective START date (earliest upcoming first)
-  // So here we just take the next few items for the homepage widget.
   const { data: allUpcomingEvents = [] } = useEvents({ upcomingOnly: true });
-  const upcomingEvents = allUpcomingEvents.slice(0, 4);
+
+  // Homepage-only display rule: Mobile Health Clinic events (category contains
+  // "mobile" or "clinic") should only appear in the homepage News & Events /
+  // Upcoming Events sections when they're within 2 weeks of the event date.
+  // Other event types are unaffected. This does NOT cancel or archive events —
+  // it only controls homepage visibility. The full schedule remains on /wego.
+  const isMobileClinic = (p: { category?: string | null }) => {
+    const c = (p.category ?? "").toLowerCase();
+    return c.includes("mobile") || c.includes("clinic");
+  };
+  const withinTwoWeeks = (dateStr: string | null | undefined) => {
+    if (!dateStr) return false;
+    const key = dateStr.slice(0, 10);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const cutoff = new Date(today);
+    cutoff.setDate(cutoff.getDate() + 14);
+    const m = key.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!m) return false;
+    const d = new Date(+m[1], +m[2] - 1, +m[3]);
+    return d >= today && d <= cutoff;
+  };
+  const passesHomepageMobileRule = (p: {
+    post_type: string;
+    category?: string | null;
+    event_date?: string | null;
+    published_at?: string | null;
+  }) => {
+    if (p.post_type !== "event" || !isMobileClinic(p)) return true;
+    return withinTwoWeeks(p.event_date ?? p.published_at);
+  };
+
+  const news = allNews.filter(passesHomepageMobileRule).slice(0, 4);
+  const upcomingEvents = allUpcomingEvents.filter(passesHomepageMobileRule).slice(0, 4);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
