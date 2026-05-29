@@ -63,7 +63,10 @@ export function usePosts(limit?: number) {
         .select("*")
         .eq("published", true);
       if (error) throw error;
-      const sorted = sortPostsChronologically((data ?? []) as Post[]).map(sanitizePost);
+      // Hide cancelled posts from generic news/event lists.
+      // (The Calendar page opts in via useEvents({ includeCancelled: true }).)
+      const visible = ((data ?? []) as Post[]).filter((p) => !p.cancelled);
+      const sorted = sortPostsChronologically(visible).map(sanitizePost);
       return limit ? sorted.slice(0, limit) : sorted;
     },
   });
