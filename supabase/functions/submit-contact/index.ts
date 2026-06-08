@@ -14,7 +14,8 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-const RECIPIENT = "ecphd@dph.ga.gov";
+const RECIPIENT_DEFAULT = "ecphd@dph.ga.gov";
+const RECIPIENT_WEGO = "dph6mobileclinic@dph.ga.gov";
 const MIN_FILL_MS = 3000; // submissions faster than this are treated as bots
 const MAX_LEN = {
   name: 120,
