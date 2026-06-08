@@ -31,6 +31,7 @@ interface Payload {
   phone?: unknown;
   subject?: unknown;
   message?: unknown;
+  source?: unknown; // "wego" routes to mobile clinic inbox
   // Bot traps
   website?: unknown; // honeypot — must be empty
   hp_company?: unknown; // honeypot — must be empty
