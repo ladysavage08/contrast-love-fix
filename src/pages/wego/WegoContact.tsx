@@ -175,6 +175,14 @@ const WegoContact = () => {
                 />
               </div>
 
+              {/* Honeypot fields — hidden from real users, bots fill them in */}
+              <div aria-hidden="true" className="absolute left-[-10000px] h-0 w-0 overflow-hidden">
+                <label htmlFor="wego-website">Website</label>
+                <input id="wego-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+                <label htmlFor="wego-hp-company">Company</label>
+                <input id="wego-hp-company" name="hp_company" type="text" tabIndex={-1} autoComplete="off" />
+              </div>
+
               {error && (
                 <p ref={errorRef} id="wego-contact-error" tabIndex={-1} role="alert" className="text-sm font-medium text-destructive">
                   {error}
