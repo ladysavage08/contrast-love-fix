@@ -117,6 +117,13 @@ Deno.serve(async (req) => {
   const phone = trimTo(body.phone, MAX_LEN.phone);
   const subject = trimTo(body.subject, MAX_LEN.subject);
   const message = trimTo(body.message, MAX_LEN.message);
+  const source = trimTo(body.source, 40).toLowerCase();
+  const isWego = source === "wego";
+  const recipient = isWego ? RECIPIENT_WEGO : RECIPIENT_DEFAULT;
+  const subjectPrefix = isWego ? "[WeGo Mobile Health Clinic]" : "[ECPHD Contact]";
+  const emailHeading = isWego
+    ? "New WeGo / Mobile Health Clinic website submission"
+    : "New ECPHD contact form submission";
 
   const fieldErrors: Record<string, string> = {};
   if (!name) fieldErrors.name = "Name is required.";
