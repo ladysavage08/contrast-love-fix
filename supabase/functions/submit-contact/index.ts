@@ -14,7 +14,8 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-const RECIPIENT = "ecphd@dph.ga.gov";
+const RECIPIENT_DEFAULT = "ecphd@dph.ga.gov";
+const RECIPIENT_WEGO = "dph6mobileclinic@dph.ga.gov";
 const MIN_FILL_MS = 3000; // submissions faster than this are treated as bots
 const MAX_LEN = {
   name: 120,
@@ -30,6 +31,7 @@ interface Payload {
   phone?: unknown;
   subject?: unknown;
   message?: unknown;
+  source?: unknown; // "wego" routes to mobile clinic inbox
   // Bot traps
   website?: unknown; // honeypot — must be empty
   hp_company?: unknown; // honeypot — must be empty
@@ -115,6 +117,13 @@ Deno.serve(async (req) => {
   const phone = trimTo(body.phone, MAX_LEN.phone);
   const subject = trimTo(body.subject, MAX_LEN.subject);
   const message = trimTo(body.message, MAX_LEN.message);
+  const source = trimTo(body.source, 40).toLowerCase();
+  const isWego = source === "wego";
+  const recipient = isWego ? RECIPIENT_WEGO : RECIPIENT_DEFAULT;
+  const subjectPrefix = isWego ? "[WeGo Mobile Health Clinic]" : "[ECPHD Contact]";
+  const emailHeading = isWego
+    ? "New WeGo / Mobile Health Clinic website submission"
+    : "New ECPHD contact form submission";
 
   const fieldErrors: Record<string, string> = {};
   if (!name) fieldErrors.name = "Name is required.";
@@ -184,8 +193,9 @@ Deno.serve(async (req) => {
 
   if (resendKey) {
     const html = `
-      <h2>New ECPHD contact form submission</h2>
+      <h2>${escapeHtml(emailHeading)}</h2>
       <table cellpadding="6" style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:14px;">
+        <tr><td><strong>Source</strong></td><td>${escapeHtml(isWego ? "WeGo / Mobile Health Clinic website" : "ECPHD website")}</td></tr>
         <tr><td><strong>Name</strong></td><td>${escapeHtml(name)}</td></tr>
         <tr><td><strong>Email</strong></td><td>${escapeHtml(email)}</td></tr>
         <tr><td><strong>Phone</strong></td><td>${escapeHtml(phone || "—")}</td></tr>
@@ -208,9 +218,9 @@ Deno.serve(async (req) => {
         },
         body: JSON.stringify({
           from: fromAddress,
-          to: [RECIPIENT],
+          to: [recipient],
           reply_to: email,
-          subject: `[ECPHD Contact] ${subject}`,
+          subject: `${subjectPrefix} ${subject}`,
           html,
         }),
       });
