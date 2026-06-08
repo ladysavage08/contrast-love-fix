@@ -193,8 +193,9 @@ Deno.serve(async (req) => {
 
   if (resendKey) {
     const html = `
-      <h2>New ECPHD contact form submission</h2>
+      <h2>${escapeHtml(emailHeading)}</h2>
       <table cellpadding="6" style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:14px;">
+        <tr><td><strong>Source</strong></td><td>${escapeHtml(isWego ? "WeGo / Mobile Health Clinic website" : "ECPHD website")}</td></tr>
         <tr><td><strong>Name</strong></td><td>${escapeHtml(name)}</td></tr>
         <tr><td><strong>Email</strong></td><td>${escapeHtml(email)}</td></tr>
         <tr><td><strong>Phone</strong></td><td>${escapeHtml(phone || "—")}</td></tr>
@@ -217,9 +218,9 @@ Deno.serve(async (req) => {
         },
         body: JSON.stringify({
           from: fromAddress,
-          to: [RECIPIENT],
+          to: [recipient],
           reply_to: email,
-          subject: `[ECPHD Contact] ${subject}`,
+          subject: `${subjectPrefix} ${subject}`,
           html,
         }),
       });
