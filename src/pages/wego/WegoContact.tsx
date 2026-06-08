@@ -2,19 +2,20 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { Phone } from "lucide-react";
 import WegoLayout from "@/components/wego/WegoLayout";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 /**
  * WeGo Contact — accessible form (labels, required indicators, error text)
  * plus reassurance messaging and a prominent call CTA.
  *
- * The form intentionally does not POST anywhere yet. To wire it up to email
- * delivery, replace the onSubmit handler with a call to your backend / form
- * service of choice.
+ * Submissions are sent via the `submit-contact` edge function with
+ * source="wego", which routes the email to dph6mobileclinic@dph.ga.gov.
  */
 const WegoContact = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
+  const startedAtRef = useRef<number>(Date.now());
 
   useEffect(() => {
     if (error) {
@@ -22,7 +23,7 @@ const WegoContact = () => {
     }
   }, [error]);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     if (!form.checkValidity()) {
@@ -32,17 +33,52 @@ const WegoContact = () => {
     }
     setError(null);
     setSubmitting(true);
-    // Placeholder — show confirmation. Replace with real submission later.
-    setTimeout(() => {
-      setSubmitting(false);
+
+    const fd = new FormData(form);
+    const payload = {
+      source: "wego",
+      name: String(fd.get("name") || ""),
+      email: String(fd.get("email") || ""),
+      phone: String(fd.get("phone") || ""),
+      subject: "WeGo / Mobile Health Clinic Inquiry",
+      message: String(fd.get("message") || ""),
+      website: String(fd.get("website") || ""),
+      hp_company: String(fd.get("hp_company") || ""),
+      started_at: startedAtRef.current,
+    };
+
+    try {
+      const { data, error: invokeError } = await supabase.functions.invoke(
+        "submit-contact",
+        { body: payload },
+      );
+      if (invokeError || !data?.ok) {
+        const msg =
+          (data && typeof data === "object" && "error" in data && (data as { error?: string }).error) ||
+          invokeError?.message ||
+          "We couldn't send your message. Please call 1-877-884-WEGO.";
+        setError(msg);
+        setSubmitting(false);
+        return;
+      }
       toast({
-        title: "Message ready to send",
+        title: "Message sent",
         description:
-          "Connect this form to your email service to deliver messages. For now, please call 1-877-884-WEGO.",
+          "Thank you — your message has been sent to the WeGo Mobile Health Clinic team. We'll respond during business hours.",
       });
-      (e.target as HTMLFormElement).reset();
-    }, 400);
+      form.reset();
+      startedAtRef.current = Date.now();
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "We couldn't send your message. Please call 1-877-884-WEGO.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
+
 
   return (
     <WegoLayout breadcrumb={[{ label: "Contact" }]}>
