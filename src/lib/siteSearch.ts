@@ -56,16 +56,16 @@ export function getStaticSearchIndex(): SearchEntry[] {
     entries.push({
       title: `${c.name} County`,
       url: `/counties/${c.slug}`,
-      snippet: c.tagline || `${c.name} County Health Department.`,
+      snippet: firstParagraph(c.intro) || `${c.healthDept ?? `${c.name} County Health Department`}.`,
       section: "Counties",
     });
   }
 
   for (const p of programs) {
     entries.push({
-      title: p.name,
+      title: p.title,
       url: `/programs/${p.slug}`,
-      snippet: firstParagraph(p.shortDescription || p.description),
+      snippet: firstParagraph(p.summary),
       section: "Programs",
     });
   }
@@ -74,7 +74,7 @@ export function getStaticSearchIndex(): SearchEntry[] {
     entries.push({
       title: e.title,
       url: `/environmental-health/${e.slug}`,
-      snippet: firstParagraph(e.shortDescription),
+      snippet: firstParagraph(e.summary),
       section: "Environmental Health",
     });
   }
@@ -83,7 +83,7 @@ export function getStaticSearchIndex(): SearchEntry[] {
     entries.push({
       title: w.title,
       url: `/womens-health/${w.slug}`,
-      snippet: firstParagraph(w.shortDescription),
+      snippet: firstParagraph(w.summary),
       section: "Women's Health",
     });
   }
