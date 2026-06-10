@@ -119,14 +119,16 @@ const SiteHeader = ({
 
           <form
             role="search"
+            action="/search"
+            method="get"
             className="flex w-full items-stretch overflow-hidden rounded border border-border md:max-w-sm"
-            onSubmit={(e) => e.preventDefault()}
           >
             <label htmlFor="site-search" className="sr-only">
               Search this site
             </label>
             <input
               id="site-search"
+              name="q"
               type="search"
               placeholder="Search this site"
               className="min-w-0 flex-1 bg-background px-3 py-2 text-base text-foreground placeholder:text-muted-foreground focus:outline-none md:text-sm"
