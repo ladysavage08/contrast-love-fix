@@ -22,6 +22,7 @@ import Accessibility from "./pages/Accessibility.tsx";
 import Services from "./pages/Services.tsx";
 import Directory from "./pages/Directory.tsx";
 import Search from "./pages/Search.tsx";
+import Sitemap from "./pages/Sitemap.tsx";
 import Auth from "./pages/Auth.tsx";
 import Admin from "./pages/Admin.tsx";
 import AdminAlerts from "./pages/AdminAlerts.tsx";
