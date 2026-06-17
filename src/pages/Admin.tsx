@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
-import { Users, Upload, Newspaper, LogOut, ExternalLink, Megaphone, Image as ImageIcon, Link2, LayoutDashboard } from "lucide-react";
+import { Users, Upload, Newspaper, LogOut, ExternalLink, Megaphone, Image as ImageIcon, Link2, LayoutDashboard, Truck } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -74,6 +74,14 @@ const tools: Tool[] = [
     to: "/admin/links",
     icon: Link2,
     cta: "Manage links",
+  },
+  {
+    title: "WeGo Event Requests",
+    description:
+      "Review Mobile Health Clinic special event requests submitted from the public site. Update status (New, Under Review, Approved, Scheduled, etc.) and add notes.",
+    to: "/admin/wego-requests",
+    icon: Truck,
+    cta: "Open requests",
   },
 ];
 

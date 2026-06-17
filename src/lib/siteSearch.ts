@@ -41,6 +41,7 @@ const staticPages: SearchEntry[] = [
   { title: "WeGo — Schedule", url: "/wego/schedule", snippet: "Where the mobile clinic will be next.", section: "WeGo" },
   { title: "WeGo — FAQ", url: "/wego/faq", snippet: "Frequently asked questions about the mobile clinic.", section: "WeGo" },
   { title: "WeGo — Contact", url: "/wego/contact", snippet: "Request a visit or get in touch with the mobile clinic team.", section: "WeGo" },
+  { title: "WeGo — Request the Mobile Unit for an Event", url: "/wego/special-event-request", snippet: "Submit a request to bring the Mobile Health Clinic to your community event.", section: "WeGo" },
 ];
 
 function firstParagraph(text: string | null | undefined, max = 180): string {
