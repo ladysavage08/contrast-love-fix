@@ -42,7 +42,7 @@ export function useFooterContent() {
     async function load() {
       const { data } = await supabase
         .from("site_settings")
-        .select("value, updated_at, updated_by_email")
+        .select("value, updated_at")
         .eq("key", FOOTER_CONTENT_KEY)
         .maybeSingle();
       if (cancelled) return;
@@ -50,7 +50,7 @@ export function useFooterContent() {
         setContent({ ...DEFAULT_FOOTER, ...(data.value as Partial<FooterContent>) });
         setMeta({
           updatedAt: (data as any).updated_at ?? null,
-          updatedByEmail: (data as any).updated_by_email ?? null,
+          updatedByEmail: null,
         });
       }
       setLoaded(true);
