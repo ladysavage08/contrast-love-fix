@@ -279,11 +279,10 @@ const WegoSpecialEventRequest = () => {
       setForm(initial);
       startedAtRef.current = Date.now();
     } catch (err) {
+      console.error("[submit-wego-event] submission error:", err);
       setStatus("error");
       setErrorMsg(
-        err instanceof Error
-          ? err.message
-          : "Something went wrong. Please try again or call 1-877-884-WEGO.",
+        "Your request could not be submitted right now. Please try again, or contact the WeGo team for help.",
       );
     }
   };
