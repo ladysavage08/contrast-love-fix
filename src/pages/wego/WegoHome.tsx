@@ -58,7 +58,7 @@ const WegoHome = () => {
               </Link>
               <Link
                 to="/wego/special-event-request"
-                className="inline-flex items-center gap-2 rounded bg-accent-gold px-4 py-2.5 text-sm font-semibold text-primary hover:bg-accent-gold/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-gold"
+                className="inline-flex items-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground shadow-sm hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Request the Mobile Unit for an Event
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
