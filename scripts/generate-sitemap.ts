@@ -50,6 +50,7 @@ const staticEntries: Entry[] = [
   { path: "/wego/schedule", changefreq: "weekly", priority: "0.8" },
   { path: "/wego/faq", changefreq: "monthly", priority: "0.6" },
   { path: "/wego/contact", changefreq: "monthly", priority: "0.6" },
+  { path: "/wego/special-event-request", changefreq: "monthly", priority: "0.7" },
 ];
 
 async function fetchPublishedNewsSlugs(): Promise<{ slug: string; updated: string }[]> {

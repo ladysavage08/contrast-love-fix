@@ -401,6 +401,117 @@ export type Database = {
         }
         Relationships: []
       }
+      wego_event_requests: {
+        Row: {
+          additional_notes: string | null
+          contact_name: string
+          contact_title: string | null
+          created_at: string
+          electricity_available: boolean
+          email: string
+          email_error: string | null
+          email_sent: boolean
+          event_address: string
+          event_city: string
+          event_county: string | null
+          event_date: string
+          event_end_time: string
+          event_name: string
+          event_start_time: string
+          expected_attendance: number
+          id: string
+          ip_hash: string | null
+          onsite_contact_name: string
+          onsite_contact_phone: string
+          organization_name: string
+          parking_level_accessible: boolean
+          phone: string
+          services_other_detail: string | null
+          services_requested: string[]
+          setup_instructions: string | null
+          space_for_unit: boolean
+          status: Database["public"]["Enums"]["wego_request_status"]
+          status_notes: string | null
+          status_updated_at: string | null
+          status_updated_by: string | null
+          updated_at: string
+          user_agent: string | null
+          venue_type: Database["public"]["Enums"]["wego_venue_type"]
+        }
+        Insert: {
+          additional_notes?: string | null
+          contact_name: string
+          contact_title?: string | null
+          created_at?: string
+          electricity_available: boolean
+          email: string
+          email_error?: string | null
+          email_sent?: boolean
+          event_address: string
+          event_city: string
+          event_county?: string | null
+          event_date: string
+          event_end_time: string
+          event_name: string
+          event_start_time: string
+          expected_attendance: number
+          id?: string
+          ip_hash?: string | null
+          onsite_contact_name: string
+          onsite_contact_phone: string
+          organization_name: string
+          parking_level_accessible: boolean
+          phone: string
+          services_other_detail?: string | null
+          services_requested?: string[]
+          setup_instructions?: string | null
+          space_for_unit: boolean
+          status?: Database["public"]["Enums"]["wego_request_status"]
+          status_notes?: string | null
+          status_updated_at?: string | null
+          status_updated_by?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          venue_type: Database["public"]["Enums"]["wego_venue_type"]
+        }
+        Update: {
+          additional_notes?: string | null
+          contact_name?: string
+          contact_title?: string | null
+          created_at?: string
+          electricity_available?: boolean
+          email?: string
+          email_error?: string | null
+          email_sent?: boolean
+          event_address?: string
+          event_city?: string
+          event_county?: string | null
+          event_date?: string
+          event_end_time?: string
+          event_name?: string
+          event_start_time?: string
+          expected_attendance?: number
+          id?: string
+          ip_hash?: string | null
+          onsite_contact_name?: string
+          onsite_contact_phone?: string
+          organization_name?: string
+          parking_level_accessible?: boolean
+          phone?: string
+          services_other_detail?: string | null
+          services_requested?: string[]
+          setup_instructions?: string | null
+          space_for_unit?: boolean
+          status?: Database["public"]["Enums"]["wego_request_status"]
+          status_notes?: string | null
+          status_updated_at?: string | null
+          status_updated_by?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          venue_type?: Database["public"]["Enums"]["wego_venue_type"]
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -417,6 +528,16 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "moderator" | "user" | "editor"
+      wego_request_status:
+        | "new"
+        | "under_review"
+        | "need_more_information"
+        | "approved"
+        | "denied"
+        | "scheduled"
+        | "completed"
+        | "cancelled"
+      wego_venue_type: "indoor" | "outdoor" | "both"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -545,6 +666,17 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user", "editor"],
+      wego_request_status: [
+        "new",
+        "under_review",
+        "need_more_information",
+        "approved",
+        "denied",
+        "scheduled",
+        "completed",
+        "cancelled",
+      ],
+      wego_venue_type: ["indoor", "outdoor", "both"],
     },
   },
 } as const
