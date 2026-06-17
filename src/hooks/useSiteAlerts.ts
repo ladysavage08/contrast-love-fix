@@ -98,7 +98,7 @@ export function useSiteAlerts() {
     async function load() {
       const { data } = await supabase
         .from("site_settings")
-        .select("value, updated_at, updated_by_email, status")
+        .select("value, updated_at, status")
         .eq("key", SITE_ALERTS_KEY)
         .maybeSingle();
       if (cancelled) return;
@@ -113,7 +113,7 @@ export function useSiteAlerts() {
         });
         setMeta({
           updatedAt: (data as any).updated_at ?? null,
-          updatedByEmail: (data as any).updated_by_email ?? null,
+          updatedByEmail: null,
           status: ((data as any).status ?? "published") as "draft" | "published",
         });
       }
