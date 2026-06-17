@@ -131,12 +131,16 @@ const AdminWegoRequests = () => {
     setRows((data ?? []) as Row[]);
   }
 
-  async function updateRow(id: string, patch: Partial<Row>) {
+  async function updateRow(
+    id: string,
+    patch: { status: Status; status_notes: string | null },
+  ) {
     setSavingId(id);
     const { error } = await supabase
       .from("wego_event_requests")
       .update({
-        ...patch,
+        status: patch.status,
+        status_notes: patch.status_notes,
         status_updated_at: new Date().toISOString(),
         status_updated_by: user?.id ?? null,
       })
