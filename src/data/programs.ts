@@ -79,6 +79,12 @@ export const programs: Program[] = [
       { label: "Babies Can't Wait (BCW)" },
       { label: "Infants at High Risk" },
       { label: "SIDS Info" },
+      {
+        label: "Georgia DPH School Health webpage",
+        href: "https://dph.georgia.gov/about-dph/clinical-services/office-nursing/school-health",
+        description:
+          "DPH Form 3300 is required for children enrolling in a Georgia public school for the first time. The form documents that a child has received vision, hearing, dental, and nutrition screenings, supporting the early identification of health concerns that may affect their learning and overall well-being.",
+      },
     ],
   },
   {
