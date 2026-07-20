@@ -84,26 +84,50 @@ const ProgramPage = () => {
                 />
                 {program.subtopics.length > 0 ? (
                   <ul className="mt-5 divide-y divide-border border-y border-border">
-                    {program.subtopics.map((s) => (
+                  {program.subtopics.map((s) => {
+                    const external = s.href ? isExternalHref(s.href) : false;
+                    return (
                       <li key={s.label} className="py-3">
                         {s.href ? (
-                          <Link
-                            to={s.href}
-                            className="inline-flex items-center gap-2 text-base font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
-                          >
-                            {s.label}
-                            <ArrowRight
-                              className="h-4 w-4"
-                              aria-hidden="true"
-                            />
-                          </Link>
+                          external ? (
+                            <a
+                              href={s.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`${s.label} (opens in new tab)`}
+                              className="inline-flex items-center gap-2 text-base font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
+                            >
+                              {s.label}
+                              <ExternalLink
+                                className="h-4 w-4"
+                                aria-hidden="true"
+                              />
+                            </a>
+                          ) : (
+                            <Link
+                              to={s.href}
+                              className="inline-flex items-center gap-2 text-base font-medium text-primary underline-offset-2 hover:underline focus-visible:underline"
+                            >
+                              {s.label}
+                              <ArrowRight
+                                className="h-4 w-4"
+                                aria-hidden="true"
+                              />
+                            </Link>
+                          )
                         ) : (
                           <span className="text-base text-foreground/90">
                             {s.label}
                           </span>
                         )}
+                        {s.description && (
+                          <p className="mt-2 max-w-3xl text-base leading-relaxed text-foreground/90">
+                            {s.description}
+                          </p>
+                        )}
                       </li>
-                    ))}
+                    );
+                  })}
                   </ul>
                 ) : (
                   <p className="mt-5 text-base leading-relaxed text-foreground/90">
