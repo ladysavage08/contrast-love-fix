@@ -73,12 +73,27 @@ export const programs: Program[] = [
       "Programs and services that support healthy growth, development, and safety for infants, children, and adolescents — including specialized services for children with special health care needs.",
     subtopics: [
       { label: "Childhood Safety" },
-      { label: "Children's Medical Services (CMS)" },
-      { label: "Hearing Screening for Infants" },
-      { label: "Children 1st" },
-      { label: "Babies Can't Wait (BCW)" },
+      {
+        label: "Children's Medical Services (CMS)",
+        href: "https://dph.georgia.gov/CMS",
+      },
+      {
+        label: "Early Hearing Detection and Intervention (EHDI) / Hearing Screening",
+        href: "https://dph.georgia.gov/EHDI",
+      },
+      {
+        label: "Children 1st",
+        href: "https://dph.georgia.gov/children1st",
+      },
+      {
+        label: "Babies Can't Wait",
+        href: "https://dph.georgia.gov/babies-cant-wait",
+      },
       { label: "Infants at High Risk" },
-      { label: "SIDS Info" },
+      {
+        label: "Safe Sleep Flip Chart – English PDF",
+        href: "https://dph.georgia.gov/document/document/safe-sleepflip-chartenglishpdf/download",
+      },
       {
         label: "Georgia DPH School Health webpage",
         href: "https://dph.georgia.gov/about-dph/clinical-services/office-nursing/school-health",
