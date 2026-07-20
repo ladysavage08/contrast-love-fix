@@ -1,8 +1,9 @@
-import { ArrowRight, Phone, Mail } from "lucide-react";
+import { ArrowRight, ExternalLink, Phone, Mail } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { getProgramBySlug } from "@/data/programs";
+import { isExternalHref } from "@/lib/siteLinkValidation";
 
 /**
  * Reusable program/service detail page.
