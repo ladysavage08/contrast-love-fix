@@ -10,6 +10,8 @@
 export interface ProgramSubtopic {
   label: string;
   href?: string;
+  /** Optional plain-text description shown beneath the link/label. */
+  description?: string;
 }
 
 export interface Program {
