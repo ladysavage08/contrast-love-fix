@@ -105,6 +105,7 @@ const App = () => (
           <Route path="/admin/content" element={<AdminContent />} />
           <Route path="/admin/footer" element={<AdminFooter />} />
           <Route path="/wic" element={<Wic />} />
+          <Route path="/hopwa" element={<Hopwa />} />
           <Route path="/getwic" element={<GetWicRedirect />} />
           <Route path="/getwic/" element={<GetWicRedirect />} />
           <Route path="/GetWIC" element={<GetWicRedirect />} />
