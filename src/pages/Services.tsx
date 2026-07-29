@@ -2,7 +2,7 @@ import {
   FileText, Stethoscope, Syringe, Activity, HeartPulse, Apple,
   MapPin, Bus, Clock, Phone, ShieldCheck, Baby, FlaskConical,
   Salad, FileWarning, ClipboardList, ScrollText, FileCheck,
-  Newspaper, Calendar, Mail, ArrowRight,
+  Newspaper, Calendar, Mail, ArrowRight, Home,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
