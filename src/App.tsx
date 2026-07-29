@@ -32,6 +32,7 @@ import AdminLinks from "./pages/AdminLinks.tsx";
 import AdminContent from "./pages/AdminContent.tsx";
 import AdminFooter from "./pages/AdminFooter.tsx";
 import Wic from "./pages/Wic.tsx";
+import Hopwa from "./pages/Hopwa.tsx";
 import GetWicRedirect from "./pages/GetWicRedirect.tsx";
 import Calendar from "./pages/Calendar.tsx";
 import WegoHome from "./pages/wego/WegoHome.tsx";
