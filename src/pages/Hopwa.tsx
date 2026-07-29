@@ -61,31 +61,20 @@ const Hopwa = () => {
                 Apply for HOPWA Services
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                Download and complete the HOPWA application to begin the
-                eligibility process.
+                Complete the online HOPWA application to begin the eligibility
+                process.
               </p>
               <div className="mt-4">
-                {APPLICATION_URL ? (
-                  <a
-                    href={APPLICATION_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-                  >
-                    <FileDown className="h-4 w-4" aria-hidden="true" />
-                    Download the HOPWA Application
-                  </a>
-                ) : (
-                  <button
-                    type="button"
-                    disabled
-                    aria-disabled="true"
-                    className="inline-flex cursor-not-allowed items-center gap-2 rounded bg-muted px-4 py-2.5 text-sm font-semibold text-muted-foreground"
-                  >
-                    <FileDown className="h-4 w-4" aria-hidden="true" />
-                    Application Coming Soon
-                  </button>
-                )}
+                <a
+                  href={APPLICATION_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Apply for HOPWA Services Online (opens in a new tab)"
+                  className="inline-flex items-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                >
+                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                  Apply for HOPWA Services Online
+                </a>
               </div>
             </section>
           </section>
