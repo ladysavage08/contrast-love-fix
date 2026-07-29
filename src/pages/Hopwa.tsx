@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
-import { FileDown, Home } from "lucide-react";
+import { ExternalLink, Home } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 /**
  * HOPWA (Housing Opportunities for Persons With AIDS) services page.
- * Application URL is not yet available; the download button renders as a
- * disabled, non-interactive control until a real URL is provided.
  */
-const APPLICATION_URL: string | null = null;
+const APPLICATION_URL =
+  "https://na3.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=1194ecf0-9e51-45e5-8999-e4f9cdb5de48&env=na3&acct=bf407b1b-6cb7-4aa9-8071-158b99ee1247&v=2";
 
 const Hopwa = () => {
   return (
