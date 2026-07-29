@@ -22,6 +22,7 @@ const SECTIONS: Section[] = [
       { label: "Get a health screening (A1C, cholesterol, blood pressure)", href: "/programs", icon: Activity },
       { label: "Get family planning services", href: "/womens-health/family-planning", icon: HeartPulse },
       { label: "Get help with WIC", href: "/wic", icon: Apple },
+      { label: "Get HOPWA housing assistance (HIV/AIDS)", href: "/hopwa", icon: Home },
     ],
   },
   {
