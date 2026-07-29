@@ -32,6 +32,7 @@ import AdminLinks from "./pages/AdminLinks.tsx";
 import AdminContent from "./pages/AdminContent.tsx";
 import AdminFooter from "./pages/AdminFooter.tsx";
 import Wic from "./pages/Wic.tsx";
+import Hopwa from "./pages/Hopwa.tsx";
 import GetWicRedirect from "./pages/GetWicRedirect.tsx";
 import Calendar from "./pages/Calendar.tsx";
 import WegoHome from "./pages/wego/WegoHome.tsx";
@@ -104,6 +105,7 @@ const App = () => (
           <Route path="/admin/content" element={<AdminContent />} />
           <Route path="/admin/footer" element={<AdminFooter />} />
           <Route path="/wic" element={<Wic />} />
+          <Route path="/hopwa" element={<Hopwa />} />
           <Route path="/getwic" element={<GetWicRedirect />} />
           <Route path="/getwic/" element={<GetWicRedirect />} />
           <Route path="/GetWIC" element={<GetWicRedirect />} />
