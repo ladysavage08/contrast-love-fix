@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
-import { FileDown, Home } from "lucide-react";
+import { ExternalLink, Home } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 /**
  * HOPWA (Housing Opportunities for Persons With AIDS) services page.
- * Application URL is not yet available; the download button renders as a
- * disabled, non-interactive control until a real URL is provided.
  */
-const APPLICATION_URL: string | null = null;
+const APPLICATION_URL =
+  "https://na3.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=1194ecf0-9e51-45e5-8999-e4f9cdb5de48&env=na3&acct=bf407b1b-6cb7-4aa9-8071-158b99ee1247&v=2";
 
 const Hopwa = () => {
   return (
@@ -62,31 +61,20 @@ const Hopwa = () => {
                 Apply for HOPWA Services
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                Download and complete the HOPWA application to begin the
-                eligibility process.
+                Complete the online HOPWA application to begin the eligibility
+                process.
               </p>
               <div className="mt-4">
-                {APPLICATION_URL ? (
-                  <a
-                    href={APPLICATION_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-                  >
-                    <FileDown className="h-4 w-4" aria-hidden="true" />
-                    Download the HOPWA Application
-                  </a>
-                ) : (
-                  <button
-                    type="button"
-                    disabled
-                    aria-disabled="true"
-                    className="inline-flex cursor-not-allowed items-center gap-2 rounded bg-muted px-4 py-2.5 text-sm font-semibold text-muted-foreground"
-                  >
-                    <FileDown className="h-4 w-4" aria-hidden="true" />
-                    Application Coming Soon
-                  </button>
-                )}
+                <a
+                  href={APPLICATION_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Apply for HOPWA Services Online (opens in a new tab)"
+                  className="inline-flex items-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                >
+                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                  Apply for HOPWA Services Online
+                </a>
               </div>
             </section>
           </section>
