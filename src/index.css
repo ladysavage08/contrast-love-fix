@@ -169,6 +169,13 @@ All colors MUST be HSL.
     text-underline-offset: 0.2em;
   }
 
+  /* Ensure links inside prose/article body content are visually distinct. */
+  .prose a {
+    color: hsl(var(--primary));
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
   input,
   select,
   textarea {
