@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
+import SecurityTesterBanner from "@/components/SecurityTesterBanner";
 import { supabase } from "@/integrations/supabase/client";
 import {
   DEFAULT_SETTINGS,
@@ -30,7 +31,7 @@ import { MODAL_PRESETS, type ModalPresetKey } from "@/config/siteAlerts";
 const AdminAlerts = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user, canView, loading: authLoading } = useAdminAuth();
+  const { user, canView, canManage, isSecurityTester, securityTesterExpiresAt, loading: authLoading } = useAdminAuth();
 
   const [settings, setSettings] = useState<SiteAlertsSettings>(DEFAULT_SETTINGS);
   const [meta, setMeta] = useState<{ updated_at: string | null; updated_by_email: string | null }>(
@@ -170,6 +171,10 @@ const AdminAlerts = () => {
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
       <main id="main" className="container py-10">
+        {isSecurityTester && !canManage && (
+          <SecurityTesterBanner expiresAt={securityTesterExpiresAt} />
+        )}
+        <fieldset disabled={!canManage} className="contents">
         <nav aria-label="Breadcrumb" className="mb-4 text-sm text-muted-foreground">
           <Link to="/admin" className="text-primary underline-offset-2 hover:underline">
             Admin
@@ -614,6 +619,7 @@ const AdminAlerts = () => {
             Tip: clear your <code>echd-modal-shown</code> session storage to re-trigger the modal while testing.
           </p>
         </div>
+        </fieldset>
       </main>
       <SiteFooter />
     </div>

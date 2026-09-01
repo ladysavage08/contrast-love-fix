@@ -4,6 +4,7 @@ import { ArrowLeft, Plus, Save, Trash2, Upload, Loader2 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
+import SecurityTesterBanner from "@/components/SecurityTesterBanner";
 import { useIdleSignOut } from "@/hooks/useIdleSignOut";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -55,7 +56,7 @@ const validateHref = (href: string | null | undefined) => {
 
 const AdminHero = () => {
   const navigate = useNavigate();
-  const { user, canView, loading: authLoading } = useAdminAuth();
+  const { user, canView, canManage, isSecurityTester, securityTesterExpiresAt, loading: authLoading } = useAdminAuth();
   const [slides, setSlides] = useState<HeroSlideRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [savingId, setSavingId] = useState<string | null>(null);
@@ -185,6 +186,10 @@ const AdminHero = () => {
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
       <main id="main" className="container py-10">
+        {isSecurityTester && !canManage && (
+          <SecurityTesterBanner expiresAt={securityTesterExpiresAt} />
+        )}
+        <fieldset disabled={!canManage} className="contents">
         <nav aria-label="Breadcrumb" className="mb-4 text-sm text-muted-foreground">
           <Link to="/admin" className="text-primary underline-offset-2 hover:underline">
             Admin
@@ -415,6 +420,7 @@ const AdminHero = () => {
             ))}
           </ul>
         )}
+        </fieldset>
       </main>
       <SiteFooter />
     </div>
