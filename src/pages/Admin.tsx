@@ -146,7 +146,10 @@ const Admin = () => {
     );
   }
 
-  if (!user || !canManage) return null;
+  if (!user || !canView) return null;
+
+  const visibleTools = tools.filter((t) => canManage || !t.manageOnly);
+
 
   return (
     <div className="min-h-screen bg-background text-foreground">
