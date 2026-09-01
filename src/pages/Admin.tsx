@@ -16,7 +16,10 @@ type Tool = {
   href?: string;
   icon: LucideIcon;
   cta: string;
+  /** Hidden from read-only accounts (security tester). */
+  manageOnly?: boolean;
 };
+
 
 const tools: Tool[] = [
   {
