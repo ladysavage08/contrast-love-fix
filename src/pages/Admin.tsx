@@ -96,7 +96,16 @@ const tools: Tool[] = [
 
 const Admin = () => {
   const navigate = useNavigate();
-  const { user, isAdmin, isEditor, canManage, loading } = useAdminAuth();
+  const {
+    user,
+    isAdmin,
+    isEditor,
+    canManage,
+    canView,
+    isSecurityTester,
+    securityTesterExpiresAt,
+    loading,
+  } = useAdminAuth();
   const loggedAccessRef = useRef(false);
 
   useEffect(() => {
@@ -105,8 +114,8 @@ const Admin = () => {
       navigate("/auth", { replace: true });
       return;
     }
-    // Role gate: only admin OR editor can access /admin
-    if (!canManage) {
+    // Role gate: admin, editor, or an active read-only security tester
+    if (!canView) {
       navigate("/", { replace: true });
       return;
     }
@@ -115,10 +124,13 @@ const Admin = () => {
       void logAuditEvent("admin_access", {
         email: user.email ?? null,
         user_id: user.id,
-        metadata: { role: isAdmin ? "admin" : "editor" },
+        metadata: {
+          role: isAdmin ? "admin" : isEditor ? "editor" : "security_tester",
+        },
       });
     }
-  }, [user, canManage, isAdmin, loading, navigate]);
+  }, [user, canView, isAdmin, isEditor, loading, navigate]);
+
 
   useIdleSignOut(!!user, () => navigate("/auth", { replace: true }));
 
