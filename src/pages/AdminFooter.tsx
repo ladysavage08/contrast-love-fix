@@ -23,7 +23,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const AdminFooter = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user, canManage, loading: authLoading } = useAdminAuth();
+  const { user, canView, loading: authLoading } = useAdminAuth();
 
   const [content, setContent] = useState<FooterContent>(DEFAULT_FOOTER);
   const [meta, setMeta] = useState<{ updated_at: string | null; updated_by_email: string | null }>(
@@ -35,8 +35,8 @@ const AdminFooter = () => {
   useEffect(() => {
     if (authLoading) return;
     if (!user) navigate("/auth", { replace: true });
-    else if (!canManage) navigate("/", { replace: true });
-  }, [user, canManage, authLoading, navigate]);
+    else if (!canView) navigate("/", { replace: true });
+  }, [user, canView, authLoading, navigate]);
 
   useEffect(() => {
     (async () => {

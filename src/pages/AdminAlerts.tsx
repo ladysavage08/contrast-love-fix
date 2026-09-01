@@ -30,7 +30,7 @@ import { MODAL_PRESETS, type ModalPresetKey } from "@/config/siteAlerts";
 const AdminAlerts = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user, canManage, loading: authLoading } = useAdminAuth();
+  const { user, canView, loading: authLoading } = useAdminAuth();
 
   const [settings, setSettings] = useState<SiteAlertsSettings>(DEFAULT_SETTINGS);
   const [meta, setMeta] = useState<{ updated_at: string | null; updated_by_email: string | null }>(
@@ -42,8 +42,8 @@ const AdminAlerts = () => {
   useEffect(() => {
     if (authLoading) return;
     if (!user) navigate("/auth", { replace: true });
-    else if (!canManage) navigate("/", { replace: true });
-  }, [user, canManage, authLoading, navigate]);
+    else if (!canView) navigate("/", { replace: true });
+  }, [user, canView, authLoading, navigate]);
 
   useEffect(() => {
     async function load() {

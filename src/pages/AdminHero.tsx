@@ -55,7 +55,7 @@ const validateHref = (href: string | null | undefined) => {
 
 const AdminHero = () => {
   const navigate = useNavigate();
-  const { user, canManage, loading: authLoading } = useAdminAuth();
+  const { user, canView, loading: authLoading } = useAdminAuth();
   const [slides, setSlides] = useState<HeroSlideRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [savingId, setSavingId] = useState<string | null>(null);
@@ -66,8 +66,8 @@ const AdminHero = () => {
   useEffect(() => {
     if (authLoading) return;
     if (!user) return navigate("/auth", { replace: true });
-    if (!canManage) return navigate("/admin", { replace: true });
-  }, [authLoading, user, canManage, navigate]);
+    if (!canView) return navigate("/admin", { replace: true });
+  }, [authLoading, user, canView, navigate]);
 
   const loadSlides = useCallback(async () => {
     setLoading(true);
@@ -84,8 +84,8 @@ const AdminHero = () => {
   }, []);
 
   useEffect(() => {
-    if (canManage) void loadSlides();
-  }, [canManage, loadSlides]);
+    if (canView) void loadSlides();
+  }, [canView, loadSlides]);
 
   const updateField = <K extends keyof HeroSlideRow>(id: string, key: K, value: HeroSlideRow[K]) => {
     setSlides((prev) => prev.map((s) => (s.id === id ? { ...s, [key]: value } : s)));
@@ -169,7 +169,7 @@ const AdminHero = () => {
     toast({ title: "Image uploaded", description: "Click Save to apply." });
   };
 
-  if (authLoading || !user || !canManage) {
+  if (authLoading || !user || !canView) {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <SiteHeader />

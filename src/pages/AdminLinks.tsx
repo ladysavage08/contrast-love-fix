@@ -50,7 +50,7 @@ const formatDate = (iso: string) => {
 const AdminLinks = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user, isAdmin, canManage, loading: authLoading } = useAdminAuth();
+  const { user, isAdmin, canView, loading: authLoading } = useAdminAuth();
 
   const [rows, setRows] = useState<SiteLinkRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -64,8 +64,8 @@ const AdminLinks = () => {
   useEffect(() => {
     if (authLoading) return;
     if (!user) navigate("/auth", { replace: true });
-    else if (!canManage) navigate("/", { replace: true });
-  }, [user, canManage, authLoading, navigate]);
+    else if (!canView) navigate("/", { replace: true });
+  }, [user, canView, authLoading, navigate]);
 
   useIdleSignOut(!!user, () => navigate("/auth", { replace: true }));
 
