@@ -202,6 +202,10 @@ const Admin = () => {
           </div>
         </header>
 
+        {isSecurityTester && !canManage && (
+          <SecurityTesterBanner expiresAt={securityTesterExpiresAt} />
+        )}
+
         {!isAdmin && isEditor && (
           <div
             role="status"
@@ -213,7 +217,8 @@ const Admin = () => {
         )}
 
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {tools.map((t) => {
+          {visibleTools.map((t) => {
+
             const Icon = t.icon;
             return (
               <li
