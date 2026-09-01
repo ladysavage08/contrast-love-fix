@@ -37,6 +37,7 @@ const tools: Tool[] = [
     to: "/directory",
     icon: Users,
     cta: "Open directory",
+    manageOnly: true,
   },
   {
     title: "Staff Import (CSV)",
@@ -45,6 +46,7 @@ const tools: Tool[] = [
     to: "/directory#import",
     icon: Upload,
     cta: "Go to import",
+    manageOnly: true,
   },
   {
     title: "News & Events",
@@ -53,7 +55,9 @@ const tools: Tool[] = [
     to: "/admin/news",
     icon: Newspaper,
     cta: "Manage posts",
+    manageOnly: true,
   },
+
   {
     title: "Site Alerts",
     description:
