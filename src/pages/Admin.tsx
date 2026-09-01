@@ -180,8 +180,15 @@ const Admin = () => {
                   : "bg-muted text-muted-foreground"
               }`}
             >
-              {isAdmin ? "Admin" : isEditor ? "Editor" : "Signed in"}
+              {isAdmin
+                ? "Admin"
+                : isEditor
+                  ? "Editor"
+                  : isSecurityTester
+                    ? "Security tester (read only)"
+                    : "Signed in"}
             </span>
+
             <button
               type="button"
               onClick={async () => {
