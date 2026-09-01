@@ -383,18 +383,21 @@ export type Database = {
       user_roles: {
         Row: {
           created_at: string
+          expires_at: string | null
           id: string
           role: Database["public"]["Enums"]["app_role"]
           user_id: string
         }
         Insert: {
           created_at?: string
+          expires_at?: string | null
           id?: string
           role: Database["public"]["Enums"]["app_role"]
           user_id: string
         }
         Update: {
           created_at?: string
+          expires_at?: string | null
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
@@ -527,7 +530,7 @@ export type Database = {
       is_admin_or_editor: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      app_role: "admin" | "moderator" | "user" | "editor"
+      app_role: "admin" | "moderator" | "user" | "editor" | "security_tester"
       wego_request_status:
         | "new"
         | "under_review"
@@ -665,7 +668,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "moderator", "user", "editor"],
+      app_role: ["admin", "moderator", "user", "editor", "security_tester"],
       wego_request_status: [
         "new",
         "under_review",
