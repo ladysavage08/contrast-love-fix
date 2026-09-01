@@ -4,6 +4,8 @@ import type { LucideIcon } from "lucide-react";
 import { Users, Upload, Newspaper, LogOut, ExternalLink, Megaphone, Image as ImageIcon, Link2, LayoutDashboard, Truck } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SecurityTesterBanner from "@/components/SecurityTesterBanner";
+
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { useIdleSignOut } from "@/hooks/useIdleSignOut";
 import { logAuditEvent } from "@/lib/auditLog";
