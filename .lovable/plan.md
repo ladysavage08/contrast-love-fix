@@ -20,6 +20,18 @@ So the approved set (dashboard, alerts, hero, links, settings/footer) needs read
 
 Per your instruction not to grant permissions just to avoid an error, `/admin/news` stays **inaccessible** to the tester (it gates on `isAdmin` today and will keep doing so). `/admin/wego-requests` and the directory import tools likewise stay inaccessible.
 
+## site_settings audit (completed)
+
+The table holds exactly 2 rows, keys `site_alerts` and `footer_content`. No secrets, credentials, keys, tokens, or private configuration — only banner/modal text and public footer contact details. No draft rows exist. The only non-public columns are `updated_by` (a staff user id) and `updated_by_email` (a staff `@dph.ga.gov` address).
+
+Conclusion: no secrets, but the tester still gets **key-scoped** access rather than whole-table access, so any future setting added to this table is not automatically exposed:
+
+```
+USING (public.is_security_tester(auth.uid()) AND key IN ('site_alerts','footer_content'))
+```
+
+If you also want the editor email hidden from the tester, say so and I'll serve those two rows through a security-definer view that omits `updated_by`/`updated_by_email` instead. Otherwise it stays as a published staff contact address.
+
 ## Database changes (one migration)
 
 1. Add `security_tester` to the `app_role` list.
@@ -27,9 +39,13 @@ Per your instruction not to grant permissions just to avoid an error, `/admin/ne
 3. Update `has_role()` and `is_admin_or_editor()` to ignore rows whose `expires_at <= now()`. Both keep `SECURITY DEFINER`, `STABLE`, and `SET search_path = public`, and neither will ever return true for `security_tester` — `is_admin_or_editor` matches only `admin` and `editor` explicitly, so no inherited write rights are possible.
 4. New `public.is_security_tester(uuid)` — `SECURITY DEFINER`, `STABLE`, `SET search_path = public`, execute granted to `authenticated` only (not `public`/`anon`), matching how the existing helpers were locked down.
 5. Three new policies, all `FOR SELECT` only, all `TO authenticated`:
-   - `site_settings`, `hero_slides`, `site_links` — `USING (public.is_security_tester(auth.uid()))`.
+   - `site_settings` — key-scoped as above
+   - `hero_slides`, `site_links` — `USING (public.is_security_tester(auth.uid()))`
    No INSERT/UPDATE/DELETE policy is created for this role anywhere, so every write is rejected by RLS regardless of what the client sends.
 6. Nothing granted on: `wego_event_requests`, `contact_submissions` (already denied to all clients), `admin_audit_log` (read stays admin-only; the existing insert-your-own-row policy lets the tester's activity be logged without letting it read the log), `staff_directory` writes, `posts` writes, `user_roles` management.
+
+Existing-policy sweep (verified): on `site_settings`, `hero_slides`, and `site_links` the only non-admin/editor policies are the public read filters already live on the website (`status = 'published'`, `enabled = true`, `active = true`). There is no broad `authenticated` `USING (true)` policy on any table, so nothing widens accidentally. On `user_roles`, the only self-read policy is `auth.uid() = user_id`, so the tester sees its own assignment and `expires_at` and nothing else.
+
 
 Expiry is evaluated inside these functions on every request, so an expired role loses access on the next database call even with a live browser session — nothing is cached in the JWT.
 
