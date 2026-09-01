@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
+import SecurityTesterBanner from "@/components/SecurityTesterBanner";
 import { useIdleSignOut } from "@/hooks/useIdleSignOut";
 import { supabase } from "@/integrations/supabase/client";
 import { siteLinkSchema, type SiteLinkInput } from "@/lib/siteLinkValidation";
@@ -50,7 +51,7 @@ const formatDate = (iso: string) => {
 const AdminLinks = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user, isAdmin, canManage, loading: authLoading } = useAdminAuth();
+  const { user, isAdmin, canView, canManage, isSecurityTester, securityTesterExpiresAt, loading: authLoading } = useAdminAuth();
 
   const [rows, setRows] = useState<SiteLinkRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -64,8 +65,8 @@ const AdminLinks = () => {
   useEffect(() => {
     if (authLoading) return;
     if (!user) navigate("/auth", { replace: true });
-    else if (!canManage) navigate("/", { replace: true });
-  }, [user, canManage, authLoading, navigate]);
+    else if (!canView) navigate("/", { replace: true });
+  }, [user, canView, authLoading, navigate]);
 
   useIdleSignOut(!!user, () => navigate("/auth", { replace: true }));
 
@@ -200,6 +201,10 @@ const AdminLinks = () => {
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
       <main id="main" className="container py-10">
+        {isSecurityTester && !canManage && (
+          <SecurityTesterBanner expiresAt={securityTesterExpiresAt} />
+        )}
+        <fieldset disabled={!canManage} className="contents">
         <nav aria-label="Breadcrumb" className="mb-4 text-sm text-muted-foreground">
           <Link to="/admin" className="text-primary underline-offset-2 hover:underline">
             Admin
@@ -463,6 +468,7 @@ const AdminLinks = () => {
             ))}
           </ul>
         </section>
+        </fieldset>
       </main>
       <SiteFooter />
     </div>

@@ -10,6 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
+import SecurityTesterBanner from "@/components/SecurityTesterBanner";
 import { supabase } from "@/integrations/supabase/client";
 import {
   DEFAULT_FOOTER,
@@ -23,7 +24,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const AdminFooter = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user, canManage, loading: authLoading } = useAdminAuth();
+  const { user, canView, canManage, isSecurityTester, securityTesterExpiresAt, loading: authLoading } = useAdminAuth();
 
   const [content, setContent] = useState<FooterContent>(DEFAULT_FOOTER);
   const [meta, setMeta] = useState<{ updated_at: string | null; updated_by_email: string | null }>(
@@ -35,8 +36,8 @@ const AdminFooter = () => {
   useEffect(() => {
     if (authLoading) return;
     if (!user) navigate("/auth", { replace: true });
-    else if (!canManage) navigate("/", { replace: true });
-  }, [user, canManage, authLoading, navigate]);
+    else if (!canView) navigate("/", { replace: true });
+  }, [user, canView, authLoading, navigate]);
 
   useEffect(() => {
     (async () => {
@@ -101,6 +102,10 @@ const AdminFooter = () => {
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
       <main id="main" className="container py-10">
+        {isSecurityTester && !canManage && (
+          <SecurityTesterBanner expiresAt={securityTesterExpiresAt} />
+        )}
+        <fieldset disabled={!canManage} className="contents">
         <nav aria-label="Breadcrumb" className="mb-4 text-sm text-muted-foreground">
           <Link to="/admin" className="text-primary underline-offset-2 hover:underline">
             Admin
@@ -228,6 +233,7 @@ const AdminFooter = () => {
             Open homepage in new tab to verify
           </Link>
         </div>
+        </fieldset>
       </main>
       <SiteFooter />
     </div>

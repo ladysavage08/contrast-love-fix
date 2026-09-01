@@ -60,15 +60,15 @@ const sections: Section[] = [
 
 const AdminContent = () => {
   const navigate = useNavigate();
-  const { user, canManage, loading } = useAdminAuth();
+  const { user, canView, loading } = useAdminAuth();
 
   useEffect(() => {
     if (loading) return;
     if (!user) navigate("/auth", { replace: true });
-    else if (!canManage) navigate("/", { replace: true });
-  }, [user, canManage, loading, navigate]);
+    else if (!canView) navigate("/", { replace: true });
+  }, [user, canView, loading, navigate]);
 
-  if (loading || !user || !canManage) return null;
+  if (loading || !user || !canView) return null;
 
   return (
     <div className="min-h-screen bg-background text-foreground">

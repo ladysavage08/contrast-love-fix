@@ -4,6 +4,8 @@ import type { LucideIcon } from "lucide-react";
 import { Users, Upload, Newspaper, LogOut, ExternalLink, Megaphone, Image as ImageIcon, Link2, LayoutDashboard, Truck } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SecurityTesterBanner from "@/components/SecurityTesterBanner";
+
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { useIdleSignOut } from "@/hooks/useIdleSignOut";
 import { logAuditEvent } from "@/lib/auditLog";
@@ -16,7 +18,10 @@ type Tool = {
   href?: string;
   icon: LucideIcon;
   cta: string;
+  /** Hidden from read-only accounts (security tester). */
+  manageOnly?: boolean;
 };
+
 
 const tools: Tool[] = [
   {
@@ -34,6 +39,7 @@ const tools: Tool[] = [
     to: "/directory",
     icon: Users,
     cta: "Open directory",
+    manageOnly: true,
   },
   {
     title: "Staff Import (CSV)",
@@ -42,6 +48,7 @@ const tools: Tool[] = [
     to: "/directory#import",
     icon: Upload,
     cta: "Go to import",
+    manageOnly: true,
   },
   {
     title: "News & Events",
@@ -50,7 +57,9 @@ const tools: Tool[] = [
     to: "/admin/news",
     icon: Newspaper,
     cta: "Manage posts",
+    manageOnly: true,
   },
+
   {
     title: "Site Alerts",
     description:
@@ -82,12 +91,23 @@ const tools: Tool[] = [
     to: "/admin/wego-requests",
     icon: Truck,
     cta: "Open requests",
+    manageOnly: true,
+
   },
 ];
 
 const Admin = () => {
   const navigate = useNavigate();
-  const { user, isAdmin, isEditor, canManage, loading } = useAdminAuth();
+  const {
+    user,
+    isAdmin,
+    isEditor,
+    canManage,
+    canView,
+    isSecurityTester,
+    securityTesterExpiresAt,
+    loading,
+  } = useAdminAuth();
   const loggedAccessRef = useRef(false);
 
   useEffect(() => {
@@ -96,8 +116,8 @@ const Admin = () => {
       navigate("/auth", { replace: true });
       return;
     }
-    // Role gate: only admin OR editor can access /admin
-    if (!canManage) {
+    // Role gate: admin, editor, or an active read-only security tester
+    if (!canView) {
       navigate("/", { replace: true });
       return;
     }
@@ -106,10 +126,13 @@ const Admin = () => {
       void logAuditEvent("admin_access", {
         email: user.email ?? null,
         user_id: user.id,
-        metadata: { role: isAdmin ? "admin" : "editor" },
+        metadata: {
+          role: isAdmin ? "admin" : isEditor ? "editor" : "security_tester",
+        },
       });
     }
-  }, [user, canManage, isAdmin, loading, navigate]);
+  }, [user, canView, isAdmin, isEditor, loading, navigate]);
+
 
   useIdleSignOut(!!user, () => navigate("/auth", { replace: true }));
 
@@ -125,7 +148,10 @@ const Admin = () => {
     );
   }
 
-  if (!user || !canManage) return null;
+  if (!user || !canView) return null;
+
+  const visibleTools = tools.filter((t) => canManage || !t.manageOnly);
+
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -156,8 +182,15 @@ const Admin = () => {
                   : "bg-muted text-muted-foreground"
               }`}
             >
-              {isAdmin ? "Admin" : isEditor ? "Editor" : "Signed in"}
+              {isAdmin
+                ? "Admin"
+                : isEditor
+                  ? "Editor"
+                  : isSecurityTester
+                    ? "Security tester (read only)"
+                    : "Signed in"}
             </span>
+
             <button
               type="button"
               onClick={async () => {
@@ -171,6 +204,10 @@ const Admin = () => {
           </div>
         </header>
 
+        {isSecurityTester && !canManage && (
+          <SecurityTesterBanner expiresAt={securityTesterExpiresAt} />
+        )}
+
         {!isAdmin && isEditor && (
           <div
             role="status"
@@ -182,7 +219,8 @@ const Admin = () => {
         )}
 
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {tools.map((t) => {
+          {visibleTools.map((t) => {
+
             const Icon = t.icon;
             return (
               <li
