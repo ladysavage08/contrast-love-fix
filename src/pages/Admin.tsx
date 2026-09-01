@@ -89,6 +89,8 @@ const tools: Tool[] = [
     to: "/admin/wego-requests",
     icon: Truck,
     cta: "Open requests",
+    manageOnly: true,
+
   },
 ];
 
