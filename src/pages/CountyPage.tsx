@@ -363,11 +363,15 @@ const CountyPage = () => {
                     const Icon = relatedIconMap[icon];
                     const cls =
                       "flex min-h-[44px] items-center gap-3 rounded px-3 py-2.5 text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
+                    const isExternal = /^https?:\/\//i.test(href);
                     const inner = (
                       <>
                         <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
                         <span className="font-medium underline-offset-2 hover:underline">
                           {label}
+                          {isExternal && (
+                            <span className="sr-only"> (opens in a new tab)</span>
+                          )}
                         </span>
                       </>
                     );
@@ -378,7 +382,12 @@ const CountyPage = () => {
                             {inner}
                           </Link>
                         ) : (
-                          <a href={href} className={cls}>
+                          <a
+                            href={href}
+                            className={cls}
+                            target={isExternal ? "_blank" : undefined}
+                            rel={isExternal ? "noopener noreferrer" : undefined}
+                          >
                             {inner}
                           </a>
                         )}

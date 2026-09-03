@@ -75,9 +75,17 @@ const defaultRelated = (countyName: string): CountyRelatedLink[] => {
       href: `/counties/${slug}/boh-recordings`,
       internal: true,
     },
-    { icon: "barChart", label: "County Health Rankings", href: "#" },
+    {
+      icon: "barChart",
+      label: "County Health Rankings",
+      href: "https://www.countyhealthrankings.org/health-data/georgia?year=2025",
+    },
     { icon: "newspaper", label: `${countyName} Local News`, href: "#" },
-    { icon: "utensils", label: "Restaurant Inspection Scores", href: "#" },
+    {
+      icon: "utensils",
+      label: "Restaurant Inspection Scores",
+      href: "https://ga.healthinspections.us/stateofgeorgia/",
+    },
   ];
 };
 
