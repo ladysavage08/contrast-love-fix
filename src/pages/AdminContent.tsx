@@ -49,6 +49,13 @@ const sections: Section[] = [
     icon: PanelBottom,
   },
   {
+    title: "BOH Meeting Recordings",
+    description:
+      "County Board of Health meeting recordings — add, edit, unpublish, or archive links by county.",
+    to: "/admin/boh-recordings",
+    icon: Video,
+  },
+  {
     title: "Mobile Clinic Schedule",
     description:
       "Add, edit, cancel, or uncancel Mobile Health Clinic stops shown on the WeGo schedule.",
@@ -56,6 +63,7 @@ const sections: Section[] = [
     icon: CalendarIcon,
     badge: "Events",
   },
+
 ];
 
 const AdminContent = () => {
