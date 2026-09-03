@@ -144,79 +144,56 @@ const News = () => {
           <p className="text-muted-foreground">No posts have been published yet.</p>
         )}
 
-        {regularPosts.length > 0 && (
-          <ul className="grid gap-6 sm:grid-cols-2">
-            {regularPosts.map((post) => (
-              <li
-                key={post.id}
-                className="flex flex-col overflow-hidden rounded-lg border border-border bg-card"
-              >
-                {post.featured_image_url ? (
-                  <img
-                    src={post.featured_image_url}
-                    alt={
-                      post.featured_image_decorative
-                        ? ""
-                        : post.featured_image_alt ?? ""
-                    }
-                    {...(post.featured_image_decorative
-                      ? { role: "presentation", "aria-hidden": true }
-                      : {})}
-                    loading="lazy"
-                    className="h-48 w-full object-cover"
-                  />
-                ) : (
-                  <div
-                    aria-hidden="true"
-                    className="h-2 w-full bg-accent"
-                  />
-                )}
-                <div className="flex flex-1 flex-col p-5">
-                  <div className="mb-2 flex flex-wrap items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground">
-                    <span className="inline-flex items-center gap-1">
-                      <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
-                      {formatPostDate(post.published_at)}
-                    </span>
-                    {post.category && (
-                      <>
-                        <span aria-hidden="true">•</span>
-                        <span>{post.category}</span>
-                      </>
-                    )}
-                    {post.post_type === "event" && (
-                      <>
-                        <span aria-hidden="true">•</span>
-                        <span className="rounded bg-accent/20 px-2 py-0.5 font-semibold text-accent-foreground">
-                          Event
-                        </span>
-                      </>
-                    )}
-                  </div>
-                  <h2 className="text-lg font-semibold leading-snug">
-                    <Link
-                      to={`/news/${post.slug}`}
-                      className="text-primary underline-offset-2 hover:underline"
-                    >
-                      {post.title}
-                    </Link>
-                  </h2>
-                  {post.excerpt && (
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      {post.excerpt}
-                    </p>
-                  )}
-                  <Link
-                    to={`/news/${post.slug}`}
-                    className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary underline underline-offset-2 hover:underline"
-                    aria-label={`Read the full article: ${post.title}`}
-                  >
-                    Read Full Article <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </Link>
-                </div>
-              </li>
-            ))}
-          </ul>
+        {upcomingEvents.length > 0 && (
+          <section aria-labelledby="upcoming-events-heading" className="mb-10">
+            <h2 id="upcoming-events-heading" className="mb-4 text-2xl font-bold">
+              Upcoming Events
+            </h2>
+            <ul className="grid gap-6 sm:grid-cols-2">
+              {upcomingEvents.map((post) => (
+                <PostCard key={post.id} post={post} />
+              ))}
+            </ul>
+          </section>
         )}
+
+        {newsPosts.length > 0 && (
+          <section aria-labelledby="latest-news-heading" className="mb-10">
+            <h2 id="latest-news-heading" className="mb-4 text-2xl font-bold">
+              Latest News
+            </h2>
+            <ul className="grid gap-6 sm:grid-cols-2">
+              {newsPosts.map((post) => (
+                <PostCard key={post.id} post={post} />
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {pastEvents.length > 0 && (
+          <section aria-labelledby="past-events-heading" className="mb-4">
+            <h2 id="past-events-heading" className="mb-4 text-2xl font-bold">
+              Past Events (Archive)
+            </h2>
+            <details className="rounded-lg border border-border bg-muted/30">
+              <summary className="cursor-pointer rounded-lg px-4 py-4 text-base font-semibold text-primary underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                Show {pastEvents.length} past event{pastEvents.length === 1 ? "" : "s"}
+              </summary>
+              <div className="px-4 pb-5 pt-1">
+                <p className="mb-4 text-sm text-muted-foreground">
+                  Events are moved here automatically once their date has passed. Listed
+                  newest to oldest.
+                </p>
+                <ul className="grid gap-6 sm:grid-cols-2">
+                  {pastEvents.map((post) => (
+                    <PostCard key={post.id} post={post} past />
+                  ))}
+                </ul>
+              </div>
+            </details>
+          </section>
+        )}
+
       </main>
       <SiteFooter />
     </div>
