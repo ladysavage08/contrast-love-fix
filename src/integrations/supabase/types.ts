@@ -44,6 +44,54 @@ export type Database = {
         }
         Relationships: []
       }
+      boh_recordings: {
+        Row: {
+          archived: boolean
+          county_slug: string
+          created_at: string
+          duration: string | null
+          id: string
+          meeting_date: string
+          notes: string | null
+          platform: string
+          published: boolean
+          recording_url: string
+          title: string | null
+          updated_at: string
+          updated_by_email: string | null
+        }
+        Insert: {
+          archived?: boolean
+          county_slug: string
+          created_at?: string
+          duration?: string | null
+          id?: string
+          meeting_date: string
+          notes?: string | null
+          platform?: string
+          published?: boolean
+          recording_url: string
+          title?: string | null
+          updated_at?: string
+          updated_by_email?: string | null
+        }
+        Update: {
+          archived?: boolean
+          county_slug?: string
+          created_at?: string
+          duration?: string | null
+          id?: string
+          meeting_date?: string
+          notes?: string | null
+          platform?: string
+          published?: boolean
+          recording_url?: string
+          title?: string | null
+          updated_at?: string
+          updated_by_email?: string | null
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           created_at: string
