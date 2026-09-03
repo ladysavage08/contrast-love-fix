@@ -65,12 +65,22 @@ export interface County {
   clinicSites?: CountyClinicSite[];
 }
 
-const defaultRelated = (countyName: string): CountyRelatedLink[] => [
-  { icon: "calendar", label: `${countyName} BOH Meetings 2026`, href: "#" },
-  { icon: "barChart", label: "County Health Rankings", href: "#" },
-  { icon: "newspaper", label: `${countyName} Local News`, href: "#" },
-  { icon: "utensils", label: "Restaurant Inspection Scores", href: "#" },
-];
+const defaultRelated = (countyName: string): CountyRelatedLink[] => {
+  const slug = countyName.replace(/\s*County$/i, "").trim().toLowerCase();
+  return [
+    { icon: "calendar", label: `${countyName} BOH Meetings 2026`, href: "#" },
+    {
+      icon: "video",
+      label: `${countyName} Previous BOH Meeting Recordings`,
+      href: `/counties/${slug}/boh-recordings`,
+      internal: true,
+    },
+    { icon: "barChart", label: "County Health Rankings", href: "#" },
+    { icon: "newspaper", label: `${countyName} Local News`, href: "#" },
+    { icon: "utensils", label: "Restaurant Inspection Scores", href: "#" },
+  ];
+};
+
 
 const intro = (name: string, dept: string) =>
   `Welcome to the ${dept}, where our goal is to serve the citizens of ${name} by providing preventive healthcare services.`;
