@@ -35,7 +35,9 @@ const relatedIconMap: Record<CountyRelatedLink["icon"], typeof Calendar> = {
   barChart: BarChart3,
   newspaper: Newspaper,
   utensils: Utensils,
+  video: Video,
 };
+
 
 const InfoCard = ({
   icon: Icon,
