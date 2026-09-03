@@ -16,8 +16,11 @@ export interface CountyRelatedLink {
   label: string;
   href: string;
   /** Lucide icon name. Resolved in CountyPage. */
-  icon: "calendar" | "barChart" | "newspaper" | "utensils";
+  icon: "calendar" | "barChart" | "newspaper" | "utensils" | "video";
+  /** true = internal route (rendered with react-router Link). */
+  internal?: boolean;
 }
+
 
 export interface CountyClinicSite {
   name: string;
