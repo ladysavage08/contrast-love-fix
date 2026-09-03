@@ -113,7 +113,11 @@ export const counties: County[] = [
     ],
     heroImage: "county-burke.jpg",
     heroAlt: "Burke County courthouse and surrounding landscape",
-    relatedLinks: defaultRelated("Burke County"),
+    relatedLinks: defaultRelated("Burke County").map((link) =>
+      link.label === "Burke County Local News"
+        ? { ...link, href: "https://www.thetruecitizen.com/" }
+        : link
+    ),
   },
   {
     slug: "columbia",
