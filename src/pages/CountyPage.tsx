@@ -10,7 +10,9 @@ import {
   BarChart3,
   Newspaper,
   Utensils,
+  Video,
   ImageIcon,
+
 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -35,7 +37,9 @@ const relatedIconMap: Record<CountyRelatedLink["icon"], typeof Calendar> = {
   barChart: BarChart3,
   newspaper: Newspaper,
   utensils: Utensils,
+  video: Video,
 };
+
 
 const InfoCard = ({
   icon: Icon,
@@ -355,23 +359,34 @@ const CountyPage = () => {
                   Related Pages
                 </h2>
                 <ul className="grid gap-2 sm:grid-cols-2">
-                  {related.map(({ icon, label, href }) => {
+                  {related.map(({ icon, label, href, internal }) => {
                     const Icon = relatedIconMap[icon];
+                    const cls =
+                      "flex min-h-[44px] items-center gap-3 rounded px-3 py-2.5 text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
+                    const inner = (
+                      <>
+                        <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                        <span className="font-medium underline-offset-2 hover:underline">
+                          {label}
+                        </span>
+                      </>
+                    );
                     return (
                       <li key={label}>
-                        <a
-                          href={href}
-                          className="flex items-center gap-3 rounded px-3 py-2.5 text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
-                        >
-                          <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                          <span className="font-medium underline-offset-2 hover:underline">
-                            {label}
-                          </span>
-                        </a>
+                        {internal ? (
+                          <Link to={href} className={cls}>
+                            {inner}
+                          </Link>
+                        ) : (
+                          <a href={href} className={cls}>
+                            {inner}
+                          </a>
+                        )}
                       </li>
                     );
                   })}
                 </ul>
+
               </section>
             )}
           </div>

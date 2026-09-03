@@ -7,6 +7,7 @@ import Index from "./pages/Index.tsx";
 import About from "./pages/About.tsx";
 import Contact from "./pages/Contact.tsx";
 import Counties from "./pages/Counties.tsx";
+import CountyBohRecordings from "./pages/CountyBohRecordings";
 import CountyPage from "./pages/CountyPage.tsx";
 import Programs from "./pages/Programs.tsx";
 import ProgramPage from "./pages/ProgramPage.tsx";
@@ -28,6 +29,7 @@ import Admin from "./pages/Admin.tsx";
 import AdminAlerts from "./pages/AdminAlerts.tsx";
 import AdminNews from "./pages/AdminNews.tsx";
 import AdminHero from "./pages/AdminHero.tsx";
+import AdminBohRecordings from "./pages/AdminBohRecordings";
 import AdminLinks from "./pages/AdminLinks.tsx";
 import AdminContent from "./pages/AdminContent.tsx";
 import AdminFooter from "./pages/AdminFooter.tsx";
@@ -81,6 +83,7 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/counties" element={<Counties />} />
           <Route path="/counties/:slug" element={<CountyPage />} />
+          <Route path="/counties/:slug/boh-recordings" element={<CountyBohRecordings />} />
           <Route path="/programs" element={<Programs />} />
           <Route path="/programs/home-visiting-program" element={<HomeVisitingProgram />} />
           <Route path="/programs/:slug" element={<ProgramPage />} />
@@ -102,6 +105,7 @@ const App = () => (
           <Route path="/admin/news" element={<AdminNews />} />
           <Route path="/admin/hero" element={<AdminHero />} />
           <Route path="/admin/links" element={<AdminLinks />} />
+          <Route path="/admin/boh-recordings" element={<AdminBohRecordings />} />
           <Route path="/admin/content" element={<AdminContent />} />
           <Route path="/admin/footer" element={<AdminFooter />} />
           <Route path="/wic" element={<Wic />} />
