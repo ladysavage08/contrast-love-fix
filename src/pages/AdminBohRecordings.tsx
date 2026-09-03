@@ -166,10 +166,12 @@ const AdminBohRecordings = () => {
   }
 
   async function toggle(r: Row, field: "published" | "archived") {
-    const { error } = await supabase
-      .from("boh_recordings")
-      .update({ [field]: !r[field], updated_by_email: user?.email ?? null })
-      .eq("id", r.id);
+    const patch =
+      field === "published"
+        ? { published: !r.published, updated_by_email: user?.email ?? null }
+        : { archived: !r.archived, updated_by_email: user?.email ?? null };
+    const { error } = await supabase.from("boh_recordings").update(patch).eq("id", r.id);
+
     if (error) toast({ title: "Update failed", description: error.message, variant: "destructive" });
     else load();
   }
