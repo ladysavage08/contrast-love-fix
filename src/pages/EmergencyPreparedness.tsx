@@ -2,14 +2,14 @@ import { ArrowRight, ExternalLink, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import imgSwabTruck from "@/assets/ep/img_5660.jpg.asset.json";
-import imgSwabCar from "@/assets/ep/7e9a2788.jpg.asset.json";
-import imgSiteSign from "@/assets/ep/7e9a2036.jpg.asset.json";
-import imgShelterPeople from "@/assets/ep/dsc_0119.jpg.asset.json";
-import imgShelterCots from "@/assets/ep/dsc_0141.jpg.asset.json";
-import imgShelterCotsBlue from "@/assets/ep/image33.jpg.asset.json";
-import imgBus from "@/assets/ep/dsc_0150.jpg.asset.json";
-import imgBriefing from "@/assets/ep/dsc_0125.jpg.asset.json";
+import imgSwabTruck from "@/assets/ep/img_5660.jpg";
+import imgSwabCar from "@/assets/ep/7e9a2788.jpg";
+import imgSiteSign from "@/assets/ep/7e9a2036.jpg";
+import imgShelterPeople from "@/assets/ep/dsc_0119.jpg";
+import imgShelterCots from "@/assets/ep/dsc_0141.jpg";
+import imgShelterCotsBlue from "@/assets/ep/image33.jpg";
+import imgBus from "@/assets/ep/dsc_0150.jpg";
+import imgBriefing from "@/assets/ep/dsc_0125.jpg";
 
 /**
  * Emergency Preparedness — dedicated program page.
@@ -19,42 +19,42 @@ import imgBriefing from "@/assets/ep/dsc_0125.jpg.asset.json";
 
 const galleryImages = [
   {
-    src: imgSwabTruck.url,
+    src: imgSwabTruck,
     alt: "A public health nurse in a gown, N95 mask, face shield and gloves works at an outdoor drive-through testing site beside a pickup truck.",
     caption: "Public health emergency response and disease control",
   },
   {
-    src: imgSwabCar.url,
+    src: imgSwabCar,
     alt: "A masked and gowned nurse collects a nasal swab sample from a driver seated in a vehicle.",
     caption: "Drive-through specimen collection",
   },
   {
-    src: imgSiteSign.url,
+    src: imgSiteSign,
     alt: "Vehicles line up under a large white tent at the Richmond County Board of Health, next to a Georgia Department of Public Health East Central Health District sign.",
     caption: "Public health emergency operations site",
   },
   {
-    src: imgShelterCots.url,
+    src: imgShelterCots,
     alt: "Rows of empty green cots with folded blankets set up across a high school gymnasium floor before shelter residents arrive.",
     caption: "Shelter set-up before arrivals",
   },
   {
-    src: imgShelterPeople.url,
+    src: imgShelterPeople,
     alt: "Families rest on cots and gather with volunteers inside a gymnasium being used as an emergency shelter.",
     caption: "Mass care operations in an emergency shelter",
   },
   {
-    src: imgShelterCotsBlue.url,
+    src: imgShelterCotsBlue,
     alt: "Numbered medical screening stations line the wall of a gymnasium filled with rows of blue cots and pillows.",
     caption: "Medical needs shelter with screening stations",
   },
   {
-    src: imgBus.url,
+    src: imgBus,
     alt: "Evacuees carrying bags board a chartered motor coach in a parking lot while school buses and staff assist nearby.",
     caption: "Transportation and evacuation support",
   },
   {
-    src: imgBriefing.url,
+    src: imgBriefing,
     alt: "Public health staff in high-visibility safety vests sit in a classroom for a shelter operations briefing.",
     caption: "Preparedness coordination and staff training",
   },
@@ -200,7 +200,7 @@ const EmergencyPreparedness = () => {
                 </p>
                 <figure className="mt-5">
                   <img
-                    src={imgSwabTruck.url}
+                    src={imgSwabTruck}
                     alt={galleryImages[0].alt}
                     loading="lazy"
                     decoding="async"
@@ -265,7 +265,7 @@ const EmergencyPreparedness = () => {
                 </p>
                 <figure className="mt-5">
                   <img
-                    src={imgBriefing.url}
+                    src={imgBriefing}
                     alt={galleryImages[7].alt}
                     loading="lazy"
                     decoding="async"
