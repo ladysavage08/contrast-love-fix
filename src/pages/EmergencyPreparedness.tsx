@@ -2,6 +2,7 @@ import { ArrowRight, ExternalLink, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import WeatherAlerts from "@/components/WeatherAlerts";
 import imgSwabTruck from "@/assets/ep/img_5660.jpg";
 import imgSwabCar from "@/assets/ep/7e9a2788.jpg";
 import imgSiteSign from "@/assets/ep/7e9a2036.jpg";
