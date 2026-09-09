@@ -96,12 +96,28 @@ function matchedCounties(props: Record<string, any>): string[] {
     if (name) found.add(name);
   }
 
-  // Zone-based alerts have no county SAME codes; fall back to the area text.
-  const areaDesc = String(props?.areaDesc ?? "");
-  for (const name of Object.keys(DISTRICT_COUNTIES)) {
-    const re = new RegExp(`\\b${name}\\b`, "i");
-    if (re.test(areaDesc)) found.add(name);
+  // Zone-based alerts carry no county SAME codes; fall back to the area text,
+  // but only for alerts that actually cover Georgia zones/counties, and only
+  // for area parts that are Georgia (unlabeled or ", GA"). This avoids
+  // matching same-named counties in other states, e.g. "Jefferson, FL".
+  const ugc: string[] = props?.geocode?.UGC ?? [];
+  const coversGeorgia =
+    ugc.some((code) => String(code).startsWith("GA")) ||
+    same.some((code) => String(code).startsWith("013"));
+
+  if (coversGeorgia) {
+    const parts = String(props?.areaDesc ?? "")
+      .split(";")
+      .map((part) => part.trim())
+      .filter((part) => !/,\s*[A-Z]{2}$/.test(part) || /,\s*GA$/.test(part))
+      .map((part) => part.replace(/,\s*GA$/, ""));
+
+    for (const name of Object.keys(DISTRICT_COUNTIES)) {
+      const re = new RegExp(`\\b${name}\\b`, "i");
+      if (parts.some((part) => re.test(part))) found.add(name);
+    }
   }
+
 
   return [...found].sort((a, b) => a.localeCompare(b));
 }
