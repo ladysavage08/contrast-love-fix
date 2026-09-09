@@ -142,6 +142,18 @@ const HeroSlider = () => {
                   aria-hidden="true"
                   className="absolute inset-0 bg-gradient-to-t from-foreground/95 via-foreground/75 to-foreground/20 sm:bg-gradient-to-r sm:from-foreground/85 sm:via-foreground/55 sm:to-transparent"
                 />
+                {/* Mouse-only convenience: whole slide links to the same place as the button.
+                    Hidden from keyboard/AT so the visible button stays the single stop. */}
+                {slide.cta.href && slide.cta.href !== "#" ? (
+                  <a
+                    href={slide.cta.href}
+                    aria-hidden="true"
+                    tabIndex={-1}
+                    className="absolute inset-0"
+                  >
+                    <span className="sr-only">{slide.title}</span>
+                  </a>
+                ) : null}
                 {/* pb-20 on mobile clears the dots pill so the CTA is always fully visible. */}
                 <div className="relative flex h-full w-full min-w-0 max-w-2xl flex-col justify-end gap-2.5 p-4 pb-20 text-background sm:justify-center sm:gap-3 sm:p-8 sm:pb-8 md:p-10">
                   {slide.eyebrow ? (
