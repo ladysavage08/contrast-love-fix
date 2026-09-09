@@ -311,6 +311,20 @@ const EmergencyPreparedness = () => {
                     <li key={item.slice(0, 40)}>{item}</li>
                   ))}
                 </ul>
+                <figure className="mt-6">
+                  <img
+                    src={imgKitSupplies}
+                    alt="Emergency preparedness supplies and educational materials displayed at a community event."
+                    loading="lazy"
+                    decoding="async"
+                    width={1400}
+                    height={1050}
+                    className="h-auto w-full rounded-lg border border-border"
+                  />
+                  <figcaption className="mt-2 text-sm text-muted-foreground">
+                    Sample emergency kit supplies and family preparedness materials.
+                  </figcaption>
+                </figure>
               </section>
 
               <section aria-labelledby="stay-informed">
