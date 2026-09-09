@@ -10,6 +10,13 @@ import imgShelterCots from "@/assets/ep/dsc_0141.jpg";
 import imgShelterCotsBlue from "@/assets/ep/image33.jpg";
 import imgBus from "@/assets/ep/dsc_0150.jpg";
 import imgBriefing from "@/assets/ep/dsc_0125.jpg";
+import imgStaffGroup from "@/assets/ep/staff_group.jpg";
+import imgPpeDriveThrough from "@/assets/ep/ppe_drive_through.jpg";
+import imgResponseSite from "@/assets/ep/response_site_vehicles.jpg";
+import imgNursesDriveThrough from "@/assets/ep/nurses_drive_through.jpg";
+import imgPlanningExercise from "@/assets/ep/planning_exercise.jpg";
+import imgKitSupplies from "@/assets/ep/kit_supplies_table.jpg";
+import imgPreparednessMaterials from "@/assets/ep/preparedness_materials.jpg";
 
 /**
  * Emergency Preparedness — dedicated program page.
