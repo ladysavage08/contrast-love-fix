@@ -256,6 +256,36 @@ const EmergencyPreparedness = () => {
                     public.
                   </li>
                 </ul>
+                <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                  <figure>
+                    <img
+                      src={imgStaffGroup}
+                      alt="Public health personnel participate in an emergency preparedness training session."
+                      loading="lazy"
+                      decoding="async"
+                      width={1050}
+                      height={1400}
+                      className="h-auto w-full rounded-lg border border-border"
+                    />
+                    <figcaption className="mt-2 text-sm text-muted-foreground">
+                      District preparedness staff during a training session.
+                    </figcaption>
+                  </figure>
+                  <figure>
+                    <img
+                      src={imgPlanningExercise}
+                      alt="Emergency preparedness team members participate in a planning exercise."
+                      loading="lazy"
+                      decoding="async"
+                      width={1400}
+                      height={1050}
+                      className="h-auto w-full rounded-lg border border-border"
+                    />
+                    <figcaption className="mt-2 text-sm text-muted-foreground">
+                      Planning and coordination with community partners.
+                    </figcaption>
+                  </figure>
+                </div>
               </section>
 
               <section aria-labelledby="community-personal">
