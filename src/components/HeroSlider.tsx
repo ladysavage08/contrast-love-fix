@@ -43,7 +43,7 @@ const defaultSlides: Slide[] = [
     // Keep the supply-kit photo in frame on small screens; text lives in the caption.
     focal: "object-[72%_center] sm:object-[65%_center]",
     // Sept 30, 2026 at 11:59:59 p.m. Eastern (UTC-4)
-    expiresAt: "2026-10-01T03:59:59-00:00",
+    expiresAt: "2026-09-30T23:59:59-04:00",
   },
   {
     image: mobileClinic,
@@ -95,7 +95,9 @@ const HeroSlider = () => {
               : undefined,
           focal: s.focal ?? undefined,
         }))
-      : defaultSlides;
+      : defaultSlides.filter(
+          (s) => !s.expiresAt || new Date(s.expiresAt).getTime() > Date.now()
+        );
 
   useEffect(() => {
     if (!api) return;
