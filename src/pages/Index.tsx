@@ -81,6 +81,12 @@ const Index = () => {
     if (p.post_type !== "event" || !isMobileClinic(p)) return true;
     return withinTwoWeeks(p.event_date ?? p.published_at);
   };
+  const usesSeptemberMobileClinicGraphic = (p: {
+    category?: string | null;
+    event_date?: string | null;
+  }) =>
+    p.category === "Mobile Clinic" &&
+    (p.event_date ?? "").slice(0, 7) === "2026-09";
 
   const news = allNews.filter(passesHomepageMobileRule).slice(0, 4);
   const upcomingEvents = allUpcomingEvents.filter(passesHomepageMobileRule).slice(0, 4);
@@ -179,7 +185,11 @@ const Index = () => {
                         ? { role: "presentation", "aria-hidden": true }
                         : {})}
                       loading="lazy"
-                      className="h-16 w-20 shrink-0 rounded object-cover sm:h-20 sm:w-28"
+                      className={`h-16 w-20 shrink-0 rounded sm:h-20 sm:w-28 ${
+                        usesSeptemberMobileClinicGraphic(item)
+                          ? "bg-muted object-contain"
+                          : "object-cover"
+                      }`}
                     />
                   ) : (
                     <div
