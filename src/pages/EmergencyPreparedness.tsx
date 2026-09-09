@@ -218,6 +218,37 @@ const EmergencyPreparedness = () => {
                     during an emergency response.
                   </figcaption>
                 </figure>
+                <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                  <figure>
+                    <img
+                      src={imgPpeDriveThrough}
+                      alt="Public health worker wearing protective equipment assists a community member at a drive-through response site."
+                      loading="lazy"
+                      decoding="async"
+                      width={1400}
+                      height={933}
+                      className="h-auto w-full rounded-lg border border-border"
+                    />
+                    <figcaption className="mt-2 text-sm text-muted-foreground">
+                      Protecting staff and residents during an infectious disease
+                      response.
+                    </figcaption>
+                  </figure>
+                  <figure>
+                    <img
+                      src={imgResponseSite}
+                      alt="Public health staff coordinate vehicles at an emergency response site."
+                      loading="lazy"
+                      decoding="async"
+                      width={1400}
+                      height={933}
+                      className="h-auto w-full rounded-lg border border-border"
+                    />
+                    <figcaption className="mt-2 text-sm text-muted-foreground">
+                      Traffic flow and site coordination during response operations.
+                    </figcaption>
+                  </figure>
+                </div>
               </section>
 
               <section aria-labelledby="echd-role">
