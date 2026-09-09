@@ -13,6 +13,7 @@ import { useHeroSlides } from "@/hooks/useHeroSlides";
 import communityCrowd from "@/assets/slide-community-crowd.jpg";
 import mobileClinic from "@/assets/hero-mobile-clinic.jpg";
 import immunization from "@/assets/slide-immunization.jpg";
+import preparednessMonth from "@/assets/national-preparedness-month.jpg";
 
 type Slide = {
   image: string;
@@ -24,10 +25,26 @@ type Slide = {
   secondaryCta?: { label: string; href: string };
   /** Tailwind object-position classes, e.g. "object-center sm:object-right". Keeps focal subject visible across breakpoints. */
   focal?: string;
+  /** ISO timestamp after which the slide is hidden automatically. */
+  expiresAt?: string;
 };
 
 /** Fallback slides used when no admin-managed slides exist or fetch fails. */
 const defaultSlides: Slide[] = [
+  {
+    image: preparednessMonth,
+    alt: "Emergency supply kit with the words September is National Preparedness Month—Prepare Today. Stay Ready.",
+    eyebrow: "Prepare Today. Stay Ready.",
+    title: "September Is National Preparedness Month",
+    cta: {
+      label: "Learn How to Prepare",
+      href: "/news/september-is-national-preparedness-month-2026",
+    },
+    // Keep the supply-kit photo in frame on small screens; text lives in the caption.
+    focal: "object-[60%_center] sm:object-center",
+    // Sept 30, 2026 at 11:59:59 p.m. Eastern (UTC-4)
+    expiresAt: "2026-09-30T23:59:59-04:00",
+  },
   {
     image: mobileClinic,
     alt: "East Central Public Health District Mobile Health Clinic vehicle with DPH branding and the slogan 'We Go Where You Are!'",
@@ -53,6 +70,7 @@ const defaultSlides: Slide[] = [
   },
 ];
 
+
 const HeroSlider = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -77,7 +95,9 @@ const HeroSlider = () => {
               : undefined,
           focal: s.focal ?? undefined,
         }))
-      : defaultSlides;
+      : defaultSlides.filter(
+          (s) => !s.expiresAt || new Date(s.expiresAt).getTime() > Date.now()
+        );
 
   useEffect(() => {
     if (!api) return;
@@ -122,6 +142,18 @@ const HeroSlider = () => {
                   aria-hidden="true"
                   className="absolute inset-0 bg-gradient-to-t from-foreground/95 via-foreground/75 to-foreground/20 sm:bg-gradient-to-r sm:from-foreground/85 sm:via-foreground/55 sm:to-transparent"
                 />
+                {/* Mouse-only convenience: whole slide links to the same place as the button.
+                    Hidden from keyboard/AT so the visible button stays the single stop. */}
+                {slide.cta.href && slide.cta.href !== "#" ? (
+                  <a
+                    href={slide.cta.href}
+                    aria-hidden="true"
+                    tabIndex={-1}
+                    className="absolute inset-0"
+                  >
+                    <span className="sr-only">{slide.title}</span>
+                  </a>
+                ) : null}
                 {/* pb-20 on mobile clears the dots pill so the CTA is always fully visible. */}
                 <div className="relative flex h-full w-full min-w-0 max-w-2xl flex-col justify-end gap-2.5 p-4 pb-20 text-background sm:justify-center sm:gap-3 sm:p-8 sm:pb-8 md:p-10">
                   {slide.eyebrow ? (
