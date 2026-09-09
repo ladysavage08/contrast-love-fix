@@ -270,6 +270,29 @@ const EmergencyPreparedness = () => {
                   strikes so each person knows what to do, where to go and how to reach
                   one another.
                 </p>
+                <div className="mt-5 grid items-start gap-5 sm:grid-cols-2">
+                  <figure>
+                    <img
+                      src={imgNursesDriveThrough}
+                      alt="Public health nurses assist a community member during a drive-through response operation."
+                      loading="lazy"
+                      decoding="async"
+                      width={1050}
+                      height={1400}
+                      className="h-auto w-full rounded-lg border border-border"
+                    />
+                    <figcaption className="mt-2 text-sm text-muted-foreground">
+                      Nurses support residents at a drive-through response site.
+                    </figcaption>
+                  </figure>
+                  <p className="text-base leading-relaxed text-foreground/90">
+                    A coordinated community response depends on neighbors, schools,
+                    faith communities, employers and local agencies working together
+                    with public health. When a mass care or mass casualty event
+                    happens, district staff join county partners to shelter residents,
+                    meet medical needs and keep the public informed.
+                  </p>
+                </div>
                 <figure className="mt-5">
                   <img
                     src={imgBriefing}
