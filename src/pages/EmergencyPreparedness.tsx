@@ -456,6 +456,10 @@ const EmergencyPreparedness = () => {
                 </p>
               </section>
 
+              <WeatherAlerts />
+
+
+
               <section aria-labelledby="resources">
                 <h2 id="resources" className="text-2xl font-semibold">
                   Emergency Preparedness Resources
