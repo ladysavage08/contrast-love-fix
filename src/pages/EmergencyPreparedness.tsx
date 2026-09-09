@@ -380,7 +380,7 @@ const EmergencyPreparedness = () => {
                 </h2>
                 <div aria-hidden="true" className="mt-2 h-1 w-16 bg-accent-gold" />
                 <ul className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  {galleryImages.slice(1).map((img) => (
+                  {galleryImages.slice(1, 7).map((img) => (
                     <li key={img.src}>
                       <figure>
                         <img
