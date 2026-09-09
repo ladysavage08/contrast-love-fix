@@ -13,6 +13,7 @@ import { useHeroSlides } from "@/hooks/useHeroSlides";
 import communityCrowd from "@/assets/slide-community-crowd.jpg";
 import mobileClinic from "@/assets/hero-mobile-clinic.jpg";
 import immunization from "@/assets/slide-immunization.jpg";
+import preparednessMonth from "@/assets/national-preparedness-month.jpg";
 
 type Slide = {
   image: string;
@@ -24,10 +25,26 @@ type Slide = {
   secondaryCta?: { label: string; href: string };
   /** Tailwind object-position classes, e.g. "object-center sm:object-right". Keeps focal subject visible across breakpoints. */
   focal?: string;
+  /** ISO timestamp after which the slide is hidden automatically. */
+  expiresAt?: string;
 };
 
 /** Fallback slides used when no admin-managed slides exist or fetch fails. */
 const defaultSlides: Slide[] = [
+  {
+    image: preparednessMonth,
+    alt: "Emergency supply kit with the words September is National Preparedness Month—Prepare Today. Stay Ready.",
+    eyebrow: "Prepare Today. Stay Ready.",
+    title: "September Is National Preparedness Month",
+    cta: {
+      label: "Learn How to Prepare",
+      href: "/news/september-is-national-preparedness-month-2026",
+    },
+    // Keep the supply-kit photo in frame on small screens; text lives in the caption.
+    focal: "object-[72%_center] sm:object-[65%_center]",
+    // Sept 30, 2026 at 11:59:59 p.m. Eastern (UTC-4)
+    expiresAt: "2026-10-01T03:59:59-00:00",
+  },
   {
     image: mobileClinic,
     alt: "East Central Public Health District Mobile Health Clinic vehicle with DPH branding and the slogan 'We Go Where You Are!'",
@@ -52,6 +69,7 @@ const defaultSlides: Slide[] = [
     cta: { label: "Find a clinic near you", href: "/counties" },
   },
 ];
+
 
 const HeroSlider = () => {
   const [api, setApi] = useState<CarouselApi>();
