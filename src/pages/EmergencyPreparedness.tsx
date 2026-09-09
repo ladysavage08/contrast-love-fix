@@ -591,6 +591,7 @@ const EmergencyPreparedness = () => {
                     ["Create Your Emergency Kit", "kit"],
                     ["Stay Informed if You Lose Power", "stay-informed"],
                     ["County Emergency Alert Systems", "county-alerts"],
+                    ["National Weather Service Alerts", "nws-alerts"],
                     ["Emergency Preparedness Resources", "resources"],
                   ].map(([label, id]) => (
                     <li key={id}>
