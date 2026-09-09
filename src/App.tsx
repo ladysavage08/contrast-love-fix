@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -95,6 +95,10 @@ const App = () => (
           <Route path="/womens-health/:slug" element={<WomensHealthPage />} />
           <Route path="/news" element={<News />} />
           <Route path="/news/what-is-public-health-article-series" element={<PublicHealthSeries />} />
+          <Route
+            path="/news/justin-case-prepare-your-family-for-a-weather-disaster-september-2026"
+            element={<Navigate to="/news/just-in-case-prepare-your-family-for-a-weather-disaster-september-2026" replace />}
+          />
           <Route path="/news/:slug" element={<NewsPost />} />
           <Route path="/accessibility" element={<Accessibility />} />
           <Route path="/services" element={<Services />} />
