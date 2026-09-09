@@ -379,6 +379,21 @@ const EmergencyPreparedness = () => {
                     </li>
                   ))}
                 </ul>
+                <figure className="mt-6">
+                  <img
+                    src={imgPreparednessMaterials}
+                    alt="Emergency preparedness guides, first-aid supplies and severe-weather safety materials displayed at an outreach event."
+                    loading="lazy"
+                    decoding="async"
+                    width={1050}
+                    height={1400}
+                    className="mx-auto h-auto w-full max-w-md rounded-lg border border-border"
+                  />
+                  <figcaption className="mt-2 text-sm text-muted-foreground">
+                    Preparedness guides and supplies shared at a community outreach
+                    event.
+                  </figcaption>
+                </figure>
               </section>
 
               <section aria-labelledby="gallery">
