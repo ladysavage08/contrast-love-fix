@@ -10,6 +10,13 @@ import imgShelterCots from "@/assets/ep/dsc_0141.jpg";
 import imgShelterCotsBlue from "@/assets/ep/image33.jpg";
 import imgBus from "@/assets/ep/dsc_0150.jpg";
 import imgBriefing from "@/assets/ep/dsc_0125.jpg";
+import imgStaffGroup from "@/assets/ep/staff_group.jpg";
+import imgPpeDriveThrough from "@/assets/ep/ppe_drive_through.jpg";
+import imgResponseSite from "@/assets/ep/response_site_vehicles.jpg";
+import imgNursesDriveThrough from "@/assets/ep/nurses_drive_through.jpg";
+import imgPlanningExercise from "@/assets/ep/planning_exercise.jpg";
+import imgKitSupplies from "@/assets/ep/kit_supplies_table.jpg";
+import imgPreparednessMaterials from "@/assets/ep/preparedness_materials.jpg";
 
 /**
  * Emergency Preparedness — dedicated program page.
@@ -211,6 +218,37 @@ const EmergencyPreparedness = () => {
                     during an emergency response.
                   </figcaption>
                 </figure>
+                <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                  <figure>
+                    <img
+                      src={imgPpeDriveThrough}
+                      alt="Public health worker wearing protective equipment assists a community member at a drive-through response site."
+                      loading="lazy"
+                      decoding="async"
+                      width={1400}
+                      height={933}
+                      className="h-auto w-full rounded-lg border border-border"
+                    />
+                    <figcaption className="mt-2 text-sm text-muted-foreground">
+                      Protecting staff and residents during an infectious disease
+                      response.
+                    </figcaption>
+                  </figure>
+                  <figure>
+                    <img
+                      src={imgResponseSite}
+                      alt="Public health staff coordinate vehicles at an emergency response site."
+                      loading="lazy"
+                      decoding="async"
+                      width={1400}
+                      height={933}
+                      className="h-auto w-full rounded-lg border border-border"
+                    />
+                    <figcaption className="mt-2 text-sm text-muted-foreground">
+                      Traffic flow and site coordination during response operations.
+                    </figcaption>
+                  </figure>
+                </div>
               </section>
 
               <section aria-labelledby="echd-role">
@@ -249,6 +287,36 @@ const EmergencyPreparedness = () => {
                     public.
                   </li>
                 </ul>
+                <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                  <figure>
+                    <img
+                      src={imgStaffGroup}
+                      alt="Public health personnel participate in an emergency preparedness training session."
+                      loading="lazy"
+                      decoding="async"
+                      width={1050}
+                      height={1400}
+                      className="h-auto w-full rounded-lg border border-border"
+                    />
+                    <figcaption className="mt-2 text-sm text-muted-foreground">
+                      District preparedness staff during a training session.
+                    </figcaption>
+                  </figure>
+                  <figure>
+                    <img
+                      src={imgPlanningExercise}
+                      alt="Emergency preparedness team members participate in a planning exercise."
+                      loading="lazy"
+                      decoding="async"
+                      width={1400}
+                      height={1050}
+                      className="h-auto w-full rounded-lg border border-border"
+                    />
+                    <figcaption className="mt-2 text-sm text-muted-foreground">
+                      Planning and coordination with community partners.
+                    </figcaption>
+                  </figure>
+                </div>
               </section>
 
               <section aria-labelledby="community-personal">
@@ -263,6 +331,29 @@ const EmergencyPreparedness = () => {
                   strikes so each person knows what to do, where to go and how to reach
                   one another.
                 </p>
+                <div className="mt-5 grid items-start gap-5 sm:grid-cols-2">
+                  <figure>
+                    <img
+                      src={imgNursesDriveThrough}
+                      alt="Public health nurses assist a community member during a drive-through response operation."
+                      loading="lazy"
+                      decoding="async"
+                      width={1050}
+                      height={1400}
+                      className="h-auto w-full rounded-lg border border-border"
+                    />
+                    <figcaption className="mt-2 text-sm text-muted-foreground">
+                      Nurses support residents at a drive-through response site.
+                    </figcaption>
+                  </figure>
+                  <p className="text-base leading-relaxed text-foreground/90">
+                    A coordinated community response depends on neighbors, schools,
+                    faith communities, employers and local agencies working together
+                    with public health. When a mass care or mass casualty event
+                    happens, district staff join county partners to shelter residents,
+                    meet medical needs and keep the public informed.
+                  </p>
+                </div>
                 <figure className="mt-5">
                   <img
                     src={imgBriefing}
@@ -304,6 +395,20 @@ const EmergencyPreparedness = () => {
                     <li key={item.slice(0, 40)}>{item}</li>
                   ))}
                 </ul>
+                <figure className="mt-6">
+                  <img
+                    src={imgKitSupplies}
+                    alt="Emergency preparedness supplies and educational materials displayed at a community event."
+                    loading="lazy"
+                    decoding="async"
+                    width={1400}
+                    height={1050}
+                    className="h-auto w-full rounded-lg border border-border"
+                  />
+                  <figcaption className="mt-2 text-sm text-muted-foreground">
+                    Sample emergency kit supplies and family preparedness materials.
+                  </figcaption>
+                </figure>
               </section>
 
               <section aria-labelledby="stay-informed">
@@ -372,6 +477,21 @@ const EmergencyPreparedness = () => {
                     </li>
                   ))}
                 </ul>
+                <figure className="mt-6">
+                  <img
+                    src={imgPreparednessMaterials}
+                    alt="Emergency preparedness guides, first-aid supplies and severe-weather safety materials displayed at an outreach event."
+                    loading="lazy"
+                    decoding="async"
+                    width={1050}
+                    height={1400}
+                    className="mx-auto h-auto w-full max-w-md rounded-lg border border-border"
+                  />
+                  <figcaption className="mt-2 text-sm text-muted-foreground">
+                    Preparedness guides and supplies shared at a community outreach
+                    event.
+                  </figcaption>
+                </figure>
               </section>
 
               <section aria-labelledby="gallery">
