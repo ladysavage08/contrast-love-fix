@@ -35,6 +35,7 @@ import AdminContent from "./pages/AdminContent.tsx";
 import AdminFooter from "./pages/AdminFooter.tsx";
 import Wic from "./pages/Wic.tsx";
 import Hopwa from "./pages/Hopwa.tsx";
+import EmergencyPreparedness from "./pages/EmergencyPreparedness.tsx";
 import GetWicRedirect from "./pages/GetWicRedirect.tsx";
 import Calendar from "./pages/Calendar.tsx";
 import WegoHome from "./pages/wego/WegoHome.tsx";
@@ -86,6 +87,7 @@ const App = () => (
           <Route path="/counties/:slug/boh-recordings" element={<CountyBohRecordings />} />
           <Route path="/programs" element={<Programs />} />
           <Route path="/programs/home-visiting-program" element={<HomeVisitingProgram />} />
+          <Route path="/programs/emergency-preparedness" element={<EmergencyPreparedness />} />
           <Route path="/programs/:slug" element={<ProgramPage />} />
           <Route path="/environmental-health" element={<EnvironmentalHealth />} />
           <Route path="/environmental-health/:slug" element={<EnvironmentalHealthPage />} />
