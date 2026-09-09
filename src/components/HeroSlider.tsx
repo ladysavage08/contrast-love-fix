@@ -41,7 +41,7 @@ const defaultSlides: Slide[] = [
       href: "/news/september-is-national-preparedness-month-2026",
     },
     // Keep the supply-kit photo in frame on small screens; text lives in the caption.
-    focal: "object-[88%_center] sm:object-right",
+    focal: "object-[60%_center] sm:object-center",
     // Sept 30, 2026 at 11:59:59 p.m. Eastern (UTC-4)
     expiresAt: "2026-09-30T23:59:59-04:00",
   },
