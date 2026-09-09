@@ -107,7 +107,7 @@ const resources = [
   },
   {
     label: "Georgia Department of Public Health — Emergency Preparedness",
-    href: "https://dph.georgia.gov/emergency-preparedness",
+    href: "https://dph.georgia.gov/epidemiology/epidemiology-emergency-preparedness",
   },
   {
     label: "FEMA Integrated Public Alert and Warning System (IPAWS)",
