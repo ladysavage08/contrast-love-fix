@@ -2,6 +2,7 @@ import { ArrowRight, ExternalLink, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import WeatherAlerts from "@/components/WeatherAlerts";
 import imgSwabTruck from "@/assets/ep/img_5660.jpg";
 import imgSwabCar from "@/assets/ep/7e9a2788.jpg";
 import imgSiteSign from "@/assets/ep/7e9a2036.jpg";
@@ -456,6 +457,10 @@ const EmergencyPreparedness = () => {
                 </p>
               </section>
 
+              <WeatherAlerts />
+
+
+
               <section aria-labelledby="resources">
                 <h2 id="resources" className="text-2xl font-semibold">
                   Emergency Preparedness Resources
@@ -591,6 +596,7 @@ const EmergencyPreparedness = () => {
                     ["Create Your Emergency Kit", "kit"],
                     ["Stay Informed if You Lose Power", "stay-informed"],
                     ["County Emergency Alert Systems", "county-alerts"],
+                    ["National Weather Service Alerts", "nws-alerts"],
                     ["Emergency Preparedness Resources", "resources"],
                   ].map(([label, id]) => (
                     <li key={id}>
