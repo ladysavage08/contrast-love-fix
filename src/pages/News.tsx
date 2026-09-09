@@ -11,6 +11,10 @@ const eventEndKey = (p: Post) =>
 const eventStartKey = (p: Post) =>
   (p.event_date ?? p.published_at ?? "").slice(0, 10);
 
+const usesSeptemberMobileClinicGraphic = (p: Post) =>
+  p.category === "Mobile Clinic" &&
+  (p.event_date ?? "").slice(0, 7) === "2026-09";
+
 const PostCard = ({ post, past = false }: { post: Post; past?: boolean }) => (
   <li className="flex flex-col overflow-hidden rounded-lg border border-border bg-card">
     {post.featured_image_url ? (
@@ -21,7 +25,11 @@ const PostCard = ({ post, past = false }: { post: Post; past?: boolean }) => (
           ? { role: "presentation", "aria-hidden": true }
           : {})}
         loading="lazy"
-        className="h-48 w-full object-cover"
+        className={`h-48 w-full ${
+          usesSeptemberMobileClinicGraphic(post)
+            ? "bg-muted object-contain"
+            : "object-cover"
+        }`}
       />
     ) : (
       <div aria-hidden="true" className="h-2 w-full bg-accent" />

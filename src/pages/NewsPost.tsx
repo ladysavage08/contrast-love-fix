@@ -6,6 +6,13 @@ import { usePost, formatPostDate } from "@/hooks/usePosts";
 import { isAllDayEvent } from "@/lib/eventDate";
 import { normalizeSanitizedPostBody } from "@/lib/postBodyHtml";
 
+const usesSeptemberMobileClinicGraphic = (post: {
+  category?: string | null;
+  event_date?: string | null;
+}) =>
+  post.category === "Mobile Clinic" &&
+  (post.event_date ?? "").slice(0, 7) === "2026-09";
+
 const NewsPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const { data: post, isLoading, error } = usePost(slug);
@@ -122,7 +129,11 @@ const NewsPost = () => {
                 {...(post.featured_image_decorative
                   ? { role: "presentation", "aria-hidden": true }
                   : {})}
-                className="mb-6 w-full rounded-lg object-cover"
+                className={`mb-6 w-full rounded-lg ${
+                  usesSeptemberMobileClinicGraphic(post)
+                    ? "h-auto object-contain"
+                    : "object-cover"
+                }`}
               />
             )}
 
