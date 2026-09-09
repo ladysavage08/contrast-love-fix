@@ -113,8 +113,11 @@ function matchedCounties(props: Record<string, any>): string[] {
       .map((part) => part.replace(/,\s*GA$/, ""));
 
     for (const name of Object.keys(DISTRICT_COUNTIES)) {
-      const re = new RegExp(`\\b${name}\\b`, "i");
-      if (parts.some((part) => re.test(part))) found.add(name);
+      // Exact part match: Georgia forecast zones for these counties are named
+      // for the county itself, so this avoids "Northern Columbia" (Florida).
+      if (parts.some((part) => part.toLowerCase() === name.toLowerCase())) {
+        found.add(name);
+      }
     }
   }
 
