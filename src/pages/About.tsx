@@ -426,7 +426,7 @@ const About = () => {
               {[
                 ["District Health Director", "Lee Donohue, MD"],
                 ["Deputy Director", "Jonathan Adriano"],
-                ["District Nursing Director", "Rebecca Kershner"],
+                ["District Nursing Director", "Jennifer Harrison"],
                 ["Chronic Disease Coordinator", "Sadie Stockton"],
                 ["Emergency Preparedness and Response Director", "Ella Gardner"],
                 ["Environmental Health Director", "Jasmine Anderson"],
