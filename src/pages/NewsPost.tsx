@@ -3,7 +3,7 @@ import { ArrowLeft, Calendar, Clock, MapPin, ExternalLink } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { usePost, formatPostDate } from "@/hooks/usePosts";
-import { isAllDayEvent } from "@/lib/eventDate";
+import { isAllDayEvent, formatDateKey } from "@/lib/eventDate";
 import { normalizeSanitizedPostBody } from "@/lib/postBodyHtml";
 
 const usesSeptemberMobileClinicGraphic = (post: {
@@ -152,12 +152,7 @@ const NewsPost = () => {
                         <Calendar className="mt-0.5 h-4 w-4 text-primary" aria-hidden="true" />
                         <span>
                           <span className="font-medium">Date: </span>
-                          {new Date(post.event_date).toLocaleDateString("en-US", {
-                            weekday: "long",
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          })}
+                          {formatDateKey(post.event_date)}
                         </span>
                       </li>
                     )}
