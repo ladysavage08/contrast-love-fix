@@ -99,6 +99,10 @@ const App = () => (
             path="/news/justin-case-prepare-your-family-for-a-weather-disaster-september-2026"
             element={<Navigate to="/news/just-in-case-prepare-your-family-for-a-weather-disaster-september-2026" replace />}
           />
+          <Route
+            path="/news/mobile-clinic-lincoln-2026-09-15"
+            element={<Navigate to="/news/mobile-clinic-lincoln-2026-09-22" replace />}
+          />
           <Route path="/news/:slug" element={<NewsPost />} />
           <Route path="/accessibility" element={<Accessibility />} />
           <Route path="/services" element={<Services />} />
