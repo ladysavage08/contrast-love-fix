@@ -86,13 +86,15 @@ const News = () => {
   const seriesPosts = posts?.filter((post) => isPublicHealthSeriesPost(post.category)) ?? [];
   const regularPosts = posts?.filter((post) => !isPublicHealthSeriesPost(post.category)) ?? [];
 
-  const newsPosts = regularPosts.filter((p) => p.post_type !== "event");
-  const upcomingEvents = regularPosts
-    .filter((p) => p.post_type === "event" && eventEndKey(p) >= today)
-    .sort((a, b) => eventStartKey(a).localeCompare(eventStartKey(b)));
+  // One unified, newest → oldest list: news by published_at, events by
+  // event_date (already sorted that way by usePosts/sortPostsChronologically).
+  // Past events are pulled out into the archive at the bottom of the page.
   const pastEvents = regularPosts
     .filter((p) => p.post_type === "event" && eventEndKey(p) < today)
     .sort((a, b) => eventStartKey(b).localeCompare(eventStartKey(a)));
+  const latestPosts = regularPosts.filter(
+    (p) => !(p.post_type === "event" && eventEndKey(p) < today),
+  );
 
 
   return (
@@ -152,26 +154,13 @@ const News = () => {
           <p className="text-muted-foreground">No posts have been published yet.</p>
         )}
 
-        {upcomingEvents.length > 0 && (
-          <section aria-labelledby="upcoming-events-heading" className="mb-10">
-            <h2 id="upcoming-events-heading" className="mb-4 text-2xl font-bold">
-              Upcoming Events
-            </h2>
-            <ul className="grid gap-6 sm:grid-cols-2">
-              {upcomingEvents.map((post) => (
-                <PostCard key={post.id} post={post} />
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {newsPosts.length > 0 && (
+        {latestPosts.length > 0 && (
           <section aria-labelledby="latest-news-heading" className="mb-10">
             <h2 id="latest-news-heading" className="mb-4 text-2xl font-bold">
-              Latest News
+              Latest News &amp; Events
             </h2>
             <ul className="grid gap-6 sm:grid-cols-2">
-              {newsPosts.map((post) => (
+              {latestPosts.map((post) => (
                 <PostCard key={post.id} post={post} />
               ))}
             </ul>
