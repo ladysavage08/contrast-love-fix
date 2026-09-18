@@ -24,6 +24,10 @@ export function sanitizePostBodyHtml(input: string) {
   return purifier.sanitize(input, {
     ALLOWED_TAGS: [...SAFE_HTML_TAGS],
     ALLOWED_ATTR: [...SAFE_HTML_ATTRS],
+    // target and rel hold non-URI values (e.g. "_blank", "noopener
+    // noreferrer"). Without this, DOMPurify treats them as URI attributes
+    // and strips them because the values don't match the URI pattern.
+    ADD_URI_SAFE_ATTR: ["target", "rel"],
     ALLOW_DATA_ATTR: false,
     FORBID_TAGS: ["script", "style"],
     ALLOWED_URI_REGEXP: SAFE_URI_PATTERN,
