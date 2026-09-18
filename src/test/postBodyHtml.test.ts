@@ -7,14 +7,14 @@ describe("post body HTML handling", () => {
 
     expect(result).toContain("<h2>Update</h2>");
     expect(result).toContain("<strong>news</strong>");
-    expect(result).not.toContain("<h2>");
+    expect(result).not.toMatch(/<h2>/);
   });
 
   it("decodes previously escaped HTML and renders the sanitized markup", () => {
     const result = normalizeSanitizedPostBody("<p>Visit <a href=\"https://example.org\" target=\"_blank\">Example</a></p>");
 
     expect(result).toContain('<p>Visit <a href="https://example.org" target="_blank" rel="noopener noreferrer">Example</a></p>');
-    expect(result).not.toContain("<a");
+    expect(result).not.toMatch(/<a/);
   });
 
   it("keeps plain text posts working by wrapping paragraphs", () => {
