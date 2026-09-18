@@ -7,14 +7,14 @@ describe("post body HTML handling", () => {
 
     expect(result).toContain("<h2>Update</h2>");
     expect(result).toContain("<strong>news</strong>");
-    expect(result).not.toContain("&lt;h2&gt;");
+    expect(result).not.toContain("<h2>");
   });
 
   it("decodes previously escaped HTML and renders the sanitized markup", () => {
-    const result = normalizeSanitizedPostBody("&lt;p&gt;Visit &lt;a href=\"https://example.org\" target=\"_blank\"&gt;Example&lt;/a&gt;&lt;/p&gt;");
+    const result = normalizeSanitizedPostBody("<p>Visit <a href=\"https://example.org\" target=\"_blank\">Example</a></p>");
 
-    expect(result).toContain('<p>Visit <a href="https://example.org">Example</a></p>');
-    expect(result).not.toContain("&lt;a");
+    expect(result).toContain('<p>Visit <a href="https://example.org" target="_blank" rel="noopener noreferrer">Example</a></p>');
+    expect(result).not.toContain("<a");
   });
 
   it("keeps plain text posts working by wrapping paragraphs", () => {
@@ -27,5 +27,12 @@ describe("post body HTML handling", () => {
     const result = sanitizePostBodyHtml('<p>Hello</p><script>alert("xss")</script>');
 
     expect(result).toBe("<p>Hello</p>");
+  });
+
+  it("preserves target and rel on external links in post bodies", () => {
+    const result = normalizeSanitizedPostBody('<p>Read the full <a href="https://www.wjbf.com/test" target="_blank" rel="noopener noreferrer">WJBF News article</a>.</p>');
+
+    expect(result).toContain('target="_blank"');
+    expect(result).toContain('rel="noopener noreferrer"');
   });
 });
