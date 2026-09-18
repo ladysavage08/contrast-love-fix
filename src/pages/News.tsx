@@ -154,26 +154,13 @@ const News = () => {
           <p className="text-muted-foreground">No posts have been published yet.</p>
         )}
 
-        {upcomingEvents.length > 0 && (
-          <section aria-labelledby="upcoming-events-heading" className="mb-10">
-            <h2 id="upcoming-events-heading" className="mb-4 text-2xl font-bold">
-              Upcoming Events
-            </h2>
-            <ul className="grid gap-6 sm:grid-cols-2">
-              {upcomingEvents.map((post) => (
-                <PostCard key={post.id} post={post} />
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {newsPosts.length > 0 && (
+        {latestPosts.length > 0 && (
           <section aria-labelledby="latest-news-heading" className="mb-10">
             <h2 id="latest-news-heading" className="mb-4 text-2xl font-bold">
-              Latest News
+              Latest News &amp; Events
             </h2>
             <ul className="grid gap-6 sm:grid-cols-2">
-              {newsPosts.map((post) => (
+              {latestPosts.map((post) => (
                 <PostCard key={post.id} post={post} />
               ))}
             </ul>
