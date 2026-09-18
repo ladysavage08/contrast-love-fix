@@ -86,13 +86,15 @@ const News = () => {
   const seriesPosts = posts?.filter((post) => isPublicHealthSeriesPost(post.category)) ?? [];
   const regularPosts = posts?.filter((post) => !isPublicHealthSeriesPost(post.category)) ?? [];
 
-  const newsPosts = regularPosts.filter((p) => p.post_type !== "event");
-  const upcomingEvents = regularPosts
-    .filter((p) => p.post_type === "event" && eventEndKey(p) >= today)
-    .sort((a, b) => eventStartKey(a).localeCompare(eventStartKey(b)));
+  // One unified, newest → oldest list: news by published_at, events by
+  // event_date (already sorted that way by usePosts/sortPostsChronologically).
+  // Past events are pulled out into the archive at the bottom of the page.
   const pastEvents = regularPosts
     .filter((p) => p.post_type === "event" && eventEndKey(p) < today)
     .sort((a, b) => eventStartKey(b).localeCompare(eventStartKey(a)));
+  const latestPosts = regularPosts.filter(
+    (p) => !(p.post_type === "event" && eventEndKey(p) < today),
+  );
 
 
   return (
