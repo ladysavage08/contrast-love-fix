@@ -33,6 +33,7 @@ const staticEntries: Entry[] = [
   { path: "/counties", changefreq: "monthly", priority: "0.9" },
   { path: "/programs", changefreq: "monthly", priority: "0.9" },
   { path: "/programs/home-visiting-program", changefreq: "monthly", priority: "0.7" },
+  { path: "/programs/project-impact-augusta", changefreq: "monthly", priority: "0.7" },
   { path: "/environmental-health", changefreq: "monthly", priority: "0.8" },
   { path: "/womens-health", changefreq: "monthly", priority: "0.8" },
   { path: "/wic", changefreq: "monthly", priority: "0.8" },

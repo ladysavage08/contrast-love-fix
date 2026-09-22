@@ -252,6 +252,23 @@ export const programs: Program[] = [
     ],
   },
   {
+    slug: "project-impact-augusta",
+    title: "Project Impact Augusta",
+    summary:
+      "HIV and STI prevention, testing, outreach, and free condoms by mail.",
+    intro:
+      "Project Impact Augusta is an HIV and STI prevention and outreach effort of the East Central Health District, offering education, prevention resources, testing, and linkage to care in the Augusta area.",
+    href: "/programs/project-impact-augusta",
+    subtopics: [
+      {
+        label: "Request Free Condoms by Mail",
+        href: "https://forms.cloud.microsoft/g/5avd7qg7TA",
+        description:
+          "Use the confidential online form to have free condoms mailed to you discreetly.",
+      },
+    ],
+  },
+  {
     slug: "teen-pregnancy-prevention",
     title: "Teen Pregnancy Prevention",
     summary:
