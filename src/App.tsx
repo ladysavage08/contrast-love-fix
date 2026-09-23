@@ -53,6 +53,7 @@ import NotFound from "./pages/NotFound.tsx";
 import SiteAlertBanner from "./components/SiteAlertBanner.tsx";
 import SiteAlertModal from "./components/SiteAlertModal.tsx";
 import AnalyticsTracker from "./components/AnalyticsTracker.tsx";
+import ExternalLinkInterstitial from "./components/ExternalLinkInterstitial.tsx";
 
 // Keep cached data for navigation, but always revalidate on focus/mount
 // so admin updates flow to the live site without a page refresh.
@@ -81,6 +82,7 @@ const App = () => (
         <SiteAlertBanner />
         <SiteAlertModal />
         <AnalyticsTracker />
+        <ExternalLinkInterstitial />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
