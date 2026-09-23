@@ -5,7 +5,7 @@ import SiteFooter from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 
 /**
- * Project Impact Augusta — HIV/STI prevention and outreach program page.
+ * Project Impact Augusta — care and support for people living with HIV/AIDS.
  */
 const CONDOM_FORM_URL = "https://forms.cloud.microsoft/g/5avd7qg7TA";
 const SERVICE_AREA_MAP_URL =
@@ -218,6 +218,15 @@ const ProjectImpactAugusta = () => {
                 <Home className="h-4 w-4" aria-hidden="true" />
                 All Programs &amp; Services
               </Link>
+              <Link
+                to="/programs/hiv-prevention"
+                className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded border border-primary px-4 py-2.5 text-center text-sm font-semibold text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                HIV Testing &amp; Prevention Services
+              </Link>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Find testing, condoms, PrEP education and referrals, prevention education, and community outreach.
+              </p>
               <Link
                 to="/hopwa"
                 className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded border border-primary px-4 py-2.5 text-sm font-semibold text-primary hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
