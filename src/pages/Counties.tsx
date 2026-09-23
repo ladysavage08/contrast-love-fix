@@ -3,6 +3,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CountyTile from "@/components/CountyTile";
 import { counties } from "@/data/counties";
+import { useCountyHours, applyHoursOverrides } from "@/hooks/useCountyHours";
 
 /**
  * Counties landing page.
