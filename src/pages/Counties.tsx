@@ -54,7 +54,7 @@ const Counties = () => {
           <ul className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {counties.map((county) => (
               <li key={county.slug} className="flex">
-                <CountyTile county={county} />
+                <CountyTile county={applyHoursOverrides(county, hoursOverrides)} />
               </li>
             ))}
           </ul>
