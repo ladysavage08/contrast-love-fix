@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SocialIcons from "@/components/SocialIcons";
 import ManagedLink from "@/components/ManagedLink";
 import { useFooterContent } from "@/hooks/useFooterContent";
@@ -45,6 +46,14 @@ const SiteFooter = ({ showSocials = false, extraCopy }: SiteFooterProps) => {
                 defaultLabel="Accessibility"
                 className="font-medium text-primary underline underline-offset-2 hover:underline focus-visible:underline"
               />
+            </li>
+            <li>
+              <Link
+                to="/human-trafficking-notice"
+                className="font-medium text-primary underline underline-offset-2 hover:underline focus-visible:underline"
+              >
+                Human Trafficking Notice
+              </Link>
             </li>
             {content.showAnnouncementLink && (
               <li>

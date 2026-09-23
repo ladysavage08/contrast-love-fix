@@ -96,6 +96,11 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://contrast-love-fix.lovable.app/human-trafficking-notice</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://contrast-love-fix.lovable.app/wego</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

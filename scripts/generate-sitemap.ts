@@ -46,6 +46,7 @@ const staticEntries: Entry[] = [
   { path: "/search", changefreq: "monthly", priority: "0.4" },
   { path: "/sitemap", changefreq: "monthly", priority: "0.4" },
   { path: "/accessibility", changefreq: "yearly", priority: "0.3" },
+  { path: "/human-trafficking-notice", changefreq: "yearly", priority: "0.3" },
   { path: "/wego", changefreq: "monthly", priority: "0.8" },
   { path: "/wego/about", changefreq: "monthly", priority: "0.6" },
   { path: "/wego/services", changefreq: "monthly", priority: "0.7" },

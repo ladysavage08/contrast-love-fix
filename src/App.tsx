@@ -20,6 +20,7 @@ import News from "./pages/News.tsx";
 import NewsPost from "./pages/NewsPost.tsx";
 import PublicHealthSeries from "./pages/PublicHealthSeries.tsx";
 import Accessibility from "./pages/Accessibility.tsx";
+import HumanTraffickingNotice from "./pages/HumanTraffickingNotice.tsx";
 import Services from "./pages/Services.tsx";
 import Directory from "./pages/Directory.tsx";
 import Search from "./pages/Search.tsx";
@@ -109,6 +110,7 @@ const App = () => (
           />
           <Route path="/news/:slug" element={<NewsPost />} />
           <Route path="/accessibility" element={<Accessibility />} />
+          <Route path="/human-trafficking-notice" element={<HumanTraffickingNotice />} />
           <Route path="/services" element={<Services />} />
           <Route path="/directory" element={<Directory />} />
           <Route path="/search" element={<Search />} />
