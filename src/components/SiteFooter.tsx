@@ -46,6 +46,14 @@ const SiteFooter = ({ showSocials = false, extraCopy }: SiteFooterProps) => {
                 className="font-medium text-primary underline underline-offset-2 hover:underline focus-visible:underline"
               />
             </li>
+            <li>
+              <a
+                href="/human-trafficking-notice"
+                className="font-medium text-primary underline underline-offset-2 hover:underline focus-visible:underline"
+              >
+                Human Trafficking Notice
+              </a>
+            </li>
             {content.showAnnouncementLink && (
               <li>
                 <button
