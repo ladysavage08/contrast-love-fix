@@ -23,6 +23,7 @@ const SECTIONS: Section[] = [
       { label: "Get family planning services", href: "/womens-health/family-planning", icon: HeartPulse },
       { label: "Get help with WIC", href: "/wic", icon: Apple },
       { label: "Get HOPWA housing assistance (HIV/AIDS)", href: "/hopwa", icon: Home },
+      { label: "Get free HIV testing and prevention resources", href: "/programs/hiv-prevention", icon: ShieldCheck },
     ],
   },
   {
@@ -40,6 +41,7 @@ const SECTIONS: Section[] = [
       { label: "Learn about vaccines", href: "/immunizations", icon: Syringe },
       { label: "Learn about COVID/Flu", href: "/programs", icon: ShieldCheck },
       { label: "Get STD testing information", href: "/programs", icon: FlaskConical },
+      { label: "Get HIV testing, condoms, and PrEP information", href: "/programs/hiv-prevention", icon: ShieldCheck },
       { label: "Learn about chronic disease prevention", href: "/programs", icon: HeartPulse },
       { label: "Learn about women's health services", href: "/womens-health", icon: HeartPulse },
       { label: "Learn about children's health services", href: "/programs", icon: Baby },

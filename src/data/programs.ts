@@ -127,7 +127,7 @@ export const programs: Program[] = [
       "We monitor, investigate, and respond to communicable disease in the community, and offer testing, treatment, and education for residents and providers.",
     subtopics: [
       { label: "Diseases Notification Form" },
-      { label: "HIV/AIDS Info" },
+      { label: "HIV Prevention", href: "/programs/hiv-prevention" },
       { label: "Sexually Transmitted Disease (STD) Info" },
       { label: "Tuberculosis (TB) Info" },
     ],
@@ -207,6 +207,23 @@ export const programs: Program[] = [
     subtopics: [],
   },
   {
+    slug: "hiv-prevention",
+    title: "HIV Prevention",
+    summary:
+      "Free HIV testing, condoms, self-test information, PrEP education and referrals, linkage to care, and community outreach.",
+    intro:
+      "Confidential HIV testing and prevention resources available throughout the East Central Health District.",
+    href: "/programs/hiv-prevention",
+    subtopics: [
+      { label: "FREE Walk-In HIV Testing", href: "/programs/hiv-prevention#testing" },
+      { label: "FREE Condoms", href: "/programs/hiv-prevention#condoms" },
+      { label: "FREE HIV Self-Test Kits", href: "/programs/hiv-prevention#self-test-kits" },
+      { label: "PrEP Education & Referrals", href: "/programs/hiv-prevention#prep" },
+      { label: "Linkage to Care", href: "/programs/hiv-prevention#linkage-to-care" },
+      { label: "HIV Prevention Outreach", href: "/programs/hiv-prevention#outreach" },
+    ],
+  },
+  {
     slug: "immunizations",
     title: "Immunizations",
     summary:
@@ -255,9 +272,9 @@ export const programs: Program[] = [
     slug: "project-impact-augusta",
     title: "Project Impact Augusta",
     summary:
-      "HIV and STI prevention, testing, outreach, and free condoms by mail.",
+      "Care connections, case management, housing assistance, and support for individuals living with HIV/AIDS.",
     intro:
-      "Project Impact Augusta is an HIV and STI prevention and outreach effort of the East Central Health District, offering education, prevention resources, testing, and linkage to care in the Augusta area.",
+      "Project Impact Augusta provides client-centered care connections, case management, housing assistance, and supportive services for individuals living with HIV/AIDS.",
     href: "/programs/project-impact-augusta",
     subtopics: [
       {
