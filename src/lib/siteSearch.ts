@@ -36,6 +36,7 @@ const staticPages: SearchEntry[] = [
   { title: "Services", url: "/services", snippet: "Clinical and community health services.", section: "Site" },
   { title: "Directory", url: "/directory", snippet: "Staff and office directory.", section: "Site" },
   { title: "Accessibility", url: "/accessibility", snippet: "Accessibility statement and feedback.", section: "Site" },
+  { title: "Human Trafficking Notice", url: "/human-trafficking-notice", snippet: "Human trafficking notice and hotline numbers, posted under O.C.G.A. 16-5-47.", section: "Site" },
   { title: "Mobile Health Clinic (WeGo)", url: "/wego", snippet: "The Mobile Health Clinic that brings services to neighborhoods.", section: "WeGo" },
   { title: "WeGo — About", url: "/wego/about", snippet: "About the Mobile Health Clinic program.", section: "WeGo" },
   { title: "WeGo — Services", url: "/wego/services", snippet: "Services available onboard the mobile clinic.", section: "WeGo" },
