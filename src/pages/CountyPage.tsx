@@ -18,6 +18,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SocialIcons from "@/components/SocialIcons";
 import { counties, type CountyRelatedLink } from "@/data/counties";
+import { useCountyHours, applyHoursOverrides } from "@/hooks/useCountyHours";
 import burkeImage from "@/assets/county-burke.jpg";
 
 /**
