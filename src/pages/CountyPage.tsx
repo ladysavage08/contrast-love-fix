@@ -18,6 +18,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SocialIcons from "@/components/SocialIcons";
 import { counties, type CountyRelatedLink } from "@/data/counties";
+import { useCountyHours, applyHoursOverrides } from "@/hooks/useCountyHours";
 import burkeImage from "@/assets/county-burke.jpg";
 
 /**
@@ -70,9 +71,13 @@ const InfoCard = ({
 
 const CountyPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const county = counties.find((c) => c.slug === slug);
+  const hoursOverrides = useCountyHours();
+  const baseCounty = counties.find((c) => c.slug === slug);
 
-  if (!county) return <Navigate to="/counties" replace />;
+  if (!baseCounty) return <Navigate to="/counties" replace />;
+
+  const county = applyHoursOverrides(baseCounty, hoursOverrides);
+
 
   const heroSrc = county.heroImage ? heroImageMap[county.heroImage] : undefined;
   

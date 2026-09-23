@@ -3,6 +3,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CountyTile from "@/components/CountyTile";
 import { counties } from "@/data/counties";
+import { useCountyHours, applyHoursOverrides } from "@/hooks/useCountyHours";
 
 /**
  * Counties landing page.
@@ -11,6 +12,8 @@ import { counties } from "@/data/counties";
  */
 
 const Counties = () => {
+  const hoursOverrides = useCountyHours();
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
       <SiteHeader />
@@ -51,7 +54,7 @@ const Counties = () => {
           <ul className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {counties.map((county) => (
               <li key={county.slug} className="flex">
-                <CountyTile county={county} />
+                <CountyTile county={applyHoursOverrides(county, hoursOverrides)} />
               </li>
             ))}
           </ul>
