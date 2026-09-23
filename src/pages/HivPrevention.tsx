@@ -165,7 +165,7 @@ const HivPrevention = () => {
             <section id="outreach" aria-labelledby="outreach-heading" className="scroll-mt-6 border-t border-border pt-10">
               <h2 id="outreach-heading" className="text-2xl font-bold md:text-3xl">Bring HIV Prevention to Your Event</h2>
               <p className="mt-3 max-w-3xl leading-relaxed">Planning a community event, health fair, resource fair, or outreach activity? The East Central Health District HIV Prevention team may be available to provide HIV education, prevention resources, testing information, condoms, and other outreach services.</p>
-              <div role="status" className="mt-5 rounded-lg border border-accent-gold bg-muted/40 p-4 font-medium">Online outreach requests are coming soon. The form fields below are shown so organizations can see what information will be requested.</div>
+              <div role="status" className="mt-5 rounded-lg border border-accent-gold bg-muted/40 p-4 font-medium">Online outreach requests are coming soon. The form fields below are shown so organizations can see what information will be requested. To request outreach by phone, call <a href="tel:7067215957" className="font-semibold text-primary underline underline-offset-2">(706) 721-5957</a>.</div>
 
               <form aria-labelledby="outreach-form-heading" className="mt-6 rounded-lg border border-border bg-card p-6 md:p-8" onSubmit={(event) => event.preventDefault()}>
                 <h3 id="outreach-form-heading" className="text-xl font-semibold">HIV Prevention Outreach Event Request Form</h3>
