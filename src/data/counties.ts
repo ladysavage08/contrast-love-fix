@@ -317,8 +317,8 @@ export const counties: County[] = [
       {
         name: "Laney Walker Clinic",
         addressLines: ["950 Laney-Walker Blvd.", "Augusta, Georgia 30901"],
-        phone: "(706) 721-5900",
-        phoneHref: "tel:7067215900",
+        phone: "(706) 721-5800",
+        phoneHref: "tel:7067215800",
         hours: [
           { days: "Monday – Friday", time: "8:00 AM – 5:00 PM" },
           { days: "Daily", time: "Closed for Lunch 12:00 PM – 1:00 PM" },
