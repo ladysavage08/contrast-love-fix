@@ -71,9 +71,13 @@ const InfoCard = ({
 
 const CountyPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const county = counties.find((c) => c.slug === slug);
+  const hoursOverrides = useCountyHours();
+  const baseCounty = counties.find((c) => c.slug === slug);
 
-  if (!county) return <Navigate to="/counties" replace />;
+  if (!baseCounty) return <Navigate to="/counties" replace />;
+
+  const county = applyHoursOverrides(baseCounty, hoursOverrides);
+
 
   const heroSrc = county.heroImage ? heroImageMap[county.heroImage] : undefined;
   
