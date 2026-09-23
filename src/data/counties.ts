@@ -354,9 +354,11 @@ export const counties: County[] = [
         phone: "(706) 721-5840",
         phoneHref: "tel:7067215840",
         hours: [
-          { days: "Monday – Friday", time: "8:00 AM – 11:00 AM / 1:00 PM – 4:00 PM" },
+          { days: "Monday – Thursday", time: "8:00 AM – 5:00 PM" },
+          { days: "Friday", time: "8:00 AM – 2:00 PM" },
         ],
         notes: [
+          "Beginning October 1, 2026. Both locations remain open during the lunch hour.",
           "For chest X-rays, please call TB Control for schedule adjustments during scheduled holiday closings.",
         ],
       },
