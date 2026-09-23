@@ -331,8 +331,8 @@ export const counties: County[] = [
       {
         name: "South Augusta Clinic",
         addressLines: ["2420 Windsor Spring Road", "Augusta, Georgia 30906"],
-        phone: "(706) 721-5800",
-        phoneHref: "tel:7067215800",
+        phone: "(706) 790-0661",
+        phoneHref: "tel:7067900661",
         hours: [
           { days: "Monday & Wednesday", time: "8:00 AM – 5:00 PM" },
           { days: "Tuesday & Thursday", time: "8:00 AM – 6:00 PM" },
