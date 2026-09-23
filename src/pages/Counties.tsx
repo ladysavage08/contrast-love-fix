@@ -12,6 +12,8 @@ import { useCountyHours, applyHoursOverrides } from "@/hooks/useCountyHours";
  */
 
 const Counties = () => {
+  const hoursOverrides = useCountyHours();
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
       <SiteHeader />
