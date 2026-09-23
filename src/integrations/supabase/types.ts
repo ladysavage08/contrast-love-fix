@@ -134,6 +134,51 @@ export type Database = {
         }
         Relationships: []
       }
+      county_hours: {
+        Row: {
+          county_slug: string
+          created_at: string
+          hours: Json | null
+          hours_summary: Json | null
+          id: string
+          lunch_closure: string | null
+          notes: Json | null
+          published: boolean
+          site_name: string | null
+          updated_at: string
+          updated_by_email: string | null
+          walk_in_hours: Json | null
+        }
+        Insert: {
+          county_slug: string
+          created_at?: string
+          hours?: Json | null
+          hours_summary?: Json | null
+          id?: string
+          lunch_closure?: string | null
+          notes?: Json | null
+          published?: boolean
+          site_name?: string | null
+          updated_at?: string
+          updated_by_email?: string | null
+          walk_in_hours?: Json | null
+        }
+        Update: {
+          county_slug?: string
+          created_at?: string
+          hours?: Json | null
+          hours_summary?: Json | null
+          id?: string
+          lunch_closure?: string | null
+          notes?: Json | null
+          published?: boolean
+          site_name?: string | null
+          updated_at?: string
+          updated_by_email?: string | null
+          walk_in_hours?: Json | null
+        }
+        Relationships: []
+      }
       hero_slides: {
         Row: {
           created_at: string
