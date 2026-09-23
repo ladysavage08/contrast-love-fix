@@ -82,6 +82,7 @@ const App = () => (
         <SiteAlertBanner />
         <SiteAlertModal />
         <AnalyticsTracker />
+        <ExternalLinkInterstitial />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
