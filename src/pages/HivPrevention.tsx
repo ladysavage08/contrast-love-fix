@@ -22,6 +22,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { counties } from "@/data/counties";
 
 const CONDOM_FORM_URL = "https://forms.cloud.microsoft/g/5avd7qg7TA";
+const HIV_TEST_KIT_URL = "https://sendss.state.ga.us/ords/sendss/!hivcasemanagement.pretestsurvey1";
 const richmond = counties.find((county) => county.slug === "richmond");
 const testingSites = (richmond?.clinicSites ?? []).filter((site) =>
   ["Laney Walker Clinic", "South Augusta Clinic"].includes(site.name),
