@@ -48,6 +48,11 @@ const mapsHref = (entry: ScheduleEntry) => {
 const isPublic = (e: ScheduleEntry) =>
   e.type === "clinic" || e.type === "special" || e.type === "tbd";
 
+const hasDirections = (e: ScheduleEntry) =>
+  (e.type === "clinic" || e.type === "special") &&
+  Boolean(e.address) &&
+  !`${e.location ?? ""} ${e.address ?? ""}`.toLowerCase().includes("pending confirmation");
+
 /** Map a Post (database event) into the ScheduleEntry shape this page renders. */
 function postToEntry(p: Post): ScheduleEntry | null {
   const date = (p.event_date ?? p.published_at ?? "").slice(0, 10);
@@ -66,11 +71,15 @@ function postToEntry(p: Post): ScheduleEntry | null {
     location = parts[0]?.trim();
     address = parts[1]?.trim();
   }
-  const type: ScheduleEntryType = cat.includes("tbd")
-    ? "tbd"
-    : cat.includes("special")
-      ? "special"
-      : "clinic";
+  const type: ScheduleEntryType = cat.includes("maintenance")
+    ? "maintenance"
+    : cat.includes("training")
+      ? "training"
+      : cat.includes("tbd")
+        ? "tbd"
+        : cat.includes("special")
+          ? "special"
+          : "clinic";
   return {
     date,
     type,
@@ -167,7 +176,7 @@ const WegoSchedule = () => {
             Mobile Health Clinic Schedule
           </h1>
           <div aria-hidden="true" className="mt-3 h-1 w-20 bg-accent-gold" />
-          <p className="mt-2 text-sm text-muted-foreground">Updated 5-8-2026</p>
+          <p className="mt-2 text-sm text-muted-foreground">Updated September 24, 2026</p>
           <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
             Dates, times, and locations may change. Please call ahead to
             confirm a stop before traveling.
@@ -406,7 +415,7 @@ const WegoSchedule = () => {
                                     {entry.address}
                                   </address>
                                 )}
-                                {isPublic(entry) && (
+                                {hasDirections(entry) && (
                                   <a
                                     href={mapsHref(entry)}
                                     target="_blank"
@@ -474,6 +483,18 @@ const WegoSchedule = () => {
                     Special Event
                   </span>
                   <span className="text-muted-foreground">Community event</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className={`inline-flex rounded px-2 py-0.5 text-xs font-semibold uppercase tracking-wide ${TYPE_BADGE.maintenance}`}>
+                    Maintenance
+                  </span>
+                  <span className="text-muted-foreground">Unit unavailable</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className={`inline-flex rounded px-2 py-0.5 text-xs font-semibold uppercase tracking-wide ${TYPE_BADGE.tbd}`}>
+                    TBD
+                  </span>
+                  <span className="text-muted-foreground">Pending confirmation</span>
                 </li>
               </ul>
             </section>
@@ -562,7 +583,7 @@ const EntryRow = ({ entry, cancelled = false }: { entry: ScheduleEntry; cancelle
                       {entry.address}
                     </address>
                   )}
-                  {isPublic(entry) && (entry.location || entry.address) && (
+                  {hasDirections(entry) && (
                     <a
                       href={mapsHref(entry)}
                       target="_blank"
