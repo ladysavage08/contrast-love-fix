@@ -22,6 +22,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { counties } from "@/data/counties";
 
 const CONDOM_FORM_URL = "https://forms.cloud.microsoft/g/5avd7qg7TA";
+const HIV_TEST_KIT_URL = "https://sendss.state.ga.us/ords/sendss/!hivcasemanagement.pretestsurvey1";
 const richmond = counties.find((county) => county.slug === "richmond");
 const testingSites = (richmond?.clinicSites ?? []).filter((site) =>
   ["Laney Walker Clinic", "South Augusta Clinic"].includes(site.name),
@@ -131,10 +132,9 @@ const HivPrevention = () => {
             </section>
 
             <section id="self-test-kits" aria-labelledby="kits-heading" className="scroll-mt-6">
-              <h2 id="kits-heading" className="text-2xl font-bold">FREE HIV Test Kits</h2>
-              <p className="mt-3 max-w-3xl leading-relaxed">Residents will be able to request an HIV self-test kit by mail or pick up a kit from Laney Walker Clinic.</p>
-              <Button type="button" size="lg" className="mt-5" disabled aria-describedby="kits-status">Request a FREE HIV Test Kit</Button>
-              <p id="kits-status" role="status" className="mt-3 text-sm font-medium text-muted-foreground">Online self-test kit requests are coming soon.</p>
+              <h2 id="kits-heading" className="text-2xl font-bold">FREE HIV Self-Test Kits</h2>
+              <p className="mt-3 max-w-3xl leading-relaxed">Free HIV self-test kits are available to eligible individuals. Test kits may be requested through the State of Georgia's HIV testing program.</p>
+              <Button asChild size="lg" className="mt-5"><a href={HIV_TEST_KIT_URL} target="_blank" rel="noopener noreferrer" aria-label="Request a FREE HIV Test Kit (opens in a new tab)"><PackageCheck aria-hidden="true" />Request a FREE HIV Test Kit<ExternalLink aria-hidden="true" /></a></Button>
             </section>
 
             <section id="prep" aria-labelledby="prep-heading" className="scroll-mt-6">
@@ -149,9 +149,18 @@ const HivPrevention = () => {
 
             <section id="linkage-to-care" aria-labelledby="care-heading" className="scroll-mt-6 rounded-lg border border-border bg-card p-6 md:p-8">
               <h2 id="care-heading" className="text-2xl font-bold">Linkage to Care</h2>
-              <p className="mt-3 max-w-3xl leading-relaxed">Anyone who receives a positive HIV test, or who is living with HIV and is not currently connected to medical care, can receive assistance connecting with appropriate healthcare and support services.</p>
-              <p className="mt-3 max-w-3xl leading-relaxed">Project Impact Augusta provides ongoing HIV care connections, case management, housing assistance, and other support for individuals living with HIV.</p>
-              <Button asChild size="lg" className="mt-5"><Link to="/programs/project-impact-augusta"><HeartHandshake aria-hidden="true" />Get Connected to Care</Link></Button>
+              <p className="mt-3 max-w-3xl leading-relaxed">Need help getting connected to HIV care?</p>
+              <p className="mt-3 max-w-3xl leading-relaxed">If you have received a positive HIV test, are living with HIV and are not currently connected to medical care, or need help finding appropriate HIV services, our Linkage Coordinator can help connect you with care and available resources.</p>
+              <div className="mt-5 rounded-lg border border-border bg-muted/40 p-5">
+                <p className="text-lg font-semibold">Morgan Pennymon</p>
+                <p className="text-sm text-muted-foreground">Linkage Coordinator</p>
+                <a href="tel:7067215955" className="mt-2 inline-flex items-center gap-2 font-medium text-primary underline underline-offset-2"><Phone className="h-4 w-4" aria-hidden="true" />706-721-5955</a>
+              </div>
+              <p className="mt-4 max-w-3xl leading-relaxed">Project Impact Augusta provides ongoing HIV care connections, case management, housing assistance, and other support for individuals living with HIV.</p>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <Button asChild size="lg"><a href="tel:7067215955" aria-label="Call the Linkage Coordinator at 706-721-5955"><Phone aria-hidden="true" />Call the Linkage Coordinator</a></Button>
+                <Button asChild size="lg" variant="outline"><Link to="/programs/project-impact-augusta"><HeartHandshake aria-hidden="true" />Get Connected to Care</Link></Button>
+              </div>
             </section>
 
             <section aria-labelledby="education-heading">
