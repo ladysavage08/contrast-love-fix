@@ -66,11 +66,15 @@ function postToEntry(p: Post): ScheduleEntry | null {
     location = parts[0]?.trim();
     address = parts[1]?.trim();
   }
-  const type: ScheduleEntryType = cat.includes("tbd")
-    ? "tbd"
-    : cat.includes("special")
-      ? "special"
-      : "clinic";
+  const type: ScheduleEntryType = cat.includes("maintenance")
+    ? "maintenance"
+    : cat.includes("training")
+      ? "training"
+      : cat.includes("tbd")
+        ? "tbd"
+        : cat.includes("special")
+          ? "special"
+          : "clinic";
   return {
     date,
     type,
