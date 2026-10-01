@@ -101,6 +101,11 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://contrast-love-fix.lovable.app/flushot</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://contrast-love-fix.lovable.app/wego</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -417,6 +422,12 @@
   <url>
     <loc>https://contrast-love-fix.lovable.app/news/traveling-think-vaccines-april-2026</loc>
     <lastmod>2026-04-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://contrast-love-fix.lovable.app/news/october-mobile-health-clinic-schedule-is-out-now-2026</loc>
+    <lastmod>2026-09-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
