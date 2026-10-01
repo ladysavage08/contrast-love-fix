@@ -49,6 +49,7 @@ import WegoFaq from "./pages/wego/WegoFaq.tsx";
 import WegoContact from "./pages/wego/WegoContact.tsx";
 import WegoSpecialEventRequest from "./pages/wego/WegoSpecialEventRequest.tsx";
 import AdminWegoRequests from "./pages/AdminWegoRequests.tsx";
+import FluShot from "./pages/FluShot.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import SiteAlertBanner from "./components/SiteAlertBanner.tsx";
 import SiteAlertModal from "./components/SiteAlertModal.tsx";
@@ -143,6 +144,9 @@ const App = () => (
           <Route path="/wego/contact" element={<WegoContact />} />
           <Route path="/wego/special-event-request" element={<WegoSpecialEventRequest />} />
           <Route path="/admin/wego-requests" element={<AdminWegoRequests />} />
+          <Route path="/flushot" element={<FluShot />} />
+          <Route path="/FluShot" element={<FluShot />} />
+          <Route path="/FLUSHOT" element={<FluShot />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
