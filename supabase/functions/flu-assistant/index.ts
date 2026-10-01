@@ -85,13 +85,10 @@ Deno.serve(async (req) => {
   })) as UIMessage[];
 
   const clinics = await loadClinics();
-  const messages = [
-    { role: "system" as const, content: rules(lang, clinics) },
-    ...(await convertToModelMessages(ui)),
-  ];
+  const messages = await convertToModelMessages(ui);
 
   try {
-    const call = createResponsesCall(req, { baseURL: GATEWAY, apiKey, model: MODEL }, messages);
+    const call = createResponsesCall(req, { baseURL: GATEWAY, apiKey, model: MODEL }, messages, rules(lang, clinics));
     const res = await call.response();
     const headers = new Headers(res.headers);
     Object.entries(corsHeaders).forEach(([k, v]) => headers.set(k, v));
