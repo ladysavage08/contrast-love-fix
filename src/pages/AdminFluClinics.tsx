@@ -117,7 +117,7 @@ const AdminFluClinics = () => {
 
   const toggle = async (r: FluClinic, field: "published" | "archived") => {
     const { error } = await supabase.from("flu_clinics")
-      .update({ [field]: !r[field], updated_by_email: user?.email ?? null }).eq("id", r.id);
+      .update((field === "published" ? { published: !r.published } : { archived: !r.archived })).eq("id", r.id);
     if (error) toast({ title: "Update failed", description: error.message, variant: "destructive" });
     else load();
   };
