@@ -179,6 +179,66 @@ export type Database = {
         }
         Relationships: []
       }
+      flu_clinics: {
+        Row: {
+          access_type: string
+          archived: boolean
+          city_state_zip: string | null
+          clinic_date: string
+          contact_info: string | null
+          county_slug: string
+          created_at: string
+          end_time: string | null
+          id: string
+          name: string
+          published: boolean
+          registration_url: string | null
+          special_instructions: string | null
+          start_time: string | null
+          street_address: string | null
+          updated_at: string
+          updated_by_email: string | null
+        }
+        Insert: {
+          access_type?: string
+          archived?: boolean
+          city_state_zip?: string | null
+          clinic_date: string
+          contact_info?: string | null
+          county_slug: string
+          created_at?: string
+          end_time?: string | null
+          id?: string
+          name: string
+          published?: boolean
+          registration_url?: string | null
+          special_instructions?: string | null
+          start_time?: string | null
+          street_address?: string | null
+          updated_at?: string
+          updated_by_email?: string | null
+        }
+        Update: {
+          access_type?: string
+          archived?: boolean
+          city_state_zip?: string | null
+          clinic_date?: string
+          contact_info?: string | null
+          county_slug?: string
+          created_at?: string
+          end_time?: string | null
+          id?: string
+          name?: string
+          published?: boolean
+          registration_url?: string | null
+          special_instructions?: string | null
+          start_time?: string | null
+          street_address?: string | null
+          updated_at?: string
+          updated_by_email?: string | null
+        }
+        Relationships: []
+      }
       hero_slides: {
         Row: {
           created_at: string
