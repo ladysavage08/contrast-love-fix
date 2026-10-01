@@ -7,6 +7,7 @@ import {
   Calendar as CalendarIcon,
   PanelBottom,
   Video,
+  Syringe,
 
 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
@@ -56,6 +57,13 @@ const sections: Section[] = [
       "County Board of Health meeting recordings — add, edit, unpublish, or archive links by county.",
     to: "/admin/boh-recordings",
     icon: Video,
+  },
+  {
+    title: "Flu Clinics",
+    description:
+      "Flu clinic listings on /flushot — add, edit, publish, archive, or delete by county.",
+    to: "/admin/flu-clinics",
+    icon: Syringe,
   },
   {
     title: "Mobile Clinic Schedule",
