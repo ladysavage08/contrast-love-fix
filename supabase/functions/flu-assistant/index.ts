@@ -27,6 +27,7 @@ APPROVED EAST CENTRAL HEALTH DISTRICT (ECHD) FLU CONTENT
 - CDC currently recommends annual flu vaccination for most people 6 months of age and older, with rare exceptions.
 - Flu season: flu circulates every year, often increasing in fall and winter; timing and severity vary. It takes about two weeks after vaccination to develop protection, so get vaccinated before flu spreads widely.
 - Stop the spread: get vaccinated yearly; stay home when sick; cover coughs and sneezes; wash hands often; avoid touching eyes, nose and mouth with unwashed hands; clean frequently touched surfaces; follow healthcare provider guidance if you have symptoms or higher risk.
+- FEATURED EVENT: South Augusta Drive-Thru & Walk-Up Flu Clinic, Wednesday, October 14, 2026, 4:00 PM-7:00 PM, South Augusta Health Department, 2420 Windsor Spring Road, Augusta, GA 30906. Open to the public. Appointments encouraged but not required; walk-ups welcome. Bring insurance card and photo ID. Book with the scheduling link above.
 - More information: CDC flu site https://www.cdc.gov/flu/
 `;
 

@@ -8,7 +8,8 @@ import SiteFooter from "@/components/SiteFooter";
 import FluAssistant from "@/components/FluAssistant";
 import { Button } from "@/components/ui/button";
 import { counties } from "@/data/counties";
-import { useUpcomingFluClinics, type FluClinic } from "@/hooks/useFluClinics";
+import { todayKeyET, useUpcomingFluClinics, type FluClinic } from "@/hooks/useFluClinics";
+import southAugustaFlyer from "@/assets/south-augusta-flu-clinic-oct14.jpg";
 
 /**
  * Permanent public flu page: ecphd.com/flushot (English) and /flushot/es (Spanish).
@@ -79,6 +80,17 @@ const COPY = {
     cdcBtn: "Visit CDC Flu Information",
     cdcUrl: "https://www.cdc.gov/flu/",
     cdcSr: " (cdc.gov, opens in a new tab)",
+    featured: {
+      label: "Featured Flu Clinic",
+      title: "South Augusta Drive-Thru Flu Clinic",
+      dateL: "Date", date: "Wednesday, October 14, 2026",
+      timeL: "Time", time: "4:00 PM – 7:00 PM",
+      locL: "Location", loc: "South Augusta Health Department", addr1: "2420 Windsor Spring Road", addr2: "Augusta, GA 30906",
+      badges: ["Open to the public", "Walk-ups welcome"],
+      note: "Appointments are encouraged, but walk-ups are welcome.",
+      bring: "Please bring your insurance card and photo ID.",
+      alt: "Flyer for the East Central Health District Drive-Thru and Walk-Up Flu Clinic, open to the public, Wednesday, October 14, 4 to 7 PM, at the South Augusta Health Department, 2420 Windsor Spring Road, Augusta, GA 30906. No car? Walk-ups are welcome. Appointments encouraged but not required. Please bring your insurance card and photo ID.",
+    },
     readyH: "Ready to schedule?",
     ready: "You will continue to Microsoft Bookings to choose your appointment.",
   },
@@ -140,6 +152,17 @@ const COPY = {
     cdcBtn: "Visite la información de los CDC sobre la influenza",
     cdcUrl: "https://www.cdc.gov/flu/es/",
     cdcSr: " (cdc.gov, se abre en una pestaña nueva)",
+    featured: {
+      label: "Clínica destacada",
+      title: "Clínica de vacunación contra la influenza desde el auto en South Augusta",
+      dateL: "Fecha", date: "Miércoles, 14 de octubre de 2026",
+      timeL: "Hora", time: "4:00 p. m. – 7:00 p. m.",
+      locL: "Lugar", loc: "Departamento de Salud de South Augusta", addr1: "2420 Windsor Spring Road", addr2: "Augusta, GA 30906",
+      badges: ["Abierta al público", "Se atiende a pie sin auto"],
+      note: "Se recomienda hacer cita, pero también se atiende a quienes lleguen a pie.",
+      bring: "Traiga su tarjeta de seguro médico y una identificación con foto.",
+      alt: "Volante (en inglés) de la clínica de vacunación contra la influenza desde el auto y a pie del Distrito de Salud del Centro Este, abierta al público, el miércoles 14 de octubre de 4 a 7 p. m., en el Departamento de Salud de South Augusta, 2420 Windsor Spring Road, Augusta, GA 30906. Se atiende a pie. Se recomienda hacer cita, pero no es obligatorio. Traiga su tarjeta de seguro y una identificación con foto.",
+    },
     readyH: "¿Listo para programar su cita?",
     ready: "Continuará a Microsoft Bookings para elegir su cita. Es posible que la página de citas esté solo en inglés; si necesita ayuda, llame al 706-721-5800.",
   },
@@ -222,6 +245,47 @@ const ClinicCard = ({ cl, c }: { cl: FluClinic; c: Copy }) => (
   </article>
 );
 
+
+/** Shown through the end of the clinic day (Eastern time), then hides itself. */
+const FEATURED_UNTIL = "2026-10-14";
+
+const FeaturedClinic = ({ c }: { c: Copy }) => {
+  if (todayKeyET() > FEATURED_UNTIL) return null;
+  const f = c.featured;
+  return (
+    <section aria-labelledby="featured-heading" className="border-b-4 border-primary bg-card">
+      <div className="container max-w-6xl py-10 sm:py-12">
+        <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-1.5 text-sm font-bold uppercase tracking-wide text-primary-foreground">
+          <Syringe aria-hidden="true" className="h-4 w-4" />{f.label}
+        </p>
+        <div className="grid items-start gap-8 lg:grid-cols-[1fr_1.15fr]">
+          <div>
+            <h2 id="featured-heading" className="text-3xl font-bold sm:text-4xl">{f.title}</h2>
+            <dl className="mt-5 space-y-3 text-lg">
+              <div className="flex gap-3"><dt className="flex items-center gap-2 font-semibold"><CalendarCheck aria-hidden="true" className="h-5 w-5 text-primary" />{f.dateL}:</dt><dd className="text-xl font-bold">{f.date}</dd></div>
+              <div className="flex gap-3"><dt className="flex items-center gap-2 font-semibold"><Clock aria-hidden="true" className="h-5 w-5 text-primary" />{f.timeL}:</dt><dd className="text-xl font-bold">{f.time}</dd></div>
+              <div className="flex gap-3"><dt className="flex items-start gap-2 font-semibold"><MapPin aria-hidden="true" className="mt-1 h-5 w-5 text-primary" />{f.locL}:</dt><dd>{f.loc}<br />{f.addr1}<br />{f.addr2}</dd></div>
+            </dl>
+            <ul className="mt-5 flex flex-wrap gap-2">
+              {f.badges.map((b) => (
+                <li key={b} className="inline-flex items-center gap-2 rounded-md border-2 border-primary px-3 py-1.5 font-semibold">
+                  <ShieldCheck aria-hidden="true" className="h-4 w-4 text-primary" />{b}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-6"><ScheduleButton id="schedule-featured" c={c} /></div>
+            <p className="mt-3 font-medium">{f.note}</p>
+            <p className="mt-1 text-foreground/90">{f.bring}</p>
+          </div>
+          <figure>
+            <img src={southAugustaFlyer} alt={f.alt} width={1440} height={817} className="h-auto w-full rounded-lg border border-border shadow-sm" />
+          </figure>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const ClinicList = ({ c }: { c: Copy }) => {
   const { data, isLoading, isError } = useUpcomingFluClinics();
   if (isLoading) return <p role="status">{c.loading}</p>;
@@ -273,6 +337,8 @@ const FluShot = ({ lang = "en" }: { lang?: Lang }) => {
             </div>
           </div>
         </section>
+
+        <FeaturedClinic c={c} />
 
         <Section id="clinics-heading" title={c.clinicsH}>
           <p className="mb-6 text-lg">{c.clinicsIntro}</p>
