@@ -153,11 +153,11 @@ const FluShot = () => {
         <section className="border-b border-border bg-secondary/40">
           <div className="container flex flex-col items-center py-16 text-center sm:py-20">
             <div aria-hidden="true" className="mb-6 flex items-center gap-3">
-              <Leaf className="h-6 w-6 -rotate-12 text-accent" />
+              <Leaf className="h-6 w-6 -rotate-12 text-primary" />
               <span className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-primary text-primary-foreground">
                 <Syringe className="h-10 w-10" />
               </span>
-              <Leaf className="h-6 w-6 rotate-12 text-accent" />
+              <Leaf className="h-6 w-6 rotate-12 text-primary" />
             </div>
             <p className="mb-2 text-sm font-bold uppercase tracking-wide">East Central Health District</p>
             <h1 className="text-4xl font-bold sm:text-5xl">Beat the Flu</h1>
