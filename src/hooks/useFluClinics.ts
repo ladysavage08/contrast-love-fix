@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { formatDateKey } from "@/lib/eventDate";
 
 export type FluClinic = {
   id: string;
@@ -58,4 +57,3 @@ export const formatClinicDate = (key: string) => {
   });
 };
 
-void formatDateKey;
