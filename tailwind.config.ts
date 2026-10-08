@@ -34,6 +34,13 @@ export default {
           foreground: "hsl(var(--brand-foreground))",
           hover: "hsl(var(--brand-hover))",
         },
+        raspberry: {
+          DEFAULT: "hsl(var(--raspberry))",
+          foreground: "hsl(var(--raspberry-foreground))",
+          hover: "hsl(var(--raspberry-hover))",
+        },
+        "pink-soft": "hsl(var(--pink-soft))",
+        "pink-medium": "hsl(var(--pink-medium))",
         "accent-gold": {
           DEFAULT: "hsl(var(--accent-gold))",
           foreground: "hsl(var(--accent-gold-foreground))",

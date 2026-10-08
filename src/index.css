@@ -30,6 +30,13 @@ All colors MUST be HSL.
     --accent-gold: 38 100% 32%;
     --accent-gold-foreground: 0 0% 100%;
 
+    /* Breast Cancer Awareness campaign palette (raspberry on white ≈ 9:1). */
+    --raspberry: 330 85% 30%;
+    --raspberry-foreground: 0 0% 100%;
+    --raspberry-hover: 330 85% 24%;
+    --pink-soft: 340 80% 96%;
+    --pink-medium: 340 75% 88%;
+
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 220 25% 12%;
 
