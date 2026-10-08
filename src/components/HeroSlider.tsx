@@ -14,6 +14,7 @@ import communityCrowd from "@/assets/slide-community-crowd.jpg";
 import mobileClinic from "@/assets/hero-mobile-clinic.jpg";
 import immunization from "@/assets/slide-immunization.jpg";
 import preparednessMonth from "@/assets/national-preparedness-month.jpg";
+import breastCancerAwareness from "@/assets/slide-breast-cancer-awareness.jpg";
 
 type Slide = {
   image: string;
@@ -31,6 +32,17 @@ type Slide = {
 
 /** Fallback slides used when no admin-managed slides exist or fetch fails. */
 const defaultSlides: Slide[] = [
+  {
+    image: breastCancerAwareness,
+    alt: "A pink awareness ribbon on a raspberry and pink background.",
+    eyebrow: "Breast Cancer Awareness Month",
+    title: "October Is Breast Cancer Awareness Month",
+    subtitle: "Know the Signs. Understand Your Risk. Take Action.",
+    cta: { label: "Learn More", href: "/breastcancer" },
+    focal: "object-[85%_center] sm:object-center",
+    // Hidden automatically from Nov 1, 2026 (Oct 31 11:59:59 p.m. Eastern, UTC-4). Entry is kept for review.
+    expiresAt: "2026-10-31T23:59:59-04:00",
+  },
   {
     image: preparednessMonth,
     alt: "Emergency supply kit with the words September is National Preparedness Month—Prepare Today. Stay Ready.",

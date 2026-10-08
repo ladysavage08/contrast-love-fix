@@ -56,6 +56,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://contrast-love-fix.lovable.app/breastcancer</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://contrast-love-fix.lovable.app/news</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -433,6 +438,12 @@
   <url>
     <loc>https://contrast-love-fix.lovable.app/news/october-mobile-health-clinic-schedule-is-out-now-2026</loc>
     <lastmod>2026-09-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://contrast-love-fix.lovable.app/news/echd-office-closure-october-12-2026</loc>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

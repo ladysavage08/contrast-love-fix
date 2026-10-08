@@ -32,6 +32,9 @@ if [ ! -d dist ]; then
   exit 1
 fi
 
+echo "==> Writing social share pages"
+node scripts/build-share-pages.mjs
+
 echo "==> Creating $OUT"
 rm -f "$OUT"
 ( cd dist && zip -r "$OUT" . )

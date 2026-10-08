@@ -30,6 +30,7 @@ const staticPages: SearchEntry[] = [
   { title: "Environmental Health", url: "/environmental-health", snippet: "Inspections, permits, and environmental health programs.", section: "Environmental Health" },
   { title: "Women's Health", url: "/womens-health", snippet: "Women's health services and clinics across the district.", section: "Women's Health" },
   { title: "WIC", url: "/wic", snippet: "Women, Infants, and Children nutrition program.", section: "Site" },
+  { title: "Breast Cancer Awareness Month 2026", url: "/breastcancer", snippet: "Learn about breast cancer signs, screening, early detection, and trusted resources.", section: "Site" },
   { title: "HOPWA Services", url: "/hopwa", snippet: "Housing Opportunities for Persons With AIDS — housing assistance and supportive services for individuals and families affected by HIV/AIDS.", section: "Site" },
   { title: "News", url: "/news", snippet: "District news and announcements.", section: "News" },
   { title: "Calendar", url: "/calendar", snippet: "Upcoming events, clinics, and community visits.", section: "Calendar" },
