@@ -38,6 +38,7 @@ const staticEntries: Entry[] = [
   { path: "/womens-health", changefreq: "monthly", priority: "0.8" },
   { path: "/wic", changefreq: "monthly", priority: "0.8" },
   { path: "/hopwa", changefreq: "monthly", priority: "0.7" },
+  { path: "/breastcancer", changefreq: "monthly", priority: "0.7" },
   { path: "/news", changefreq: "weekly", priority: "0.8" },
   { path: "/news/what-is-public-health-article-series", changefreq: "monthly", priority: "0.6" },
   { path: "/calendar", changefreq: "weekly", priority: "0.7" },
