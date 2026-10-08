@@ -25,7 +25,10 @@ const ITEMS: NavItem[] = [
   ["Programs/Services", "/programs"],
   ["Mobile Health Clinic", "/wego"],
   ["Directory", "/directory"],
-  ["Careers", "https://dph.georgia.gov/about-dph/careers"],
+  [
+    "Careers",
+    "https://www.governmentjobs.com/careers/georgiadph?department[0]=District%206%20Augusta%2FState&sort=PostingDate%7CDescending",
+  ],
   ["News/Events", "/news"],
   ["Calendar", "/calendar"],
   ["I Want To…", "/services"],
