@@ -194,6 +194,22 @@ const WegoSchedule = () => {
 
             <div
               role="note"
+              aria-labelledby="november-heading"
+              className="mt-4 rounded-lg border-l-4 border-primary bg-muted/40 p-4"
+            >
+              <h3 id="november-heading" className="text-base font-semibold">
+                November Schedule Coming Soon
+              </h3>
+              <p className="mt-1 text-sm leading-relaxed">
+                We're currently finalizing the November 2026 Mobile Health Clinic
+                schedule. Please check back soon for updated dates, times, and
+                locations.
+              </p>
+            </div>
+
+
+            <div
+              role="note"
               className="mt-4 flex items-start gap-3 rounded-lg border-l-4 border-accent-gold bg-muted/40 p-4"
             >
               <AlertCircle
