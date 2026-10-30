@@ -35,6 +35,7 @@ const TYPE_BADGE: Record<ScheduleEntryType, string> = {
   training: "bg-accent-gold text-accent-gold-foreground",
   tbd: "border border-dashed border-border bg-background text-muted-foreground",
   special: "bg-accent-gold text-accent-gold-foreground",
+  holiday: "bg-muted text-foreground border border-border",
 };
 
 const PDF_HREF = "/wego-may-2026-schedule.pdf";
@@ -71,7 +72,9 @@ function postToEntry(p: Post): ScheduleEntry | null {
     location = parts[0]?.trim();
     address = parts[1]?.trim();
   }
-  const type: ScheduleEntryType = cat.includes("maintenance")
+  const type: ScheduleEntryType = cat.includes("holiday")
+    ? "holiday"
+    : cat.includes("maintenance")
     ? "maintenance"
     : cat.includes("training")
       ? "training"
@@ -176,7 +179,7 @@ const WegoSchedule = () => {
             Mobile Health Clinic Schedule
           </h1>
           <div aria-hidden="true" className="mt-3 h-1 w-20 bg-accent-gold" />
-          <p className="mt-2 text-sm text-muted-foreground">Updated September 24, 2026</p>
+          <p className="mt-2 text-sm text-muted-foreground">Updated October 30, 2026</p>
           <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
             Dates, times, and locations may change. Please call ahead to
             confirm a stop before traveling.
@@ -198,13 +201,22 @@ const WegoSchedule = () => {
               className="mt-4 rounded-lg border-l-4 border-primary bg-muted/40 p-4"
             >
               <h3 id="november-heading" className="text-base font-semibold">
-                November Schedule Coming Soon
+                November 2026 Schedule Notes
               </h3>
-              <p className="mt-1 text-sm leading-relaxed">
-                We're currently finalizing the November 2026 Mobile Health Clinic
-                schedule. Please check back soon for updated dates, times, and
-                locations.
-              </p>
+              <ul className="mt-1 list-disc space-y-1 pl-5 text-sm leading-relaxed">
+                <li>
+                  <strong>Wednesday, November 11</strong> — Holiday: no Mobile
+                  Unit services.
+                </li>
+                <li>
+                  <strong>Wednesday, November 25</strong> — The Mobile Unit
+                  closes at 12:00 noon.
+                </li>
+                <li>
+                  <strong>Thursday, November 26 &amp; Friday, November 27</strong>{" "}
+                  — Holiday: no Mobile Unit services.
+                </li>
+              </ul>
             </div>
 
 
@@ -511,6 +523,12 @@ const WegoSchedule = () => {
                     TBD
                   </span>
                   <span className="text-muted-foreground">Pending confirmation</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className={`inline-flex rounded px-2 py-0.5 text-xs font-semibold uppercase tracking-wide ${TYPE_BADGE.holiday}`}>
+                    Holiday
+                  </span>
+                  <span className="text-muted-foreground">No Mobile Unit services</span>
                 </li>
               </ul>
             </section>

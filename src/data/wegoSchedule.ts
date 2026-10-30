@@ -16,7 +16,8 @@ export type ScheduleEntryType =
   | "maintenance"
   | "training"
   | "tbd"
-  | "special";
+  | "special"
+  | "holiday";
 
 export interface ScheduleEntry {
   /** ISO date (YYYY-MM-DD) — used for sorting and accessible labels. */
@@ -244,5 +245,7 @@ export function entryTypeLabel(type: ScheduleEntryType): string {
       return "TBD";
     case "special":
       return "Special Event";
+    case "holiday":
+      return "Holiday";
   }
 }
