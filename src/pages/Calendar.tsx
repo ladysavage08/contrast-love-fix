@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, MapPin, Clock, ArrowRight, Stethoscope } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -266,14 +265,7 @@ const Calendar = () => {
                         </span>
                       )}
                     </p>
-                    <p className="font-medium text-foreground">
-                      <Link
-                        to={`/news/${e.slug}`}
-                        className="underline-offset-2 hover:underline focus-visible:underline"
-                      >
-                        {e.title}
-                      </Link>
-                    </p>
+                    <p className="font-medium text-foreground">{e.title}</p>
                     {e.event_location && (
                       <p className="text-xs text-muted-foreground">{e.event_location}</p>
                     )}
@@ -349,12 +341,7 @@ function EventCard({ event, compact = false, cancelled = false }: { event: Post;
             </span>
           )}
           <h3 className={cn("font-semibold text-foreground", compact ? "text-base" : "text-lg")}>
-            <Link
-              to={`/news/${event.slug}`}
-              className="underline-offset-2 hover:underline focus-visible:underline"
-            >
-              {event.title}
-            </Link>
+            {event.title}
           </h3>
           <dl className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted-foreground">
             {eventDateKey(event) && (
