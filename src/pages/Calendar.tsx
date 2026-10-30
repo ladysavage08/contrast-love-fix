@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, MapPin, Clock, ArrowRight, Stethoscope } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -341,7 +342,12 @@ function EventCard({ event, compact = false, cancelled = false }: { event: Post;
             </span>
           )}
           <h3 className={cn("font-semibold text-foreground", compact ? "text-base" : "text-lg")}>
-            {event.title}
+            <Link
+              to={`/news/${event.slug}`}
+              className="underline-offset-2 hover:underline focus-visible:underline"
+            >
+              {event.title}
+            </Link>
           </h3>
           <dl className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted-foreground">
             {eventDateKey(event) && (
