@@ -266,7 +266,14 @@ const Calendar = () => {
                         </span>
                       )}
                     </p>
-                    <p className="font-medium text-foreground">{e.title}</p>
+                    <p className="font-medium text-foreground">
+                      <Link
+                        to={`/news/${e.slug}`}
+                        className="underline-offset-2 hover:underline focus-visible:underline"
+                      >
+                        {e.title}
+                      </Link>
+                    </p>
                     {e.event_location && (
                       <p className="text-xs text-muted-foreground">{e.event_location}</p>
                     )}
