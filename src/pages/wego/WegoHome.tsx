@@ -53,7 +53,7 @@ const WegoHome = () => {
                 href="https://www.surveymonkey.com/r/XZX52RD"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded bg-background px-4 py-2.5 text-sm font-semibold text-primary hover:bg-background/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background sm:w-auto"
+                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded bg-background px-4 py-2.5 text-sm font-semibold text-primary hover:bg-background/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto"
               >
                 <ExternalLink className="h-4 w-4 shrink-0" aria-hidden="true" />
                 Request a Mobile Unit Visit
