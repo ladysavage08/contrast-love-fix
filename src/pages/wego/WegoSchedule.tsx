@@ -97,7 +97,12 @@ type ViewMode = "cards" | "table";
 
 const WegoSchedule = () => {
   const todayKey = getTodayKey();
-  const { data: events = [], isLoading, isError } = useEvents({ upcomingOnly: false });
+  // includeCancelled: true so canceled stops stay listed with a "Canceled"
+  // label instead of silently disappearing from the schedule.
+  const { data: events = [], isLoading, isError } = useEvents({
+    upcomingOnly: false,
+    includeCancelled: true,
+  });
 
   // Build the entry list from live database events (Mobile Clinic category).
   // Show entries from the current month onward (or just current month).
