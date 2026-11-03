@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import {
   Phone,
   MapPin,
+  ExternalLink,
   Clock,
   AlertCircle,
   Download,
@@ -189,6 +190,16 @@ const WegoSchedule = () => {
             Dates, times, and locations may change. Please call ahead to
             confirm a stop before traveling.
           </p>
+          <a
+            href="https://www.surveymonkey.com/r/XZX52RD"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded bg-brand px-4 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:w-auto"
+          >
+            <ExternalLink className="h-4 w-4 shrink-0" aria-hidden="true" />
+            Request a Mobile Unit Visit
+            <span className="sr-only">(opens in a new tab)</span>
+          </a>
         </header>
 
         <div className="grid gap-8 lg:grid-cols-[1fr_320px]">

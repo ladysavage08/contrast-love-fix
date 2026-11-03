@@ -1,4 +1,4 @@
-import { ArrowRight, Calendar, HeartPulse, MapPin, Phone } from "lucide-react";
+import { ArrowRight, Calendar, ExternalLink, HeartPulse, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import WegoLayout from "@/components/wego/WegoLayout";
 
@@ -49,6 +49,16 @@ const WegoHome = () => {
               screenings, vaccines, well-child checks, and more.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
+              <a
+                href="https://www.surveymonkey.com/r/XZX52RD"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded bg-background px-4 py-2.5 text-sm font-semibold text-primary hover:bg-background/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto"
+              >
+                <ExternalLink className="h-4 w-4 shrink-0" aria-hidden="true" />
+                Request a Mobile Unit Visit
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
               <Link
                 to="/wego/schedule"
                 className="inline-flex items-center gap-2 rounded bg-background px-4 py-2.5 text-sm font-semibold text-primary hover:bg-background/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background"
