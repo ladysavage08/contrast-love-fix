@@ -41,6 +41,17 @@ export default {
         },
         "pink-soft": "hsl(var(--pink-soft))",
         "pink-medium": "hsl(var(--pink-medium))",
+        diabetes: {
+          DEFAULT: "hsl(var(--diabetes))",
+          foreground: "hsl(var(--diabetes-foreground))",
+          hover: "hsl(var(--diabetes-hover))",
+          soft: "hsl(var(--diabetes-soft))",
+          medium: "hsl(var(--diabetes-medium))",
+        },
+        autumn: {
+          DEFAULT: "hsl(var(--autumn))",
+          soft: "hsl(var(--autumn-soft))",
+        },
         "accent-gold": {
           DEFAULT: "hsl(var(--accent-gold))",
           foreground: "hsl(var(--accent-gold-foreground))",

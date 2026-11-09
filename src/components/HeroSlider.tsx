@@ -14,6 +14,7 @@ import communityCrowd from "@/assets/slide-community-crowd.jpg";
 import mobileClinic from "@/assets/hero-mobile-clinic.jpg";
 import immunization from "@/assets/slide-immunization.jpg";
 import preparednessMonth from "@/assets/national-preparedness-month.jpg";
+import diabetesAwareness from "@/assets/slide-diabetes-awareness.jpg";
 import breastCancerAwareness from "@/assets/slide-breast-cancer-awareness.jpg";
 
 type Slide = {
@@ -28,10 +29,29 @@ type Slide = {
   focal?: string;
   /** ISO timestamp after which the slide is hidden automatically. */
   expiresAt?: string;
+  /** ISO timestamp before which the slide is hidden. */
+  startsAt?: string;
 };
 
+/** True when a slide is inside its scheduled window at time `now`. */
+export const isSlideActive = (s: { startsAt?: string; expiresAt?: string }, now: number) =>
+  (!s.startsAt || new Date(s.startsAt).getTime() <= now) &&
+  (!s.expiresAt || new Date(s.expiresAt).getTime() > now);
+
 /** Fallback slides used when no admin-managed slides exist or fetch fails. */
-const defaultSlides: Slide[] = [
+export const defaultSlides: Slide[] = [
+  {
+    image: diabetesAwareness,
+    alt: "A smiling multigenerational family in blue clothing walking together through an autumn park.",
+    eyebrow: "American Diabetes Month",
+    title: "November Is American Diabetes Month",
+    subtitle: "Know Your Risk. Protect Your Health.",
+    cta: { label: "Learn More", href: "/diabetes-awareness-month" },
+    focal: "object-[80%_center] sm:object-center",
+    // Nov 1, 2026 12:00 a.m. EDT through Dec 1, 2026 12:00 a.m. EST (America/New_York).
+    startsAt: "2026-11-01T00:00:00-04:00",
+    expiresAt: "2026-12-01T00:00:00-05:00",
+  },
   {
     image: breastCancerAwareness,
     alt: "A pink awareness ribbon on a raspberry and pink background.",
@@ -87,6 +107,12 @@ const HeroSlider = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const { slides: dbSlides, loading } = useHeroSlides();
+  // Re-check the schedule every minute so timed slides start/stop without a page refresh.
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = window.setInterval(() => setNow(Date.now()), 60_000);
+    return () => window.clearInterval(id);
+  }, []);
 
   // Map DB slides into the existing Slide shape so the render code below stays unchanged.
   const slides: Slide[] =
@@ -107,9 +133,7 @@ const HeroSlider = () => {
               : undefined,
           focal: s.focal ?? undefined,
         }))
-      : defaultSlides.filter(
-          (s) => !s.expiresAt || new Date(s.expiresAt).getTime() > Date.now()
-        );
+      : defaultSlides.filter((s) => isSlideActive(s, now));
 
   useEffect(() => {
     if (!api) return;

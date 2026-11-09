@@ -37,6 +37,15 @@ All colors MUST be HSL.
     --pink-soft: 340 80% 96%;
     --pink-medium: 340 75% 88%;
 
+    /* American Diabetes Month campaign palette (navy on white ≈ 12:1). */
+    --diabetes: 218 75% 28%;
+    --diabetes-foreground: 0 0% 100%;
+    --diabetes-hover: 218 75% 22%;
+    --diabetes-soft: 210 90% 95%;
+    --diabetes-medium: 210 80% 82%;
+    --autumn: 25 85% 40%;
+    --autumn-soft: 32 90% 93%;
+
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 220 25% 12%;
 

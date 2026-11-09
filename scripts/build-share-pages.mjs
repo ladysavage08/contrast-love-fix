@@ -13,6 +13,14 @@ const pages = [
     image: `${SITE}/breastcancer-og.jpg`,
     imageAlt: "Pink ribbon with the text Breast Cancer Awareness Month 2026 — East Central Health District",
   },
+  {
+    path: "diabetes-awareness-month",
+    title: "American Diabetes Month 2026 | East Central Health District",
+    description:
+      "November is American Diabetes Month. Know your risk, learn the warning signs, and find trusted CDC resources to help prevent type 2 diabetes.",
+    image: `${SITE}/diabetes-og.jpg`,
+    imageAlt: "Blue awareness circle with autumn leaves and the text November Is American Diabetes Month — Know Your Risk. Protect Your Health.",
+  },
 ];
 
 const base = readFileSync("dist/index.html", "utf8");
