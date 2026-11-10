@@ -14,7 +14,7 @@ import communityCrowd from "@/assets/slide-community-crowd.jpg";
 import mobileClinic from "@/assets/hero-mobile-clinic.jpg";
 import immunization from "@/assets/slide-immunization.jpg";
 import preparednessMonth from "@/assets/national-preparedness-month.jpg";
-import diabetesAwareness from "@/assets/slide-diabetes-awareness.jpg";
+import diabetesAwareness from "@/assets/slide-diabetes-awareness-v2.jpg";
 import breastCancerAwareness from "@/assets/slide-breast-cancer-awareness.jpg";
 
 type Slide = {
@@ -42,12 +42,12 @@ export const isSlideActive = (s: { startsAt?: string; expiresAt?: string }, now:
 export const defaultSlides: Slide[] = [
   {
     image: diabetesAwareness,
-    alt: "A smiling multigenerational family in blue clothing walking together through an autumn park.",
+    alt: "A smiling multigenerational family in blue clothing in an autumn park beside a silver diabetes awareness ribbon with a blue circle.",
     eyebrow: "American Diabetes Month",
     title: "November Is American Diabetes Month",
     subtitle: "Know Your Risk. Protect Your Health.",
     cta: { label: "Learn More", href: "/diabetes-awareness-month" },
-    focal: "object-[80%_center] sm:object-center",
+    focal: "object-right sm:object-center",
     // Nov 1, 2026 12:00 a.m. EDT through Dec 1, 2026 12:00 a.m. EST (America/New_York).
     startsAt: "2026-11-01T00:00:00-04:00",
     expiresAt: "2026-12-01T00:00:00-05:00",
