@@ -31,3 +31,12 @@
 - New formatter for event labels (weekday, month, day, year, plus multi-day ranges) used on the homepage, News & Events and the event page.
 - Tests: next-occurrence selection, rollover after a date passes, archiving after the last date, no date when none is confirmed, no `published_at` fallback, and news never archived.
 - Code changes, so a new Pair upload package is built at the end. The data merge is live immediately.
+
+## Your added safeguards
+- **Old links keep working:** each merged copy's web address forwards to the combined event page, so no links break. A new redirect list is stored in the database.
+- **Eastern Time:** all date checks use America/New_York. An event stays listed until its end time (for example 12:30 PM), or until 11:59 PM Eastern when it has no time.
+- **Canceled dates:** a canceled date drops out of upcoming listings and the next confirmed date shows instead. Canceled dates stay in the event's history, labeled Canceled.
+- **Events with no dates:** these are left out of upcoming listings but stay visible and editable for administrators.
+- **No lost details:** before merging, I compare every copy's description, image, location, time, links and buttons. Anything that differs is kept on the date it belongs to or flagged to you, and nothing is merged blind.
+- **Mobile Health Clinic:** its schedule, county records and features stay exactly as they are. Those posts get no date rows and use their current single date.
+- **Deployment:** I test the changes and build the Pair upload package, but nothing goes to the live website until you approve. Database changes such as the merge and the redirects show up on the live site as soon as they're made, so I'll do the merge as the last step, right after the package is built.
