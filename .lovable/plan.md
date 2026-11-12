@@ -25,7 +25,7 @@
 - Mobile Health Clinic stops are left as they are (one stop per county per day), so the Mobile Clinic schedule doesn't change.
 
 ## Technical details
-- New table `post_event_dates` (post_id, event_date, end_date, start_time, end_time, event_time text, cancelled, cancellation_note). Public can read rows of published posts; admins can write. Grants and row-level security follow the `posts` table.
+- New table `post_event_dates` (post_id, event_date, end_date, start_time, end_time, event_time text, location, details, registration/link URL and label, cancelled, cancellation_note). Public can read rows of published posts; admins can write. Grants and row-level security follow the `posts` table.
 - Shared helper `nextOccurrence(post, dates, today)` in `src/lib/eventDate.ts`. The listing uses the occurrence table when it has rows and falls back to `posts.event_date`/`event_end_date`. The `published_at` fallback for events is removed everywhere (eventDateKey, eventEndKey, Index.tsx line 202 and line 286, News.tsx, usePosts sorting and archiving, Calendar).
 - Calendar shows a dot on each confirmed occurrence. A 60-second check moves listings to the next date without a refresh.
 - New formatter for event labels (weekday, month, day, year, plus multi-day ranges) used on the homepage, News & Events and the event page.
@@ -71,3 +71,20 @@
 - The Mobile Health Clinic schedule is unchanged (compared before and after).
 - Old event links work.
 - The admin date editor works, including add, edit, remove and cancel.
+
+## Details that differ by date
+- Each event date can have its own location, note or description, registration link and button. When a date has a value, the site shows it for that date. Otherwise it uses the event's main details.
+- The event page and listings always show the details that belong to the date on display.
+- During the merge, any detail that differs between copies is saved on its own date, never overwritten.
+
+## Full rehearsal before production
+- I run the entire migration on a copy of the event data. The copy is fed into the preview through test fixtures, so the live database is never touched.
+- The rehearsal covers the merge, keeping canceled and past dates, the redirects, and moving on to the next date (simulated clock: Nov 15 at 12:31 PM ET rolls over to Nov 22).
+- Screenshots and checks reflect the website as it will look after the migration.
+- I also run the exact merge script against a copy of the affected records in a throwaway area of the database. I compare the results and then delete the copy. Production records stay untouched.
+
+## Scope of this round (steps 1–3 only)
+- Create the new tables. They start empty and are safe for the live site.
+- Build and test the new website code.
+- Prepare the Pair package, the merge script, the backup query and the rollback instructions for your review.
+- No production merging, unpublishing, redirects or deployment until your final approval. The new `.htaccess` redirects go in a separate file that is added only at go-live.
