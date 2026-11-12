@@ -1,24 +1,33 @@
-# American Diabetes Month 2026 — page + timed homepage slide
+# Show the real next event date, not the publish date
 
-## What you'll get
-1. **New page at `/diabetes-awareness-month`** titled "November Is American Diabetes Month", using the site's normal header, footer and fonts. Sections in the order of your brief:
-   - Hero: "Know Your Risk. Protect Your Health." with the subtitle, supporting text and a **Learn Your Diabetes Risk** button (CDC prediabetes risk resources).
-   - Diabetes by the Numbers: three cards (40.1 million; more than 2 in 5 adults; about 8 in 10 don't know), with the CDC credited and linked.
-   - Understanding Diabetes: expandable sections for diabetes, type 1, type 2, gestational, prediabetes. States plainly that type 1 can't be prevented right now, and type 2 can often be prevented or delayed.
-   - Could You Recognize the Signs?: five warning signs with icons, a note that there may be no symptoms, and "Talk With Your Healthcare Provider About Testing".
-   - Could You Have Prediabetes and Not Know It?: a callout with a **Take the 1-Minute Prediabetes Risk Test** button that goes to the CDC-promoted test. The site won't host its own quiz.
-   - Small Steps Today. Healthier Tomorrows.: six tip cards, plus a note that type 2 prevention tips are not type 1 treatment.
-   - Every Action Matters.: five ways to make a difference, "inspired by" the ADA. No claim of partnership, no ADA artwork, and no claim that it is the 2026 theme.
-   - Trusted Resources and a Sources list (the 7 approved CDC/ADA links only).
-   - Closing: "Your Health Journey Starts With One Step." with the ECPHD logo and a link to the Contact page. No promises of testing or appointments.
-   - The page uses blue and light blue with warm autumn accents. Animations are gentle and turn off for people who prefer reduced motion.
-2. **Homepage slide** using the same slide system as Breast Cancer Awareness. It shows "November Is American Diabetes Month" with "Know Your Risk. Protect Your Health." and a **Learn More** button to the new page. It runs Nov 1, 12:00 AM to Dec 1, 12:00 AM Eastern, then disappears on its own. The page itself stays up after that.
-3. **New images:** a blue-themed slide photo of a diverse family (no text in the image) and a 1200×630 social-share image.
-4. **Search and sharing:** a page title and description, a social preview card, and listings in the sitemap and site search.
+## What's wrong today
+- The homepage News & Events list shows each item's **published date** for events too. That is why "Compass for Hope – Showers at James Brown Arena" reads "OCTOBER 30, 2026 • EVENT" (the day it was posted) instead of its event day.
+- Several other spots fall back to the published date when an event has no event date.
+- Compass for Hope is stored as **9 separate copies**, one per Sunday (Nov 1 – Dec 27). Project Refresh – Shower @ May Park has 2 copies (Oct 30, Nov 12). The copies clutter the listings, and changing a detail means editing every copy.
+
+## What visitors will see
+- Events show their actual date with the day of the week, for example **SUNDAY, NOVEMBER 15, 2026 • EVENT**. Multi-day events show **NOVEMBER 14–16, 2026 • EVENT**.
+- An event with several confirmed dates appears **once** and shows its next upcoming date. Once that date has passed, it moves to the next confirmed date on its own, with no page refresh or admin step needed.
+- After the last confirmed date passes, the event leaves the homepage and active listings and goes to Past Events. Nothing is deleted, and its page link keeps working.
+- No "Every Sunday" or "Weekly" labels. No dates generated from a pattern. Only dates an administrator entered.
+- An event with no confirmed date shows no date at all. It never shows the published date and is never archived based on the published date.
+- News articles keep showing their published date and are never archived for being old.
+- The event's own page shows the next date plus a short list of other upcoming confirmed dates.
+
+## What administrators get (News admin page)
+- Each event has an **Event Dates** list. Each row has a date, an optional end date and an optional time. Admins can **add**, **edit** or **remove** a row, or mark one date as canceled, without recreating the article.
+- Published Date stays a separate field, and so do manual archive/reactivate.
+
+## Cleaning up existing content
+- Merge the 9 Compass for Hope copies into one event with its 9 dates. Dates that have already passed (Nov 1, Nov 8) go into history, so the site shows **Sunday, November 15, 2026** next.
+- Merge the 2 Project Refresh – Shower @ May Park copies the same way. The separate "Project Refresh Holiday Event" (Dec 10) stays its own event.
+- The extra copies are **unpublished, not deleted**.
+- Mobile Health Clinic stops are left as they are (one stop per county per day), so the Mobile Clinic schedule doesn't change.
 
 ## Technical details
-- New `src/pages/DiabetesAwarenessMonth.tsx` is modeled on `BreastCancerAwareness.tsx` (one H1, accordion, icons with aria-hidden, sr-only "(opens in a new tab)", min-h-11 tap targets, motion-safe animations). There is a route in `App.tsx`.
-- `HeroSlider.tsx`: add an optional `startsAt` to default slides and filter by it along with `expiresAt`. Add the diabetes entry with `startsAt: 2026-11-01T00:00:00-04:00` (EDT at midnight Nov 1) and `expiresAt: 2026-12-01T00:00:00-05:00`. The breast cancer entry and its logic stay the same; it has already expired. The filter is synchronous on first render, so there is no flicker. Existing rule: if any `hero_slides` DB rows exist, they replace the defaults. I'll check whether any exist, and if so tell you rather than change them.
-- Add to `scripts/build-share-pages.mjs`, `scripts/generate-sitemap.ts`/`public/sitemap.xml`, and `src/lib/siteSearch.ts`. Images are optimized JPGs in `src/assets` and `public/diabetes-og.jpg`.
-- External links go through the existing leave-site warning.
-- Checks: the page loads on desktop and phone, the homepage slide shows today and links correctly, the slide is hidden when the clock is mocked to Dec 1, every outbound link returns OK, and the build passes. Then I'll rebuild the upload package. Pair upload is still manual.
+- New table `post_event_dates` (post_id, event_date, end_date, event_time, cancelled, sort). Public can read rows of published posts; admins can write. Grants and row-level security follow the `posts` table.
+- Shared helper `nextOccurrence(post, dates, today)` in `src/lib/eventDate.ts`. The listing uses the occurrence table when it has rows and falls back to `posts.event_date`/`event_end_date`. The `published_at` fallback for events is removed everywhere (eventDateKey, eventEndKey, Index.tsx line 202 and line 286, News.tsx, usePosts sorting and archiving, Calendar).
+- Calendar shows a dot on each confirmed occurrence. A 60-second check moves listings to the next date without a refresh.
+- New formatter for event labels (weekday, month, day, year, plus multi-day ranges) used on the homepage, News & Events and the event page.
+- Tests: next-occurrence selection, rollover after a date passes, archiving after the last date, no date when none is confirmed, no `published_at` fallback, and news never archived.
+- Code changes, so a new Pair upload package is built at the end. The data merge is live immediately.
