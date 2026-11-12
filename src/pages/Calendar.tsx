@@ -40,7 +40,7 @@ function startOfMonth(d: Date) {
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const Calendar = () => {
-  const { data: events = [], isLoading } = useEvents({ upcomingOnly: false, includeCancelled: true });
+  const { data: events = [], isLoading } = useEvents({ upcomingOnly: false, includeCancelled: true, expand: true });
   const [cursor, setCursor] = useState(() => startOfMonth(new Date()));
   const [selected, setSelected] = useState<string | null>(null);
 
@@ -64,10 +64,8 @@ const Calendar = () => {
   const upcoming = useMemo(
     () =>
       events
-        .filter((e) => {
-          const end = eventEndKey(e);
-          return end && end >= todayKey;
-        })
+        // Upcoming = confirmed date whose Eastern end time hasn't passed.
+        .filter((e) => e.event_status === "upcoming" && !!eventEndKey(e))
         .sort((a, b) => {
           const ka = eventDateKey(a);
           const kb = eventDateKey(b);

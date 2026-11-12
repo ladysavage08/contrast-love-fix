@@ -1,0 +1,2 @@
+- [x] Event dates: per-occurrence dates, ET rollover, admin editor, rehearsal, package + go-live kit
+- [ ] Go-live (Compass merge, .htaccess redirects, package upload) — waiting on final approval

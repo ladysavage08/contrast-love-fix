@@ -1,8 +1,9 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { ArrowLeft, Calendar, Clock, MapPin, ExternalLink } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { usePost, formatPostDate } from "@/hooks/usePosts";
+import { usePost, formatPostDate, type Post } from "@/hooks/usePosts";
+import { formatEventDateLabel, occurrenceTimeText } from "@/lib/eventOccurrences";
 import { isAllDayEvent, formatDateKey } from "@/lib/eventDate";
 import { normalizeSanitizedPostBody } from "@/lib/postBodyHtml";
 
@@ -15,7 +16,15 @@ const usesSeptemberMobileClinicGraphic = (post: {
 
 const NewsPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { data: post, isLoading, error } = usePost(slug);
+  const { data: lookup, isLoading, error } = usePost(slug);
+  if (lookup && "redirectTo" in lookup) {
+    return <Navigate to={`/news/${lookup.redirectTo}`} replace />;
+  }
+  const post = (lookup ?? null) as Post | null;
+  const otherDates = (post?.upcoming_occurrences ?? []).slice(1);
+  const historyDates = (post?.occurrences ?? []).filter(
+    (o) => o.cancelled || !(post?.upcoming_occurrences ?? []).includes(o),
+  ).filter((o) => o !== post?.current_occurrence || o.cancelled);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -64,10 +73,14 @@ const NewsPost = () => {
             <header className="mb-6 border-b border-border pb-4">
               <div className="mb-2 h-1 w-16 rounded bg-accent" aria-hidden="true" />
               <div className="mb-2 flex flex-wrap items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground">
-                <span className="inline-flex items-center gap-1">
-                  <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
-                  {formatPostDate(post.published_at)}
-                </span>
+                {(post.post_type !== "event" || post.event_date) && (
+                  <span className="inline-flex items-center gap-1">
+                    <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
+                    {post.post_type === "event"
+                      ? formatEventDateLabel(post.event_date, post.event_end_date)
+                      : formatPostDate(post.published_at)}
+                  </span>
+                )}
                 {post.category && (
                   <>
                     <span aria-hidden="true">•</span>
@@ -151,8 +164,12 @@ const NewsPost = () => {
                       <li className="flex items-start gap-2">
                         <Calendar className="mt-0.5 h-4 w-4 text-primary" aria-hidden="true" />
                         <span>
-                          <span className="font-medium">Date: </span>
-                          {formatDateKey(post.event_date)}
+                          <span className="font-medium">
+                            {post.event_status === "past" ? "Date: " : "Next date: "}
+                          </span>
+                          {formatEventDateLabel(post.event_date, post.event_end_date) ??
+                            formatDateKey(post.event_date)}
+                          {post.event_status === "past" && " (this event has ended)"}
                         </span>
                       </li>
                     )}
@@ -193,12 +210,42 @@ const NewsPost = () => {
                           rel="noopener noreferrer"
                           className="text-primary underline-offset-2 hover:underline"
                         >
-                          Registration / Details
+                          {post.occurrence_link_label || "Registration / Details"}
                           <span className="sr-only"> (opens in new tab)</span>
                         </a>
                       </li>
                     )}
                   </ul>
+                  {post.occurrence_details && (
+                    <p className="mt-3 text-sm">{post.occurrence_details}</p>
+                  )}
+                  {otherDates.length > 0 && (
+                    <div className="mt-4">
+                      <h3 className="text-sm font-semibold">Other upcoming dates</h3>
+                      <ul className="mt-1 space-y-1 text-sm">
+                        {otherDates.map((o) => (
+                          <li key={o.id ?? o.event_date}>
+                            {formatEventDateLabel(o.event_date, o.end_date)}
+                            {occurrenceTimeText(o) && ` · ${occurrenceTimeText(o)}`}
+                            {o.location && ` · ${o.location}`}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {historyDates.length > 0 && (
+                    <details className="mt-4 text-sm">
+                      <summary className="cursor-pointer font-semibold">Past and canceled dates</summary>
+                      <ul className="mt-1 space-y-1 text-muted-foreground">
+                        {historyDates.map((o) => (
+                          <li key={o.id ?? o.event_date}>
+                            {formatEventDateLabel(o.event_date, o.end_date)}
+                            {o.cancelled && ` · Canceled${o.cancellation_note ? `: ${o.cancellation_note}` : ""}`}
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  )}
                 </section>
               )}
 

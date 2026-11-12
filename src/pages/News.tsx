@@ -5,11 +5,14 @@ import SiteFooter from "@/components/SiteFooter";
 import { usePosts, formatPostDate, type Post } from "@/hooks/usePosts";
 import { PUBLIC_HEALTH_SERIES_CATEGORY, PUBLIC_HEALTH_SERIES_PATH, isPublicHealthSeriesPost } from "@/lib/publicHealthSeries";
 
-/** Date an event is considered finished (end date if multi-day, else start). */
-const eventEndKey = (p: Post) =>
-  (p.event_end_date ?? p.event_date ?? p.published_at ?? "").slice(0, 10);
-const eventStartKey = (p: Post) =>
-  (p.event_date ?? p.published_at ?? "").slice(0, 10);
+import { formatEventDateLabel } from "@/lib/eventOccurrences";
+
+const eventStartKey = (p: Post) => (p.event_date ?? "").slice(0, 10);
+/** Event card date: confirmed event date; news: publication date. */
+export const postDateLabel = (p: Post) =>
+  p.post_type === "event"
+    ? formatEventDateLabel(p.event_date, p.event_end_date)
+    : formatPostDate(p.published_at);
 
 const usesSeptemberMobileClinicGraphic = (p: Post) =>
   p.category === "Mobile Clinic" &&
@@ -38,7 +41,7 @@ const PostCard = ({ post, past = false }: { post: Post; past?: boolean }) => (
       <div className="mb-2 flex flex-wrap items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground">
         <span className="inline-flex items-center gap-1">
           <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
-          {formatPostDate(post.event_date ?? post.published_at)}
+          {postDateLabel(post)}
         </span>
         {post.category && (
           <>
@@ -82,7 +85,6 @@ const PostCard = ({ post, past = false }: { post: Post; past?: boolean }) => (
 
 const News = () => {
   const { data: posts, isLoading, error } = usePosts();
-  const today = new Date().toISOString().slice(0, 10);
   const seriesPosts = posts?.filter((post) => isPublicHealthSeriesPost(post.category)) ?? [];
   const regularPosts = posts?.filter((post) => !isPublicHealthSeriesPost(post.category)) ?? [];
 
@@ -90,10 +92,10 @@ const News = () => {
   // event_date (already sorted that way by usePosts/sortPostsChronologically).
   // Past events are pulled out into the archive at the bottom of the page.
   const pastEvents = regularPosts
-    .filter((p) => p.post_type === "event" && eventEndKey(p) < today)
+    .filter((p) => p.post_type === "event" && p.event_status === "past")
     .sort((a, b) => eventStartKey(b).localeCompare(eventStartKey(a)));
   const latestPosts = regularPosts.filter(
-    (p) => !(p.post_type === "event" && eventEndKey(p) < today),
+    (p) => !(p.post_type === "event" && p.event_status === "past"),
   );
 
 

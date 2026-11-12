@@ -67,10 +67,11 @@ export function toDateKey(input: string | Date | null | undefined): string {
 
 /**
  * The single rule used everywhere to decide which calendar day an event
- * belongs to: prefer `event_date`, fall back to `published_at`.
+ * belongs to: its confirmed `event_date` (no publication-date fallback).
  */
 export function eventDateKey(e: EventLike): string {
-  return toDateKey(e.event_date) || toDateKey(e.published_at);
+  // Never use the publication date as an event date.
+  return toDateKey(e.event_date);
 }
 
 /**
@@ -81,8 +82,7 @@ export function eventDateKey(e: EventLike): string {
 export function eventEndKey(e: EventLike): string {
   return (
     toDateKey(e.event_end_date) ||
-    toDateKey(e.event_date) ||
-    toDateKey(e.published_at)
+    toDateKey(e.event_date)
   );
 }
 

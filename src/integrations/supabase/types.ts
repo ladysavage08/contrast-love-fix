@@ -305,6 +305,92 @@ export type Database = {
         }
         Relationships: []
       }
+      post_event_dates: {
+        Row: {
+          cancellation_note: string | null
+          cancelled: boolean
+          created_at: string
+          details: string | null
+          end_date: string | null
+          end_time: string | null
+          event_date: string
+          event_time: string | null
+          id: string
+          link_label: string | null
+          link_url: string | null
+          location: string | null
+          post_id: string
+          source_post_id: string | null
+          start_time: string | null
+          updated_at: string
+        }
+        Insert: {
+          cancellation_note?: string | null
+          cancelled?: boolean
+          created_at?: string
+          details?: string | null
+          end_date?: string | null
+          end_time?: string | null
+          event_date: string
+          event_time?: string | null
+          id?: string
+          link_label?: string | null
+          link_url?: string | null
+          location?: string | null
+          post_id: string
+          source_post_id?: string | null
+          start_time?: string | null
+          updated_at?: string
+        }
+        Update: {
+          cancellation_note?: string | null
+          cancelled?: boolean
+          created_at?: string
+          details?: string | null
+          end_date?: string | null
+          end_time?: string | null
+          event_date?: string
+          event_time?: string | null
+          id?: string
+          link_label?: string | null
+          link_url?: string | null
+          location?: string | null
+          post_id?: string
+          source_post_id?: string | null
+          start_time?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_event_dates_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      post_slug_redirects: {
+        Row: {
+          active: boolean
+          created_at: string
+          new_slug: string
+          old_slug: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          new_slug: string
+          old_slug: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          new_slug?: string
+          old_slug?: string
+        }
+        Relationships: []
+      }
       posts: {
         Row: {
           article_page_reference: string | null

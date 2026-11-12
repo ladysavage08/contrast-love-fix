@@ -15,6 +15,13 @@
       "when": 1790870772251,
       "tag": "0001_create_flu_clinics",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794520119232,
+      "tag": "0002_post_event_dates_and_redirects",
+      "breakpoints": true
     }
   ]
 }

@@ -31,9 +31,41 @@ export type Post = {
   cancelled: boolean;
   cancellation_note: string | null;
   cancelled_at: string | null;
-};
+} & Partial<ResolvedFields>;
 
 import { sortPostsChronologically } from "@/lib/sortPosts";
+import {
+  resolveEvent,
+  type OccurrenceRow,
+  type ResolvedFields,
+} from "@/lib/eventOccurrences";
+
+/** Listings re-check every minute so dates roll over without a refresh. */
+const ROLLOVER_MS = 60_000;
+
+/** Fetch confirmed occurrence rows for the given event posts, grouped by post. */
+async function fetchOccurrences(postIds: string[]): Promise<Map<string, OccurrenceRow[]>> {
+  const map = new Map<string, OccurrenceRow[]>();
+  if (!postIds.length) return map;
+  const { data, error } = await supabase
+    .from("post_event_dates")
+    .select("*")
+    .in("post_id", postIds);
+  // The table is additive; if it can't be read, fall back to each post's own date.
+  if (error) return map;
+  for (const r of (data ?? []) as OccurrenceRow[]) {
+    const list = map.get(r.post_id!) ?? [];
+    list.push(r);
+    map.set(r.post_id!, list);
+  }
+  return map;
+}
+
+async function resolveAll(posts: Post[]): Promise<Post[]> {
+  const occ = await fetchOccurrences(posts.filter((p) => p.post_type === "event").map((p) => p.id));
+  const now = new Date();
+  return posts.map((p) => resolveEvent(p, occ.get(p.id) ?? [], now) as Post);
+}
 
 // Strip common markdown formatting (bold/italic/code) from a title so that
 // admin-entered titles like "**Measles Update**" render cleanly on the site.
@@ -63,63 +95,81 @@ export function usePosts(limit?: number) {
         .select("*")
         .eq("published", true);
       if (error) throw error;
-      // Hide cancelled posts from generic news/event lists.
+      // Hide cancelled posts from generic news/event lists, and hide events
+      // that have no confirmed date (never substitute the publication date).
       // (The Calendar page opts in via useEvents({ includeCancelled: true }).)
-      const visible = ((data ?? []) as Post[]).filter((p) => !p.cancelled);
+      const resolved = await resolveAll((data ?? []) as Post[]);
+      const visible = resolved.filter(
+        (p) => !p.cancelled && !(p.post_type === "event" && p.event_status === "undated"),
+      );
       const sorted = sortPostsChronologically(visible).map(sanitizePost);
       return limit ? sorted.slice(0, limit) : sorted;
     },
+    refetchInterval: ROLLOVER_MS,
   });
 }
 
-export function useEvents(opts?: { upcomingOnly?: boolean; limit?: number; includeCancelled?: boolean }) {
-  const { upcomingOnly = true, limit, includeCancelled = false } = opts ?? {};
+export function useEvents(opts?: {
+  upcomingOnly?: boolean;
+  limit?: number;
+  includeCancelled?: boolean;
+  /** One entry per confirmed occurrence (Calendar grid). */
+  expand?: boolean;
+}) {
+  const { upcomingOnly = true, limit, includeCancelled = false, expand = false } = opts ?? {};
   return useQuery({
-    queryKey: ["events", upcomingOnly, limit ?? "all", includeCancelled],
+    queryKey: ["events", upcomingOnly, limit ?? "all", includeCancelled, expand],
     queryFn: async (): Promise<Post[]> => {
-      // Fetch ALL published events. We sort & filter client-side so that events
-      // missing event_date (admin/mobile-app entries that only set published_at)
-      // still appear on the website calendar.
       const { data, error } = await supabase
         .from("posts")
         .select("*")
         .eq("published", true)
         .eq("post_type", "event");
       if (error) throw error;
-      const all = ((data ?? []) as Post[]).filter((e) => includeCancelled || !e.cancelled);
+      const resolved = (await resolveAll((data ?? []) as Post[])).filter(
+        (e) => includeCancelled || !e.cancelled,
+      );
 
-      // Effective START date used for sorting: event_date if present,
-      // otherwise the published_at date portion.
-      const effective = (e: Post) =>
-        (e.event_date ?? e.published_at ?? "").slice(0, 10);
+      let list: Post[] = resolved;
+      if (expand) {
+        list = resolved.flatMap((e) =>
+          (e.occurrences ?? []).length > 1 || (e.occurrences?.[0] && "id" in e.occurrences[0])
+            ? (e.occurrences ?? [])
+                .filter((o) => includeCancelled || !o.cancelled)
+                .map((o) => ({
+                  ...(resolveEvent(e, [o]) as Post),
+                  id: `${e.id}__${o.event_date}${o.id ? `__${o.id}` : ""}`,
+                  cancelled: e.cancelled || !!o.cancelled,
+                  cancellation_note: o.cancelled ? o.cancellation_note ?? null : e.cancellation_note,
+                }))
+            : e.event_date
+              ? [e]
+              : [],
+        );
+      }
 
-      // Effective END date used for archival: event_end_date if present,
-      // otherwise the start/event_date — so multi-day or recurring events
-      // only archive after the LAST date has passed.
-      const effectiveEnd = (e: Post) =>
-        (e.event_end_date ?? e.event_date ?? e.published_at ?? "").slice(0, 10);
-
-      let list = [...all].sort((a, b) => {
-        const ea = effective(a);
-        const eb = effective(b);
+      list = [...list].sort((a, b) => {
+        const ea = a.event_date ?? "9999";
+        const eb = b.event_date ?? "9999";
         return ea < eb ? -1 : ea > eb ? 1 : 0;
       });
 
-      if (upcomingOnly) {
-        const today = new Date().toISOString().slice(0, 10);
-        list = list.filter((e) => effectiveEnd(e) >= today);
-      }
+      // Upcoming = has a confirmed date whose Eastern end time hasn't passed.
+      if (upcomingOnly) list = list.filter((e) => e.event_status === "upcoming");
       if (limit) list = list.slice(0, limit);
       return list.map(sanitizePost);
     },
+    refetchInterval: ROLLOVER_MS,
   });
 }
+
+export type PostLookup = Post | { redirectTo: string } | null;
 
 export function usePost(slug: string | undefined) {
   return useQuery({
     queryKey: ["post", slug],
     enabled: !!slug,
-    queryFn: async (): Promise<Post | null> => {
+    queryFn: async (): Promise<PostLookup> => {
       const { data, error } = await supabase
         .from("posts")
         .select("*")
@@ -127,8 +177,19 @@ export function usePost(slug: string | undefined) {
         .eq("published", true)
         .maybeSingle();
       if (error) throw error;
-      return data ? sanitizePost(data as Post) : null;
+      if (!data) {
+        // A merged/renamed post keeps working via its redirect.
+        const { data: r } = await supabase
+          .from("post_slug_redirects")
+          .select("new_slug")
+          .eq("old_slug", slug!)
+          .maybeSingle();
+        return r?.new_slug && r.new_slug !== slug ? { redirectTo: r.new_slug } : null;
+      }
+      const [resolved] = await resolveAll([data as Post]);
+      return sanitizePost(resolved);
     },
+    refetchInterval: ROLLOVER_MS,
   });
 }
 

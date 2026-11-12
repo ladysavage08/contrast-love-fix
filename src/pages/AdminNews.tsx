@@ -1,3 +1,4 @@
+import EventDatesEditor from "@/components/admin/EventDatesEditor";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload, X, Heading2, Heading3, Bold, Italic, List, Link as LinkIcon, Pilcrow, RotateCcw, Ban, Undo2 } from "lucide-react";
@@ -976,6 +977,18 @@ function PostEditor({
                 placeholder="https://…"
                 maxLength={500}
               />
+            </div>
+            <div className="sm:col-span-2">
+              {draft.id ? (
+                <EventDatesEditor
+                  postId={draft.id}
+                  onSynced={(d, e) => onChange({ ...draft, event_date: d, event_end_date: e })}
+                />
+              ) : (
+                <p className="rounded border border-dashed border-border p-3 text-sm text-muted-foreground">
+                  Save this event first, then you can add more confirmed dates.
+                </p>
+              )}
             </div>
           </>
         )}

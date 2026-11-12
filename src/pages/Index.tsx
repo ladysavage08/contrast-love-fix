@@ -15,6 +15,7 @@ import SiteFooter from "@/components/SiteFooter";
 import SocialIcons from "@/components/SocialIcons";
 import ManagedLink from "@/components/ManagedLink";
 import { usePosts, useEvents, formatPostDate } from "@/hooks/usePosts";
+import { formatEventDateLabel } from "@/lib/eventOccurrences";
 import { eventDateKey, formatDateKey, isAllDayEvent } from "@/lib/eventDate";
 import { PUBLIC_HEALTH_SERIES_PATH } from "@/lib/publicHealthSeries";
 import { Calendar as CalendarIcon, MapPin } from "lucide-react";
@@ -79,7 +80,7 @@ const Index = () => {
     published_at?: string | null;
   }) => {
     if (p.post_type !== "event" || !isMobileClinic(p)) return true;
-    return withinTwoWeeks(p.event_date ?? p.published_at);
+    return withinTwoWeeks(p.event_date);
   };
   const usesSeptemberMobileClinicGraphic = (p: {
     category?: string | null;
@@ -199,7 +200,9 @@ const Index = () => {
                   )}
                   <div className="min-w-0">
                     <p className="text-[11px] uppercase tracking-wide text-muted-foreground sm:text-xs">
-                      {formatPostDate(item.published_at)}
+                      {item.post_type === "event"
+                        ? formatEventDateLabel(item.event_date, item.event_end_date)
+                        : formatPostDate(item.published_at)}
                       {item.post_type === "event" && " • Event"}
                     </p>
                     <h3 className="text-base font-semibold leading-snug sm:text-lg">
@@ -283,7 +286,7 @@ const Index = () => {
                   const key = eventDateKey(e);
                   const dateLabel = key
                     ? formatDateKey(key, { weekday: "short", month: "short", day: "numeric" })
-                    : formatPostDate(e.published_at);
+                    : "";
                   return (
                     <li key={e.id} className="flex gap-4 rounded-lg border border-border p-4">
                       <div className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded bg-muted text-center">
