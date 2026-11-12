@@ -25,7 +25,7 @@
 - Mobile Health Clinic stops are left as they are (one stop per county per day), so the Mobile Clinic schedule doesn't change.
 
 ## Technical details
-- New table `post_event_dates` (post_id, event_date, end_date, event_time, cancelled, sort). Public can read rows of published posts; admins can write. Grants and row-level security follow the `posts` table.
+- New table `post_event_dates` (post_id, event_date, end_date, start_time, end_time, event_time text, cancelled, cancellation_note). Public can read rows of published posts; admins can write. Grants and row-level security follow the `posts` table.
 - Shared helper `nextOccurrence(post, dates, today)` in `src/lib/eventDate.ts`. The listing uses the occurrence table when it has rows and falls back to `posts.event_date`/`event_end_date`. The `published_at` fallback for events is removed everywhere (eventDateKey, eventEndKey, Index.tsx line 202 and line 286, News.tsx, usePosts sorting and archiving, Calendar).
 - Calendar shows a dot on each confirmed occurrence. A 60-second check moves listings to the next date without a refresh.
 - New formatter for event labels (weekday, month, day, year, plus multi-day ranges) used on the homepage, News & Events and the event page.
@@ -39,4 +39,35 @@
 - **Events with no dates:** these are left out of upcoming listings but stay visible and editable for administrators.
 - **No lost details:** before merging, I compare every copy's description, image, location, time, links and buttons. Anything that differs is kept on the date it belongs to or flagged to you, and nothing is merged blind.
 - **Mobile Health Clinic:** its schedule, county records and features stay exactly as they are. Those posts get no date rows and use their current single date.
-- **Deployment:** I test the changes and build the Pair upload package, but nothing goes to the live website until you approve. Database changes such as the merge and the redirects show up on the live site as soon as they're made, so I'll do the merge as the last step, right after the package is built.
+- **Deployment:** nothing goes to the live website without your approval. See the rollout order below.
+
+## Event end time
+- Each event date gets an optional **Start Time** and **End Time**.
+- A date stays listed until its end time in Eastern Time. With no end time, it stays listed until 11:59 PM Eastern. A multi-day date uses the last day's end time, or the end of that day.
+- Existing free-text times such as "10:30 AM – 12:30 PM" are converted into start and end times during the merge. The original text is kept.
+
+## Rollout order (keeps the live calendar working the whole time)
+1. **Now, safe for the live site:** add two new, empty database tables, one for event dates and one for redirects. Nothing is renamed or removed. The current live website doesn't read the new tables, so it keeps working exactly as it does today.
+2. **Now, preview only:** build and test the new website code. When an event has no date rows, the new code falls back to the existing single date, so it also works correctly against today's live data.
+3. **Now:** build the Pair package and give it to you. No live data changes have been made at this point.
+4. **After your final approval:**
+   - Back up every affected event record to a file.
+   - You upload the package. The new code works with the current data, so the site keeps working throughout.
+   - I then run the merge: add the date rows, unpublish the extra copies and turn on the redirects.
+   - I set the remaining event's main date to its next date, so even a cached old page shows a correct date.
+5. **Rollback:** the backup file plus a ready-to-run undo script that republishes the copies and removes the new date rows. The previous Pair package stays available to re-upload.
+
+**Confirmation:** in this order, the website and database changes can go out together without disrupting the live events calendar. The one thing to avoid is running the merge before the new package is uploaded, because the old site would then show only one Compass for Hope date. That step waits for your approval.
+
+## Links on Pair
+- Old addresses of the merged copies get permanent (301) redirects in the site's Pair redirect file (`.htaccess`), the same method already used for the corrected "Just In Case" article. A matching in-app redirect covers the preview.
+
+## Final checks before handing over the package
+- Homepage dates are correct.
+- No duplicate events on News & Events.
+- Events move on to their next date automatically (tested with a simulated clock).
+- Expired events move to Past Events.
+- News articles are unchanged.
+- The Mobile Health Clinic schedule is unchanged (compared before and after).
+- Old event links work.
+- The admin date editor works, including add, edit, remove and cancel.
