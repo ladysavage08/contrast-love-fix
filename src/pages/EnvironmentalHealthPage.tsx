@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { getEhSubpageBySlug } from "@/data/environmentalHealth";
+import ServSafeRegistration from "@/components/ServSafeRegistration";
 
 /**
  * Reusable Environmental Health subpage.
@@ -79,6 +80,7 @@ const EnvironmentalHealthPage = () => {
 
           <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
             <div className="space-y-10">
+              {page.slug === "servsafe-registration-form" && <ServSafeRegistration />}
               {/* Resources */}
               <section aria-labelledby="resources-heading">
                 <h2

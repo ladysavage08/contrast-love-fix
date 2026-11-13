@@ -1,2 +1,3 @@
 - [x] Event dates: per-occurrence dates, ET rollover, admin editor, rehearsal, package + go-live kit
 - [ ] Go-live (Compass merge, .htaccess redirects, package upload) — waiting on final approval
+- [x] ServSafe: convert and check the 2027 PDF, add download/print and registration information, verify and package

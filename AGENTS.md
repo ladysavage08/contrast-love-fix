@@ -6,3 +6,4 @@
 - Time-limited homepage slides with no DB rows live in `defaultSlides` with `expiresAt`; adding any `hero_slides` DB row replaces all defaults.
 - Event dates: multi-date events store confirmed dates in `post_event_dates`; `src/lib/eventOccurrences.ts` resolves the next date in America/New_York and listings never fall back to `published_at` — keeps every surface showing the same real date.
 - Merged/renamed post slugs: `post_slug_redirects` (in-app) plus matching 301 rules in `public/.htaccess` for Pair — Pair serves static files, so both are needed.
+- ServSafe registration uses the existing Environmental Health page template with a focused registration section and a hosted PDF pointer; download through a Blob so the file saves reliably on the same origin.

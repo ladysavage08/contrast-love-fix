@@ -233,7 +233,7 @@ export const ehSubpages: EhSubpage[] = [
     resources: [
       { label: "2026 ServSafe Class Dates &amp; Locations" },
       { label: "Class Cost &amp; What's Included" },
-      { label: "ServSafe Registration Form" },
+      { label: "2027 ServSafe Registration Form", href: "/environmental-health/servsafe-registration-form" },
       { label: "What to Bring on Class Day" },
       { label: "Recertification Information" },
     ],
@@ -262,11 +262,15 @@ export const ehSubpages: EhSubpage[] = [
       "Use the ServSafe registration form to reserve a seat in an upcoming ServSafe Food Protection Manager certification class.",
     resourcesHeading: "Registration",
     resources: [
-      { label: "ServSafe Registration Form (PDF)" },
-      { label: "2026 ServSafe Schedule" },
+      { label: "2026 ServSafe Schedule", href: "/environmental-health/servsafe-schedule-2026" },
       { label: "Class Cost &amp; Payment Information" },
       { label: "Materials Provided" },
     ],
+    contact: {
+      phone: "(706) 667-4234",
+      email: "dph6-eh@dph.ga.gov",
+      note: "Contact our office with questions about ServSafe registration.",
+    },
   },
 ];
 
