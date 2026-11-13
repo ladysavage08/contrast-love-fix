@@ -88,8 +88,9 @@ const News = () => {
   const seriesPosts = posts?.filter((post) => isPublicHealthSeriesPost(post.category)) ?? [];
   const regularPosts = posts?.filter((post) => !isPublicHealthSeriesPost(post.category)) ?? [];
 
-  // One unified, newest → oldest list: news by published_at, events by
-  // event_date (already sorted that way by usePosts/sortPostsChronologically).
+  // One unified list: upcoming events soonest → farthest, news newest →
+  // oldest, alternating so both kinds show (already sorted that way by
+  // usePosts/sortPostsForPublicList).
   // Past events are pulled out into the archive at the bottom of the page.
   const pastEvents = regularPosts
     .filter((p) => p.post_type === "event" && p.event_status === "past")

@@ -33,7 +33,7 @@ export type Post = {
   cancelled_at: string | null;
 } & Partial<ResolvedFields>;
 
-import { sortPostsChronologically } from "@/lib/sortPosts";
+import { sortPostsForPublicList } from "@/lib/sortPosts";
 import {
   resolveEvent,
   type OccurrenceRow,
@@ -88,8 +88,9 @@ export function usePosts(limit?: number) {
   return useQuery({
     queryKey: ["posts", limit ?? "all"],
     queryFn: async (): Promise<Post[]> => {
-      // Fetch all published posts; sort client-side so events use event_date
-      // and news uses published_at (see sortPostsChronologically).
+      // Fetch all published posts; sort client-side so upcoming events run
+      // soonest → farthest, news runs newest → oldest, and the two alternate
+      // (see sortPostsForPublicList).
       const { data, error } = await supabase
         .from("posts")
         .select("*")
@@ -102,7 +103,7 @@ export function usePosts(limit?: number) {
       const visible = resolved.filter(
         (p) => !p.cancelled && !(p.post_type === "event" && p.event_status === "undated"),
       );
-      const sorted = sortPostsChronologically(visible).map(sanitizePost);
+      const sorted = sortPostsForPublicList(visible).map(sanitizePost);
       return limit ? sorted.slice(0, limit) : sorted;
     },
     refetchInterval: ROLLOVER_MS,
