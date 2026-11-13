@@ -54,6 +54,8 @@ type Draft = {
   featured_image_decorative: boolean;
   published: boolean;
   published_at: string; // ISO date (YYYY-MM-DD) for input[type=date]
+  homepage_expires_on: string; // YYYY-MM-DD; homepage only
+  homepage_featured: boolean;
   event_date: string; // YYYY-MM-DD
   event_end_date: string; // YYYY-MM-DD (final/end date for multi-day or recurring events)
   event_time: string;
@@ -82,6 +84,8 @@ const emptyDraft = (): Draft => ({
   featured_image_decorative: false,
   published: true,
   published_at: new Date().toISOString().slice(0, 10),
+  homepage_expires_on: "",
+  homepage_featured: false,
   event_date: "",
   event_end_date: "",
   event_time: "",
@@ -123,6 +127,8 @@ function postToDraft(p: Post): Draft {
     featured_image_decorative: p.featured_image_decorative ?? false,
     published: p.published,
     published_at: (p.published_at ?? "").slice(0, 10),
+    homepage_expires_on: p.homepage_expires_on ?? "",
+    homepage_featured: p.homepage_featured ?? false,
     event_date: p.event_date ?? "",
     event_end_date: p.event_end_date ?? "",
     event_time: p.event_time ?? "",
@@ -254,6 +260,12 @@ const AdminNews = () => {
       published_at: editing.published_at
         ? new Date(editing.published_at).toISOString()
         : new Date().toISOString(),
+      homepage_expires_on:
+        editing.post_type === "news" && editing.homepage_expires_on
+          ? editing.homepage_expires_on
+          : null,
+      homepage_featured:
+        editing.post_type === "news" && editing.homepage_featured,
       event_date: editing.post_type === "event" && editing.event_date
         ? editing.event_date
         : null,
@@ -779,6 +791,39 @@ function PostEditor({
             onChange={(e) => set("published_at", e.target.value)}
           />
         </div>
+
+        {draft.post_type === "news" && (
+          <>
+            <div>
+              <Label htmlFor="homepage_expires_on">Homepage expiration date (optional)</Label>
+              <Input
+                id="homepage_expires_on"
+                type="date"
+                value={draft.homepage_expires_on}
+                onChange={(e) => set("homepage_expires_on", e.target.value)}
+                aria-describedby="homepage_expires_on_help"
+              />
+              <p id="homepage_expires_on_help" className="mt-1 text-xs text-muted-foreground">
+                Visible on the homepage through this date, Eastern Time. The article remains in News &amp; Events afterward.
+              </p>
+            </div>
+            <div className="sm:col-span-2 flex items-center gap-3 rounded-md border border-border bg-background p-3">
+              <Switch
+                id="homepage_featured"
+                checked={draft.homepage_featured}
+                onCheckedChange={(v) => set("homepage_featured", v)}
+              />
+              <div>
+                <Label htmlFor="homepage_featured" className="cursor-pointer">
+                  Feature this announcement on the homepage
+                </Label>
+                <p className="text-xs text-muted-foreground">
+                  Keeps an important announcement eligible beyond the usual 14-day recent-news window. An expiration date still applies.
+                </p>
+              </div>
+            </div>
+          </>
+        )}
 
         <div>
           <Label htmlFor="category">Category (optional)</Label>

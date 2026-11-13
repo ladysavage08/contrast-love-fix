@@ -416,6 +416,8 @@ export type Database = {
           featured_image_alt: string | null
           featured_image_decorative: boolean
           featured_image_url: string | null
+          homepage_expires_on: string | null
+          homepage_featured: boolean
           id: string
           post_type: string
           publication_name: string | null
@@ -449,6 +451,8 @@ export type Database = {
           featured_image_alt?: string | null
           featured_image_decorative?: boolean
           featured_image_url?: string | null
+          homepage_expires_on?: string | null
+          homepage_featured?: boolean
           id?: string
           post_type?: string
           publication_name?: string | null
@@ -482,6 +486,8 @@ export type Database = {
           featured_image_alt?: string | null
           featured_image_decorative?: boolean
           featured_image_url?: string | null
+          homepage_expires_on?: string | null
+          homepage_featured?: boolean
           id?: string
           post_type?: string
           publication_name?: string | null

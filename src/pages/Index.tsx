@@ -16,6 +16,7 @@ import SocialIcons from "@/components/SocialIcons";
 import ManagedLink from "@/components/ManagedLink";
 import { usePosts, useEvents, formatPostDate } from "@/hooks/usePosts";
 import { formatEventDateLabel } from "@/lib/eventOccurrences";
+import { selectHomepagePosts } from "@/lib/homepagePosts";
 import { eventDateKey, formatDateKey, isAllDayEvent } from "@/lib/eventDate";
 import { PUBLIC_HEALTH_SERIES_PATH } from "@/lib/publicHealthSeries";
 import { Calendar as CalendarIcon, MapPin } from "lucide-react";
@@ -89,7 +90,7 @@ const Index = () => {
     p.category === "Mobile Clinic" &&
     (p.event_date ?? "").slice(0, 7) === "2026-09";
 
-  const news = allNews.filter(passesHomepageMobileRule).slice(0, 4);
+  const news = selectHomepagePosts(allNews.filter(passesHomepageMobileRule));
   const upcomingEvents = allUpcomingEvents.filter(passesHomepageMobileRule).slice(0, 4);
 
   return (

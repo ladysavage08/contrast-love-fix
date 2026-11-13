@@ -21,6 +21,8 @@ export type Post = {
   category: string | null;
   published: boolean;
   published_at: string;
+  homepage_expires_on: string | null;
+  homepage_featured: boolean;
   event_date: string | null;
   event_end_date: string | null;
   event_time: string | null;
