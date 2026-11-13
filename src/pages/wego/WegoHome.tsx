@@ -56,7 +56,7 @@ const WegoHome = () => {
                 className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded bg-background px-4 py-2.5 text-sm font-semibold text-primary hover:bg-background/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto"
               >
                 <ExternalLink className="h-4 w-4 shrink-0" aria-hidden="true" />
-                Request a Mobile Unit Visit
+                Mobile Health Clinic Special Event Request
                 <span className="sr-only">(opens in a new tab)</span>
               </a>
               <Link
