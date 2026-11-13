@@ -49,7 +49,6 @@ import WegoServices from "./pages/wego/WegoServices.tsx";
 import WegoSchedule from "./pages/wego/WegoSchedule.tsx";
 import WegoFaq from "./pages/wego/WegoFaq.tsx";
 import WegoContact from "./pages/wego/WegoContact.tsx";
-import WegoSpecialEventRequest from "./pages/wego/WegoSpecialEventRequest.tsx";
 import AdminWegoRequests from "./pages/AdminWegoRequests.tsx";
 import FluShot, { FluShotEs } from "./pages/FluShot.tsx";
 import AdminFluClinics from "./pages/AdminFluClinics.tsx";
@@ -147,7 +146,6 @@ const App = () => (
           <Route path="/wego/schedule" element={<WegoSchedule />} />
           <Route path="/wego/faq" element={<WegoFaq />} />
           <Route path="/wego/contact" element={<WegoContact />} />
-          <Route path="/wego/special-event-request" element={<WegoSpecialEventRequest />} />
           <Route path="/admin/wego-requests" element={<AdminWegoRequests />} />
           <Route path="/flushot" element={<FluShot />} />
           <Route path="/flushot/es" element={<FluShotEs />} />
