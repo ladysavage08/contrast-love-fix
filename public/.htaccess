@@ -19,6 +19,15 @@
 
   # 301 redirect: corrected article slug (Justin Case -> Just In Case)
   RewriteRule ^news/justin-case-prepare-your-family-for-a-weather-disaster-september-2026/?$ /news/just-in-case-prepare-your-family-for-a-weather-disaster-september-2026 [R=301,L,NC]
+  RewriteRule ^news/compass-for-hope-showers-2026-11-01/?$ /news/compass-for-hope-showers [R=301,L,NC]
+  RewriteRule ^news/compass-for-hope-showers-2026-11-08/?$ /news/compass-for-hope-showers [R=301,L,NC]
+  RewriteRule ^news/compass-for-hope-showers-2026-11-15/?$ /news/compass-for-hope-showers [R=301,L,NC]
+  RewriteRule ^news/compass-for-hope-showers-2026-11-22/?$ /news/compass-for-hope-showers [R=301,L,NC]
+  RewriteRule ^news/compass-for-hope-showers-2026-11-29/?$ /news/compass-for-hope-showers [R=301,L,NC]
+  RewriteRule ^news/compass-for-hope-showers-2026-12-06/?$ /news/compass-for-hope-showers [R=301,L,NC]
+  RewriteRule ^news/compass-for-hope-showers-2026-12-13/?$ /news/compass-for-hope-showers [R=301,L,NC]
+  RewriteRule ^news/compass-for-hope-showers-2026-12-20/?$ /news/compass-for-hope-showers [R=301,L,NC]
+  RewriteRule ^news/compass-for-hope-showers-2026-12-27/?$ /news/compass-for-hope-showers [R=301,L,NC]
 
   # If the request is for a real file or folder, serve it directly.
   RewriteCond %{REQUEST_FILENAME} -f [OR]
