@@ -224,14 +224,14 @@ export const ehSubpages: EhSubpage[] = [
   },
   {
     slug: "servsafe-schedule-2026",
-    title: "2026 ServSafe Schedule",
+    title: "2027 ServSafe Schedule",
     summary:
       "Upcoming ServSafe Food Protection Manager certification class dates.",
     intro:
-      "The 2026 schedule for ServSafe Food Protection Manager certification classes offered through East Central Health District. Seats are limited — please register in advance.",
+      "The 2027 schedule for ServSafe Food Protection Manager certification classes offered through East Central Health District. Seats are limited — please register in advance.",
     resourcesHeading: "Class Information",
     resources: [
-      { label: "2026 ServSafe Class Dates &amp; Locations" },
+      { label: "2027 ServSafe Class Dates &amp; Locations" },
       { label: "Class Cost &amp; What's Included" },
       { label: "2027 ServSafe Registration Form", href: "/environmental-health/servsafe-registration-form" },
       { label: "What to Bring on Class Day" },
@@ -262,7 +262,7 @@ export const ehSubpages: EhSubpage[] = [
       "Use the ServSafe registration form to reserve a seat in an upcoming ServSafe Food Protection Manager certification class.",
     resourcesHeading: "Registration",
     resources: [
-      { label: "2026 ServSafe Schedule", href: "/environmental-health/servsafe-schedule-2026" },
+      { label: "2027 ServSafe Schedule", href: "/environmental-health/servsafe-schedule-2026" },
       { label: "Class Cost &amp; Payment Information" },
       { label: "Materials Provided" },
     ],
