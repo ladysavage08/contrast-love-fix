@@ -111,7 +111,6 @@ const HealthyPregnancySupport = () => {
           <section aria-labelledby="why-heading">
             <h2 id="why-heading" className="text-2xl font-bold text-maternal-navy sm:text-3xl">Why Early Prenatal Care Matters</h2>
             <div className="mt-4 space-y-3 text-lg leading-relaxed text-foreground/90">
-              <p>November is Prematurity Awareness Month.</p>
               <p>Premature birth occurs before 37 weeks of pregnancy and can increase the risk of health complications.</p>
               <p>Receiving prenatal care early and consistently helps healthcare providers monitor pregnancy, identify potential complications, and connect expectant mothers with appropriate treatment and resources.</p>
               <p>Not all premature births can be prevented, but access to timely medical care and support is important.</p>
