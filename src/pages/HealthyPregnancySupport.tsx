@@ -98,7 +98,7 @@ const HealthyPregnancySupport = () => {
                   connects mothers and babies with the support they need.
                 </p>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                  <a href={TEL} className={btnPrimary}><Phone className="h-4 w-4" aria-hidden="true" />Call {PHONE}</a>
+                  <Link to="/counties" className={btnPrimary}><Phone className="h-4 w-4" aria-hidden="true" />Contact Your Local Health Department</Link>
                   <a href="#services" className={btnOutline}>Explore Available Services</a>
                 </div>
               </div>
