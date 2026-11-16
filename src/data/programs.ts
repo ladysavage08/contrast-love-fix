@@ -322,6 +322,7 @@ export const programs: Program[] = [
       { label: "Breast and Cervical Cancer Prevention (BCCP)", href: "/womens-health/bccp" },
       { label: "Family Planning / Reproductive Health", href: "/womens-health/family-planning" },
       { label: "Preconception Health", href: "/womens-health/preconception-health" },
+      { label: "Healthy Pregnancy Support", href: "/healthy-pregnancy-support" },
       { label: "Breast Health", href: "/womens-health/breast-health" },
       { label: "Cervical Health", href: "/womens-health/cervical-health" },
       { label: "Cancer Screening Services", href: "/womens-health/cancer-screening-services" },

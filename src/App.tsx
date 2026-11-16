@@ -37,6 +37,7 @@ import AdminFooter from "./pages/AdminFooter.tsx";
 import Wic from "./pages/Wic.tsx";
 import BreastCancerAwareness from "./pages/BreastCancerAwareness";
 import DiabetesAwarenessMonth from "./pages/DiabetesAwarenessMonth";
+import HealthyPregnancySupport from "./pages/HealthyPregnancySupport";
 import Hopwa from "./pages/Hopwa.tsx";
 import ProjectImpactAugusta from "./pages/ProjectImpactAugusta.tsx";
 import HivPrevention from "./pages/HivPrevention.tsx";
@@ -133,6 +134,7 @@ const App = () => (
           <Route path="/hopwa" element={<Hopwa />} />
           <Route path="/breastcancer" element={<BreastCancerAwareness />} />
           <Route path="/diabetes-awareness-month" element={<DiabetesAwarenessMonth />} />
+          <Route path="/healthy-pregnancy-support" element={<HealthyPregnancySupport />} />
           <Route path="/getwic" element={<GetWicRedirect />} />
           <Route path="/getwic/" element={<GetWicRedirect />} />
           <Route path="/GetWIC" element={<GetWicRedirect />} />

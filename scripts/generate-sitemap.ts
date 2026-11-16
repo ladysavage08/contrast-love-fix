@@ -36,6 +36,7 @@ const staticEntries: Entry[] = [
   { path: "/programs/project-impact-augusta", changefreq: "monthly", priority: "0.7" },
   { path: "/environmental-health", changefreq: "monthly", priority: "0.8" },
   { path: "/womens-health", changefreq: "monthly", priority: "0.8" },
+  { path: "/healthy-pregnancy-support", changefreq: "monthly", priority: "0.7" },
   { path: "/wic", changefreq: "monthly", priority: "0.8" },
   { path: "/hopwa", changefreq: "monthly", priority: "0.7" },
   { path: "/breastcancer", changefreq: "monthly", priority: "0.7" },

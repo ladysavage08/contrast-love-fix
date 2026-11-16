@@ -21,6 +21,14 @@ const pages = [
     image: `${SITE}/diabetes-og.jpg`,
     imageAlt: "Blue awareness circle with autumn leaves and the text November Is American Diabetes Month — Know Your Risk. Protect Your Health.",
   },
+  {
+    path: "healthy-pregnancy-support",
+    title: "Healthy Pregnancy Starts with Support | East Central Health District",
+    description:
+      "Pregnant? Get help applying for pregnancy Medicaid and learn about free Home Visiting support for eligible moms and babies from East Central Health District.",
+    image: `${SITE}/healthy-pregnancy-og.jpg`,
+    imageAlt: "A public health nurse checks the blood pressure of a smiling pregnant woman at home.",
+  },
 ];
 
 const base = readFileSync("dist/index.html", "utf8");

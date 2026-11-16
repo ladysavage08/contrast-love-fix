@@ -41,6 +41,14 @@ export default {
         },
         "pink-soft": "hsl(var(--pink-soft))",
         "pink-medium": "hsl(var(--pink-medium))",
+        maternal: {
+          DEFAULT: "hsl(var(--maternal))",
+          foreground: "hsl(var(--maternal-foreground))",
+          hover: "hsl(var(--maternal-hover))",
+          soft: "hsl(var(--maternal-soft))",
+          medium: "hsl(var(--maternal-medium))",
+          navy: "hsl(var(--maternal-navy))",
+        },
         diabetes: {
           DEFAULT: "hsl(var(--diabetes))",
           foreground: "hsl(var(--diabetes-foreground))",

@@ -43,6 +43,12 @@ All colors MUST be HSL.
     --diabetes-hover: 218 75% 22%;
     --diabetes-soft: 210 90% 95%;
     --diabetes-medium: 210 80% 82%;
+    --maternal: 270 45% 38%;
+    --maternal-foreground: 0 0% 100%;
+    --maternal-hover: 270 45% 30%;
+    --maternal-soft: 270 60% 96%;
+    --maternal-medium: 270 45% 85%;
+    --maternal-navy: 222 60% 18%;
     --autumn: 25 85% 40%;
     --autumn-soft: 32 90% 93%;
 
