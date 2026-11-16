@@ -105,6 +105,21 @@ const WomensHealth = () => {
                       </Link>
                     </li>
                   ))}
+                  <li>
+                    <Link
+                      to="/healthy-pregnancy-support"
+                      className="group flex h-full flex-col rounded-lg border border-border bg-card p-5 hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    >
+                      <h3 className="text-base font-semibold text-primary">Healthy Pregnancy Support</h3>
+                      <p className="mt-2 flex-1 text-sm leading-relaxed text-foreground/90">
+                        Help applying for pregnancy Medicaid and free Home Visiting support for eligible moms and babies.
+                      </p>
+                      <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary underline-offset-2 group-hover:underline">
+                        Learn more about Healthy Pregnancy Support
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </span>
+                    </Link>
+                  </li>
                 </ul>
               </section>
 
